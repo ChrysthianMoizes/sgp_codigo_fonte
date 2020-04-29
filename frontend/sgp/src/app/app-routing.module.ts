@@ -4,8 +4,12 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'Home',
     component: HomeComponent,
+    children:[{
+      path: 'Perfil'
+      /*component: PerfilComponent ,*/
+    }]
   }/*,
   {
     path: 'login',
