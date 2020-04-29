@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-send-email',
@@ -9,7 +10,12 @@ export class SendEmailComponent implements OnInit {
 
   constructor() { }
 
+  email = new FormControl('', Validators.required);
   ngOnInit(): void {
+  }
+
+  showEmail() {
+    alert(this.email.value);
   }
 
 }

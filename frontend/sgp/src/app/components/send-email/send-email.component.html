@@ -1,1 +1,9 @@
-<p>send-email works!</p>
+<div class="ui-g-12 ui-md-4">
+  Email:
+  <div class="ui-inputgroup">
+    <input type="text" pInputText [formControl]='email' placeholder="Email">
+  </div>
+</div>
+
+<p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
+<p-button label="Enviar" (click)='showEmail()'></p-button>
