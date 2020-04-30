@@ -1,0 +1,21 @@
+.nav-bar {
+  height: 60px;
+  background-color: rgb(255, 44, 44);
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 4px 0px rgba(0,0,0,.25);
+}
+
+.nav-bar > i, .nav-bar > h1 {
+  color: white;
+}
+
+.nav-bar > img {
+  filter: invert(1);
+}
+
+.nav-bar > img:hover, .nav-bar > i:hover {
+  cursor: pointer;
+}
