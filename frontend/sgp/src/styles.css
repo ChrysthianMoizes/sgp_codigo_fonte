@@ -3,4 +3,5 @@ html, body {
   width: 100vw;
   min-height: 100vh;
   background-color: rgb(247, 247, 247);
+  font-family: Arial, Helvetica, sans-serif;
 }
