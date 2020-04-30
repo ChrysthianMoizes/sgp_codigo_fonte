@@ -6,10 +6,10 @@ const routes: Routes = [
   {
     path: 'Home',
     component: HomeComponent,
-    children:[{
+    /*children:[{
       path: 'Perfil'
-      /*component: PerfilComponent ,*/
-    }]
+      component: PerfilComponent ,
+    }]*/
   }/*,
   {
     path: 'login',
