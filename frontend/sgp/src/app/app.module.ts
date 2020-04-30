@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
@@ -14,7 +14,8 @@ import { ButtonModule } from 'primeng/button';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

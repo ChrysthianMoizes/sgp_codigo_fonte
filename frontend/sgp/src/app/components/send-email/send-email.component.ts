@@ -10,12 +10,13 @@ export class SendEmailComponent implements OnInit {
 
   constructor() { }
 
-  email = new FormControl('', Validators.required);
+  email: string;
+  label = 'Reenviar email'
   ngOnInit(): void {
   }
 
   showEmail() {
-    alert(this.email.value);
+    alert(this.email);
   }
 
 }

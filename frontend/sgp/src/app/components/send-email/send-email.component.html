@@ -1,9 +1,12 @@
-<div class="ui-g-12 ui-md-4">
-  Email:
-  <div class="ui-inputgroup">
-    <input type="text" pInputText [formControl]='email' placeholder="Email">
-  </div>
-</div>
+<div class="container">
+  <span>{{label}}</span>
 
-<p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
-<p-button label="Enviar" (click)='showEmail()'></p-button>
+  <span>Email</span>
+  <input type="text" pInputText [(ngModel)]="email" />
+
+  <div>
+    <p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
+    <p-button label="Enviar" (click)='showEmail()'></p-button>
+  </div>
+
+</div>
