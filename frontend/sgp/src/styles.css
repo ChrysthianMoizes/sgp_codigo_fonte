@@ -2,4 +2,5 @@ html, body {
   margin: 0;
   width: 100vw;
   min-height: 100vh;
+  background-color: rgb(247, 247, 247);
 }
