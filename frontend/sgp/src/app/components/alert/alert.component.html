@@ -1,5 +1,6 @@
-<p>alert works!</p>
 <p-toast
+  [showTransitionOptions]="'200ms'"
+  [hideTransitionOptions]="'200ms'"
   position="center"
   key="c"
   (onClose)="onReject()"
@@ -38,6 +39,6 @@
   type="button"
   pButton
   (click)="showConfirm()"
-  label="Confirm"
-  class="ui-button-warning"
+  label="Open Alert"
+  class="ui-button-success"
 ></button>

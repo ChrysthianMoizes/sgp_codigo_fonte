@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -20,7 +20,7 @@ export class AlertComponent {
   }
 
   showConfirm() {
-    this.messageService.clear();
+    this.clear();
     this.verifyType(this.tipo);
     this.messageService.add({
       key: 'c',
@@ -41,9 +41,11 @@ export class AlertComponent {
         case 'error':
           this.tiposimbolo = 'pi-times';
           this.tipostring = 'Erro!';
+          break;
         default:
           this.tiposimbolo = 'pi-exclamation-triangle';
           this.tipostring = 'Atenção!';
+          break;
       }
     }
   }
