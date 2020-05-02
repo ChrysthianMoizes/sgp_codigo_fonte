@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api/menuitem';
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from 'primeng/api/menuitem';
 
 @Component({
   selector: 'app-breadcrumb',
