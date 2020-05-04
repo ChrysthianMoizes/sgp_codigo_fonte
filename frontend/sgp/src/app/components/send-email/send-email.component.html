@@ -1,9 +1,14 @@
-<div class="ui-g-12 ui-md-4">
-  Email:
-  <div class="ui-inputgroup">
-    <input type="text" pInputText [formControl]='email' placeholder="Email">
-  </div>
-</div>
+<div class="container">
+  <p>{{label}}</p>
 
-<p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
-<p-button label="Enviar" (click)='showEmail()'></p-button>
+  <form class="displayEmail">
+    <span>Email</span>
+    <input class="form-control" type="email" pInputText [formControl]="email" [email]='true' />
+  </form>
+
+  <div>
+    <p-button label="Cancelar" styleClass="ui-button-danger" (click)='toHome()'></p-button>
+    <p-button label="Confirmar" styleClass="ui-button-success" (click)='send()'></p-button>
+  </div>
+
+</div>
