@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-email',
@@ -8,7 +9,7 @@ import { FormControl, Validators } from '@angular/forms'
 })
 export class SendEmailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   email = new FormControl('', [
     Validators.required,
@@ -16,11 +17,12 @@ export class SendEmailComponent implements OnInit {
   ]);
   @Input() label: string;
   @Output() sendEmail = new EventEmitter();
+
   ngOnInit(): void {
   }
 
-  showEmail() {
-    alert(this.email);
+  toHome() {
+    this.router.navigate(['login']);
   }
 
   send() {
