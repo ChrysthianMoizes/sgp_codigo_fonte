@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CardComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

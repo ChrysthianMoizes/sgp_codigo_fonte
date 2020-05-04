@@ -19,14 +19,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-<<<<<<< HEAD
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
-=======
-            "assets": ["src/favicon.ico", "src/assets"],
->>>>>>> ag/login
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
@@ -91,7 +87,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-<<<<<<< HEAD
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -99,10 +94,6 @@
             "styles": [
               "src/styles.css"
             ],
-=======
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
->>>>>>> ag/login
             "scripts": []
           }
         },
@@ -114,13 +105,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-<<<<<<< HEAD
             "exclude": [
               "**/node_modules/**"
             ]
-=======
-            "exclude": ["**/node_modules/**"]
->>>>>>> ag/login
           }
         },
         "e2e": {
@@ -138,13 +125,8 @@
       }
     }
   },
-<<<<<<< HEAD
   "defaultProject": "sgp",
   "cli": {
     "analytics": "b9d9a7e2-fe40-406c-a9c2-64e9d0d12013"
   }
 }
-=======
-  "defaultProject": "sgp"
-}
->>>>>>> ag/login
