@@ -15,6 +15,7 @@ import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.
 import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
 import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
 import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
+import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.service';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.ser
     ButtonModule,
     FormsModule
   ],
-  providers: [ReenviarEmailService],
+  providers: [ReenviarEmailService, ResetarSenhaService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
