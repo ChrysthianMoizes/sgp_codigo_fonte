@@ -10,7 +10,6 @@ export class ReenviarEmailService {
   constructor() { }
 
   reenviarEmailConfirmacao(email: string): Observable<void> {
-    alert('teste')
     return of();
   }
 }
