@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CardComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    ReenviarEmailComponent
   ],
   imports: [
     BrowserModule,
