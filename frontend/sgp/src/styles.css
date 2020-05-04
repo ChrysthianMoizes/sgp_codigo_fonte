@@ -6,6 +6,17 @@
   align-items: center;
 }
 
+.displayEmail{
+  display: flex;
+  flex-direction: column;
+  color: red;
+}
+
+.container p{
+  font-weight: bold;
+  color: red;
+}
+
 .container button {
   margin: 10px;
 }

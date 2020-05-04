@@ -1,12 +1,14 @@
 <div class="container">
-  <span>{{label}}</span>
+  <p>{{label}}</p>
+  <form class="displayEmail">
+    <span>Email</span>
+    <input [class.is-invalid]="email.invalid && email.touched" class="form-control" type="email" pInputText
+      [formControl]="email" [email]='true' />
 
-  <span>Email</span>
-  <input type="text" pInputText [(ngModel)]="email" />
-
+  </form>
   <div>
     <p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
-    <p-button label="Enviar" (click)='send()'></p-button>
+    <p-button label="Confirmar" [disabled]='verifyPadding()' styleClass="ui-button-success" (click)='send()'></p-button>
   </div>
 
 </div>
