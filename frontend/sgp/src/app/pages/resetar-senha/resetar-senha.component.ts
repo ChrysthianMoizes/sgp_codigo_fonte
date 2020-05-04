@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResetarSenhaService } from 'src/app/stores/resetar-senha/resetar-senha.service';
 
 @Component({
   selector: 'app-resetar-senha',
@@ -7,13 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetarSenhaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private resetarSenhaService: ResetarSenhaService) { }
 
   ngOnInit(): void {
   }
 
   send(email: string) {
-    alert(email);
+    this.resetarSenhaService.resetarSenha(email).subscribe(
+      response => {
+        alert(response)
+      },
+      erro => {
+        alert('erro')
+      }
+    )
   }
 
 }
