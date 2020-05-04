@@ -16,6 +16,22 @@
   filter: invert(1);
 }
 
+.nav-bar > i {
+  font-size: 30px;
+}
+
 .nav-bar > img:hover, .nav-bar > i:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+  .nav-bar > h1 {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .nav-bar > h1 {
+    font-size: 16px;
+  }
 }
