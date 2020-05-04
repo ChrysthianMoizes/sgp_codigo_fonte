@@ -1,19 +1,19 @@
 <div class="nav-bar">
   <i
-    class="pi pi-bars"
     (click)="onClickHamburguerMenu($event)"
+    class="pi pi-bars"
   ></i>
   <h1> {{ title }} </h1>
 
   <img
-    src="../../../assets/profile.svg"
+    (click)="menu.toggle($event)"
     alt="PERFIL"
     height="40px"
-    (click)="menu.toggle($event)"
+    src="../../../assets/profile.svg"
   >
 </div>
 <p-menu
   #menu
-  [popup]="true"
   [model]=items
+  [popup]="true"
 ></p-menu>
