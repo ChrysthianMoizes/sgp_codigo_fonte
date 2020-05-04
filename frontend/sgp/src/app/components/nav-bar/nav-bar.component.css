@@ -16,6 +16,10 @@
   filter: invert(1);
 }
 
+.nav-bar > i {
+  font-size: 30px;
+}
+
 .nav-bar > img:hover, .nav-bar > i:hover {
   cursor: pointer;
 }
