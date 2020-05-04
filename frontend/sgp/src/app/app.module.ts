@@ -10,13 +10,18 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CardComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    CadastroComponent,
+    FormCadastroComponent,
   ],
   imports: [
     BrowserModule,
