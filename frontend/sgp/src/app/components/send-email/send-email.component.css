@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.displayEmail{
+  display: flex;
+  flex-direction: column;
+  color: red;
+  text-align: left !important;
+}
+
+.container p{
+  font-weight: bold;
+  color: red;
+}
+
+.container button {
+  margin: 10px;
+}

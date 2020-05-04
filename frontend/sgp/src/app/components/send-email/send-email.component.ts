@@ -29,8 +29,4 @@ export class SendEmailComponent implements OnInit {
     this.sendEmail.emit(this.email.value);
   }
 
-  verifyPadding() {
-    return this.email.invalid;
-  }
-
 }
