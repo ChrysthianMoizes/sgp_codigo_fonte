@@ -11,6 +11,7 @@ import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
+import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.co
     HomeComponent,
     CardComponent,
     SendEmailComponent,
-    ReenviarEmailComponent
+    ReenviarEmailComponent,
+    ResetarSenhaComponent
   ],
   imports: [
     BrowserModule,
