@@ -12,6 +12,7 @@ import { SendEmailComponent } from './components/send-email/send-email.component
 import { HomeComponent } from './pages/home/home.component';
 import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
 import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
+import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.compo
     ButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ReenviarEmailService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

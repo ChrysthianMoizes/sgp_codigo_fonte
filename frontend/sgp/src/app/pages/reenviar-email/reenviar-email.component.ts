@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReenviarEmailService } from 'src/app/stores/reenviar-email/reenviar-email.service';
 
 @Component({
   selector: 'app-reenviar-email',
@@ -7,13 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReenviarEmailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reenviarEmailService: ReenviarEmailService) { }
 
   ngOnInit(): void {
   }
 
   send(email: string) {
-    alert(email);
+    this.reenviarEmailService.reenviarEmailConfirmacao(email).subscribe(
+      response => {
+        alert(response);
+      },
+      erro => {
+        alert('Erro')
+      }
+    )
   }
 
 }
