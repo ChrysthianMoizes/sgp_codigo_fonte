@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms'
 
 @Component({
@@ -11,12 +11,17 @@ export class SendEmailComponent implements OnInit {
   constructor() { }
 
   email: string;
-  label = 'Reenviar email'
+  @Input() label: string;
+  @Output() sendEmail = new EventEmitter();
   ngOnInit(): void {
   }
 
   showEmail() {
     alert(this.email);
+  }
+
+  send() {
+    this.sendEmail.emit(this.email);
   }
 
 }
