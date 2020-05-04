@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
-
-
 
 @NgModule({
   declarations: [
@@ -27,7 +25,8 @@ import { HomeComponent } from './pages/home/home.component';
     InputTextModule,
     PasswordModule,
     ReactiveFormsModule,
-    ButtonModule
+    ButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -8,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   constructor() { }
+  label = 'Reenviar Email';
+
+  showEmail(email: string) {
+    alert(email);
+  }
 
   ngOnInit(): void {
   }
