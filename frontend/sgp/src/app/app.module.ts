@@ -12,6 +12,9 @@ import { SendEmailComponent } from './components/send-email/send-email.component
 import { HomeComponent } from './pages/home/home.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
+import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
+import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
+import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
 
 
 @NgModule({
@@ -20,8 +23,11 @@ import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.
     HomeComponent,
     CardComponent,
     SendEmailComponent,
+    ReenviarEmailComponent,
+    ResetarSenhaComponent,
     CadastroComponent,
     FormCadastroComponent,
+    ReenviarEmailService
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,7 @@ import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.
     ButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ReenviarEmailService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
