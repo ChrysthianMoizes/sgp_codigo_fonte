@@ -28,7 +28,6 @@ import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.servic
     ResetarSenhaComponent,
     CadastroComponent,
     FormCadastroComponent,
-    ReenviarEmailService
   ],
   imports: [
     BrowserModule,
