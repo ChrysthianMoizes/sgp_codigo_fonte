@@ -16,11 +16,10 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
     this.loadCrumbs()
   }
-  home: MenuItem;
   menuItems: MenuItem [];
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
-  private createBreadcrumbs(route: ActivatedRoute, url: string = '#', breadcrumbs: MenuItem[] = []): MenuItem[] {
+  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
 
     if (children.length === 0) {

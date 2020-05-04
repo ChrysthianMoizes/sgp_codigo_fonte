@@ -1,15 +1,23 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
-  {
-    path: '', component: HomeComponent, data:{ breadcrumb: 'home'}
-  },{
-    path: 'layout', component: LayoutComponent, data:{ breadcrumb: 'Layout'},
-    children:[ {path: 'teste',component: HomeComponent, data: {breadcrumb: 'teste'}}]
-  }/*,
+{path: '',
+  pathMatch: 'full',
+  redirectTo: 'home'
+},
+{
+  path: '',
+  component: LayoutComponent,
+  children:[
+    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home'}},
+    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil'}}
+  ]
+}
+  /*,
   {
     path: 'login',
     component: },
