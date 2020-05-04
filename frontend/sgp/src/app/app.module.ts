@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AlertComponent],
@@ -17,7 +18,7 @@ import { HomeComponent } from './pages/home/home.component';
     ButtonModule,
     ToastModule,
   ],
-  providers: [],
+  providers: [ AuthService ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
