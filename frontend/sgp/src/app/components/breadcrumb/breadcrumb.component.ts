@@ -13,11 +13,11 @@ export class BreadcrumbComponent implements OnInit {
   home: MenuItem;
 
   ngOnInit() {
-      this.items = [
-          {label:'Home'},
-      ];
+    this.items = [
+      {label: 'Home'},
+    ];
 
-      this.home = {icon: 'pi pi-home'}
+    this.home = {icon: 'pi pi-home'}
   }
 
 }
