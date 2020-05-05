@@ -1,0 +1,43 @@
+<app-card>
+
+  <div class="caracteres">
+    <span>
+      <label>Login</label>
+    </span>
+  </div>
+
+  <div class="espacamento">
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+      <span class="ui-float-label" >
+        <input id="float-input" class="borderInput" type="text" size="27" pInputText>
+        <label for="float-input" class="caracteres">E-mail</label>
+      </span>
+    </div>
+  </div>
+
+  <div class="espacamento">
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+        <span class="ui-float-label" >
+        <input for="float-input" class="borderInput" type="password" size="27" maxlength="20" pInputText>
+        <label id="float-input" class="caracteres">Senha</label>
+      </span>
+    </div>
+  </div>
+
+  <div class="espacamento">
+    <span>
+      <button pButton class="ui-button-danger" type="submit" [style]="{width: '100%'}" label="ENTRAR"></button>
+    </span>
+  </div>
+
+  <p-footer>
+    <div>
+      <span><p class="caracteres">Cadastrar</p></span>
+      <span><p class="caracteres">Esqueci minha senha</p></span>
+      <span><p class="caracteres">Reeviar e-mail de ativação</p></span>
+    </div>
+  </p-footer>
+
+</app-card>
