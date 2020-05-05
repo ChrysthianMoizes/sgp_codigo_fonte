@@ -3,5 +3,6 @@ export class Usuario {
   public nome: string;
   public senha: string;
   public email: string;
-  public permissoes: Array<string>;
+  public cpf: string;
+  public permissao: string;
 }

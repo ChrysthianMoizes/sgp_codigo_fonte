@@ -28,20 +28,16 @@ export class AuthService {
     return this.getUsuarioSessionStorage().email;
   }
 
-  public getPermissoesUsuarioSessionStorage(): Array<string> {
-    return this.getUsuarioSessionStorage().permissoes;
+  public getCpflUsuarioSessionStorage(): string {
+    return this.getUsuarioSessionStorage().cpf;
+  }
+
+  public getPermissaoUsuarioSessionStorage(): string {
+    return this.getUsuarioSessionStorage().permissao;
   }
 
   public temPermissao(permissao: string): boolean {
-    return this.getPermissoesUsuarioSessionStorage()
-      .includes(permissao);
-  }
-
-  public temUmaDessasPermissoes(permissoes: Array<string>): boolean {
-    permissoes.forEach(permissao => {
-      if(this.temPermissao(permissao)) return true;
-    });
-    return false;
+    return this.getPermissaoUsuarioSessionStorage() == permissao;
   }
 
   public containsUsuarioSessionStorage(): boolean {
@@ -52,13 +48,7 @@ export class AuthService {
     sessionStorage.clear();
   }
 
-  // constructor(){
-  //   sessionStorage.setItem(this.KEY, "jean")
-  //   console.log("USUARIO ADICIONADO AO SESSEION STORAGE")
-  //   console.log(sessionStorage.key(0))
-  //   console.log("EXISTE UM USUARIO NO SESSIONSTORAGE: ", this.containsUsuarioSessionStorage())
-  //   this.retirarUsuarioDoSessionStorage();
-  //   console.log("EXISTE UM USUARIO NO SESSIONSTORAGE: ", this.containsUsuarioSessionStorage())
-  //   console.log(sessionStorage.key(0))
-  // }
+  public isAdmin(): boolean {
+    return this.temPermissao('ROLE_ADMIN');
+  }
 }
