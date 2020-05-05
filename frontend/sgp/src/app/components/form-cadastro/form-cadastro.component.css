@@ -6,23 +6,19 @@ input {
   border-color: red;
 }
 
-#form-container {
+form {
   display: flex;
   flex-direction: column;
-}
-
-#form-header-container {
-  margin-bottom: 5px;
-  margin-top: 10px;
-  text-align: left;
-}
-
-input[type="password"] {
-  width: 267.5px;
+  margin-left: initial;
 }
 
 #buttons {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+}
+imput {
   margin-top: 10px;
+}
+button {
+  margin-bottom: 10px;
 }
