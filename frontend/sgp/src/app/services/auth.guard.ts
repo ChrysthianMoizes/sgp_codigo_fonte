@@ -17,9 +17,15 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
+    return true;
+
+    if( !this.authService.containsUsuarioSessionStorage() ) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+
     if(next.data.roles
-      && !this.authService.temUmaDessasPermissoes(next.data.roles) &&
-      !this.authService.containsUsuarioSessionStorage()
+      && !this.authService.temUmaDessasPermissoes(next.data.roles)
       ){
 
       this.router.navigate(['/login']);
