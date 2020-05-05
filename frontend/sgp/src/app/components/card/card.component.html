@@ -1,12 +1,15 @@
 <div
   [style]="{position: 'absolute', width: '300px', height: '300px', left: '50%', top: '40%', transform: 'translate(-50%, -50%'}">
-  <p-card header="Gestão de provas" id='centerText'>
+  <p-card id='centerText'>
 
-    <hr>
+    <div *ngIf="cabecalho">
+      <p-header>
+        <img src="assets/images/logobasis.png" [style]="{display: 'block', margin: '0 auto',padding: '10px 0', width: '50%'}">
+        <h2>Gestão de Provas</h2>
+        <hr>
+      </p-header>
+    </div>
 
-    <p-header>
-      <img src="assets/images/logobasis.png" [style]="{display: 'block', margin: '0 auto',padding: '10px 0', width: '50%'}">
-    </p-header>
 
     <ng-content></ng-content>
 

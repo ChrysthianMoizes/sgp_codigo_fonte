@@ -10,8 +10,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService) { }
 
+  necessitaCabecalho = true;
+
   ngOnInit(): void {
   }
+
 
   login(){
     this.loginService.logar().subscribe(
