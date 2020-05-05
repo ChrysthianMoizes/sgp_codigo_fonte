@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,7 +18,7 @@ import { HomeComponent } from './pages/home/home.component';
     ButtonModule,
     ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

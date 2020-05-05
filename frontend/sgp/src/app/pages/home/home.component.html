@@ -1,2 +1,9 @@
 <p>home works!</p>
-<app-alert tipo="success" mensagem="cuidado na requisição"></app-alert>
+<app-alert></app-alert>
+<a
+  type="button"
+  pButton
+  (click)="abrirModal('success', 'Sucesso', 'Sucesso na requisição')"
+  label="Open Alert"
+  class="ui-button-secondary"
+></a>

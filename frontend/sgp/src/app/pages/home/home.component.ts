@@ -1,3 +1,4 @@
+import { AlertService } from './../../components/alert/alert.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
-
+  constructor(private alertService: AlertService) {}
   ngOnInit(): void {}
+
+  abrirModal(tipo: string, titulo: string, mensagem: string) {
+    this.alertService.montarAlerta(tipo, titulo, mensagem);
+  }
 }
