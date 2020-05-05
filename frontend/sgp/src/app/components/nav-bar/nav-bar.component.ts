@@ -11,9 +11,9 @@ export class NavBarComponent implements OnInit {
   items: MenuItem[];
   @Input() title = 'Gestão de Provas - Basis';
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.items = [
-      { label: 'Logout', command: this.onLogout }
+      {label: 'Logout', command: this.onLogout}
     ]
   }
 

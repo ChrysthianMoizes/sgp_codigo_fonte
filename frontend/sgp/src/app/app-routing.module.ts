@@ -1,16 +1,23 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
-  {
-    path: 'Home',
-    component: HomeComponent,
-    /*children:[{
-      path: 'Perfil'
-      component: PerfilComponent ,
-    }]*/
-  }/*,
+{path: '',
+  pathMatch: 'full',
+  redirectTo: 'home'
+},
+{
+  path: '',
+  component: LayoutComponent,
+  children:[
+    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home'}},
+    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil'}}
+  ]
+}
+  /*,
   {
     path: 'login',
     component: },
@@ -43,4 +50,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,16 +1,21 @@
 <p-card>
-  <div id="campos" class="p-grid p-justify-between">
-    <div><label>Nome <br>
-      <input type="text" name="nome" pInputText/></label></div>
-    <div><label>E-Mail <br>
-      <input type="email" name="email" pInputText/></label></div>
-    <div><label>Senha <br>
-      <input type="password" name="senha" pInputText/></label></div>
+  <div class="p-grid p-justify-between" id="campos">
+    <div>
+      <label for="nome">Nome</label><br>
+      <input [(ngModel)]="perfil.nome" id="nome" pInputText type="text">
+    </div>
+    <div>
+      <label for="email">E-Mail</label><br>
+      <input [(ngModel)]="perfil.email" id="email" pInputText type="email">
+    </div>
+    <div>
+      <label for="senha">Senha</label><br>
+      <input [(ngModel)]="perfil.senha" id="senha" pInputText type="password">
+    </div>
   </div>
   <br>
-  <div id="botoes" class="p-grid p-justify-between">
+  <div class="p-grid p-justify-between" id="botoes">
     <p-button label="CANCELAR" styleClass="ui-button-secondary"></p-button>
-    <p-button label="CONFIRMAR" styleClass="ui-button-success"></p-button>
+    <p-button (onClick)="onSubmit()" label="CONFIRMAR" styleClass="ui-button-success"></p-button>
   </div>
-
 </p-card>
