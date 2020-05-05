@@ -1,38 +1,57 @@
-    <div class="container">
-      <p>Login</p>
-    </div>
-
-    <div id="form-container">
-      <div id="form-header-container">
-        <p>Nome</p>
+    <form class="ui-inputgroup">
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="27" pInputText>
+              <label for="float-input">Nome</label>
+            </span>
+        </div>
       </div>
 
-      <span class="ui-float-label">
-        <input id="float-input" type="text" size="30" pInputText>
-      </span>
-    </div>
-
-    <div id="form-container">
-      <div id="form-header-container">
-        <p>Email</p>
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-id-card" style="line-height: 1.25;"></i></span>
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="27" pInputText>
+              <label for="float-input">CPF</label>
+            </span>
+        </div>
       </div>
 
-      <span class="ui-float-label">
-        <input id="float-input" type="email" size="30" pInputText>
-      </span>
-    </div>
-
-    <div id="form-container">
-      <div id="form-header-container">
-        <p>Senha</p>
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-lock" style="line-height: 1.25;"></i></span>
+            <span class="ui-float-label">
+              <input id="float-input" type="text" size="27" pInputText>
+              <label for="float-input">Token</label>
+            </span>
+        </div>
       </div>
 
-      <span class="ui-float-label">
-        <input type="password" pPassword />
-      </span>
-    </div>
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+            <span class="ui-float-label">
+              <input id="float-input" type="email" size="27" pInputText>
+              <label for="float-input">Email</label>
+            </span>
+        </div>
+      </div>
+
+      <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+            <span class="ui-float-label">
+              <input id="float-input" type="password" size="27" pInputText>
+              <label for="float-input">Senha</label>
+            </span>
+        </div>
+      </div>
+
+    </form>
 
     <div id="buttons">
-      <p-button label="Cancelar" styleClass="ui-button-danger"></p-button>
-      <p-button label="Confirmar" styleClass="ui-button-success"></p-button>
+      <button pButton type="button" label="Confirmar" class="ui-button-success"></button>
+      <button pButton type="button" label="Cancelar" class="ui-button-danger"></button>
     </div>
