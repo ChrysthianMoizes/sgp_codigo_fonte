@@ -10,7 +10,17 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
+<<<<<<< HEAD
 import { LoginComponent } from './pages/login/login.component';
+=======
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
+import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
+import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
+import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
+import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.service';
+
+>>>>>>> f58c404355ded3a09c9757881c9d1d059a8fedf0
 
 @NgModule({
   declarations: [
@@ -18,7 +28,14 @@ import { LoginComponent } from './pages/login/login.component';
     HomeComponent,
     CardComponent,
     SendEmailComponent,
+<<<<<<< HEAD
     LoginComponent,
+=======
+    ReenviarEmailComponent,
+    ResetarSenhaComponent,
+    CadastroComponent,
+    FormCadastroComponent
+>>>>>>> f58c404355ded3a09c9757881c9d1d059a8fedf0
   ],
   imports: [
     BrowserModule,
@@ -30,7 +47,7 @@ import { LoginComponent } from './pages/login/login.component';
     ButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ReenviarEmailService, ResetarSenhaService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

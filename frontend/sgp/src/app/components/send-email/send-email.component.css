@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.container p{
+  font-weight: bold;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.container button {
+  margin: 10px;
+}
+
+.espacamento {
+  padding: 5px;
+}
+
+p-button {
+  padding: 3px;
+}

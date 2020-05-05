@@ -13,7 +13,7 @@ export class SendEmailComponent implements OnInit {
 
   email = new FormControl('', [
     Validators.required,
-    Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+    Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")
   ]);
   @Input() label: string;
   @Output() sendEmail = new EventEmitter();
@@ -27,10 +27,6 @@ export class SendEmailComponent implements OnInit {
 
   send() {
     this.sendEmail.emit(this.email.value);
-  }
-
-  verifyPadding() {
-    return this.email.invalid;
   }
 
 }

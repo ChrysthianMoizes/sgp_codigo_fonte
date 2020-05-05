@@ -1,0 +1,28 @@
+p {
+  color: red;
+}
+
+input {
+  border-color: red;
+}
+
+#form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#form-header-container {
+  margin-bottom: 5px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+input[type="password"] {
+  width: 267.5px;
+}
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
