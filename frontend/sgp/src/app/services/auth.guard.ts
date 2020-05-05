@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    if(next.data.roles
+    if(next.data.role
       && !this.authService.temPermissao(next.data.role)){
 
       this.router.navigate(['/login']);
