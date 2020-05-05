@@ -5,18 +5,20 @@
   align-items: center;
 }
 
-.displayEmail{
-  display: flex;
-  flex-direction: column;
-  color: red;
-  text-align: left !important;
-}
-
 .container p{
   font-weight: bold;
   color: red;
+  margin-bottom: 10px;
 }
 
 .container button {
   margin: 10px;
+}
+
+.espacamento {
+  padding: 5px;
+}
+
+p-button {
+  padding: 3px;
 }
