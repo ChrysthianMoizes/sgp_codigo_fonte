@@ -13,7 +13,6 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
-
   {
     path: 'reenviaremail',
     component: ReenviarEmailComponent
@@ -26,7 +25,6 @@ const routes: Routes = [
     path: 'cadastro',
     component: CadastroComponent,
   },
-  /*,
   {
     path: 'login',
     component: LoginComponent,
