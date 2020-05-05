@@ -1,5 +1,7 @@
+<app-nav-bar *ngIf="exibirTopLayout"></app-nav-bar>
 <div class="main-container">
   <div class="inner-container">
+    <app-breadcrumb *ngIf="exibirTopLayout"></app-breadcrumb>
     <ng-content></ng-content>
   </div>
 </div>
