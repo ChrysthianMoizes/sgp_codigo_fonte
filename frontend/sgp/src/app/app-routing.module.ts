@@ -13,7 +13,7 @@ const routes: Routes = [
   path: '',
   component: LayoutComponent,
   children:[
-    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home'}},
+    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home', ExibirTopLayour: true}},
     {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil'}}
   ]
 }
