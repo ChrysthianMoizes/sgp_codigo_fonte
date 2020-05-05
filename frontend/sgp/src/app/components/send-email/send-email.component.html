@@ -1,9 +1,12 @@
 <div class="container">
   <p>{{label}}</p>
 
-  <form class="displayEmail">
-    <span>Email</span>
-    <input class="form-control" type="email" pInputText [formControl]="email" [email]='true' />
+  <form class="ui-inputgroup">
+    <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+    <div class="ui-float-label">
+      <input class="form-control" id="float-input" type="email" pInputText [formControl]="email" />
+      <label for='float-input'>Email</label>
+    </div>
   </form>
 
   <div>
