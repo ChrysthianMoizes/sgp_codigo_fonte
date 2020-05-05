@@ -10,13 +10,24 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { SendEmailComponent } from './components/send-email/send-email.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
+import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
+import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
+import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
+import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
+import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CardComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    ReenviarEmailComponent,
+    ResetarSenhaComponent,
+    CadastroComponent,
+    FormCadastroComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +39,7 @@ import { HomeComponent } from './pages/home/home.component';
     ButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ReenviarEmailService, ResetarSenhaService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
