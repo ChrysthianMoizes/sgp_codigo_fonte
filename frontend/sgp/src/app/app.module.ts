@@ -1,3 +1,11 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingService } from './components/loading/loading.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { AlertComponent } from './components/alert/alert.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
+
 import {NgModule} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {BrowserModule} from '@angular/platform-browser';
@@ -23,6 +31,8 @@ import {NotfoundComponent} from './pages/notfound/notfound.component';
     NavBarComponent,
     BreadcrumbComponent,
     NotfoundComponent,
+    AlertComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -34,8 +44,10 @@ import {NotfoundComponent} from './pages/notfound/notfound.component';
     MenuModule,
     BreadcrumbModule,
     FormsModule,
+    NgxSpinnerModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
