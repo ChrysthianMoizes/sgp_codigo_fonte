@@ -1,6 +1,6 @@
 .nav-bar {
   height: 60px;
-  background-color: rgb(255, 44, 44);
+  background-color: var(--color-primary);
   padding: 0 30px;
   display: flex;
   justify-content: space-between;
