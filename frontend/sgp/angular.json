@@ -127,6 +127,6 @@
   },
   "defaultProject": "sgp",
   "cli": {
-    "analytics": false
+    "analytics": "bc9da819-75a1-4b2a-a5e2-adf338c722bb"
   }
 }

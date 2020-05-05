@@ -1,13 +1,23 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { AuthGuard } from './services/auth.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HomeComponent} from './pages/home/home.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  }/*,
+{path: '',
+  pathMatch: 'full',
+  redirectTo: 'home'
+},
+{
+  path: '',
+  component: LayoutComponent,
+  children:[
+    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home'}},
+    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil'}}
+  ]
+}
+  /*,
   {
     path: 'login',
     component: },
@@ -40,4 +50,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

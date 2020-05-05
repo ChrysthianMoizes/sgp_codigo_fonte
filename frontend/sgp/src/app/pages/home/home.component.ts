@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   constructor(private alertService: AlertService) {}
   ngOnInit(): void {}
+  usuario = {nome: 'Teste', id: 1};
 
   abrirModal(tipo: string, titulo: string, mensagem: string) {
     this.alertService.montarAlerta(tipo, titulo, mensagem);
