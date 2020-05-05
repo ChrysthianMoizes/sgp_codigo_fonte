@@ -1,3 +1,5 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingService } from './components/loading/loading.service';
 import { MessageService } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,8 +21,9 @@ import { AuthGuard } from './services/auth.guard';
     AppRoutingModule,
     ButtonModule,
     ToastModule,
+    NgxSpinnerModule,
   ],
-  providers: [AuthService, AuthGuard, MessageService],
+  providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
