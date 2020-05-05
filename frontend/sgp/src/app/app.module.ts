@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AlertComponent],
@@ -18,7 +19,7 @@ import { AuthService } from './services/auth.service';
     ButtonModule,
     ToastModule,
   ],
-  providers: [ AuthService ],
+  providers: [ AuthService, AuthGuard ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
