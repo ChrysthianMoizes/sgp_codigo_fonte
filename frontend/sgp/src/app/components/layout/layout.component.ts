@@ -7,10 +7,14 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
+  // static readonly EXIBIR_TOPLAYOUT = 'exibirToplayout';
+  exibirTopLayout = true;
+
   constructor() {
   }
 
   ngOnInit(): void {
+    // const exibirTopLayout =
   }
 
 }
