@@ -17,8 +17,16 @@
 
 .espacamento {
   padding: 5px;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 p-button {
   padding: 3px;
+  width: 100%;
 }
