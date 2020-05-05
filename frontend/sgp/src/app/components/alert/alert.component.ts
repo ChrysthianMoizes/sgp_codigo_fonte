@@ -8,9 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent {
-  private tipo: string;
-  private mensagem: string;
-  private tipostring: string;
   constructor(private alertService: AlertService) {}
 
   confirmar() {

@@ -7,17 +7,15 @@ import { Injectable } from '@angular/core';
 export class AlertService {
   constructor(private messageService: MessageService) {}
 
-  private tipo: string;
   private tipoString: string;
-  public tipoSimbolo: string;
 
   limpar() {
     this.messageService.clear();
   }
 
-  verificarTipo() {
+  verificarTipo(tipo: string) {
     {
-      switch (this.tipo) {
+      switch (tipo) {
         case 'success':
           this.tipoString = 'Sucesso!';
           break;
@@ -32,7 +30,7 @@ export class AlertService {
   }
 
   montarAlerta(tipo: string, tipoString: string, mensagem: string) {
-    this.verificarTipo();
+    this.verificarTipo(tipo);
     this.messageService.add({
       key: 'c',
       sticky: true,
