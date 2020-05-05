@@ -1,0 +1,20 @@
+.caracteres {
+  color: #ff0000;
+  text-align: center
+}
+
+.espacamento {
+  padding: 10px 0;
+}
+
+.borderInput {
+  border-color: #ff0000;
+}
+
+#leftText {
+  text-align: left;
+}
+
+p-card header {
+  text-align: center;
+}
