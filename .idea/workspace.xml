@@ -38,7 +38,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97fc73ff-180f-4f7e-8d20-c0b915d98337" name="Default Changelist" comment="" />
+    <list default="true" id="97fc73ff-180f-4f7e-8d20-c0b915d98337" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/sgp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/sgp/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +65,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -72,6 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588185516859</updated>
       <workItem from="1588185519778" duration="305000" />
+      <workItem from="1588698610450" duration="117000" />
     </task>
     <servers />
   </component>
@@ -100,5 +107,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="199" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1588698726452">
+      <screen x="54" y="27" width="1312" height="741" />
+    </state>
+    <state x="199" y="31" width="1022" height="737" key="SettingsEditor/54.27.1312.741@54.27.1312.741" timestamp="1588698726452" />
   </component>
 </project>
