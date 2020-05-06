@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { CadastrarProvaComponent } from './cadastrar-prova.component';
 
@@ -10,7 +10,7 @@ describe('CadastrarProvaComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CadastrarProvaComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

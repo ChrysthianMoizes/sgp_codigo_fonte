@@ -16,6 +16,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { CadastrarProvaComponent } from './components/cadastrar-prova/cadastrar-prova.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingService } from './components/loading/loading.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -23,7 +24,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
-import { LoadingComponent } from './components/loading/loading.component';
 
 
 
@@ -38,7 +38,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     NotfoundComponent,
     CadastrarProvaComponent,
     AlertComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +54,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     BreadcrumbModule,
     FormsModule,
     NgxSpinnerModule,
-    ToastModule,
+    ToastModule
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
