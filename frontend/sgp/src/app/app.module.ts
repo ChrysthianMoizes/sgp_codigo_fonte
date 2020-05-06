@@ -1,3 +1,5 @@
+import { QuestaoComponent } from './pages/questao/form/questao.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingService } from './components/loading/loading.service';
 import { MessageService } from 'primeng/api';
@@ -32,6 +34,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
+    QuestaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     FormsModule,
     NgxSpinnerModule,
     ToastModule,
+    RadioButtonModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
