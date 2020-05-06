@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -7,14 +8,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  // static readonly EXIBIR_TOPLAYOUT = 'exibirToplayout';
-  exibirTopLayout = true;
+  exibirTopLayout;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    // const exibirTopLayout =
+  }
+
+  shownav(event: any){
+    this.exibirTopLayout= event;
   }
 
 }
