@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ProvaService } from 'src/app/services/prova.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Prova } from 'src/app/models/prova.model';
 import { Questao } from 'src/app/models/questao.model';
+import { ProvaService } from 'src/app/services/prova.service';
 import { AlertService } from '../alert/alert.service';
-import { RequisicaoLoadingService } from '../loading/requisicao-loading.service';
 import { LoadingService } from '../loading/loading.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { LoadingService } from '../loading/loading.service';
 })
 export class CadastrarProvaComponent implements OnInit {
 
-  @Input() isEditando = false;
+  @Input() provaSendoEditada;
   provaForm: FormGroup;
 
   origemQuestoes: Questao[];
@@ -33,22 +33,26 @@ export class CadastrarProvaComponent implements OnInit {
       this.destinoQuestoes = [];
     });
     this.provaService.getNumberOfElements().subscribe(total => this.totalDeQuestoes = total);
-
     this.provaForm = this.fb.group({
       titulo: ['', Validators.required],
       percentualDeAprovacao: ['', Validators.required]
     });
+
+    if (this.provaSendoEditada) this.preencherFormParaEdicao();
   }
 
-  onSubmit(): void {
-    this.loadingService.activate();
-    this.provaService.create({
-      ...this.provaForm.value,
-      questoes: this.destinoQuestoes
-    })
+  preencherFormParaEdicao(): void {
+    this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
+    this.provaForm.get('percentualDeAprovacao').setValue(this.provaSendoEditada.percentualDeAprovacao);
+    this.destinoQuestoes = this.provaSendoEditada.questoes;
+  }
+
+  cadastrarNovo(prova: Prova): void {
+    this.provaService.create(prova)
     .subscribe({
       next: () => {
         this.loadingService.deactivate();
+        this.provaForm.reset();
         this.alertService.montarAlerta(
           'success', 'Sucesso!', 'Prova cadastrada com suscesso!'
         );
@@ -59,6 +63,41 @@ export class CadastrarProvaComponent implements OnInit {
         );
       }
     });
+  }
+
+  atualizarProva(prova: Prova): void {
+    this.provaService.update(prova)
+    .subscribe({
+      next: () => {
+        this.loadingService.deactivate();
+        this.provaForm.reset();
+        this.alertService.montarAlerta(
+          'success', 'Sucesso!', 'Prova atualizada com suscesso!'
+        );
+      },
+      error: err => {
+        this.alertService.montarAlerta(
+          'error', 'Error!', err
+        );
+      }
+    });
+  }
+
+  onSubmit(): void {
+    this.loadingService.activate();
+    if (!this.provaSendoEditada) {
+      this.cadastrarNovo({
+        ...this.provaForm.value,
+        questoes: this.destinoQuestoes
+      });
+    }
+    else {
+      this.atualizarProva({
+        ...this.provaForm.value,
+        questoes: this.destinoQuestoes,
+        id: this.provaSendoEditada.id
+      });
+    }
     this.onCancel();
   }
 
@@ -78,11 +117,12 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   onCancel(): void {
+    this.provaSendoEditada = undefined;
     this.ngOnInit();
   }
 
   get titulo(): string {
-    return this.isEditando ? 'Editar Prova' : 'Cadastrar Prova';
+    return this.provaSendoEditada ? 'Editar Prova' : 'Cadastrar Prova';
   }
 
   get inputSize(): number {
