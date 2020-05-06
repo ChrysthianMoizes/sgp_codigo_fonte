@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/stores/login/login.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { LoginService } from 'src/app/stores/login/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private authService: AuthService) { }
 
   necessitaCabecalho = true;
 
@@ -17,9 +18,9 @@ export class LoginComponent implements OnInit {
 
 
   login(){
-    this.loginService.logar().subscribe(
+    this.loginService.logar("adasds@asdasd", "asdasdsd").subscribe(
       response => {
-        alert(response)
+        this.authService.setUsuarioSessionStorage(response);
       }
     )
   }
