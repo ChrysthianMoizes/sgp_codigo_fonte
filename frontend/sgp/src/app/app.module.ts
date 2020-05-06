@@ -20,7 +20,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {NotfoundComponent} from './pages/notfound/notfound.component';
 import {AuthGuard} from './services/auth.guard';
 import {AuthService} from './services/auth.service';
-
+import {BreadcrumbService} from './services/breadcrumb.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +61,7 @@ import {AuthService} from './services/auth.service';
     NgxSpinnerModule,
     ToastModule,
   ],
-  providers: [AuthService, AuthGuard, MessageService, LoadingService],
+  providers: [AuthService, AuthGuard, MessageService, LoadingService,BreadcrumbService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

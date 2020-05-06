@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {MenuItem} from 'primeng/api/menuitem';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { isNullOrUndefined } from 'util';
-import { filter } from 'rxjs/operators'
+import { Observable } from 'rxjs';
+import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -11,17 +12,25 @@ import { filter } from 'rxjs/operators'
 })
 export class BreadcrumbComponent implements OnInit {
 
-  constructor(private router: Router,private activatedRoute: ActivatedRoute) { }
+  crumbs$: Observable<MenuItem[]>;
+  showBreadCrumb:boolean= true;
+
+  constructor(private breadcrumb: BreadcrumbService,private activatedRoute: ActivatedRoute) { }
+
+  @Output() shownavbar= new EventEmitter();
+
+  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+  static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
 
   ngOnInit(): void {
-    this.loadCrumbs()
+    setTimeout(() =>{
+      this.breadcrumb.setCrumbs(this.createBreadcrumbs(this.activatedRoute.root))
+    });
+    this.crumbs$ = this.breadcrumb.crumbs$;
   }
-  menuItems: MenuItem [];
-  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
   private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
-
     if (children.length === 0) {
       return breadcrumbs;
     }
@@ -33,6 +42,8 @@ export class BreadcrumbComponent implements OnInit {
       }
 
       const label = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
+      this.showBreadCrumb = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT];
+      this.shownavbar.emit(child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT]);
       if (!isNullOrUndefined(label)) {
         breadcrumbs.push({label, url});
       }
@@ -40,11 +51,4 @@ export class BreadcrumbComponent implements OnInit {
       return this.createBreadcrumbs(child, url, breadcrumbs);
     }
   }
-
-  loadCrumbs(){
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
-  }
-
 }

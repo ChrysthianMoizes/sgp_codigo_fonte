@@ -13,10 +13,9 @@ const routes: Routes = [
   path: '',
   component: LayoutComponent,
   children:[
-    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home', ExibirTopLayour: true}},
-    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil'}}
-  ]
-}
+    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home', toplayout: false}},
+    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil', toplayout:true}}
+  ]}
   /*,
   {
     path: 'login',
