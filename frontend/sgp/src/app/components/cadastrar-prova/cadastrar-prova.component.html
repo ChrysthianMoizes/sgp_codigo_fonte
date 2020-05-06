@@ -27,6 +27,25 @@
             Título
           </label>
         </span>
+        <span class="ui-float-label" style="margin-top: 12px;">
+          <input
+            pInputText
+            type="number"
+            autocomplete="off"
+            onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+            min="0"
+            max="100"
+            id="float-input"
+            formControlName="percentualDeAprovacao"
+            [size]="inputSize"
+          >
+          <label
+            for="float-input"
+            style="margin-top: 4px;"
+          >
+            Percentual de Aprovação
+          </label>
+        </span>
         <div class="pick-with-pag">
           <p-pickList
             [source]="origemQuestoes"

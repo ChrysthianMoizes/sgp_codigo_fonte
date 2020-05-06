@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ProvaService } from 'src/app/services/prova.service';
 import { Questao } from 'src/app/models/questao.model';
 import { AlertService } from '../alert/alert.service';
@@ -35,7 +35,8 @@ export class CadastrarProvaComponent implements OnInit {
     this.provaService.getNumberOfElements().subscribe(total => this.totalDeQuestoes = total);
 
     this.provaForm = this.fb.group({
-      titulo: ['', Validators.required]
+      titulo: ['', Validators.required],
+      percentualDeAprovacao: ['', Validators.required]
     });
   }
 
@@ -91,7 +92,8 @@ export class CadastrarProvaComponent implements OnInit {
 
   get isFormValid(): boolean {
     return this.provaForm.valid
-      && this.destinoQuestoes.length > 0;
+      && this.destinoQuestoes.length > 0
+      && +this.provaForm.get('percentualDeAprovacao').value <= 100;
   }
 
 }
