@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-send-email',
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 })
 export class SendEmailComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private alerts: AlertService
+  ) { }
 
   email = new FormControl('', [
     Validators.required,
@@ -26,7 +30,12 @@ export class SendEmailComponent implements OnInit {
   }
 
   send() {
-    this.sendEmail.emit(this.email.value);
+    if (!this.email.invalid) {
+      this.sendEmail.emit(this.email.value);
+    }
+    else {
+      this.alerts.montarAlerta('error', 'Erro', 'Formato de email inválido')
+    }
   }
 
 }
