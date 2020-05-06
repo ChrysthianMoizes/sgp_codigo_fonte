@@ -91,9 +91,12 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
+    const percentualDeAprovacao = +this.provaForm.get('percentualDeAprovacao').value;
+
     return this.provaForm.valid
       && this.destinoQuestoes.length > 0
-      && +this.provaForm.get('percentualDeAprovacao').value <= 100;
+      && percentualDeAprovacao <= 100
+      && percentualDeAprovacao >= 0;
   }
 
 }
