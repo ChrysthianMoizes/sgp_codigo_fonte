@@ -21,6 +21,9 @@ import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {PerfilComponent} from './components/perfil/perfil.component';
 import {HomeComponent} from './pages/home/home.component';
 import {NotfoundComponent} from './pages/notfound/notfound.component';
+import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import {NotfoundComponent} from './pages/notfound/notfound.component';
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
+    QuestaoListarComponent,
 
   ],
   imports: [
@@ -46,6 +50,8 @@ import {NotfoundComponent} from './pages/notfound/notfound.component';
     FormsModule,
     NgxSpinnerModule,
     ToastModule,
+    TableModule,
+    DropdownModule
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],

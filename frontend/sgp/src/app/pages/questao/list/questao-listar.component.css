@@ -1,0 +1,13 @@
+#botao1, #botao2, #botao3 {
+  position: fixed;
+}
+
+#botao1 {
+  margin-top: 50px;
+}
+#botao2{
+  margin-top: 90px;
+}
+#botao3{
+  margin-top: 130px;
+}
