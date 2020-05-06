@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProvaService } from 'src/app/services/prova.service';
+import { Questao } from 'src/app/models/questao.model';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -13,28 +15,37 @@ export class CadastrarProvaComponent implements OnInit {
 
   origemQuestoes: Questao[];
   destinoQuestoes: Questao[];
-  totalDeQuestoes = QUESTOES.length;
+  totalDeQuestoes = 0;
   defaultRowSize = 6;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private provaService: ProvaService
   ) { }
 
   ngOnInit() {
-    // TODO: implementar chamdas à api
-    this.origemQuestoes = QUESTOES.slice(0, this.defaultRowSize);
-    this.destinoQuestoes = [];
+    this.provaService.index().subscribe(questoes => {
+      this.origemQuestoes = questoes;
+      this.destinoQuestoes = [];
+    });
+    this.provaService.getNumberOfElements().subscribe(total => this.totalDeQuestoes = total);
 
     this.provaForm = this.fb.group({
       titulo: ['', Validators.required]
     });
   }
 
+  onSubmit(): void {
+    this.provaService.create({
+      ...this.provaForm.value,
+      questoes: this.destinoQuestoes
+    });
+    this.onCancel();
+  }
+
   paginate(event) {
-    // TODO: Implementar chamadas à api
-    const inicio = event.page * this.defaultRowSize;
-    const fim = inicio + this.defaultRowSize;
-    this.origemQuestoes = QUESTOES.slice(inicio, fim);
+    this.provaService.index(event.page)
+      .subscribe(questoes => this.origemQuestoes = questoes);
   }
 
   removeRepetitions(arr: any[]) {
@@ -49,16 +60,6 @@ export class CadastrarProvaComponent implements OnInit {
 
   onCancel(): void {
     this.ngOnInit();
-  }
-
-  onSubmit(): void {
-    //TODO: Implementar logica da api
-    const novaProva = {
-      ...this.provaForm.value,
-      questoes: this.destinoQuestoes
-    };
-    console.log(novaProva);
-    this.onCancel();
   }
 
   get titulo(): string {
@@ -76,55 +77,3 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
 }
-
-class Prova {
-  titulo: string;
-  percentualAprovacao: number;
-  questoes: Questao[];
-}
-
-interface Questao {
-  id: number;
-  descricao: string;
-  // alternativa1: string;
-  // alternativa2: string;
-  // alternativa3: string;
-  // alternativa4: string;
-  // alternativa5: string;
-  // resposta: number;
-}
-
-const QUESTOES = [
-  { id: 1, descricao: 'descri1' },
-  { id: 2, descricao: 'descri2' },
-  { id: 3, descricao: 'descri3' },
-  { id: 4, descricao: 'descri4' },
-  { id: 5, descricao: 'descasdas1' },
-  { id: 6, descricao: 'descriasdasd2' },
-  { id: 7, descricao: 'descrsadi3' },
-  { id: 8, descricao: 'descriasda4' },
-  { id: 9, descricao: 'descrizxczx1' },
-  { id: 10, descricao: 'descrzxzxci2' },
-  { id: 11, descricao: 'descrizzx3' },
-  { id: 12, descricao: 'descrhji4' },
-  { id: 13, descricao: 'descrhjhji1' },
-  { id: 14, descricao: 'descrhi2' },
-  { id: 15, descricao: 'descri3' },
-  { id: 16, descricao: 'descri4' },
-  { id: 17, descricao: 'deschjhjri1' },
-  { id: 18, descricao: 'descri2' },
-  { id: 19, descricao: 'deshjhjcri3' },
-  { id: 20, descricao: 'descri4' },
-  { id: 21, descricao: 'descri1' },
-  { id: 22, descricao: 'descri2' },
-  { id: 23, descricao: 'descrhhhhi3' },
-  { id: 24, descricao: 'descrihhh4' },
-  { id: 17, descricao: 'deschjhjri1' },
-  { id: 18, descricao: 'descri2' },
-  { id: 19, descricao: 'deshjhjcri3' },
-  { id: 20, descricao: 'descri4' },
-  { id: 21, descricao: 'descri1' },
-  { id: 22, descricao: 'descri2' },
-  { id: 23, descricao: 'descrhhhhi3' },
-  { id: 24, descricao: 'descrihhh4' }
-]
