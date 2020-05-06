@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CadastroUsuarioService } from 'src/app/stores/cadastro/cadastro-usuario.service';
+import { LoginService } from 'src/app/stores/login/login.service';
+
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -8,15 +11,20 @@ import { CadastroUsuarioService } from 'src/app/stores/cadastro/cadastro-usuario
 })
 export class FormCadastroComponent implements OnInit {
 
-  constructor(private cadastroService: CadastroUsuarioService) {
+  usuario: Usuario = new Usuario();
+
+  constructor(private cadastroService: CadastroUsuarioService, private loginService:LoginService) {
 
   }
 
-  cadastrar(){
-    this.cadastroService.cadastrar().subscribe(response => {alert(response)})
+
+  ngOnInit(){
   }
 
-  ngOnInit(): void {
-  }
+  // cadastrar(){
+    save(){
+      this.cadastroService.cadastrarUsuario(this.usuario)
+        .subscribe(response => { this.loginService.logar(response.email, response.senha)})
+    }
 
 }
