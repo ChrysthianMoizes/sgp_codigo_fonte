@@ -23,6 +23,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 
@@ -37,7 +38,7 @@ import { AuthService } from './services/auth.service';
     NotfoundComponent,
     CadastrarProvaComponent,
     AlertComponent,
-
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
