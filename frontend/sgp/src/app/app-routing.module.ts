@@ -8,6 +8,7 @@ import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {

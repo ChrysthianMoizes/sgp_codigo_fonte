@@ -1,0 +1,9 @@
+.container-buttons{
+  position: fixed;
+  margin-left: 91.5%;
+}
+
+.container-buttons button{
+  margin-right: 20px;
+  margin-top: 3px;
+}

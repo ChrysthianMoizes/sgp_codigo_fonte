@@ -22,11 +22,13 @@ export class ListarCandidatosComponent implements OnInit {
   filtro = new FiltroCandidato();
   rows = 20;
   first = 0;
+  selectedCandidato: Usuario;
+  listCandidato: Usuario[] = [];
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'id', header: 'ID', width: '5%' },
-      { field: 'nome', header: 'Nome', width: '50%' },
+      { field: 'id', header: 'ID', width: '10%' },
+      { field: 'nome', header: 'Nome', width: '45%' },
       { field: 'email', header: 'Email', width: '45%' }
     ]
 
