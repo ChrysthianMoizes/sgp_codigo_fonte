@@ -2,13 +2,12 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private KEY: string = 'sgp';
 
-  public setUsuarioSessionStorage(usuario: Usuario): void{
+  public setUsuarioSessionStorage(usuario: Usuario): void {
     sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
   }
 
@@ -33,7 +32,10 @@ export class AuthService {
   }
 
   public getPermissaoUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().permissao;
+    if (this.containsUsuarioSessionStorage()) {
+      return this.getUsuarioSessionStorage().permissao;
+    }
+    return '';
   }
 
   public temPermissao(permissao: string): boolean {
