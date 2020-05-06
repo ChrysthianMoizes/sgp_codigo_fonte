@@ -51,15 +51,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     NavBarComponent,
     BreadcrumbComponent,
     NotfoundComponent,
-    AlertComponent,
-    ButtonModule,
-    BrowserAnimationsModule,
-    MenuModule,
-    BreadcrumbModule,
-    FormsModule,
-    NgxSpinnerModule,
-    ToastModule,
-
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +61,12 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     PasswordModule,
     ReactiveFormsModule,
     ButtonModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule,
+    ToastModule,
+    MenuModule,
+    BrowserAnimationsModule,
+    BreadcrumbModule
   ],
   providers: [ReenviarEmailService, ResetarSenhaService, LoginService, CadastroUsuarioService, AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],

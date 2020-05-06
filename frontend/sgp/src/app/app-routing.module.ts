@@ -16,8 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
     children: [
+      { path: '', component: LoginComponent, data: { breadcrumb: 'Login' } },
       { path: 'cadastro', component: CadastroComponent, data: { breadcrumb: 'Cadastro' } },
       { path: 'resetarsenha', component: ResetarSenhaComponent, data: { breadcrumb: 'Resetar Senha' } },
       { path: 'reenviaremail', component: ReenviarEmailComponent, data: { breadcrumb: 'Reenviar Email' } },
@@ -31,50 +31,6 @@ const routes: Routes = [
       { path: 'perfil', component: PerfilComponent, data: { breadcrumb: 'Perfil' } },
     ]
   }
-  /*,
-  {
-    path: 'login',
-    component: },
-  {
-    path: 'cadastro',
-    component:},
-  {
-    path: 'reenviaremail',
-    component: ReenviarEmailComponent
-  },
-  {
-    path: 'resetarsenha',
-    component: ResetarSenhaComponent
-  },
-  {
-    path: 'cadastro',
-    component: CadastroComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  /*
-  {
-    path: 'cadastro',
-    component: CadastroComponent
-  }/*,
-  {,
-  {
-    path: 'login',
-    component: },
-
-    path: 'home',
-    component:
-  },
-  {
-    path: 'perfil',
-    component:
-  },
-  {
-    path: 'not-found',
-    component:
-  }*/
 ];
 
 @NgModule({
