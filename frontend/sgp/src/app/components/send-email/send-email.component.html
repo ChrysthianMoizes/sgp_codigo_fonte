@@ -1,0 +1,17 @@
+<div class="container">
+  <p>{{label}}</p>
+  <div class="espacamento">
+    <div class="ui-inputgroup">
+      <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+      <div class="ui-float-label">
+        <input class="form-control" size='26' id="float-input" type="email" pInputText [formControl]="email" />
+        <label for='float-input'>Email</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button pButton type="button" label="Confirmar" class="ui-button-success" (click)='send()'></button>
+    <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)='toHome()'></button>
+  </div>
+</div>
