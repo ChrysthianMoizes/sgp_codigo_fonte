@@ -24,6 +24,7 @@
     "@types/quill": "^2.0.3",
     "chart.js": "^2.9.3",
     "ng-quill": "^4.5.3",
+    "ngx-spinner": "^9.0.2",
     "primeflex": "^1.0.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.6",
