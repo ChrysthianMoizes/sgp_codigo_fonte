@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +35,8 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
+import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,8 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     NavBarComponent,
     BreadcrumbComponent,
     NotfoundComponent,
-    AlertComponent
+    AlertComponent,
+    ListarCandidatosComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +70,20 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     ToastModule,
     MenuModule,
     BrowserAnimationsModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    TableModule
   ],
-  providers: [ReenviarEmailService, ResetarSenhaService, LoginService, CadastroUsuarioService, AuthService, AuthGuard, MessageService, LoadingService],
+  providers: [
+    ReenviarEmailService,
+    ResetarSenhaService,
+    LoginService,
+    CadastroUsuarioService,
+    AuthService,
+    AuthGuard,
+    MessageService,
+    LoadingService,
+    ListarCandidatosService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
