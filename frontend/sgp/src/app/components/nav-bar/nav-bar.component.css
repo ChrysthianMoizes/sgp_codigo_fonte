@@ -5,10 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, .25);
+  box-shadow: 0 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-.nav-bar > i, .nav-bar > h1 {
+.nav-bar > i,
+.nav-bar > h1 {
   color: white;
 }
 
@@ -20,8 +21,47 @@
   font-size: 30px;
 }
 
-.nav-bar > img:hover, .nav-bar > i:hover {
+.nav-bar > img:hover,
+.nav-bar > i:hover {
   cursor: pointer;
+}
+
+.icone {
+  transform: rotate(90deg);
+  transition: ease-in 400ms;
+}
+
+.ativo {
+  display: block !important;
+  animation-duration: 400ms;
+  animation-name: slideright;
+}
+
+.sidebar {
+  display: none;
+  position: fixed;
+  max-width: 300px;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--color-primary);
+}
+
+.sidebar .btn-sidebar {
+  width: 100vw;
+  max-width: 300px;
+  display: block;
+  margin: 10px 0;
+  padding: 20px 0;
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-top: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
+  border-radius: 0;
+}
+
+.sidebar .btn-sidebar:first-child {
+  margin-top: 17px;
 }
 
 @media screen and (max-width: 640px) {
@@ -33,5 +73,14 @@
 @media screen and (max-width: 450px) {
   .nav-bar > h1 {
     font-size: 16px;
+  }
+}
+
+@keyframes slideright {
+  from {
+    margin-left: -300px;
+  }
+  to {
+    margin-left: 0;
   }
 }
