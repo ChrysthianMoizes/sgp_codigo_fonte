@@ -19,7 +19,21 @@ import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.servic
 import { LoginComponent } from './pages/login/login.component';
 import { LoginService } from './stores/login/login.service';
 import { CadastroUsuarioService } from './stores/cadastro/cadastro-usuario.service';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingService } from './components/loading/loading.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { AlertComponent } from './components/alert/alert.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenuModule } from 'primeng/menu';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +45,21 @@ import { CadastroUsuarioService } from './stores/cadastro/cadastro-usuario.servi
     ResetarSenhaComponent,
     CadastroComponent,
     FormCadastroComponent,
-    LoginComponent
+    LoginComponent,
+    PerfilComponent,
+    LayoutComponent,
+    NavBarComponent,
+    BreadcrumbComponent,
+    NotfoundComponent,
+    AlertComponent,
+    ButtonModule,
+    BrowserAnimationsModule,
+    MenuModule,
+    BreadcrumbModule,
+    FormsModule,
+    NgxSpinnerModule,
+    ToastModule,
+
   ],
   imports: [
     BrowserModule,
@@ -43,7 +71,7 @@ import { CadastroUsuarioService } from './stores/cadastro/cadastro-usuario.servi
     ButtonModule,
     FormsModule
   ],
-  providers: [ReenviarEmailService, ResetarSenhaService, LoginService, CadastroUsuarioService],
+  providers: [ReenviarEmailService, ResetarSenhaService, LoginService, CadastroUsuarioService, AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
