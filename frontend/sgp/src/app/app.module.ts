@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {ButtonModule, CardModule, DataViewModule, InputTextModule} from 'primeng';
+import {ButtonModule, CardModule, DataViewModule, InputTextModule, TableModule} from 'primeng';
 import {MessageService} from 'primeng/api';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {MenuModule} from 'primeng/menu';
@@ -63,6 +63,7 @@ import {AuthService} from './services/auth.service';
     NgxSpinnerModule,
     ToastModule,
     DataViewModule,
+    TableModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],

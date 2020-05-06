@@ -11,6 +11,8 @@ import {ProvaService} from '../../services/prova/prova.service';
 export class ListarProvasComponent implements OnInit {
 
   provas: Prova[];
+  provasSelecionadas: Prova[];
+  definicaoColunas: any[];
 
   constructor(
     private provaService: ProvaService
@@ -21,6 +23,16 @@ export class ListarProvasComponent implements OnInit {
     this.provaService.getProvas().subscribe(provas => {
       this.provas = provas;
     });
+
+    this.definicaoColunas = [
+      {field: 'id', header: 'ID'},
+      {field: 'titulo', header: 'Titulo'},
+      {field: 'percentualAprovacao', header: '% para aprovação'}
+    ];
+
   }
 
+  isSelected(): boolean {
+    return this.provasSelecionadas && this.provasSelecionadas.length === 1;
+  }
 }
