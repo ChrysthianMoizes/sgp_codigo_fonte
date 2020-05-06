@@ -4,6 +4,7 @@ import { ProvaService } from 'src/app/services/prova.service';
 import { Questao } from 'src/app/models/questao.model';
 import { AlertService } from '../alert/alert.service';
 import { RequisicaoLoadingService } from '../loading/requisicao-loading.service';
+import { LoadingService } from '../loading/loading.service';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -24,7 +25,7 @@ export class CadastrarProvaComponent implements OnInit {
     private fb: FormBuilder,
     private provaService: ProvaService,
     private alertService: AlertService,
-    private requisicaoLoadingService: RequisicaoLoadingService
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -40,13 +41,14 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.requisicaoLoadingService.requisicaoLoading();
+    this.loadingService.activate();
     this.provaService.create({
       ...this.provaForm.value,
       questoes: this.destinoQuestoes
     })
     .subscribe({
       next: () => {
+        this.loadingService.deactivate();
         this.alertService.montarAlerta(
           'success', 'Sucesso!', 'Prova cadastrada com suscesso!'
         );
