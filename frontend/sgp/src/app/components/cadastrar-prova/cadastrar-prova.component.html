@@ -1,0 +1,104 @@
+<app-loading></app-loading>
+<app-alert></app-alert>
+<p-card>
+  <h1 style="margin-top: 0px"> {{ titulo }} </h1>
+  <section style="margin-top: 14px;">
+    <div class="card-header">
+      <h3 style="margin-bottom: 0px;"> Selecione as questões desejadas. </h3>
+      <p style="margin-top: 4px;">
+        As questões disponíveis são visíveis à esquerda. As questões
+        selecionadas são visíveis à direita.
+      </p>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="provaForm">
+        <span class="ui-float-label">
+          <input
+            pInputText
+            id="float-input"
+            formControlName="titulo"
+            [size]="inputSize"
+          >
+          <label
+            for="float-input"
+            style="margin-top: 4px;"
+          >
+            Título
+          </label>
+        </span>
+        <span class="ui-float-label" style="margin-top: 12px;">
+          <input
+            pInputText
+            type="number"
+            autocomplete="off"
+            min="0"
+            max="100"
+            id="float-input"
+            formControlName="percentualDeAprovacao"
+            [size]="inputSize"
+          >
+          <label
+            for="float-input"
+            style="margin-top: 4px;"
+          >
+            Percentual de Aprovação
+          </label>
+        </span>
+        <div class="pick-with-pag">
+          <p-pickList
+            [source]="origemQuestoes"
+            [target]="destinoQuestoes"
+            sourceHeader="Questões Disponíveis"
+            targetHeader="Questões Selecionadas"
+            [responsive]="true"
+            dragdrop="true"
+            [sourceStyle]="{'height':'300px'}"
+            [targetStyle]="{'height':'300px'}"
+            [showSourceControls]=false
+            [showTargetControls]=false
+            (onMoveToTarget)="onMoveToTarget($event)"
+          >
+            <ng-template
+              let-questao
+              pTemplate="item"
+            >
+                <div class="ui-helper-clearfix">
+                  {{ questao.id }}
+                  <div style="font-size:14px; float:right; margin:15px 5px 0 0">
+                    {{ questao.descricao }}
+                  </div>
+                </div>
+            </ng-template>
+          </p-pickList>
+          <div class="paginator">
+            <p-paginator
+              rows="20"
+              [totalRecords]="totalDeQuestoes"
+              (onPageChange)="paginate($event)"
+              pageLinkSize="3"
+            ></p-paginator>
+          </div>
+        </div>
+
+        <footer>
+          <button
+            pButton
+            class="ui-button-secondary"
+            type="button"
+            (click)="onCancel()"
+            label="CANCELAR"
+          ></button>
+          <button
+            pButton
+            type="button"
+            (click)="onSubmit()"
+            [disabled]="!isFormValid"
+            label="SALVAR"
+          ></button>
+        </footer>
+      </form>
+    </div>
+
+  </section>
+</p-card>
