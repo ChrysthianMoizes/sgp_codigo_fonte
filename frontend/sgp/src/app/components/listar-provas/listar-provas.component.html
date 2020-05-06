@@ -1,0 +1,11 @@
+<div class="p-grid p-justify-center">
+  <p-card *ngFor="let prova of provas" [header]="prova.titulo" class="p-col-5">
+    <div>
+      {{ prova.titulo }}
+    </div>
+
+    <p-footer>
+      <button label="Ver" pButton type="button"></button>
+    </p-footer>
+  </p-card>
+</div>

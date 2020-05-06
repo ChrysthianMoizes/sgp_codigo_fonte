@@ -1,13 +1,14 @@
-import { MessageService } from 'primeng/api';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {MessageService} from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlertService {
-  constructor(private messageService: MessageService) {}
-
   private tipoString: string;
+
+  constructor(private messageService: MessageService) {
+  }
 
   limpar() {
     this.messageService.clear();

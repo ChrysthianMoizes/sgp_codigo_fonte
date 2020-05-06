@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {MenuItem} from 'primeng/api/menuitem';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { isNullOrUndefined } from 'util';
-import { filter } from 'rxjs/operators'
+import {filter} from 'rxjs/operators';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -11,13 +11,21 @@ import { filter } from 'rxjs/operators'
 })
 export class BreadcrumbComponent implements OnInit {
 
-  constructor(private router: Router,private activatedRoute: ActivatedRoute) { }
+  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+  menuItems: MenuItem [];
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
-    this.loadCrumbs()
+    this.loadCrumbs();
   }
-  menuItems: MenuItem [];
-  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+
+  loadCrumbs() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
+  }
 
   private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
@@ -39,12 +47,6 @@ export class BreadcrumbComponent implements OnInit {
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
     }
-  }
-
-  loadCrumbs(){
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
   }
 
 }

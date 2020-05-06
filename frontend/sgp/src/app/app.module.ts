@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {ButtonModule, CardModule, InputTextModule} from 'primeng';
+import {ButtonModule, CardModule, DataViewModule, InputTextModule} from 'primeng';
 import {MessageService} from 'primeng/api';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {MenuModule} from 'primeng/menu';
@@ -13,6 +13,7 @@ import {AppComponent} from './app.component';
 import {AlertComponent} from './components/alert/alert.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {LayoutComponent} from './components/layout/layout.component';
+import {ListarProvasComponent} from './components/listar-provas/listar-provas.component';
 import {LoadingService} from './components/loading/loading.service';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {PerfilComponent} from './components/perfil/perfil.component';
@@ -38,6 +39,7 @@ import {AuthService} from './services/auth.service';
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
+    ListarProvasComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +62,7 @@ import {AuthService} from './services/auth.service';
     FormsModule,
     NgxSpinnerModule,
     ToastModule,
+    DataViewModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
