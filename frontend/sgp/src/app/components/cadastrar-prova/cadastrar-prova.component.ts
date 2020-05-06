@@ -82,7 +82,7 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   get titulo(): string {
-    return this.isEditando ? "Editar Prova" : "Cadastrar Prova";
+    return this.isEditando ? 'Editar Prova' : 'Cadastrar Prova';
   }
 
   get inputSize(): number {
