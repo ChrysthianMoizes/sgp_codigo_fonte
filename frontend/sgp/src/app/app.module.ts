@@ -1,3 +1,5 @@
+import { QuestaoComponent } from './pages/questao/form/questao.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingService } from './components/loading/loading.service';
 import { MessageService } from 'primeng/api';
@@ -36,7 +38,7 @@ import {DropdownModule} from 'primeng/dropdown';
     NotfoundComponent,
     AlertComponent,
     QuestaoListarComponent,
-
+    QuestaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,10 +53,10 @@ import {DropdownModule} from 'primeng/dropdown';
     NgxSpinnerModule,
     ToastModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    RadioButtonModule
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
