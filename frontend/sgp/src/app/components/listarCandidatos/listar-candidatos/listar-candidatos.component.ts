@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ListarCandidatosService } from 'src/app/stores/candidatos/listar-candidatos.service';
 import { AlertService } from '../../alert/alert.service';
@@ -13,11 +13,13 @@ import { FiltroCandidato } from 'src/app/models/filtro-candidato.model';
 export class ListarCandidatosComponent implements OnInit {
 
   constructor(
-    private candidatoService: ListarCandidatosService,
     private alerts: AlertService
   ) { }
 
-  candidatos: Usuario[];
+  @Input() candidatos: Usuario[];
+  @Output() deleteCandidato = new EventEmitter();
+  @Output() editCandidato = new EventEmitter();
+  @Output() viewCandidato = new EventEmitter();
   cols: any[];
   filtro = new FiltroCandidato();
   rows = 20;
@@ -31,25 +33,20 @@ export class ListarCandidatosComponent implements OnInit {
       { field: 'nome', header: 'Nome', width: '45%' },
       { field: 'email', header: 'Email', width: '45%' }
     ]
-
-    this.candidatoService.listarCandidatos().subscribe(
-      response => {
-        this.candidatos = response;
-      },
-      erro => {
-        this.alerts.montarAlerta('error', 'Erro', 'Erro ao listar candidatos')
-      }
-    )
-
   }
 
   edit(){
-
+    this.editCandidato.emit(this.listCandidato[0]);
   }
 
   delete(){
-
+    this.deleteCandidato.emit(this.listCandidato);
   }
+
+  view() {
+    this.viewCandidato.emit(this.listCandidato[0]);
+  }
+
   next() {
     this.first = this.first + this.rows;
   }
