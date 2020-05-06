@@ -19,7 +19,6 @@ export class CadastrarProvaComponent implements OnInit {
   origemQuestoes: Questao[];
   destinoQuestoes: Questao[];
   totalDeQuestoes = 0;
-  defaultRowSize = 6;
 
   constructor(
     private fb: FormBuilder,
