@@ -42,6 +42,14 @@ export class ListarCandidatosComponent implements OnInit {
     )
 
   }
+
+  edit(){
+
+  }
+
+  delete(){
+
+  }
   next() {
     this.first = this.first + this.rows;
   }
