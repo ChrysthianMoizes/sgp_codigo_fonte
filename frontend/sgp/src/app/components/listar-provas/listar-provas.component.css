@@ -1,14 +1,19 @@
-
-#botao1, #botao2, #botao3 {
+#buttonDelete, #buttonEdit, #buttonVisualize {
   position: fixed;
 }
 
-#botao1 {
+#buttonDelete {
   margin-top: 50px;
 }
-#botao2{
+
+#buttonEdit {
   margin-top: 90px;
 }
-#botao3{
+
+#buttonVisualize {
   margin-top: 130px;
+}
+
+#buttonNew {
+  margin: 5px 0 5px 0;
 }

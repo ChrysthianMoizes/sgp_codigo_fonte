@@ -1,29 +1,30 @@
-<app-layout>
-  <button pButton label="Novo"></button>
-  <div id="tabela" class="p-grid">
-    <div class="p-col-11">
-      <p-table [columns]="definicaoColunas" [value]="provas" selectionMode="multiple"
-               [(selection)]="provasSelecionadas" rows=20 paginator="true">
-        <ng-template pTemplate="header" let-colunas>
-          <tr>
-            <th *ngFor="let coluna of colunas">
-              {{ coluna.header }}
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-prova let-colunas="columns">
-          <tr [pSelectableRow]="prova">
-            <td *ngFor="let coluna of colunas">
-              {{ prova[coluna.field] }}
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-    <div id="botoes" class="p-col-1">
-      <button pButton id="botao1" icon="pi pi-trash" class="ui-button-rounded"></button>
-      <button pButton id="botao2" icon="pi pi-pencil" class="ui-button-rounded" [disabled]="!isSelected()"></button>
-      <button pButton id="botao3" icon="pi pi-eye" class="ui-button-rounded" [disabled]="!isSelected()"></button>
-    </div>
+<button id="buttonNew" label="Novo" pButton></button>
+<div class="p-grid" id="tabela">
+  <div class="p-col-11">
+    <p-table [(selection)]="provasSelecionadas" [columns]="definicaoColunas" [value]="provas"
+             paginator="true" rows=20 selectionMode="multiple">
+      <ng-template let-colunas pTemplate="header">
+        <tr>
+          <th *ngFor="let coluna of colunas">
+            {{ coluna.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template let-colunas="columns" let-prova pTemplate="body">
+        <tr [pSelectableRow]="prova">
+          <td *ngFor="let coluna of colunas">
+            {{ prova[coluna.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
-</app-layout>
+  <div class="p-col-1" id="botoes">
+    <button [disabled]="!isAtLeastOneSelected()" class="ui-button-rounded " icon="pi pi-trash" id="buttonDelete"
+            pButton></button>
+    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-pencil" id="buttonEdit"
+            pButton></button>
+    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-eye" id="buttonVisualize"
+            pButton></button>
+  </div>
+</div>

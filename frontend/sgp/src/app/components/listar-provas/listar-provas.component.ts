@@ -32,7 +32,11 @@ export class ListarProvasComponent implements OnInit {
 
   }
 
-  isSelected(): boolean {
+  isOneSelected(): boolean {
     return this.provasSelecionadas && this.provasSelecionadas.length === 1;
+  }
+
+  isAtLeastOneSelected(): boolean {
+    return this.provasSelecionadas && this.provasSelecionadas.length >= 1;
   }
 }
