@@ -1,3 +1,5 @@
+import { QuestaoComponent } from './pages/questao/form/questao.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingService } from './components/loading/loading.service';
 import { MessageService } from 'primeng/api';
@@ -13,8 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule, CardModule, InputTextModule } from 'primeng';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuModule } from 'primeng/menu';
-import { TableModule } from 'primeng/table';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -23,6 +23,9 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-avaliacao.component';
 
 @NgModule({
@@ -36,6 +39,8 @@ import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-a
     NotfoundComponent,
     AlertComponent,
     ListarAvaliacaoComponent,
+    QuestaoListarComponent,
+    QuestaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,8 @@ import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-a
     NgxSpinnerModule,
     ToastModule,
     TableModule,
+    DropdownModule,
+    RadioButtonModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],

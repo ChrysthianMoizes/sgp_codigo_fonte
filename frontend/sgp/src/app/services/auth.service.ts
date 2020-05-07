@@ -12,27 +12,42 @@ export class AuthService {
   }
 
   public getUsuarioSessionStorage(): Usuario {
-    return JSON.parse(sessionStorage.getItem(this.KEY));
+    if(this.containsUsuarioSessionStorage()){
+      return JSON.parse(sessionStorage.getItem(this.KEY));
+    }
+    return new Usuario();
   }
 
   public getNomeUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().nome;
+    if(this.containsUsuarioSessionStorage()){
+      return this.getUsuarioSessionStorage().nome;
+    }
+    return '';
   }
 
   public getIdUsuarioSessionStorage(): number {
-    return this.getUsuarioSessionStorage().id;
+    if(this.containsUsuarioSessionStorage()){
+      return this.getUsuarioSessionStorage().id;
+    }
+    return 0;
   }
 
   public getEmailUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().email;
+    if(this.containsUsuarioSessionStorage()){
+      return this.getUsuarioSessionStorage().email;
+    }
+    return '';
   }
 
   public getCpflUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().cpf;
+    if(this.containsUsuarioSessionStorage()){
+      return this.getUsuarioSessionStorage().cpf;
+    }
+    return '';
   }
 
   public getPermissaoUsuarioSessionStorage(): string {
-    if (this.containsUsuarioSessionStorage()) {
+    if(this.containsUsuarioSessionStorage()){
       return this.getUsuarioSessionStorage().permissao;
     }
     return '';
