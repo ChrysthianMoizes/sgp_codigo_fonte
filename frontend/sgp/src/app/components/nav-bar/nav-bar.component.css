@@ -51,6 +51,7 @@
   margin: 0;
   background-color: var(--color-primary);
   top: 60px;
+  z-index: 600;
 }
 
 .sidebar .btn-sidebar {

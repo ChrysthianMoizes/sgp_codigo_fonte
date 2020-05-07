@@ -1,5 +1,9 @@
-<app-nav-bar></app-nav-bar>
-<app-layout>
+<p-dialog
+  header="{{ hader }}"
+  [modal]="true"
+  [(visible)]="exibir"
+  [style]="{ width: '60vw' }"
+>
   <div class="ui-g">
     <div class="ui-g-10">
       <h3>Questão</h3>
@@ -15,7 +19,7 @@
       </span>
 
       <span class="ui-float-label margem-top">
-        <input id="float-input" type="text" size="30" pInputText />
+        <p-dropdown placeholder=""></p-dropdown>
         <label for="float-input">Tipo</label>
       </span>
 
@@ -91,9 +95,10 @@
       <button
         pButton
         type="button"
-        label="Cadastrar"
-        class="ui-button-raised margem-top"
+        label="Salvar"
+        (click)="salvar()"
+        class="ui-button-rounded"
       ></button>
     </div>
   </div>
-</app-layout>
+</p-dialog>
