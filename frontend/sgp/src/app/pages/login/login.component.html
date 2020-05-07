@@ -6,37 +6,49 @@
     </span>
   </div>
 
-  <div class="espacamento">
+<form #formLogin="ngForm" (ngSubmit)="requisitarLogin(formLogin)" autocomplete="off">
+
+  <div class="form-group" class="espacamento" >
     <div class="ui-inputgroup">
       <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
       <span class="ui-float-label" >
-        <input id="float-input" class="borderInput" type="text" size="27" pInputText>
-        <label for="float-input" class="caracteres">E-mail</label>
+        <input id="email-input" class="borderInput" type="text"
+         name="email" size="27" pInputText [(ngModel)]="usuario.email" required email #email="ngModel">
+         <label for="email-input" class="caracteres">E-mail</label>
       </span>
+    </div>
+    <div *ngIf="verificaValidTouched(email)">
+      E-mail é obrigatorio!
     </div>
   </div>
 
-  <div class="espacamento">
+  <div class="form-group" class="espacamento">
       <div class="ui-inputgroup">
         <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
         <span class="ui-float-label" >
-        <input for="float-input" class="borderInput" type="password" size="27" maxlength="20" pInputText>
-        <label id="float-input" class="caracteres">Senha</label>
-      </span>
-    </div>
+        <input for="senha-input" class="borderInput" type="password"
+        name="senha" size="27" maxlength="20" pInputText [(ngModel)]="usuario.senha" required #senha="ngModel">
+        <label id="senha-input" class="caracteres">Senha</label>
+        </span>
+      </div>
+      <div *ngIf="verificaValidTouched(senha)">
+        Senha é obrigatorio!
+      </div>
   </div>
 
   <div class="espacamento">
     <span>
-      <button pButton class="ui-button-danger" type="submit" [style]="{width: '100%'}" label="ENTRAR" (click)="login()"></button>
+      <button pButton class="ui-button-danger" type="submit" [style]="{width: '100%'}"
+      label="ENTRAR" [disabled]="formLogin.invalid"></button>
     </span>
   </div>
+</form>
 
   <p-footer>
     <div>
-      <span><p class="caracteres">Cadastrar</p></span>
-      <span><p class="caracteres">Esqueci minha senha</p></span>
-      <span><p class="caracteres">Reeviar e-mail de ativação</p></span>
+      <span><p><a routerLink="/login/cadastro" routerLinkActive="active" class="caracteres">Cadastrar</a></p></span>
+      <span><p><a routerLink="/login/resetarsenha" routerLinkActive="active" class="caracteres">Esqueci minha senha</a></p></span>
+      <span><p><a routerLink="/login/reenviaremail" routerLinkActive="active" class="caracteres">Reeviar e-mail de ativação</a></p></span>
     </div>
   </p-footer>
 
