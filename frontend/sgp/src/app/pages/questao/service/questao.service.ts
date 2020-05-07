@@ -3,7 +3,8 @@ import { Questao } from './../models/questao.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
@@ -177,8 +178,8 @@ export class QuestaoService {
     },
   ];
 
-  public getQuestoes(): Array<Questao> {
-    return this.questoes;
+  public getQuestoes(): Observable<any> {
+    return of(this.questoes);
   }
 
   public getQuestaoById(id: number): Questao {
@@ -192,17 +193,17 @@ export class QuestaoService {
   public criarQuestao(questao: Questao): Questao {
     questao.id = this.idQuestao + 1;
     this.questoes.push(questao);
-    console.log(this.questoes);
     this.idQuestao++;
     return questao;
   }
 
-  public deletarQuestao(id: number): boolean {
-    if (this.questoes.includes(this.getQuestaoById(id))) {
-      this.questoes.pop();
-      return true;
+  public deletarQuestao(element: Questao): Observable<any> {
+    const pos = this.questoes.indexOf(element);
+    console.log(pos);
+    if (pos != -1) {
+      this.questoes.splice(pos, 1);
     }
-    return false;
+    return of(null);
   }
 
   public atualizarQuestao(questao: Questao): Questao {

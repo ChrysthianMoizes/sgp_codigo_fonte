@@ -1,3 +1,4 @@
+import { AlertService } from './../../../components/alert/alert.service';
 import { QuestaoComponent } from './../form/questao.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng';
@@ -148,6 +149,7 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   constructor(
+    private alertService: AlertService,
     private questaoService: QuestaoService,
     public dialogService: DialogService
   ) {}
@@ -160,12 +162,39 @@ export class QuestaoListarComponent implements OnInit {
       { field: 'tipo_questao', header: 'Tipo da Questão' },
     ];
 
-    this.questoes = this.questaoService.getQuestoes();
+    this.questaoService.getQuestoes().subscribe((response) => {
+      this.questoes = response;
+    });
   }
 
   isSelected(): boolean {
     return this.questoesSelecionadas.length == 1;
   }
+
+  excluir() {
+    this.questoesSelecionadas.forEach((element) => {
+      this.questaoService.deletarQuestao(element).subscribe(
+        (response) => {
+          this.alertService.montarAlerta(
+            'success',
+            'Sucesso',
+            'Questão Excluida com sucesso'
+          );
+          this.questaoService.getQuestoes().subscribe((response) => {
+            this.questoes = response;
+          });
+        },
+        (error) => {
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao Excluir questão'
+          );
+        }
+      );
+    });
+  }
+
   showDialog(id: string) {
     this.dialogQuestao.exibirDialog(id, this.questoesSelecionadas);
 

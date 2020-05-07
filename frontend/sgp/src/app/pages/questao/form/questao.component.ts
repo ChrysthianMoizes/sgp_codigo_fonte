@@ -89,10 +89,20 @@ export class QuestaoComponent implements OnInit {
   }
 
   exibirDialog(id: string, questoesSelecionadas: any) {
-    //this.descricao = questoesSelecionadas[0].descricao;
     if (id == '2') {
       this.exibir = true;
       this.hader = 'Editar Questão';
+      this.formQuestao.setValue({
+        descricao: questoesSelecionadas[0].descricao,
+        senioridadeQ: questoesSelecionadas[0].senioridade,
+        tipo_questaoQ: questoesSelecionadas[0].tipo_questao,
+        alternativa1: questoesSelecionadas[0].alternativa_1,
+        alternativa2: questoesSelecionadas[0].alternativa_2,
+        alternativa3: questoesSelecionadas[0].alternativa_3,
+        alternativa4: questoesSelecionadas[0].alternativa_4,
+        alternativa5: questoesSelecionadas[0].alternativa_5,
+        selectedValue: questoesSelecionadas[0].resposta.toString(),
+      });
     } else {
       this.exibir = true;
       this.hader = 'Cadastrar Questão';
@@ -101,6 +111,7 @@ export class QuestaoComponent implements OnInit {
 
   cadastar() {
     let questao: Questao = new Questao();
+    questao.descricao = this.formQuestao.value.descricao;
     questao.senioridade = this.formQuestao.value.senioridadeQ;
     questao.tipo_questao = this.formQuestao.value.tipo_questaoQ;
     questao.alternativa_1 = this.formQuestao.value.alternativa1;
@@ -109,7 +120,7 @@ export class QuestaoComponent implements OnInit {
     questao.alternativa_4 = this.formQuestao.value.alternativa4;
     questao.alternativa_5 = this.formQuestao.value.alternativa5;
     questao.resposta = parseInt(this.formQuestao.value.selectedValue, 10);
-
+    console.log(questao);
     this.questaoService.criarQuestao(questao);
   }
 }
