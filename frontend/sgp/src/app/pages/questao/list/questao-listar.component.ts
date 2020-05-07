@@ -142,7 +142,7 @@ export class QuestaoListarComponent implements OnInit {
   ];
 
   //questoes: any[];
-  questoesSelecionadas: any[];
+  questoesSelecionadas: any[] = [];
 
   definicaoColunas: any[];
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;

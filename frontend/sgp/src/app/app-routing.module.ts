@@ -1,5 +1,3 @@
-import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
-import { QuestaoComponent } from './pages/questao/form/questao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
