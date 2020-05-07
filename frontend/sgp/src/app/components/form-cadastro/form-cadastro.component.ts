@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CadastroUsuarioService } from 'src/app/stores/cadastro/cadastro-usuario.service';
 import { LoginService } from 'src/app/stores/login/login.service';
 
 import { Usuario } from 'src/app/models/usuario.model';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -11,9 +13,10 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class FormCadastroComponent implements OnInit {
 
-  usuario: Usuario = new Usuario();
+  @Input() usuario: Usuario;
+  @Output() cadastrarUsuario = new EventEmitter();
 
-  constructor(private cadastroService: CadastroUsuarioService, private loginService:LoginService) {
+  constructor() {
 
   }
 
@@ -21,10 +24,8 @@ export class FormCadastroComponent implements OnInit {
   ngOnInit(){
   }
 
-  // cadastrar(){
-    save(){
-      this.cadastroService.cadastrarUsuario(this.usuario)
-        .subscribe(response => { this.loginService.logar(response.email, response.senha)})
-    }
+  save(){
+    this.cadastrarUsuario.emit(this.usuario)
+  }
 
 }
