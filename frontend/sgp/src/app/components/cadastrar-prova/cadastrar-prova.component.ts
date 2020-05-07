@@ -9,12 +9,12 @@ import { LoadingService } from '../loading/loading.service';
 @Component({
   selector: 'app-cadastrar-prova',
   templateUrl: './cadastrar-prova.component.html',
-  styleUrls: ['./cadastrar-prova.component.css']
+  styleUrls: ['./cadastrar-prova.component.css'],
 })
 export class CadastrarProvaComponent implements OnInit {
-
   @Input() provaSendoEditada;
   provaForm: FormGroup;
+  visualizando: boolean = true;
 
   origemQuestoes: Questao[];
   destinoQuestoes: Questao[];
@@ -25,17 +25,19 @@ export class CadastrarProvaComponent implements OnInit {
     private provaService: ProvaService,
     private alertService: AlertService,
     private loadingService: LoadingService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.provaService.index().subscribe(questoes => {
+    this.provaService.index().subscribe((questoes) => {
       this.origemQuestoes = questoes;
       this.destinoQuestoes = [];
     });
-    this.provaService.getNumberOfElements().subscribe(total => this.totalDeQuestoes = total);
+    this.provaService
+      .getNumberOfElements()
+      .subscribe((total) => (this.totalDeQuestoes = total));
     this.provaForm = this.fb.group({
       titulo: ['', Validators.required],
-      percentualDeAprovacao: ['', Validators.required]
+      percentualDeAprovacao: ['', Validators.required],
     });
 
     if (this.provaSendoEditada) this.preencherFormParaEdicao();
@@ -43,43 +45,43 @@ export class CadastrarProvaComponent implements OnInit {
 
   preencherFormParaEdicao(): void {
     this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.provaForm.get('percentualDeAprovacao').setValue(this.provaSendoEditada.percentualDeAprovacao);
+    this.provaForm
+      .get('percentualDeAprovacao')
+      .setValue(this.provaSendoEditada.percentualDeAprovacao);
     this.destinoQuestoes = this.provaSendoEditada.questoes;
   }
 
   cadastrarNovo(prova: Prova): void {
-    this.provaService.create(prova)
-    .subscribe({
+    this.provaService.create(prova).subscribe({
       next: () => {
         this.loadingService.deactivate();
         this.provaForm.reset();
         this.alertService.montarAlerta(
-          'success', 'Sucesso!', 'Prova cadastrada com suscesso!'
+          'success',
+          'Sucesso!',
+          'Prova cadastrada com suscesso!'
         );
       },
-      error: err => {
-        this.alertService.montarAlerta(
-          'error', 'Error!', err
-        );
-      }
+      error: (err) => {
+        this.alertService.montarAlerta('error', 'Error!', err);
+      },
     });
   }
 
   atualizarProva(prova: Prova): void {
-    this.provaService.update(prova)
-    .subscribe({
+    this.provaService.update(prova).subscribe({
       next: () => {
         this.loadingService.deactivate();
         this.provaForm.reset();
         this.alertService.montarAlerta(
-          'success', 'Sucesso!', 'Prova atualizada com suscesso!'
+          'success',
+          'Sucesso!',
+          'Prova atualizada com suscesso!'
         );
       },
-      error: err => {
-        this.alertService.montarAlerta(
-          'error', 'Error!', err
-        );
-      }
+      error: (err) => {
+        this.alertService.montarAlerta('error', 'Error!', err);
+      },
     });
   }
 
@@ -88,28 +90,26 @@ export class CadastrarProvaComponent implements OnInit {
     if (!this.provaSendoEditada) {
       this.cadastrarNovo({
         ...this.provaForm.value,
-        questoes: this.destinoQuestoes
+        questoes: this.destinoQuestoes,
       });
-    }
-    else {
+    } else {
       this.atualizarProva({
         ...this.provaForm.value,
         questoes: this.destinoQuestoes,
-        id: this.provaSendoEditada.id
+        id: this.provaSendoEditada.id,
       });
     }
     this.onCancel();
   }
 
   paginate(event) {
-    this.provaService.index(event.page)
-      .subscribe(questoes => this.origemQuestoes = questoes);
+    this.provaService
+      .index(event.page)
+      .subscribe((questoes) => (this.origemQuestoes = questoes));
   }
 
   removeRepetitions(arr: any[]) {
-    return arr.filter(
-      (questao, i) => arr.indexOf(questao) === i
-    );
+    return arr.filter((questao, i) => arr.indexOf(questao) === i);
   }
 
   onMoveToTarget(event): void {
@@ -127,16 +127,18 @@ export class CadastrarProvaComponent implements OnInit {
 
   get inputSize(): number {
     const inputTitulo = this.provaForm.get('titulo').value;
-    return (inputTitulo) ? inputTitulo.length : 20;
+    return inputTitulo ? inputTitulo.length : 20;
   }
 
   get isFormValid(): boolean {
-    const percentualDeAprovacao = +this.provaForm.get('percentualDeAprovacao').value;
+    const percentualDeAprovacao = +this.provaForm.get('percentualDeAprovacao')
+      .value;
 
-    return this.provaForm.valid
-      && this.destinoQuestoes.length > 0
-      && percentualDeAprovacao <= 100
-      && percentualDeAprovacao >= 0;
+    return (
+      this.provaForm.valid &&
+      this.destinoQuestoes.length > 0 &&
+      percentualDeAprovacao <= 100 &&
+      percentualDeAprovacao >= 0
+    );
   }
-
 }

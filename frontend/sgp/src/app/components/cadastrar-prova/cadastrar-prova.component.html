@@ -1,10 +1,10 @@
 <app-loading></app-loading>
 <app-alert></app-alert>
 <p-card>
-  <h1 style="margin-top: 0px"> {{ titulo }} </h1>
+  <h1 style="margin-top: 0px;">{{ titulo }}</h1>
   <section style="margin-top: 14px;">
-    <div class="card-header">
-      <h3 style="margin-bottom: 0px;"> Selecione as questões desejadas. </h3>
+    <div *ngIf="visualizando" class="card-header">
+      <h3 style="margin-bottom: 0px;">Selecione as questões desejadas.</h3>
       <p style="margin-top: 4px;">
         As questões disponíveis são visíveis à esquerda. As questões
         selecionadas são visíveis à direita.
@@ -19,11 +19,8 @@
             id="float-input"
             formControlName="titulo"
             [size]="inputSize"
-          >
-          <label
-            for="float-input"
-            style="margin-top: 4px;"
-          >
+          />
+          <label for="float-input" style="margin-top: 4px;">
             Título
           </label>
         </span>
@@ -37,15 +34,12 @@
             id="float-input"
             formControlName="percentualDeAprovacao"
             [size]="inputSize"
-          >
-          <label
-            for="float-input"
-            style="margin-top: 4px;"
-          >
+          />
+          <label for="float-input" style="margin-top: 4px;">
             Percentual de Aprovação
           </label>
         </span>
-        <div class="pick-with-pag">
+        <div *ngIf="visualizando" class="pick-with-pag">
           <p-pickList
             [source]="origemQuestoes"
             [target]="destinoQuestoes"
@@ -53,22 +47,21 @@
             targetHeader="Questões Selecionadas"
             [responsive]="true"
             dragdrop="true"
-            [sourceStyle]="{'height':'300px'}"
-            [targetStyle]="{'height':'300px'}"
-            [showSourceControls]=false
-            [showTargetControls]=false
+            [sourceStyle]="{ height: '300px' }"
+            [targetStyle]="{ height: '300px' }"
+            [showSourceControls]="false"
+            [showTargetControls]="false"
             (onMoveToTarget)="onMoveToTarget($event)"
           >
-            <ng-template
-              let-questao
-              pTemplate="item"
-            >
-                <div class="ui-helper-clearfix">
-                  {{ questao.id }}
-                  <div style="font-size:14px; float:right; margin:15px 5px 0 0">
-                    {{ questao.descricao }}
-                  </div>
+            <ng-template let-questao pTemplate="item">
+              <div class="ui-helper-clearfix">
+                {{ questao.id }}
+                <div
+                  style="font-size: 14px; float: right; margin: 15px 5px 0 0;"
+                >
+                  {{ questao.descricao }}
                 </div>
+              </div>
             </ng-template>
           </p-pickList>
           <div class="paginator">
@@ -80,7 +73,7 @@
             ></p-paginator>
           </div>
         </div>
-
+        <div *ngIf="!visualizando"></div>
         <footer>
           <button
             pButton
@@ -99,6 +92,5 @@
         </footer>
       </form>
     </div>
-
   </section>
 </p-card>
