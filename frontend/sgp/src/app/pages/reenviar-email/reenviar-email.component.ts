@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReenviarEmailService } from 'src/app/stores/reenviar-email/reenviar-email.service';
+import { AlertService } from 'src/app/components/alert/alert.service';
 
 @Component({
   selector: 'app-reenviar-email',
@@ -8,7 +9,10 @@ import { ReenviarEmailService } from 'src/app/stores/reenviar-email/reenviar-ema
 })
 export class ReenviarEmailComponent implements OnInit {
 
-  constructor(private reenviarEmailService: ReenviarEmailService) { }
+  constructor(
+    private reenviarEmailService: ReenviarEmailService,
+    private alerts: AlertService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -16,10 +20,10 @@ export class ReenviarEmailComponent implements OnInit {
   send(email: string) {
     this.reenviarEmailService.reenviarEmailConfirmacao(email).subscribe(
       response => {
-        alert(response);
+        this.alerts.montarAlerta('success', 'Sucesso', 'Email reenviado com sucesso')
       },
       erro => {
-        alert('Erro')
+        this.alerts.montarAlerta('error', 'Erro', 'Erro ao reenviar email')
       }
     )
   }
