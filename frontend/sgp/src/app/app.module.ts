@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule, CardModule, InputTextModule } from 'primeng';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuModule } from 'primeng/menu';
+import { TableModule } from 'primeng/table';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -21,6 +23,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-avaliacao.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
+    ListarAvaliacaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
     FormsModule,
     NgxSpinnerModule,
     ToastModule,
+    TableModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
