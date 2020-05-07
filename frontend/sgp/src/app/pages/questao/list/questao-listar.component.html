@@ -1,3 +1,4 @@
+<app-alert></app-alert>
 <button pButton label="Novo" (click)="showDialog('1')"></button>
 <div class="p-grid">
   <div class="p-col-11">
@@ -27,6 +28,7 @@
   </div>
   <div id="botoes" class="p-col-1">
     <button
+      (click)="excluir()"
       pButton
       id="botao1"
       icon="pi pi-trash"
