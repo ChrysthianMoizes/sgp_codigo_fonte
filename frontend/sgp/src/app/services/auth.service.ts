@@ -1,5 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import {Injectable} from '@angular/core';
+import {Usuario} from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class AuthService {
 
   private KEY: string = 'sgp';
 
-  public setUsuarioSessionStorage(usuario: Usuario): void{
+  public setUsuarioSessionStorage(usuario: Usuario): void {
     sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
   }
 
