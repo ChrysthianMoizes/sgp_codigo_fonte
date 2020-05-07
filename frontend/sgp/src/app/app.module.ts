@@ -34,13 +34,20 @@ import {AuthService} from './services/auth.service';
     CadastrarProvaComponent,
     AlertComponent,
     LoadingComponent,
-    ListarProvasComponent,
+    ListarProvasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    PaginatorModule,
     ReactiveFormsModule,
+    PickListModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
     BrowserAnimationsModule,
+    MenuModule,
+    BreadcrumbModule,
     FormsModule,
     NgxSpinnerModule,
     PrimengModule
