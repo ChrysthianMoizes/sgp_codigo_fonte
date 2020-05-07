@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
+import { QuestaoComponent } from './pages/questao/form/questao.component';
 
 const routes: Routes = [
 {path: '',
