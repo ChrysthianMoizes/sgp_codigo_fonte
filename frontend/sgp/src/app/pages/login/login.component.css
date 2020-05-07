@@ -15,6 +15,10 @@
   text-align: left;
 }
 
+.ng-invalid.ng-touched:not(form) {
+  border: 1px solid black;
+}
+
 p-card header {
   text-align: center;
 }

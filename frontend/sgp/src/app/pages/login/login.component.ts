@@ -13,16 +13,27 @@ export class LoginComponent implements OnInit {
 
   necessitaCabecalho = true;
 
+  usuario: any = {
+    email: '',
+    senha: ''
+  }
+
+  requisitarLogin(formLogin: any){
+    this.loginService.logar(this.usuario.email, this.usuario.senha).subscribe(
+      response => {
+        this.authService.setUsuarioSessionStorage(response);
+        console.log(response);
+      }
+    )
+  }
+
+  verificaValidTouched(campo){
+    return !campo.valid && campo.touched;
+  }
+
   ngOnInit(): void {
   }
 
 
-  login(){
-    this.loginService.logar("adasds@asdasd", "asdasdsd").subscribe(
-      response => {
-        this.authService.setUsuarioSessionStorage(response);
-      }
-    )
-  }
 
 }
