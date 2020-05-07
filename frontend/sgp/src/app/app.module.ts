@@ -17,7 +17,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { PickListModule } from 'primeng/picklist';
 import { ToastModule } from 'primeng/toast';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -33,6 +32,9 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
+import { AppRoutes } from './app.routes';
+import { ProvaService } from './services/prova/prova.service';
+import { PerfilService } from './services/perfil/perfil.service';
 
 @NgModule({
   declarations: [
@@ -46,11 +48,10 @@ import { BreadcrumbService } from './services/breadcrumb.service';
     CadastrarProvaComponent,
     AlertComponent,
     LoadingComponent,
-    ListarProvasComponent,
+    ListarProvasComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     PaginatorModule,
     ReactiveFormsModule,
     PickListModule,
@@ -66,14 +67,9 @@ import { BreadcrumbService } from './services/breadcrumb.service';
     DataViewModule,
     TableModule,
     DynamicDialogModule,
+    AppRoutes
   ],
-  providers: [
-    AuthService,
-    AuthGuard,
-    MessageService,
-    LoadingService,
-    BreadcrumbService,
-  ],
+  providers:[AuthGuard,AuthService,BreadcrumbService,LoadingService,MessageService,ProvaService,PerfilService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

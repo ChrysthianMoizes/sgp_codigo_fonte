@@ -21,6 +21,7 @@ export class BreadcrumbComponent implements OnInit {
 
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
+  menuItem: MenuItem[]
 
   ngOnInit(): void {
     setTimeout(() =>{
@@ -32,6 +33,7 @@ export class BreadcrumbComponent implements OnInit {
   private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
     if (children.length === 0) {
+      breadcrumbs.unshift({label:'Página Inicial', url:'/home'})
       return breadcrumbs;
     }
 
@@ -44,7 +46,7 @@ export class BreadcrumbComponent implements OnInit {
       const label = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
       this.showBreadCrumb = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT];
       this.shownavbar.emit(child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT]);
-      if (!isNullOrUndefined(label)) {
+      if (!isNullOrUndefined(label) && label != 'Home') {
         breadcrumbs.push({label, url});
       }
 
