@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario.model';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class ListarCandidatosService {
       permissao: 'ROLE_USER'
     },
     {
-      id: 1,
+      id: 3,
       nome: 'Tito',
       senha: '666666',
       email: 'staulfertito@hotmail.com',
@@ -36,5 +37,13 @@ export class ListarCandidatosService {
 
   listarCandidatos(): Observable<Usuario[]> {
     return of<Usuario[]>(this.candidatos);
+  }
+
+  excluirCandidatos(id: number): Observable<void> {
+    var pos = this.candidatos.findIndex(element => element.id == id);
+    if (pos != -1) {
+      this.candidatos.splice(pos, 1);
+    }
+    return of(null);
   }
 }
