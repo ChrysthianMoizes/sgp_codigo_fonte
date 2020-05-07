@@ -1,14 +1,14 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import {Injectable} from '@angular/core';
+import {Usuario} from '../pages/usuario/models/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private KEY: string = 'sgp';
+  private KEY = 'sgp';
 
-  public setUsuarioSessionStorage(usuario: Usuario): void{
+  public setUsuarioSessionStorage(usuario: Usuario): void {
     sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
   }
 
@@ -33,15 +33,15 @@ export class AuthService {
   }
 
   public getPermissaoUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().permissao;
+    return this.getUsuarioSessionStorage().admin ? 'ROLE_ADMIN' : '';
   }
 
   public temPermissao(permissao: string): boolean {
-    return this.getPermissaoUsuarioSessionStorage() == permissao;
+    return this.getPermissaoUsuarioSessionStorage() === permissao;
   }
 
   public containsUsuarioSessionStorage(): boolean {
-    return sessionStorage.key(0) == this.KEY ? true : false;
+    return sessionStorage.key(0) === this.KEY;
   }
 
   public retirarUsuarioDoSessionStorage(): void {
