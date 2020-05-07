@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -16,8 +15,8 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  shownav(event: any){
-    this.exibirTopLayout= event;
+  shownav(event: any) {
+    this.exibirTopLayout = event;
   }
 
 }

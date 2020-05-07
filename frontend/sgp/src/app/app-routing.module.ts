@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {HomeComponent} from './components/home/home.component';
 import {LayoutComponent} from './components/layout/layout.component';
-import {PerfilComponent} from './components/perfil/perfil.component';
-import {HomeComponent} from './pages/home/home.component';
+import {UsuarioComponent} from './pages/usuario/usuario.component';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {path: 'home', component: HomeComponent, data: {breadcrumb: 'Home', toplayout: false}},
-      {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil', toplayout: true}}
+      {path: 'perfil', component: UsuarioComponent, data: {breadcrumb: 'Perfil', toplayout: true}}
     ]
   }
   /*,
@@ -38,7 +38,7 @@ const routes: Routes = [
     component:
   },
   {
-    path: 'perfil',
+    path: 'service',
     component:
   },
   {
