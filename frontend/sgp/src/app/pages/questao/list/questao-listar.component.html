@@ -1,6 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <app-layout>
-  <button pButton label="Novo"></button>
+  <h3>Questões</h3>
+  <button id="botao-novo" pButton label="Novo" (click)="createQuestao()"></button>
   <div class="p-grid">
     <div class="p-col-11">
       <p-table [columns]="definicaoColunas" [value]="questoes" selectionMode="multiple"
@@ -22,9 +23,9 @@
       </p-table>
     </div>
     <div id="botoes" class="p-col-1">
-      <button pButton id="botao1" icon="pi pi-trash" class="ui-button-rounded"></button>
-      <button pButton id="botao2" icon="pi pi-pencil" class="ui-button-rounded" [disabled]="!isSelected()"></button>
-      <button pButton id="botao3" icon="pi pi-eye" class="ui-button-rounded" [disabled]="!isSelected()"></button>
+      <button pButton id="botao1" icon="pi pi-trash" class="ui-button-rounded" [disabled]="!canEnabled()" (click)="deletarQuestao()"></button>
+      <button pButton id="botao2" icon="pi pi-pencil" class="ui-button-rounded" [disabled]="!isSelected()" (click)="editarQuestao()"></button>
+      <button pButton id="botao3" icon="pi pi-eye" class="ui-button-rounded" [disabled]="!isSelected()" (click)="detalheQuestao()"></button>
     </div>
   </div>
 </app-layout>

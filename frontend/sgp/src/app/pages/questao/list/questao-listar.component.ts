@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { QuestaoService } from '../service/questao.service';
+import { QuestaoModel } from '../model/questao.model';
+import { QuestaoComponent } from '../form/questao.component'
 @Component({
   selector: 'app-questao-listar',
   templateUrl: './questao-listar.component.html',
@@ -7,35 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestaoListarComponent implements OnInit {
 
-  questoes =  [
-    {id: 2, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 3, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "},
-    {id: 1, senioridade: "JUNIOR", tipo_questao: "Codificação", descricao: "Qual é a: "}
-  ]
+  questoes: Array<QuestaoModel> =  [ ]
 
-  //questoes: any[];
-  questoesSelecionadas: any[];
+  questoesSelecionadas: any[] = new Array<QuestaoModel>();
   definicaoColunas: any[];
 
-  constructor() { }
+  constructor(private questaoService: QuestaoService) { }
 
   ngOnInit(): void {
 
@@ -45,11 +24,33 @@ export class QuestaoListarComponent implements OnInit {
       {field: 'senioridade', header: 'Titulo'},
       {field: 'tipo_questao', header: 'Tipo da Questão'}
     ];
+
+    this.questoes = this.questaoService.getQuestoes();
   }
 
   isSelected(): boolean {
-    return this.questoesSelecionadas && this.questoesSelecionadas.length === 1;
+    return this.questoesSelecionadas.length == 1;
   }
 
+  canEnabled(): boolean {
+    return this.questoesSelecionadas.length > 0;
+  }
 
+  deletarQuestao(){
+    this.questaoService.deletarQuestao(
+      this.questoesSelecionadas.pop()
+    )
+  }
+
+  editarQuestao(): QuestaoModel{
+    return this.questaoService.atualizarQuestao(this.questoesSelecionadas[0]);
+  }
+
+  detalheQuestao(): QuestaoModel {
+    return this.questaoService.getQuestaoById(this.questoesSelecionadas[0].id);
+  }
+
+  createQuestao(): any {
+    return new QuestaoComponent(this.questaoService);
+  }
 }

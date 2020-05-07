@@ -5,3 +5,41 @@
   width: 250px;
   margin-bottom: 10px;
 }
+
+.dropdown {
+  margin-top: 20px;
+}
+
+
+.ordem-compra {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+input.ng-invalid.ng-touched {
+  border: solid 1px red;
+}
+
+select.ng-invalid.ng-touched {
+  border: solid 1px red;
+}
+
+input.ng-valid.ng-touched {
+  border: solid 1px green;
+}
+
+select.ng-valid.ng-touched {
+  border: solid 1px green;
+}
+
+small.ng-invalid.ng-touched {
+  color: red;
+}
+
+textarea.ng-valid.ng-touched {
+  border: solid 1px green;
+}
+
+textarea.ng-invalid.ng-touched {
+  border: solid 1px red;
+}

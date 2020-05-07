@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ButtonModule, CardModule, InputTextModule} from 'primeng';
@@ -26,6 +26,7 @@ import {NotfoundComponent} from './pages/notfound/notfound.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,9 @@ import {DropdownModule} from 'primeng/dropdown';
     ToastModule,
     TableModule,
     DropdownModule,
-    RadioButtonModule
+    RadioButtonModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
