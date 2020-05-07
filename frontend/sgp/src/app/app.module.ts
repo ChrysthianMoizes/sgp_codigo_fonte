@@ -37,6 +37,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.service';
+import { CandidatosComponent } from './pages/candidatos/candidatos.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.s
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
-    ListarCandidatosComponent
+    ListarCandidatosComponent,
+    CandidatosComponent
   ],
   imports: [
     BrowserModule,

@@ -9,21 +9,18 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { AuthGuard } from './services/auth.guard';
+import { CandidatosComponent } from './pages/candidatos/candidatos.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home'
+    redirectTo: 'login'
   },
   {
-    path: 'candidatos',
-    component: ListarCandidatosComponent
-  },
-  {
-    path: 'login',
+    path: '',
     children: [
-      { path: '', component: LoginComponent, data: { breadcrumb: 'Login' } },
+      { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login' } },
       { path: 'cadastro', component: CadastroComponent, data: { breadcrumb: 'Cadastro' } },
       { path: 'resetarsenha', component: ResetarSenhaComponent, data: { breadcrumb: 'Resetar Senha' } },
       { path: 'reenviaremail', component: ReenviarEmailComponent, data: { breadcrumb: 'Reenviar Email' } },
@@ -35,6 +32,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
       { path: 'perfil', component: PerfilComponent, data: { breadcrumb: 'Perfil' } },
+      { path: 'candidatos', component: CandidatosComponent, data: { breadcrumb: 'Candidatos' } }
     ]
   }
 ];
