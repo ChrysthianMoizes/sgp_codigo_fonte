@@ -39,7 +39,7 @@ export class CandidatosComponent implements OnInit {
   }
 
   editCandidato(candidato: Usuario) {
-    this.visualizarCandidato.openDialog(candidato, 'editar');
+    this.visualizarCandidato.openDialog(candidato, 'edicao');
   }
 
   deleteCandidato(candidatos: Usuario[]) {
@@ -52,6 +52,18 @@ export class CandidatosComponent implements OnInit {
         });
     })
     this.getCandidatos();
+  }
+
+  editarCandidato(candidato: Usuario) {
+    this.candidatoService.editarCandidato(candidato).subscribe(
+      response => {
+        this.candidatos = response;
+        this.alert.montarAlerta('success', 'Sucesso', 'Candidato alterado com sucesso')
+      },
+      erro => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato')
+      }
+    )
   }
 
 }

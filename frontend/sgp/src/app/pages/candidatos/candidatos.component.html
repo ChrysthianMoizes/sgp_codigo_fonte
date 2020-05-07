@@ -1,4 +1,4 @@
 <app-listar-candidatos [candidatos]='candidatos' (viewCandidato)='viewCandidato($event)'
   (deleteCandidato)='deleteCandidato($event)' (editCandidato)='editCandidato($event)'>
 </app-listar-candidatos>
-<app-visualizar-candidato #VisualizarCandidato></app-visualizar-candidato>
+<app-visualizar-candidato #VisualizarCandidato (editarCandidato)='editarCandidato($event)'></app-visualizar-candidato>

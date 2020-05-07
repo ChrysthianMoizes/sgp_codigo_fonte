@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ListarCandidatosService } from 'src/app/stores/candidatos/listar-candidatos.service';
@@ -12,6 +12,7 @@ export class VisualizarCandidatoComponent implements OnInit {
 
   constructor(private candidatoService: ListarCandidatosService) { }
   usuario = new Usuario();
+  @Output() editarCandidato = new EventEmitter();
   edicao: string;
   visible = false;
 
@@ -24,10 +25,9 @@ export class VisualizarCandidatoComponent implements OnInit {
     this.edicao = edicao;
   }
 
-  close() {
+  save() {
+    this.editarCandidato.emit(this.usuario);
     this.visible = false;
   }
-
-  save() { }
 
 }
