@@ -4,8 +4,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {MessageService} from 'primeng/api';
-import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AppRoutes} from './app.routes';
 import {AlertComponent} from './components/alert/alert.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {BreadcrumbService} from './components/breadcrumb/breadcrumb.service';
@@ -38,19 +38,12 @@ import {AuthService} from './services/auth.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    PaginatorModule,
     ReactiveFormsModule,
-    PickListModule,
-    CardModule,
-    InputTextModule,
-    ButtonModule,
     BrowserAnimationsModule,
-    MenuModule,
-    BreadcrumbModule,
     FormsModule,
     NgxSpinnerModule,
-    PrimengModule
+    PrimengModule,
+    AppRoutes
   ],
   providers: [
     AuthService,
