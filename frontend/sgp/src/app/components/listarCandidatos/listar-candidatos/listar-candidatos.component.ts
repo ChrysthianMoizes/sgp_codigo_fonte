@@ -35,16 +35,19 @@ export class ListarCandidatosComponent implements OnInit {
     ]
   }
 
-  edit(){
+  edit() {
     this.editCandidato.emit(this.listCandidato[0]);
+    this.listCandidato = [];
   }
 
-  delete(){
+  delete() {
     this.deleteCandidato.emit(this.listCandidato);
+    this.listCandidato = [];
   }
 
   view() {
     this.viewCandidato.emit(this.listCandidato[0]);
+    this.listCandidato = [];
   }
 
   next() {
