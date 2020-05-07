@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Prova} from 'src/app/pages/prova/models/prova.model';
 import {AlertService} from '../../components/alert/alert.service';
 import {LoadingService} from '../../components/loading/loading.service';
 import {Questao} from '../questao/models/questao';
 import {QuestaoService} from '../questao/service/questao.service';
+import {Prova} from './models/prova.model';
 import {ProvaService} from './service/prova.service';
 
 @Component({
@@ -15,11 +15,18 @@ import {ProvaService} from './service/prova.service';
 export class CadastrarProvaComponent implements OnInit {
   @Input() provaSendoEditada;
   provaForm: FormGroup;
-  visualizando = true;
+  visualizando;
+  edicao;
+  modoDialog: number;
+  //1-Cadastro,2-Edicao,3-Visualizar
+
+  @Output() retornarProva = new EventEmitter();
 
   origemQuestoes: Questao[];
   destinoQuestoes: Questao[];
   totalDeQuestoes = 0;
+
+  exibir = false;
 
   constructor(
     private fb: FormBuilder,
@@ -30,8 +37,15 @@ export class CadastrarProvaComponent implements OnInit {
   ) {
   }
 
+
   get titulo(): string {
-    return this.provaSendoEditada ? 'Editar Prova' : 'Cadastrar Prova';
+    if (this.visualizando) {
+      return 'Visualizar Prova';
+    } else if (this.edicao) {
+      return 'Editar Prova';
+    } else {
+      return 'Cadastrar Prova';
+    }
   }
 
   get inputSize(): number {
@@ -63,18 +77,61 @@ export class CadastrarProvaComponent implements OnInit {
       titulo: ['', Validators.required],
       percentualDeAprovacao: ['', Validators.required],
     });
-
-    if (this.provaSendoEditada) {
-      this.preencherFormParaEdicao();
-    }
   }
 
   preencherFormParaEdicao(): void {
     this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
     this.provaForm
       .get('percentualDeAprovacao')
-      .setValue(this.provaSendoEditada.percentualDeAprovacao);
-    this.destinoQuestoes = this.provaSendoEditada.questoes;
+      .setValue(this.provaSendoEditada.percentualAprovacao);
+    this.questaoService.index().subscribe((questoes) => {
+      this.destinoQuestoes = questoes;
+    });
+  }
+
+  abrirDialog(id, modo) {
+    if (modo === 1) {
+      this.edicao = false;
+      this.visualizando = false;
+      this.exibir = true;
+      //novo
+    } else if (modo === 2) {
+      this.edicao = true;
+      this.visualizando = false;
+      this.exibir = true;
+      this.provaSendoEditada = this.provaService.buscaProva();
+      this.provaService.buscaProva().subscribe((prova) => {
+        this.provaSendoEditada = prova;
+      });
+      this.preencherFormParaEdicao();
+      // ediçao
+    } else {
+      console.log(this.visualizando);
+      this.visualizando = true;
+      this.edicao = false;
+      this.exibir = true;
+      this.provaSendoEditada = this.provaService.buscaProva();
+      this.provaService.buscaProva().subscribe((prova) => {
+        this.provaSendoEditada = prova;
+      });
+      this.preencherFormParaEdicao();
+      this.provaForm.get('titulo').disable();
+      this.provaForm.get('percentualDeAprovacao').disable();
+      //visualizar
+    }
+    if (this.modoDialog > 1) {
+      this.provaSendoEditada = this.provaService.buscaProva();
+      this.provaService.buscaProva().subscribe((prova) => {
+        this.provaSendoEditada = prova;
+      });
+      this.preencherFormParaEdicao();
+      if (this.modoDialog === 3) {
+        this.provaForm.get('titulo').disable();
+        this.provaForm.get('percentualDeAprovacao').disable();
+      }
+    } else {
+      console.log('Cadastrar nova prova.');
+    }
   }
 
   cadastrarNovo(prova: Prova): void {
@@ -126,6 +183,9 @@ export class CadastrarProvaComponent implements OnInit {
       });
     }
     this.onCancel();
+    // servico.salvar(prova);
+    this.retornarProva.emit(null);
+    this.exibir = false;
   }
 
   paginate(event) {
@@ -144,6 +204,7 @@ export class CadastrarProvaComponent implements OnInit {
 
   onCancel(): void {
     this.provaSendoEditada = undefined;
-    this.ngOnInit();
+    this.exibir = false;
   }
+
 }

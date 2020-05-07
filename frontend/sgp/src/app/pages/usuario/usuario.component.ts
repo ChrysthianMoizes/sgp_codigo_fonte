@@ -20,8 +20,8 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.perfilService.getPerfil(1).subscribe(perfil => {
-      this.perfil = perfil;
+    this.perfilService.show(1).subscribe(perfil => {
+      this.perfil = perfil as Usuario;
     });
   }
 

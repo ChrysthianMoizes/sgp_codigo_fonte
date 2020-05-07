@@ -1,10 +1,15 @@
 <app-loading></app-loading>
 <app-alert></app-alert>
-<p-card>
-  <h1 style="margin-top: 0;">{{ titulo }}</h1>
+<p-dialog
+  header="{{ titulo }}"
+  [(visible)]="exibir"
+  [style]="{ width: '85%' }"
+  [modal]="true"
+>
+  <!-- <h1 style="margin-top: 0px;">{{ titulo }}</h1> -->
   <section style="margin-top: 14px;">
-    <div *ngIf="visualizando" class="card-header">
-      <h3 style="margin-bottom: 0;">Selecione as questões desejadas.</h3>
+    <div *ngIf="!visualizando" class="card-header">
+      <h3 style="margin-bottom: 0px;">Selecione as questões desejadas.</h3>
       <p style="margin-top: 4px;">
         As questões disponíveis são visíveis à esquerda. As questões
         selecionadas são visíveis à direita.
@@ -39,19 +44,19 @@
             Percentual de Aprovação
           </label>
         </span>
-        <div *ngIf="visualizando" class="pick-with-pag">
+        <div *ngIf="!visualizando" class="pick-with-pag">
           <p-pickList
-            (onMoveToTarget)="onMoveToTarget($event)"
-            [responsive]="true"
-            [showSourceControls]="false"
-            [showTargetControls]="false"
-            [sourceStyle]="{ height: '300px' }"
             [source]="origemQuestoes"
-            [targetStyle]="{ height: '300px' }"
             [target]="destinoQuestoes"
-            dragdrop="true"
             sourceHeader="Questões Disponíveis"
             targetHeader="Questões Selecionadas"
+            [responsive]="true"
+            dragdrop="true"
+            [sourceStyle]="{ height: '300px' }"
+            [targetStyle]="{ height: '300px' }"
+            [showSourceControls]="false"
+            [showTargetControls]="false"
+            (onMoveToTarget)="onMoveToTarget($event)"
           >
             <ng-template let-questao pTemplate="item">
               <div class="ui-helper-clearfix">
@@ -73,24 +78,40 @@
             ></p-paginator>
           </div>
         </div>
-        <div *ngIf="!visualizando"></div>
-        <footer>
+        <div *ngIf="visualizando" style="margin-top: 12px;">
+          <p-accordion [multiple]="true">
+            <div *ngFor="let questao of destinoQuestoes">
+              <p-accordionTab header="Questão {{ questao.id }}">
+                {{ questao.descricao }}
+                <br/>
+                1 - Alternativa 1
+                <br/>
+                2 - Alternativa 2
+                <br/>
+                3 - Alternativa 3
+                <br/>
+                Resposta correta: 2
+              </p-accordionTab>
+            </div>
+          </p-accordion>
+        </div>
+        <footer *ngIf="!visualizando">
           <button
-            (click)="onCancel()"
-            class="ui-button-secondary"
-            label="CANCELAR"
             pButton
+            class="ui-button-secondary"
             type="button"
+            (click)="onCancel()"
+            label="CANCELAR"
           ></button>
           <button
+            pButton
+            type="button"
             (click)="onSubmit()"
             [disabled]="!isFormValid"
             label="SALVAR"
-            pButton
-            type="button"
           ></button>
         </footer>
       </form>
     </div>
   </section>
-</p-card>
+</p-dialog>

@@ -45,4 +45,29 @@ export class ProvaService {
   }
 
 
+  buscaProva() {
+    return this.provas[0];
+  }
+
+  findByTitulo(query: string): Observable<Prova[]> {
+    return of(
+      PROVAS.filter(
+        elem => elem.titulo.toLowerCase().includes(
+          query.toLowerCase()
+        )
+      ) as Prova[]
+    );
+  }
+
 }
+
+
+const PROVAS = [
+  {titulo: 'Entrar na Basis'},
+  {titulo: 'Entrar s ss Basis'},
+  {titulo: 'fff na Basis'},
+  {titulo: 'Entrar asa na Basis'},
+  {titulo: 'Entrar na ad zzzz'},
+  {titulo: 'Entrar na Basiada s'},
+  {titulo: 'asd asd aEntrar na Basis'},
+];

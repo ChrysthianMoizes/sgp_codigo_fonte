@@ -10,18 +10,32 @@ export class UsuarioService {
   constructor() {
   }
 
-  getPerfil(id: number): Observable<Usuario> {
-    const perfil = new Usuario();
-    perfil.id = 1;
-    perfil.nome = 'usuário';
-    perfil.email = 'usuário@email.com';
-    perfil.senha = 'senha';
-
-    return of(perfil);
+  findByNome(query: string): Observable<Usuario[]> {
+    return of(
+      USUARIOS.filter(
+        elem => elem.nome.toLowerCase().includes(
+          query.toLowerCase()
+        )
+      ) as Usuario[]
+    );
   }
 
-  updatePefil(perfil: Usuario): Observable<void> {
-    return of();
+  show(i: number) {
+    return of(USUARIOS[i]);
   }
 
 }
+
+const USUARIOS = [{
+  nome: 'tito',
+  email: 'flavio',
+  id: 1,
+  senha: '123',
+  cpf: '123',
+  permissao: 'true'
+},
+  {nome: 'flavio', cpf: '12312321'},
+  {nome: 'jean'},
+  {nome: 'xandao'},
+  {nome: 'crithian'}
+];

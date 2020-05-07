@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Usuario } from 'src/app/models/usuario.model';
-import { Prova } from 'src/app/models/prova.model';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { ProvaService } from 'src/app/services/prova.service';
-import { Avaliacao } from 'src/app/models/avaliacao.model';
-import { AvaliacaoService } from 'src/app/services/avaliacao.service';
-import { AlertService } from '../alert/alert.service';
-import { LoadingService } from '../loading/loading.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable, of} from 'rxjs';
+import {AlertService} from '../../../../components/alert/alert.service';
+import {LoadingService} from '../../../../components/loading/loading.service';
+import {Prova} from '../../../prova/models/prova.model';
+import {ProvaService} from '../../../prova/service/prova.service';
+import {Usuario} from '../../../usuario/models/usuario';
+import {UsuarioService} from '../../../usuario/service/usuario.service';
+import {Avaliacao} from '../../models/avaliacao';
+import {AvaliacaoService} from '../../service/avaliacao.service';
 
 @Component({
   selector: 'app-cadastrar-avaliacao',
@@ -16,7 +17,7 @@ import { LoadingService } from '../loading/loading.service';
 })
 export class CadastrarAvaliacaoComponent implements OnInit {
 
-  @Input() avaliacaoSendoEditada: Avaliacao;
+  @Input() avaliacaoSendoEditada: any;
   @Input() viewOnly = false;
   avaliacaoForm: FormGroup;
   usuariosFiltrados: Usuario[];
@@ -29,7 +30,8 @@ export class CadastrarAvaliacaoComponent implements OnInit {
     private avaliacaoService: AvaliacaoService,
     private alertService: AlertService,
     private loadingService: LoadingService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.avaliacaoForm = this.fb.group({
@@ -50,7 +52,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
 
   cadastrarNovaAvaliacao(avaliacao: Avaliacao): void {
     this.avaliacaoService.create(avaliacao).subscribe({
-      next: avaliacao => {
+      next: () => {
         this.alertService.montarAlerta('success', 'Sucesso!', 'Prova cadastrada com sucesso!');
         this.avaliacaoForm.reset();
       },
@@ -62,7 +64,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
 
   atualizarAvaliacao(avaliacao: Avaliacao): void {
     this.avaliacaoService.update(avaliacao).subscribe({
-      next: avaliacao => {
+      next: () => {
         this.alertService.montarAlerta('success', 'Sucesso!', 'Prova atualizada com sucesso!');
         this.avaliacaoForm.reset();
       },
@@ -76,8 +78,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
     this.loadingService.activate();
     if (!this.avaliacaoSendoEditada) {
       this.cadastrarNovaAvaliacao(this.avaliacaoForm.value);
-    }
-    else {
+    } else {
       this.atualizarAvaliacao({
         ...this.avaliacaoForm.value,
         id: this.avaliacaoSendoEditada.id
@@ -122,7 +123,9 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   }
 
   get titulo(): string {
-    return `${this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'} avaliação`
+    return `${this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'} avaliação`;
   }
 
+
 }
+

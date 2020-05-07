@@ -3,7 +3,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {MessageService} from 'primeng/api';
+import {AutoCompleteModule} from 'primeng';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {AppComponent} from './app.component';
 import {AppRoutes} from './app.routes';
 import {AlertComponent} from './components/alert/alert.component';
@@ -15,6 +16,7 @@ import {LoadingComponent} from './components/loading/loading.component';
 import {LoadingService} from './components/loading/loading.service';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {NotfoundComponent} from './components/notfound/notfound.component';
+import {CadastrarAvaliacaoComponent} from './pages/avaliacao/forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
 import {CadastrarProvaComponent} from './pages/prova/cadastrar-prova.component';
 import {ListarProvasComponent} from './pages/prova/list/listar-provas.component';
 import {UsuarioComponent} from './pages/usuario/usuario.component';
@@ -34,7 +36,8 @@ import {AuthService} from './services/auth.service';
     CadastrarProvaComponent,
     AlertComponent,
     LoadingComponent,
-    ListarProvasComponent
+    ListarProvasComponent,
+    CadastrarAvaliacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import {AuthService} from './services/auth.service';
     FormsModule,
     NgxSpinnerModule,
     PrimengModule,
-    AppRoutes
+    AppRoutes,
+    AutoCompleteModule
   ],
   providers: [
     AuthService,
@@ -51,7 +55,8 @@ import {AuthService} from './services/auth.service';
     MessageService,
     LoadingService,
     BreadcrumbService,
-    MessageService
+    MessageService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,8 +1,17 @@
-<button id="buttonNew" label="Novo" pButton></button>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+<app-loading></app-loading>
+<app-alert></app-alert>
+<button id="buttonNew" label="Novo" (click)="cadastrarProva()" pButton></button>
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
-    <p-table [(selection)]="provasSelecionadas" [columns]="definicaoColunas" [value]="provas"
-             paginator="true" rows=20 selectionMode="multiple">
+    <p-table
+      [(selection)]="provasSelecionadas"
+      [columns]="definicaoColunas"
+      [value]="provas"
+      paginator="true"
+      rows="20"
+      selectionMode="multiple"
+    >
       <ng-template let-colunas pTemplate="header">
         <tr>
           <th *ngFor="let coluna of colunas">
@@ -20,11 +29,34 @@
     </p-table>
   </div>
   <div class="p-col-1" id="botoes">
-    <button [disabled]="!isAtLeastOneSelected()" class="ui-button-rounded " icon="pi pi-trash" id="buttonDelete"
-            pButton></button>
-    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-pencil" id="buttonEdit"
-            pButton></button>
-    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-eye" id="buttonVisualize"
-            pButton></button>
+    <button
+      [disabled]="!isAtLeastOneSelected()"
+      class="ui-button-rounded"
+      icon="pi pi-trash"
+      id="buttonDelete"
+      (click)="excluirProva()"
+      pButton
+    ></button>
+    <button
+      [disabled]="!isOneSelected()"
+      class="ui-button-rounded"
+      icon="pi pi-pencil"
+      id="buttonEdit"
+      (click)="editarProva()"
+      pButton
+    ></button>
+    <button
+      [disabled]="!isOneSelected()"
+      class="ui-button-rounded"
+      icon="pi pi-eye"
+      id="buttonVisualize"
+      (click)="visualizarProva()"
+      pButton
+    ></button>
   </div>
 </div>
+
+<app-cadastrar-prova
+  #dialogProvaForm
+  (retornarProva)="atualizarListagem()"
+></app-cadastrar-prova>

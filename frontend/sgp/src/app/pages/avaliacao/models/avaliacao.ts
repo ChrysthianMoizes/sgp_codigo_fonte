@@ -1,5 +1,5 @@
-import {Usuario} from '../../../models/usuario.model';
 import {Prova} from '../../prova/models/prova.model';
+import {Usuario} from '../../usuario/models/usuario';
 
 export class Avaliacao {
   id: number;
