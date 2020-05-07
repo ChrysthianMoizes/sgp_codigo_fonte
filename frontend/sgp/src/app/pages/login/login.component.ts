@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/stores/login/login.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,7 @@ export class LoginComponent implements OnInit {
 
   necessitaCabecalho = true;
 
-  usuario: any = {
-    email: '',
-    senha: ''
-  }
+  usuario: Usuario = new Usuario();
 
   requisitarLogin(formLogin: any){
     this.loginService.logar(this.usuario.email, this.usuario.senha).subscribe(

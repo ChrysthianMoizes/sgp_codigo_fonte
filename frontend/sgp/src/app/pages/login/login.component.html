@@ -13,7 +13,7 @@
       <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
       <span class="ui-float-label" >
         <input id="email-input" class="borderInput" type="text"
-         name="email" size="27" pInputText [ngModel]="usuario.email" required email #email="ngModel">
+         name="email" size="27" pInputText [(ngModel)]="usuario.email" required email #email="ngModel">
          <label for="email-input" class="caracteres">E-mail</label>
       </span>
     </div>
@@ -27,7 +27,7 @@
         <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
         <span class="ui-float-label" >
         <input for="senha-input" class="borderInput" type="password"
-        name="senha" size="27" maxlength="20" pInputText [ngModel]="usuario.senha" required #senha="ngModel">
+        name="senha" size="27" maxlength="20" pInputText [(ngModel)]="usuario.senha" required #senha="ngModel">
         <label id="senha-input" class="caracteres">Senha</label>
         </span>
       </div>
