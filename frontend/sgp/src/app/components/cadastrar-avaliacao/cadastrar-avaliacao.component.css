@@ -1,0 +1,14 @@
+footer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+
+section {
+  margin-top: 16px;
+  display: flex;
+}
+
+span {
+  margin-right: 8px;
+}
