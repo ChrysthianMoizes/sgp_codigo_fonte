@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CadastroUsuarioService } from 'src/app/stores/cadastro/cadastro-usuario.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Usuario } from 'src/app/models/usuario.model';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -8,15 +8,20 @@ import { CadastroUsuarioService } from 'src/app/stores/cadastro/cadastro-usuario
 })
 export class FormCadastroComponent implements OnInit {
 
-  constructor(private cadastroService: CadastroUsuarioService) {
+  @Input() usuario: Usuario;
+  @Input() modo: string;
+  @Output() cadastrarUsuario = new EventEmitter();
+
+  constructor() {
 
   }
 
-  cadastrar(){
-    this.cadastroService.cadastrar().subscribe(response => {alert(response)})
+
+  ngOnInit(){
   }
 
-  ngOnInit(): void {
+  save(){
+    this.cadastrarUsuario.emit(this.usuario)
   }
 
 }

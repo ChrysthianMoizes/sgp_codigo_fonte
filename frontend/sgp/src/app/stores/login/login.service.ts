@@ -17,11 +17,15 @@ export class LoginService {
     const user= {
       id: 1,
       nome: "abc",
-      senha: "123",
-      email: "abc@ho",
+      senha: senha,
+      // senha: "123",
+      // email: "abc@ho",
+      email: email,
       cpf: "321",
       permissao: "ROLE_ADMIN",
     }
+    console.log(user);
+
     return of<Usuario>(user)
 
   }
