@@ -13,7 +13,7 @@ export class VisualizarCandidatoComponent implements OnInit {
   constructor(private candidatoService: ListarCandidatosService) { }
   usuario = new Usuario();
   @Output() editarCandidato = new EventEmitter();
-  edicao: string;
+  modo: string;
   visible = false;
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class VisualizarCandidatoComponent implements OnInit {
   openDialog(usuario: Usuario, edicao: string) {
     this.visible = true;
     this.usuario = usuario;
-    this.edicao = edicao;
+    this.modo = edicao;
   }
 
   save() {
