@@ -24,7 +24,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   provasFiltradas: Prova[];
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private provaService: ProvaService,
     private avaliacaoService: AvaliacaoService,
@@ -34,7 +34,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.avaliacaoForm = this.fb.group({
+    this.avaliacaoForm = this.formBuilder.group({
       usuario: ['', Validators.required],
       prova: ['', Validators.required]
     });
@@ -51,27 +51,27 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   }
 
   cadastrarNovaAvaliacao(avaliacao: Avaliacao): void {
-    this.avaliacaoService.create(avaliacao).subscribe({
-      next: () => {
+    this.avaliacaoService.create(avaliacao).subscribe(
+      () => {
         this.alertService.montarAlerta('success', 'Sucesso!', 'Prova cadastrada com sucesso!');
         this.avaliacaoForm.reset();
       },
-      error: err => {
+      err => {
         this.alertService.montarAlerta('error', 'Error!', 'Confira seus dados e tente novamente.');
       }
-    }).add(() => this.loadingService.deactivate());
+    ).add(() => this.loadingService.deactivate());
   }
 
   atualizarAvaliacao(avaliacao: Avaliacao): void {
-    this.avaliacaoService.update(avaliacao).subscribe({
-      next: () => {
+    this.avaliacaoService.update(avaliacao).subscribe(
+      () => {
         this.alertService.montarAlerta('success', 'Sucesso!', 'Prova atualizada com sucesso!');
         this.avaliacaoForm.reset();
       },
-      error: err => {
+      err => {
         this.alertService.montarAlerta('error', 'Error!', 'Confira seus dados e tente novamente.');
       }
-    }).add(() => this.loadingService.deactivate());
+    ).add(() => this.loadingService.deactivate());
   }
 
   onSubmit(): void {

@@ -6,8 +6,7 @@ import {LoadingService} from '../../../components/loading/loading.service';
 import {CadastrarProvaComponent} from '../cadastrar-prova.component';
 import {Prova} from '../models/prova.model';
 import {ProvaService} from '../service/prova.service';
-// TODO: colocar cores padrão no componente
-// TODO: resolver layout espaçado em casos de muito texto
+
 @Component({
   selector: 'app-listar-provas',
   templateUrl: './listar-provas.component.html',

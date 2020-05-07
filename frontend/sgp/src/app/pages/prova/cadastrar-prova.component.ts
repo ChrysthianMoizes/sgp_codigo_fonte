@@ -13,12 +13,11 @@ import {ProvaService} from './service/prova.service';
   styleUrls: ['./cadastrar-prova.component.css'],
 })
 export class CadastrarProvaComponent implements OnInit {
-  @Input() provaSendoEditada;
+  @Input() provaSendoEditada: Prova;
   provaForm: FormGroup;
   visualizando;
   edicao;
   modoDialog: number;
-  //1-Cadastro,2-Edicao,3-Visualizar
 
   @Output() retornarProva = new EventEmitter();
 
@@ -29,7 +28,7 @@ export class CadastrarProvaComponent implements OnInit {
   exibir = false;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private provaService: ProvaService,
     private alertService: AlertService,
     private loadingService: LoadingService,
@@ -73,7 +72,7 @@ export class CadastrarProvaComponent implements OnInit {
     this.questaoService
       .getNumberOfElements()
       .subscribe((total) => (this.totalDeQuestoes = total));
-    this.provaForm = this.fb.group({
+    this.provaForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       percentualDeAprovacao: ['', Validators.required],
     });
@@ -94,7 +93,7 @@ export class CadastrarProvaComponent implements OnInit {
       this.edicao = false;
       this.visualizando = false;
       this.exibir = true;
-      //novo
+      // novo
     } else if (modo === 2) {
       this.edicao = true;
       this.visualizando = false;
@@ -135,8 +134,8 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   cadastrarNovo(prova: Prova): void {
-    this.provaService.create(prova).subscribe({
-      next: () => {
+    this.provaService.create(prova).subscribe(
+      () => {
         this.loadingService.deactivate();
         this.provaForm.reset();
         this.alertService.montarAlerta(
@@ -145,15 +144,15 @@ export class CadastrarProvaComponent implements OnInit {
           'Prova cadastrada com suscesso!'
         );
       },
-      error: (err) => {
+      (err) => {
         this.alertService.montarAlerta('error', 'Error!', err);
       },
-    });
+    );
   }
 
   atualizarProva(prova: Prova): void {
-    this.provaService.update(prova).subscribe({
-      next: () => {
+    this.provaService.update(prova).subscribe(
+      () => {
         this.loadingService.deactivate();
         this.provaForm.reset();
         this.alertService.montarAlerta(
@@ -162,10 +161,10 @@ export class CadastrarProvaComponent implements OnInit {
           'Prova atualizada com suscesso!'
         );
       },
-      error: (err) => {
+      (err) => {
         this.alertService.montarAlerta('error', 'Error!', err);
-      },
-    });
+      }
+    );
   }
 
   onSubmit(): void {
