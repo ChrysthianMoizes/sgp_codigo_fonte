@@ -1,9 +1,9 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {MenuItem} from 'primeng/api/menuitem';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { isNullOrUndefined } from 'util';
-import { Observable } from 'rxjs';
-import { BreadcrumbService } from 'src/app/services/breadcrumb.service';
+import {Observable} from 'rxjs';
+import {BreadcrumbService} from 'src/app/components/breadcrumb/breadcrumb.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -21,11 +21,10 @@ export class BreadcrumbComponent implements OnInit {
 
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
-  menuItem: MenuItem[]
 
   ngOnInit(): void {
-    setTimeout(() =>{
-      this.breadcrumb.setCrumbs(this.createBreadcrumbs(this.activatedRoute.root))
+    setTimeout(() => {
+      this.breadcrumb.setCrumbs(this.createBreadcrumbs(this.activatedRoute.root));
     });
     this.crumbs$ = this.breadcrumb.crumbs$;
   }
