@@ -1,13 +1,7 @@
-<p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '85%'}">
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{width: 'auto'}">
 
   <div class="formulario">
-    <h1>Formulário</h1>
+    <app-form-cadastro [usuario]='usuario' (cadastrarUsuario)='save()'></app-form-cadastro>
   </div>
-
-  <div *ngIf='!edicao' class="listarAvaliacoes">
-    <h1>Listagem</h1>
-  </div>
-
-  <button (click)='close()'>Fechar</button>
 
 </p-dialog>

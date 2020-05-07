@@ -35,11 +35,11 @@ export class CandidatosComponent implements OnInit {
   }
 
   viewCandidato(candidato: Usuario) {
-    this.visualizarCandidato.openDialog(candidato, false);
+    this.visualizarCandidato.openDialog(candidato, 'visualizar');
   }
 
   editCandidato(candidato: Usuario) {
-    this.alert.montarAlerta('success', 'Sucesso', `${candidato.nome} editado com sucesso`)
+    this.visualizarCandidato.openDialog(candidato, 'editar');
   }
 
   deleteCandidato(candidatos: Usuario[]) {

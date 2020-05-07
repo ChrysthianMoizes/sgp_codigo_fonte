@@ -11,21 +11,23 @@ import { ListarCandidatosService } from 'src/app/stores/candidatos/listar-candid
 export class VisualizarCandidatoComponent implements OnInit {
 
   constructor(private candidatoService: ListarCandidatosService) { }
-  usuario: Usuario;
-  edicao: boolean;
+  usuario = new Usuario();
+  edicao: string;
   visible = false;
 
   ngOnInit(): void {
   }
 
-  openDialog(usuario: Usuario, edicao: boolean) {
+  openDialog(usuario: Usuario, edicao: string) {
+    this.visible = true;
     this.usuario = usuario;
     this.edicao = edicao;
-    this.visible = true;
   }
 
   close() {
     this.visible = false;
   }
+
+  save() { }
 
 }
