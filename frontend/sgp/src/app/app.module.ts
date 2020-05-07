@@ -8,8 +8,10 @@ import { AlertComponent } from './components/alert/alert.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 
+import { DialogModule } from 'primeng/dialog';
+
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -31,7 +33,8 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import { DialogModule } from 'primeng/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { ListarAvaliacaoComponent } from './pages/avaliação/list/listar-avaliacao/listar-avaliacao.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import { DialogModule } from 'primeng/dialog';
     AlertComponent,
     QuestaoListarComponent,
     QuestaoComponent,
+    ListarAvaliacaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,8 @@ import { DialogModule } from 'primeng/dialog';
     RadioButtonModule,
     DynamicDialogModule,
     DialogModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService],
   bootstrap: [AppComponent],
