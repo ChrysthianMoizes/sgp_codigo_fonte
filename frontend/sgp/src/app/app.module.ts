@@ -26,7 +26,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-avaliacao.component';
+import { ListarAvaliacaoComponent } from './pages/avaliação/list/listar-avaliacao/listar-avaliacao.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +38,9 @@ import { ListarAvaliacaoComponent } from './components/listar-avaliacao/listar-a
     BreadcrumbComponent,
     NotfoundComponent,
     AlertComponent,
-    ListarAvaliacaoComponent,
     QuestaoListarComponent,
     QuestaoComponent,
+    ListarAvaliacaoComponent,
   ],
   imports: [
     BrowserModule,
