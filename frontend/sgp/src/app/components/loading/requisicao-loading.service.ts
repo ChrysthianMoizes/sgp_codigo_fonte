@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { LoadingService } from './loading.service';
-import { of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {of} from 'rxjs';
+import {LoadingService} from './loading.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RequisicaoLoadingService {
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService) {
+  }
 
   requisicaoLoading() {
     this.loadingService.activate();

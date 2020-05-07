@@ -1,7 +1,7 @@
-import {Location} from "@angular/common";
+import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
-import {Perfil} from "../../models/perfil";
-import {PerfilService} from "../../services/perfil.service";
+import {Perfil} from '../../models/perfil';
+import {PerfilService} from '../../services/perfil/perfil.service';
 
 @Component({
   selector: 'app-perfil',
@@ -13,16 +13,16 @@ export class PerfilComponent implements OnInit {
   perfil: Perfil = new Perfil();
 
   constructor(
-    private _perfilStore: PerfilService,
-    private _location: Location
+    private perfilService: PerfilService,
+    private location: Location
     // authStore: AuthStore
   ) {
   }
 
   ngOnInit(): void {
-    this._perfilStore.obterPerfil(1).subscribe(perfil => {
+    this.perfilService.getPerfil(1).subscribe(perfil => {
       this.perfil = perfil;
-    })
+    });
   }
 
   onSubmit() {
@@ -30,7 +30,7 @@ export class PerfilComponent implements OnInit {
   }
 
   onCancel() {
-    this._location.back();
+    this.location.back();
   }
 
 }
