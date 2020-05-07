@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/stores/login/login.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Usuario } from 'src/app/models/usuario.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService, private authService: AuthService) { }
+  constructor(private loginService: LoginService, private authService: AuthService, private router: Router) { }
 
   necessitaCabecalho = true;
 
@@ -19,8 +20,8 @@ export class LoginComponent implements OnInit {
   requisitarLogin(formLogin: any){
     this.loginService.logar(this.usuario.email, this.usuario.senha).subscribe(
       response => {
-        this.authService.setUsuarioSessionStorage(response);
-        console.log(response);
+        this.authService.setUsuarioSessionStorage(response),
+        this.router.navigate(["home"]);
       }
     )
   }
