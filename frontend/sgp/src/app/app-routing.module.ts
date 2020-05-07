@@ -3,46 +3,23 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 const routes: Routes = [
-{path: '',
-  pathMatch: 'full',
-  redirectTo: 'home'
-},
-{
-  path: '',
-  component: LayoutComponent,
-  children:[
-    {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home', toplayout: false}},
-    {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil', toplayout:true}}
-  ]}
-  /*,
-  {
-    path: 'login',
-    component: },
-  {
-    path: 'cadastro',
-    component:},
-  {
-    path: 'reenviaremail',
-    component:
+  {path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
   },
   {
-    path: 'resetarsenha',
-    component:
-  },
-  {
-    path: 'home',
-    component:
-  },
-  {
-    path: 'perfil',
-    component:
-  },
-  {
-    path: 'not-found',
-    component:
-  }*/
+    path: '',
+    component: LayoutComponent,
+    children:[
+      {path: 'home', component: HomeComponent , data:{ breadcrumb: 'Home', toplayout: true}},
+      {path: 'perfil', component: PerfilComponent, data: {breadcrumb: 'Perfil', toplayout:true}},
+      {path: 'notFound', component: NotfoundComponent, data:{breadcrumb: 'Not Found', toplayout: true}},
+      {path: '**', redirectTo: 'notFound'}
+    ]
+  }
 ];
 
 @NgModule({
@@ -51,3 +28,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
 }
+
