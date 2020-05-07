@@ -20,6 +20,11 @@ export class ProvaService {
     return of(true);
   }
 
+  update(prova: Prova): Observable<any> {
+    console.log(prova);
+    return of(true);
+  }
+
   getNumberOfElements(): Observable<number> {
     return of(QUESTOES.length);
   }
