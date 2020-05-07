@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
 
 const routes: Routes = [
   {path: '',
@@ -22,10 +22,5 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {
-}
+export const AppRoutes: ModuleWithProviders = RouterModule.forRoot(routes);
 

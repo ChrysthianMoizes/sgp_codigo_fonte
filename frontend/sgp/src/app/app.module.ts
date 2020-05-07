@@ -8,7 +8,6 @@ import {MessageService} from 'primeng/api';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {MenuModule} from 'primeng/menu';
 import {ToastModule} from 'primeng/toast';
-import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AlertComponent} from './components/alert/alert.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
@@ -25,6 +24,7 @@ import { CadastrarProvaComponent } from './components/cadastrar-prova/cadastrar-
 import { LoadingComponent } from './components/loading/loading.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { PickListModule } from 'primeng/picklist';
+import { AppRoutes } from './app.routes';
 
 @NgModule({
   declarations: [
@@ -37,11 +37,10 @@ import { PickListModule } from 'primeng/picklist';
     NotfoundComponent,
     CadastrarProvaComponent,
     AlertComponent,
-    LoadingComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     PaginatorModule,
     ReactiveFormsModule,
     PickListModule,
@@ -53,7 +52,8 @@ import { PickListModule } from 'primeng/picklist';
     BreadcrumbModule,
     FormsModule,
     NgxSpinnerModule,
-    ToastModule
+    ToastModule,
+    AppRoutes
   ],
   providers: [AuthService, AuthGuard, MessageService, LoadingService,BreadcrumbService],
   bootstrap: [AppComponent],
