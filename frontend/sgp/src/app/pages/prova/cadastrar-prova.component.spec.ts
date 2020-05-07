@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PerfilComponent} from './perfil.component';
+import {CadastrarProvaComponent} from './cadastrar-prova.component';
 
-describe('PerfilComponent', () => {
-  let component: PerfilComponent;
-  let fixture: ComponentFixture<PerfilComponent>;
+describe('CadastrarProvaComponent', () => {
+  let component: CadastrarProvaComponent;
+  let fixture: ComponentFixture<CadastrarProvaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PerfilComponent]
+      declarations: [CadastrarProvaComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PerfilComponent);
+    fixture = TestBed.createComponent(CadastrarProvaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

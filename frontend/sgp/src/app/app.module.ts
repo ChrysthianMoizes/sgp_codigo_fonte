@@ -1,53 +1,63 @@
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingService } from './components/loading/loading.service';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { AlertComponent } from './components/alert/alert.component';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/auth.guard';
-
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ButtonModule, CardModule, InputTextModule} from 'primeng';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
-import {MenuModule} from 'primeng/menu';
-import {AppRoutingModule} from './app-routing.module';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {AutoCompleteModule} from 'primeng';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {AppComponent} from './app.component';
+import {AppRoutes} from './app.routes';
+import {AlertComponent} from './components/alert/alert.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
+import {BreadcrumbService} from './components/breadcrumb/breadcrumb.service';
+import {HomeComponent} from './components/home/home.component';
 import {LayoutComponent} from './components/layout/layout.component';
+import {LoadingComponent} from './components/loading/loading.component';
+import {LoadingService} from './components/loading/loading.service';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
-import {PerfilComponent} from './components/perfil/perfil.component';
-import {HomeComponent} from './pages/home/home.component';
-import {NotfoundComponent} from './pages/notfound/notfound.component';
+import {NotfoundComponent} from './components/notfound/notfound.component';
+import {CadastrarAvaliacaoComponent} from './pages/avaliacao/forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
+import {CadastrarProvaComponent} from './pages/prova/cadastrar-prova.component';
+import {ListarProvasComponent} from './pages/prova/list/listar-provas.component';
+import {UsuarioComponent} from './pages/usuario/usuario.component';
+import {PrimengModule} from './primeng.module';
+import {AuthGuard} from './services/auth.guard';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PerfilComponent,
+    UsuarioComponent,
     LayoutComponent,
     NavBarComponent,
     BreadcrumbComponent,
     NotfoundComponent,
+    CadastrarProvaComponent,
     AlertComponent,
-
+    LoadingComponent,
+    ListarProvasComponent,
+    CadastrarAvaliacaoComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    CardModule,
-    InputTextModule,
-    ButtonModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
-    MenuModule,
-    BreadcrumbModule,
     FormsModule,
     NgxSpinnerModule,
-    ToastModule,
+    PrimengModule,
+    AppRoutes,
+    AutoCompleteModule
   ],
-  providers: [AuthService, AuthGuard, MessageService, LoadingService],
+  providers: [
+    AuthService,
+    AuthGuard,
+    MessageService,
+    LoadingService,
+    BreadcrumbService,
+    MessageService,
+    ConfirmationService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

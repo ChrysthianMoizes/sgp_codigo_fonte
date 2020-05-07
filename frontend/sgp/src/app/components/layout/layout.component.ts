@@ -7,10 +7,16 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
+  public exibirTopLayout: boolean;
+
   constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  shownav(event: any) {
+    this.exibirTopLayout = event;
   }
 
 }
