@@ -27,6 +27,7 @@ import { QuestaoListarComponent } from './pages/questao/list/questao-listar.comp
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
+import { ListarAvaliacaoComponent } from './pages/avaliação/list/listar-avaliacao/listar-avaliacao.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     AlertComponent,
     QuestaoListarComponent,
     QuestaoComponent,
+    ListarAvaliacaoComponent,
   ],
   imports: [
     BrowserModule,
