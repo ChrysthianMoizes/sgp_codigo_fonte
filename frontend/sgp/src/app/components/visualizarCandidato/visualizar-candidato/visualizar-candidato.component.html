@@ -1,0 +1,13 @@
+<p-dialog [modal]="true" [(visible)]="visible" [style]="{width: '85%'}">
+
+  <div class="formulario">
+    <h1>Formulário</h1>
+  </div>
+
+  <div *ngIf='!edicao' class="listarAvaliacoes">
+    <h1>Listagem</h1>
+  </div>
+
+  <button (click)='close()'>Fechar</button>
+
+</p-dialog>

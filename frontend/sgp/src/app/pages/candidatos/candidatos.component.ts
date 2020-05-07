@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { ListarCandidatosService } from 'src/app/stores/candidatos/listar-candidatos.service';
-
+import { DialogService } from 'primeng/dynamicdialog';
+import { VisualizarCandidatoComponent } from 'src/app/components/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
 @Component({
   selector: 'app-candidatos',
   templateUrl: './candidatos.component.html',
@@ -14,7 +15,10 @@ export class CandidatosComponent implements OnInit {
     private alert: AlertService,
     private candidatoService: ListarCandidatosService
   ) { }
+
+  @ViewChild('VisualizarCandidato') visualizarCandidato: VisualizarCandidatoComponent;
   candidatos: Usuario[];
+
   ngOnInit(): void {
     this.getCandidatos();
   }
@@ -31,7 +35,7 @@ export class CandidatosComponent implements OnInit {
   }
 
   viewCandidato(candidato: Usuario) {
-    this.alert.montarAlerta('success', 'Sucesso', `${candidato.nome} listado com sucesso`);
+    this.visualizarCandidato.openDialog(candidato, false);
   }
 
   editCandidato(candidato: Usuario) {

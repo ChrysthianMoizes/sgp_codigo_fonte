@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,6 +39,7 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.service';
 import { CandidatosComponent } from './pages/candidatos/candidatos.component';
+import { VisualizarCandidatoComponent } from './components/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { CandidatosComponent } from './pages/candidatos/candidatos.component';
     NotfoundComponent,
     AlertComponent,
     ListarCandidatosComponent,
-    CandidatosComponent
+    CandidatosComponent,
+    VisualizarCandidatoComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ import { CandidatosComponent } from './pages/candidatos/candidatos.component';
     MenuModule,
     BrowserAnimationsModule,
     BreadcrumbModule,
-    TableModule
+    TableModule,
+    DialogModule
   ],
   providers: [
     ReenviarEmailService,
@@ -84,7 +88,10 @@ import { CandidatosComponent } from './pages/candidatos/candidatos.component';
     AuthGuard,
     MessageService,
     LoadingService,
-    ListarCandidatosService
+    ListarCandidatosService,
+  ],
+  entryComponents: [
+    VisualizarCandidatoComponent
   ],
   bootstrap: [AppComponent],
 })
