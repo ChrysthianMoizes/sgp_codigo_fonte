@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   usuario: Usuario = new Usuario();
 
-  requisitarLogin(formLogin: any){
+  requisitarLogin(){
     this.loginService.logar(this.usuario.email, this.usuario.senha).subscribe(
       response => {
         this.authService.setUsuarioSessionStorage(response),
