@@ -6,7 +6,7 @@
     </span>
   </div>
 
-<form #formLogin="ngForm" (ngSubmit)="requisitarLogin(formLogin)" autocomplete="off">
+<form #formLogin="ngForm" (ngSubmit)="requisitarLogin()" autocomplete="off">
 
   <div class="form-group" class="espacamento" >
     <div class="ui-inputgroup">
@@ -46,9 +46,9 @@
 
   <p-footer>
     <div>
-      <span><p><a routerLink="/login/cadastro" routerLinkActive="active" class="caracteres">Cadastrar</a></p></span>
-      <span><p><a routerLink="/login/resetarsenha" routerLinkActive="active" class="caracteres">Esqueci minha senha</a></p></span>
-      <span><p><a routerLink="/login/reenviaremail" routerLinkActive="active" class="caracteres">Reeviar e-mail de ativação</a></p></span>
+      <span><p><a routerLink="/cadastro" routerLinkActive="active" class="caracteres">Cadastrar</a></p></span>
+      <span><p><a routerLink="/resetarsenha" routerLinkActive="active" class="caracteres">Esqueci minha senha</a></p></span>
+      <span><p><a routerLink="/reenviaremail" routerLinkActive="active" class="caracteres">Reeviar e-mail de ativação</a></p></span>
     </div>
   </p-footer>
 
