@@ -14,7 +14,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {label: 'Logout', command: this.onLogout}
-    ]
+    ];
   }
 
   onLogout(event): void {
