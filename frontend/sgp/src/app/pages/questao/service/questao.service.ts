@@ -217,45 +217,49 @@ export class QuestaoService {
     },
   ];
 
-  public getQuestoes(): Observable<any> {
+  public getQuestoes(): Observable<Questao[]> {
     return of(this.questoes);
   }
 
-  public getQuestaoById(id: number): Questao {
+  public getQuestaoById(id: number): Observable<Questao> {
     this.questoes.forEach((element) => {
       if (id == element.id) {
-        return element;
+        return of(element);
       }
     });
-    return new Questao();
+    return of(new Questao());
   }
-  public criarQuestao(questao: Questao): Questao {
+  public criarQuestao(questao: Questao): Observable<Questao> {
     questao.id = this.idQuestao + 1;
     this.questoes.push(questao);
     this.idQuestao++;
-    return questao;
+    return of(questao);
   }
 
   public deletarQuestao(element: Questao): Observable<any> {
     const pos = this.questoes.indexOf(element);
-    console.log(pos);
     if (pos != -1) {
       this.questoes.splice(pos, 1);
     }
     return of(null);
   }
 
-  public atualizarQuestao(questao: Questao): Questao {
-    let questaoPut: Questao = this.getQuestaoById(questao.id);
-    questaoPut.alternativa1 = questao.alternativa1;
-    questaoPut.alternativa2 = questao.alternativa2;
-    questaoPut.alternativa3 = questao.alternativa3;
-    questaoPut.alternativa4 = questao.alternativa4;
-    questaoPut.alternativa5 = questao.alternativa5;
-    questaoPut.resposta = questao.resposta;
-    questaoPut.descricao = questao.descricao;
-    questaoPut.senioridade = questao.senioridade;
-    questaoPut.tipoQuestao = questao.tipoQuestao;
-    return questaoPut;
+  public atualizarQuestao(questao: Questao): Observable<Questao> {
+    let questaoPut: Questao;
+    this.questoes.forEach((element) => {
+      if (element.id == questao.id) {
+        element.alternativa2 = questao.alternativa2;
+        element.alternativa3 = questao.alternativa3;
+        element.alternativa4 = questao.alternativa4;
+        element.alternativa1 = questao.alternativa1;
+        element.alternativa5 = questao.alternativa5;
+        element.resposta = questao.resposta;
+        element.descricao = questao.descricao;
+        element.senioridade = questao.senioridade;
+        element.tipoQuestao = questao.tipoQuestao;
+        return of(element);
+      }
+    });
+    return of(questaoPut);
   }
 }

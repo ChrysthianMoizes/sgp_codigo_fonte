@@ -1,10 +1,11 @@
+import { Questao } from './../models/questao';
 import { AlertService } from './../../../components/alert/alert.service';
 import { QuestaoComponent } from './../form/questao.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng';
 
 import { QuestaoService } from '../service/questao.service';
-import { Questao } from '../models/questao';
+import { ObjectUtil } from 'src/app/services/object-util.service';
 
 @Component({
   selector: 'app-questao-listar',
@@ -13,142 +14,13 @@ import { Questao } from '../models/questao';
   providers: [DialogService],
 })
 export class QuestaoListarComponent implements OnInit {
-  questoes = [
-    {
-      id: 2,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 3,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-    {
-      id: 1,
-      senioridade: 'JUNIOR',
-      tipo_questao: 'Codificação',
-      descricao: 'Qual é a: ',
-    },
-  ];
-
-  //questoes: any[];
-  questoesSelecionadas: any[] = [];
-
+  questoesSelecionadas: Questao[] = [];
+  questoes: Questao[];
   definicaoColunas: any[];
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   constructor(
+    private objectUtil: ObjectUtil,
     private alertService: AlertService,
     private questaoService: QuestaoService,
     public dialogService: DialogService
@@ -158,8 +30,8 @@ export class QuestaoListarComponent implements OnInit {
     this.definicaoColunas = [
       { field: 'id', header: 'Código' },
       { field: 'descricao', header: 'Descrição' },
-      { field: 'senioridade', header: 'Titulo' },
-      { field: 'tipo_questao', header: 'Tipo da Questão' },
+      { field: 'senioridade.descricao', header: 'Senioridade' },
+      { field: 'tipoQuestao.descricao', header: 'Tipo da Questão' },
     ];
 
     this.questaoService.getQuestoes().subscribe((response) => {
@@ -193,18 +65,11 @@ export class QuestaoListarComponent implements OnInit {
         }
       );
     });
+    this.questoesSelecionadas = [];
   }
 
   showDialog(id: string) {
-    this.dialogQuestao.exibirDialog(id, this.questoesSelecionadas);
-
-    // const ref = this.dialogService.open(QuestaoComponent, {
-    //   data: {
-    //     descricao: 'aaaa',
-    //   },
-    //   header: 'Alterar Questão',
-    //   width: '50%',
-    // });
+    this.dialogQuestao.exibirDialog(id, this.questoesSelecionadas[0]);
   }
 
   atualizar() {
@@ -212,8 +77,8 @@ export class QuestaoListarComponent implements OnInit {
     console.log('teste');
   }
 
-  ngOnDestroy() {
-    this.ref.close();
+  habilitar(): boolean {
+    return this.questoesSelecionadas.length > 0;
   }
 
   canEnabled(): boolean {
@@ -224,15 +89,7 @@ export class QuestaoListarComponent implements OnInit {
     this.questaoService.deletarQuestao(this.questoesSelecionadas.pop());
   }
 
-  editarQuestao(): Questao {
-    return this.questaoService.atualizarQuestao(this.questoesSelecionadas[0]);
-  }
-
-  detalheQuestao(): Questao {
-    return this.questaoService.getQuestaoById(this.questoesSelecionadas[0].id);
-  }
-
-  createQuestao(): any {
-    return new QuestaoComponent(this.questaoService);
+  walk(objeto: Object, caminho: string) {
+    return this.objectUtil.walk(objeto, caminho);
   }
 }

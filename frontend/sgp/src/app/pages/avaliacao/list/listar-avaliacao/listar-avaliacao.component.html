@@ -1,7 +1,11 @@
 <button id="buttonNew" label="Novo" pButton (click)="cadastrar()"></button>
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
-    <p-table [value]="avaliacoesRecebidas">
+    <p-table
+      [value]="avaliacoesRecebidas"
+      [(selection)]="avaliacaoSelecionada"
+      selectionMode="single"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>Código</th>
@@ -17,10 +21,10 @@
           [pSelectableRow]="avaliacao"
           *ngFor="let avaliacao of avaliacoesRecebidas"
         >
-          <td>{{ avaliacao.codigo }}</td>
+          <td>{{ avaliacao.id }}</td>
           <td>{{ avaliacao.prova.titulo }}</td>
           <td>{{ avaliacao.candidato.nome }}</td>
-          <td>{{ avaliacao.data.toLocaleDateString() }}</td>
+          <td>{{ avaliacao.dataAvaliacao.toLocaleDateString() }}</td>
           <td>{{ avaliacao.aproveitamento }}</td>
           <td
             *ngIf="
@@ -43,7 +47,7 @@
   <div class="p-col-1" id="botoes">
     <button
       [disabled]="!isOneSelected()"
-      (click)="editar(avaliacao)"
+      (click)="editar()"
       class="ui-button-rounded"
       icon="pi pi-pencil"
       id="buttonEdit"
@@ -51,7 +55,7 @@
     ></button>
     <button
       [disabled]="!isOneSelected()"
-      (click)="exibir(avaliacao)"
+      (click)="exibir()"
       class="ui-button-rounded"
       icon="pi pi-eye"
       id="buttonVisualize"
@@ -62,5 +66,5 @@
 <app-cadastrar-avaliacao
   #cadastroAvaliacao
   [viewOnly]="viewOnly"
-  [avaliacaoSendoEditada]="avaliacaoSendoEditada"
+  [avaliacaoSendoEditada]="avaliacaoSelecionada"
 ></app-cadastrar-avaliacao>

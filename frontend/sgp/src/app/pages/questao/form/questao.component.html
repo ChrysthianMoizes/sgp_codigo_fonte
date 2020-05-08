@@ -27,7 +27,7 @@
               [options]="senioridade"
               optionLabel="descricao"
               placeholder="Selecione uma senioridade"
-              formControlName="senioridadeQ"
+              formControlName="senioridade"
             >
             </p-dropdown>
           </span>
@@ -35,10 +35,10 @@
         <div class="ui-g ui-g-5">
           <span class="ui-float-label dropdown">
             <p-dropdown
-              [options]="tipo_questao"
+              [options]="tipoQuestao"
               optionLabel="descricao"
               placeholder="Selecione o tipo de questão"
-              formControlName="tipo_questaoQ"
+              formControlName="tipoQuestao"
             >
             </p-dropdown>
           </span>
@@ -170,6 +170,15 @@
           class="ui-button-raised margem-top"
           [disabled]="formQuestao.invalid"
           (click)="cadastar()"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          class="ui-button-raised margem-top"
+          (click)="cancelar()"
+          style="margin-left: 15px;"
         ></button>
       </div>
     </form>

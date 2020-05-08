@@ -14,9 +14,8 @@ export class ListarAvaliacaoComponent implements OnInit {
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
   viewOnly: boolean;
-  avaliacaoSendoEditada: Avaliacao;
   avaliacao: Avaliacao[];
-  avaliacaoSelecionadas: Avaliacao[];
+  avaliacaoSelecionada: Avaliacao;
   avaliacoesRecebidas: Avaliacao[];
   ngOnInit(): void {
     this.avaliacaoService.getAvaliacoes().subscribe({
@@ -30,30 +29,23 @@ export class ListarAvaliacaoComponent implements OnInit {
   }
 
   isOneSelected(): boolean {
-    return (
-      this.avaliacaoSelecionadas && this.avaliacaoSelecionadas.length === 1
-    );
-  }
-
-  isAtLeastOneSelected(): boolean {
-    return this.avaliacaoSelecionadas && this.avaliacaoSelecionadas.length >= 1;
+    return this.avaliacaoSelecionada != null;
   }
 
   cadastrar() {
     this.viewOnly = false;
-    this.avaliacaoSendoEditada = null;
+    this.avaliacaoSelecionada = null;
     this.cadastroAvaliacao.abrirDialog();
   }
 
-  editar(avaliacao) {
+  editar() {
     this.viewOnly = false;
-    this.avaliacaoSendoEditada = avaliacao;
     this.cadastroAvaliacao.abrirDialog();
   }
 
-  exibir(avaliacao) {
+  exibir() {
+    console.log(this.viewOnly);
     this.viewOnly = true;
-    this.avaliacaoSendoEditada = avaliacao;
     this.cadastroAvaliacao.abrirDialog();
   }
 }

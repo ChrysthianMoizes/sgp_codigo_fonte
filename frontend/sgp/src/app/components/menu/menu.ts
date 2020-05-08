@@ -16,7 +16,7 @@ menu.push(avaliacao);
 
 const questao = new MenuModel();
 questao.descricao = 'Questão';
-questao.path = '/questao';
+questao.path = '/questoes';
 questao.permissao = true;
 menu.push(questao);
 

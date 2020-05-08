@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../../../components/alert/alert.service';
 import { LoadingService } from '../../../../components/loading/loading.service';
@@ -14,7 +14,7 @@ import { Prova } from 'src/app/pages/prova/models/prova';
   templateUrl: './cadastrar-avaliacao.component.html',
   styleUrls: ['./cadastrar-avaliacao.component.css'],
 })
-export class CadastrarAvaliacaoComponent implements OnInit {
+export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   @Input() avaliacaoSendoEditada: any;
   @Input() viewOnly = false;
   avaliacaoForm: FormGroup;
@@ -30,6 +30,20 @@ export class CadastrarAvaliacaoComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService
   ) {}
+  ngOnChanges(): void {
+    if (this.avaliacaoSendoEditada) {
+      this.avaliacaoForm
+        .get('usuario')
+        .setValue(this.avaliacaoSendoEditada.candidato);
+      this.avaliacaoForm
+        .get('prova')
+        .setValue(this.avaliacaoSendoEditada.prova);
+    }
+
+    if (this.viewOnly) {
+      this.avaliacaoForm.disable();
+    }
+  }
 
   ngOnInit(): void {
     this.avaliacaoForm = this.formBuilder.group({
@@ -70,6 +84,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
             'Prova cadastrada com sucesso!'
           );
           this.avaliacaoForm.reset();
+          this.fecharDialog();
         },
         (err) => {
           this.alertService.montarAlerta(
@@ -93,6 +108,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
             'Prova atualizada com sucesso!'
           );
           this.avaliacaoForm.reset();
+          this.fecharDialog();
         },
         (err) => {
           this.alertService.montarAlerta(
@@ -118,7 +134,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.avaliacaoForm.reset();
+    this.fecharDialog();
   }
 
   updateUsuariosFiltrados(event): void {

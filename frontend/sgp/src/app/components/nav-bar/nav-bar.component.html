@@ -20,27 +20,8 @@
       id="primeiro"
       pButton
       label="{{ menuItem.descricao }}"
-      href="{{ menuItem.path }}"
+      [routerLink]="menuItem.path"
       class="btn-sidebar"
     ></a>
   </div>
 </div>
-
-<!--
-  <a
-    type="button"
-    id="primeiro"
-    pButton
-    label="{{ labelAvaliacao.nome }}"
-    class="btn-sidebar"
-  ></a>
-  <div *ngIf="!isAdmin">
-    <a
-      type="button"
-      *ngFor="let label of labels"
-      pButton
-      label="{{ label.nome }}"
-      class="btn-sidebar"
-      href="{{ label.url }}"
-    ></a>
-  </div> -->

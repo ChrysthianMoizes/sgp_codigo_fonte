@@ -1,5 +1,10 @@
 <app-alert></app-alert>
-<button pButton label="Novo" (click)="showDialog('1')"></button>
+<button
+  pButton
+  label="Novo"
+  (click)="showDialog('1')"
+  class="btn-margin"
+></button>
 <div class="p-grid">
   <div class="p-col-11">
     <p-table
@@ -20,7 +25,7 @@
       <ng-template pTemplate="body" let-questao let-colunas="columns">
         <tr [pSelectableRow]="questao">
           <td *ngFor="let coluna of colunas">
-            {{ questao[coluna.field] }}
+            {{ walk(questao, coluna.field) }}
           </td>
         </tr>
       </ng-template>
@@ -29,6 +34,7 @@
   <div id="botoes" class="p-col-1">
     <button
       (click)="excluir()"
+      [disabled]="!habilitar()"
       pButton
       id="botao1"
       icon="pi pi-trash"
