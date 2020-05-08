@@ -1,14 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {Avaliacao} from '../models/avaliacao';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Avaliacao } from '../models/avaliacao';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AvaliacaoService {
-
-  constructor() {
-  }
+  constructor() {}
 
   create(avaliacao: Avaliacao): Observable<Avaliacao> {
     return of(avaliacao);
@@ -18,4 +16,7 @@ export class AvaliacaoService {
     return of(avaliacao);
   }
 
+  responder(avaliacao: Avaliacao): Observable<Avaliacao> {
+    return of(avaliacao);
+  }
 }
