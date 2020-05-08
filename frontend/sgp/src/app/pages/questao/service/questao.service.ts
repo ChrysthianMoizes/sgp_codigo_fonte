@@ -1,49 +1,265 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Questao } from '../models/questao';
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { retry, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QuestaoService {
+  private URL_API: string = 'http://localhost:8080';
+  private idQuestao: number = 5;
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+  constructor(private http: HttpClient) {}
 
-  constructor() {
+  createQuestao(questao: Questao): Observable<Questao> {
+    return this.http
+      .post(
+        `${this.URL_API}/questoes`,
+        JSON.stringify(questao),
+        this.httpOptions
+      )
+      .pipe(
+        retry(1),
+        map((response: Response) => {
+          return this.convertJSONtoQuestaoModel(response.json());
+        })
+      );
+  }
+
+  changeQuestao(questao: Questao): Observable<Questao> {
+    return this.http
+      .put(
+        `${this.URL_API}/questoes/${questao.id}`,
+        JSON.stringify(questao),
+        this.httpOptions
+      )
+      .pipe(
+        retry(1),
+        map((response: Response) => {
+          return this.convertJSONtoQuestaoModel(response.json());
+        })
+      );
+  }
+
+  deleteQuestao(id: number): Observable<Response> {
+    return this.http
+      .delete(`${this.URL_API}/questoes/${id}`, this.httpOptions)
+      .pipe(
+        retry(1),
+        map((response: Response) => {
+          return response;
+        })
+      );
+  }
+
+  pesquisarQuestoes(): Observable<Array<Questao>> {
+    return this.http.get(`${this.URL_API}/questoes`, this.httpOptions).pipe(
+      retry(1),
+      map((response: Response) => {
+        return Object.assign(new Array<Questao>(), response.json());
+      })
+    );
+  }
+
+  pesquisarQuestaoPorId(id: number): Observable<Questao> {
+    return this.http
+      .get(`${this.URL_API}/questoes${id}`, this.httpOptions)
+      .pipe(
+        retry(1),
+        map((response: Questao) => {
+          return response;
+        })
+      );
   }
 
   index(page = 0, size = 20): Observable<any> {
     const inicio = page * size;
     const fim = inicio + size;
-    return of(QUESTOES.slice(inicio, fim));
+    return of(this.questoes.slice(inicio, fim));
   }
 
   getNumberOfElements(): Observable<number> {
-    return of(QUESTOES.length);
+    return of(this.questoes.length);
   }
 
-}
+  /**
+   * Convert a returned JSON object to QuestaoModel.
+   */
+  private convertJSONtoQuestaoModel(json: any): Questao {
+    return Object.assign(new Questao(), json);
+  }
 
-const QUESTOES = [
-  {id: 1, descricao: 'descri1'},
-  {id: 2, descricao: 'descri2'},
-  {id: 3, descricao: 'descri3'},
-  {id: 4, descricao: 'descri4'},
-  {id: 5, descricao: 'descasdas1'},
-  {id: 6, descricao: 'descriasdasd2'},
-  {id: 7, descricao: 'descrsadi3'},
-  {id: 8, descricao: 'descriasda4'},
-  {id: 9, descricao: 'descrizxczx1'},
-  {id: 10, descricao: 'descrzxzxci2'},
-  {id: 11, descricao: 'descrizzx3'},
-  {id: 12, descricao: 'descrhji4'},
-  {id: 13, descricao: 'descrhjhji1'},
-  {id: 14, descricao: 'descrhi2'},
-  {id: 15, descricao: 'descri3'},
-  {id: 16, descricao: 'descri4'},
-  {id: 17, descricao: 'deschjhjri1'},
-  {id: 18, descricao: 'descri2'},
-  {id: 19, descricao: 'deshjhjcri3'},
-  {id: 20, descricao: 'descri4'},
-  {id: 21, descricao: 'descri1'},
-  {id: 22, descricao: 'descri2'},
-  {id: 23, descricao: 'descrhhhhi3'},
-  {id: 24, descricao: 'descrihhh4'}
-];
+  private questoes: Array<Questao> = [
+    {
+      id: 1,
+      descricao:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
+      alternativa1:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa2:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa3:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa4:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa5:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      resposta: 2,
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
+    },
+    {
+      id: 2,
+      descricao:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
+      alternativa1:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa2:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa3:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa4:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa5:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      resposta: 4,
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
+    },
+    {
+      id: 3,
+      descricao:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
+      alternativa1:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa2:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa3:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa4:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa5:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      resposta: 2,
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
+    },
+    {
+      id: 4,
+      descricao:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
+      alternativa1:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa2:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa3:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa4:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa5:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      resposta: 4,
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
+    },
+    {
+      id: 5,
+      descricao:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
+      alternativa1:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa2:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa3:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa4:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      alternativa5:
+        'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
+      resposta: 2,
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
+    },
+  ];
+
+  public getQuestoes(): Observable<Questao[]> {
+    return of(this.questoes);
+  }
+
+  public getQuestaoById(id: number): Observable<Questao> {
+    this.questoes.forEach((element) => {
+      if (id == element.id) {
+        return of(element);
+      }
+    });
+    return of(new Questao());
+  }
+  public criarQuestao(questao: Questao): Observable<Questao> {
+    questao.id = this.idQuestao + 1;
+    this.questoes.push(questao);
+    this.idQuestao++;
+    return of(questao);
+  }
+
+  public deletarQuestao(element: Questao): Observable<any> {
+    const pos = this.questoes.indexOf(element);
+    if (pos != -1) {
+      this.questoes.splice(pos, 1);
+    }
+    return of(null);
+  }
+
+  public atualizarQuestao(questao: Questao): Observable<Questao> {
+    let questaoPut: Questao;
+    this.questoes.forEach((element) => {
+      if (element.id == questao.id) {
+        element.alternativa2 = questao.alternativa2;
+        element.alternativa3 = questao.alternativa3;
+        element.alternativa4 = questao.alternativa4;
+        element.alternativa1 = questao.alternativa1;
+        element.alternativa5 = questao.alternativa5;
+        element.resposta = questao.resposta;
+        element.descricao = questao.descricao;
+        element.senioridade = questao.senioridade;
+        element.tipoQuestao = questao.tipoQuestao;
+        return of(element);
+      }
+    });
+    return of(questaoPut);
+  }
+}

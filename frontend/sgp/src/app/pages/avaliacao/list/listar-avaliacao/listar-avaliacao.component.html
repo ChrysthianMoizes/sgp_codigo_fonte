@@ -1,0 +1,70 @@
+<button id="buttonNew" label="Novo" pButton (click)="cadastrar()"></button>
+<div class="p-grid" id="tabela">
+  <div class="p-col-11">
+    <p-table
+      [value]="avaliacoesRecebidas"
+      [(selection)]="avaliacaoSelecionada"
+      selectionMode="single"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Código</th>
+          <th>Título</th>
+          <th>Candidato</th>
+          <th>Data</th>
+          <th>Aproveitamento</th>
+          <th>Situação</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-car>
+        <tr
+          [pSelectableRow]="avaliacao"
+          *ngFor="let avaliacao of avaliacoesRecebidas"
+        >
+          <td>{{ avaliacao.id }}</td>
+          <td>{{ avaliacao.prova.titulo }}</td>
+          <td>{{ avaliacao.candidato.nome }}</td>
+          <td>{{ avaliacao.dataAvaliacao.toLocaleDateString() }}</td>
+          <td>{{ avaliacao.aproveitamento }}</td>
+          <td
+            *ngIf="
+              avaliacao.aproveitamento >= avaliacao.prova.percentualAprovacao
+            "
+          >
+            Aprovado
+          </td>
+          <td
+            *ngIf="
+              avaliacao.aproveitamento < avaliacao.prova.percentualAprovacao
+            "
+          >
+            Reprovado
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="p-col-1" id="botoes">
+    <button
+      [disabled]="!isOneSelected()"
+      (click)="editar()"
+      class="ui-button-rounded"
+      icon="pi pi-pencil"
+      id="buttonEdit"
+      pButton
+    ></button>
+    <button
+      [disabled]="!isOneSelected()"
+      (click)="exibir()"
+      class="ui-button-rounded"
+      icon="pi pi-eye"
+      id="buttonVisualize"
+      pButton
+    ></button>
+  </div>
+</div>
+<app-cadastrar-avaliacao
+  #cadastroAvaliacao
+  [viewOnly]="viewOnly"
+  [avaliacaoSendoEditada]="avaliacaoSelecionada"
+></app-cadastrar-avaliacao>

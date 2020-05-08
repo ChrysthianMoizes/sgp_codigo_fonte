@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from '../../components/alert/alert.service';
-import {LoadingService} from '../../components/loading/loading.service';
-import {Questao} from '../questao/models/questao';
-import {QuestaoService} from '../questao/service/questao.service';
-import {Prova} from './models/prova.model';
-import {ProvaService} from './service/prova.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Prova } from '../models/prova';
+import { Questao } from '../../questao/models/questao';
+import { ProvaService } from '../service/prova.service';
+import { AlertService } from 'src/app/components/alert/alert.service';
+import { LoadingService } from 'src/app/components/loading/loading.service';
+import { QuestaoService } from '../../questao/service/questao.service';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -15,8 +15,8 @@ import {ProvaService} from './service/prova.service';
 export class CadastrarProvaComponent implements OnInit {
   @Input() provaSendoEditada: Prova;
   provaForm: FormGroup;
-  visualizando;
-  edicao;
+  visualizando: boolean;
+  edicao: boolean;
   modoDialog: number;
 
   @Output() retornarProva = new EventEmitter();
@@ -33,9 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) {
-  }
-
+  ) {}
 
   get titulo(): string {
     if (this.visualizando) {
@@ -98,18 +96,18 @@ export class CadastrarProvaComponent implements OnInit {
       this.edicao = true;
       this.visualizando = false;
       this.exibir = true;
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
+      this.provaForm.get('titulo').enable();
+      this.provaForm.get('percentualDeAprovacao').enable();
       // ediçao
     } else {
       console.log(this.visualizando);
       this.visualizando = true;
       this.edicao = false;
       this.exibir = true;
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
@@ -119,7 +117,6 @@ export class CadastrarProvaComponent implements OnInit {
       //visualizar
     }
     if (this.modoDialog > 1) {
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
@@ -146,7 +143,7 @@ export class CadastrarProvaComponent implements OnInit {
       },
       (err) => {
         this.alertService.montarAlerta('error', 'Error!', err);
-      },
+      }
     );
   }
 
@@ -205,5 +202,4 @@ export class CadastrarProvaComponent implements OnInit {
     this.provaSendoEditada = undefined;
     this.exibir = false;
   }
-
 }
