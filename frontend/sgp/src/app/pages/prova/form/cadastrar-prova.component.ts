@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Prova } from '../models/prova';
-import { Questao } from '../../questao/models/questao';
-import { ProvaService } from '../service/prova.service';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
+import { Questao } from '../../questao/models/questao';
 import { QuestaoService } from '../../questao/service/questao.service';
+import { Prova } from '../models/prova';
+import { ProvaService } from '../service/prova.service';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -33,7 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) {}
+  ) { }
 
   get titulo(): string {
     if (this.visualizando) {
