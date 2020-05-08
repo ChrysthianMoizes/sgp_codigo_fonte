@@ -48,11 +48,10 @@ export class ListarCandidatosService {
   }
 
   editarCandidato(candidato: Usuario): Observable<Usuario[]> {
-    this.candidatos.find(element => {
-      if (element.id == candidato.id) {
-        element = candidato;
-      }
-    });
+    var pos = this.candidatos.findIndex(element => element.id == candidato.id);
+    if (pos != -1) {
+      this.candidatos[pos] = candidato;
+    }
     return of(this.candidatos);
   }
 }
