@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {MessageService} from 'primeng/api';
+import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -7,8 +7,7 @@ import {MessageService} from 'primeng/api';
 export class AlertService {
   private tipoString: string;
 
-  constructor(private messageService: MessageService) {
-  }
+  constructor(private messageService: MessageService) {}
 
   limpar() {
     this.messageService.clear();
@@ -31,6 +30,7 @@ export class AlertService {
   }
 
   montarAlerta(tipo: string, tipoString: string, mensagem: string) {
+    this.messageService.clear('c');
     this.verificarTipo(tipo);
     this.messageService.add({
       key: 'c',
