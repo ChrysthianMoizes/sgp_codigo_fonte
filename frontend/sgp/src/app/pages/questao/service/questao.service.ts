@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +75,16 @@ export class QuestaoService {
           return response;
         })
       );
+  }
+
+  index(page = 0, size = 20): Observable<any> {
+    const inicio = page * size;
+    const fim = inicio + size;
+    return of(this.questoes.slice(inicio, fim));
+  }
+
+  getNumberOfElements(): Observable<number> {
+    return of(this.questoes.length);
   }
 
   /**

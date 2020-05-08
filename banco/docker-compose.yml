@@ -7,7 +7,7 @@ services:
       - MYSQL_DATABASE=bancosgp
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - ./bd/:/docker-entrypoint-initdb.d/
+      - ./scripts/:/docker-entrypoint-initdb.d/
     restart: always
     ports:
       - '3306:3306'

@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   public containsUsuarioSessionStorage(): boolean {
-    return sessionStorage.key(0) == this.KEY ? true : false;
+    return sessionStorage.key(0) === this.KEY;
   }
 
   public retirarUsuarioDoSessionStorage(): void {

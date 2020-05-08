@@ -1,1 +1,1 @@
-<p-breadcrumb [model]="menuItems" ></p-breadcrumb>
+<p-breadcrumb *ngIf="showBreadCrumb" [model]="crumbs$ | async"></p-breadcrumb>

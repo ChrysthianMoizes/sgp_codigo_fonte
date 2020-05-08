@@ -64,9 +64,9 @@ e2e/*.map
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/modules.xml
+# .idea/models.xml
 # .idea/*.iml
-# .idea/modules
+# .idea/models
 # *.iml
 # *.ipr
 
@@ -107,7 +107,7 @@ fabric.properties
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 # *.iml
-# modules.xml
+# models.xml
 # .idea/misc.xml
 # *.ipr
 
