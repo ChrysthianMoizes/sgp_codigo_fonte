@@ -4,6 +4,7 @@ import {HomeComponent} from './components/home/home.component';
 import {LayoutComponent} from './components/layout/layout.component';
 import {NotfoundComponent} from './components/notfound/notfound.component';
 import {UsuarioComponent} from './pages/usuario/usuario.component';
+import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: 'home', component: HomeComponent, data: {breadcrumb: 'Home', toplayout: true}},
       {path: 'perfil', component: UsuarioComponent, data: {breadcrumb: 'Perfil', toplayout: true}},
       {path: 'notFound', component: NotfoundComponent, data: {breadcrumb: 'Not Found', toplayout: true}},
+      {path: 'provas', component: ListarProvasComponent, data:{breadcrumb: 'Provas', toplayout: true}},
       {path: '**', redirectTo: 'notFound'}
     ]
   }
