@@ -43,7 +43,7 @@
   <div class="p-col-1" id="botoes">
     <button
       [disabled]="!isOneSelected()"
-      (click)="editar()"
+      (click)="editar(avaliacao)"
       class="ui-button-rounded"
       icon="pi pi-pencil"
       id="buttonEdit"
@@ -51,7 +51,7 @@
     ></button>
     <button
       [disabled]="!isOneSelected()"
-      (click)="exibir()"
+      (click)="exibir(avaliacao)"
       class="ui-button-rounded"
       icon="pi pi-eye"
       id="buttonVisualize"
@@ -59,3 +59,8 @@
     ></button>
   </div>
 </div>
+<app-cadastrar-avaliacao
+  #cadastroAvaliacao
+  [viewOnly]="viewOnly"
+  [avaliacaoSendoEditada]="avaliacaoSendoEditada"
+></app-cadastrar-avaliacao>

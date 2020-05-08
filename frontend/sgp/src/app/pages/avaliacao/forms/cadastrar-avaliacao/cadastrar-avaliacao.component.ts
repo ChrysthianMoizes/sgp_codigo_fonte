@@ -20,6 +20,7 @@ export class CadastrarAvaliacaoComponent implements OnInit {
   avaliacaoForm: FormGroup;
   usuariosFiltrados: Usuario[];
   provasFiltradas: Prova[];
+  exibir: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +49,14 @@ export class CadastrarAvaliacaoComponent implements OnInit {
     if (this.viewOnly) {
       this.avaliacaoForm.disable();
     }
+  }
+
+  abrirDialog() {
+    this.exibir = true;
+  }
+
+  fecharDialog() {
+    this.exibir = false;
   }
 
   cadastrarNovaAvaliacao(avaliacao: Avaliacao): void {

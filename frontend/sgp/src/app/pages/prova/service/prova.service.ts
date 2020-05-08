@@ -43,8 +43,8 @@ export class ProvaService {
     return of(true);
   }
 
-  buscaProva() {
-    return this.provas[0];
+  buscaProva(): Observable<any> {
+    return of(this.provas[0]);
   }
 
   findByTitulo(query: string): Observable<Prova[]> {

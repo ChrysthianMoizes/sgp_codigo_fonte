@@ -15,8 +15,8 @@ import { QuestaoService } from '../../questao/service/questao.service';
 export class CadastrarProvaComponent implements OnInit {
   @Input() provaSendoEditada: Prova;
   provaForm: FormGroup;
-  visualizando;
-  edicao;
+  visualizando: boolean;
+  edicao: boolean;
   modoDialog: number;
 
   @Output() retornarProva = new EventEmitter();
@@ -96,18 +96,18 @@ export class CadastrarProvaComponent implements OnInit {
       this.edicao = true;
       this.visualizando = false;
       this.exibir = true;
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
+      this.provaForm.get('titulo').enable();
+      this.provaForm.get('percentualDeAprovacao').enable();
       // ediçao
     } else {
       console.log(this.visualizando);
       this.visualizando = true;
       this.edicao = false;
       this.exibir = true;
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
@@ -117,7 +117,6 @@ export class CadastrarProvaComponent implements OnInit {
       //visualizar
     }
     if (this.modoDialog > 1) {
-      this.provaSendoEditada = this.provaService.buscaProva();
       this.provaService.buscaProva().subscribe((prova) => {
         this.provaSendoEditada = prova;
       });

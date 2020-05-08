@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CadastrarAvaliacaoComponent } from './../../forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Avaliacao } from '../../models/avaliacao';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 
@@ -9,6 +10,11 @@ import { AvaliacaoService } from '../../service/avaliacao.service';
 })
 export class ListarAvaliacaoComponent implements OnInit {
   constructor(private avaliacaoService: AvaliacaoService) {}
+
+  @ViewChild('cadastroAvaliacao')
+  cadastroAvaliacao: CadastrarAvaliacaoComponent;
+  viewOnly: boolean;
+  avaliacaoSendoEditada: Avaliacao;
   avaliacao: Avaliacao[];
   avaliacaoSelecionadas: Avaliacao[];
   avaliacoesRecebidas: Avaliacao[];
@@ -33,9 +39,21 @@ export class ListarAvaliacaoComponent implements OnInit {
     return this.avaliacaoSelecionadas && this.avaliacaoSelecionadas.length >= 1;
   }
 
-  cadastrar() {}
+  cadastrar() {
+    this.viewOnly = false;
+    this.avaliacaoSendoEditada = null;
+    this.cadastroAvaliacao.abrirDialog();
+  }
 
-  editar() {}
+  editar(avaliacao) {
+    this.viewOnly = false;
+    this.avaliacaoSendoEditada = avaliacao;
+    this.cadastroAvaliacao.abrirDialog();
+  }
 
-  exibir() {}
+  exibir(avaliacao) {
+    this.viewOnly = true;
+    this.avaliacaoSendoEditada = avaliacao;
+    this.cadastroAvaliacao.abrirDialog();
+  }
 }
