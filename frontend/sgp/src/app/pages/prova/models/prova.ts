@@ -1,5 +1,4 @@
-import {Questao} from '../../questao/models/questao';
-
+import { Questao } from '../../questao/models/questao';
 export class Prova {
   id: number;
   titulo: string;

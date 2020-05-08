@@ -1,8 +1,13 @@
 <app-alert></app-alert>
-<p-card>
+<p-dialog
+  header=" {{ titulo }}"
+  [(visible)]="exibir"
+  [style]="{ width: '85%' }"
+  [modal]="true"
+>
   <header>
-    <h1> {{ titulo }} </h1>
-    <p> Associe um candidato a uma prova. </p>
+    <h1>{{ titulo }}</h1>
+    <p>Associe um candidato a uma prova.</p>
   </header>
 
   <form [formGroup]="avaliacaoForm">
@@ -55,4 +60,4 @@
       ></button>
     </footer>
   </form>
-</p-card>
+</p-dialog>
