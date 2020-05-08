@@ -118,7 +118,7 @@ export class RealizarAvaliacaoComponent implements OnInit {
     console.log(this.avaliacao.prova);
   }
 
-  verificaquestoes(): boolean {
+  verificaQuestoes(): boolean {
     let valido = false;
 
     this.avaliacao.prova.questoes.forEach((questao) => {
