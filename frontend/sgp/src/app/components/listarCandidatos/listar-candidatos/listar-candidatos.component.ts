@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ListarCandidatosService } from 'src/app/stores/candidatos/listar-candidatos.service';
 import { AlertService } from '../../alert/alert.service';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { FiltroCandidato } from 'src/app/models/filtro-candidato.model';
+import { VisualizarCandidatoComponent } from '../../visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
 
 @Component({
   selector: 'app-listar-candidatos',
@@ -13,21 +14,21 @@ import { FiltroCandidato } from 'src/app/models/filtro-candidato.model';
 export class ListarCandidatosComponent implements OnInit {
 
   constructor(
-    private alerts: AlertService
+    private alert: AlertService,
+    private candidatoService: ListarCandidatosService
   ) { }
 
-  @Input() candidatos: Usuario[];
-  @Output() deleteCandidato = new EventEmitter();
-  @Output() editCandidato = new EventEmitter();
-  @Output() viewCandidato = new EventEmitter();
+  @ViewChild('VisualizarCandidato') visualizarCandidato: VisualizarCandidatoComponent;
+
   cols: any[];
   filtro = new FiltroCandidato();
   rows = 20;
   first = 0;
-  selectedCandidato: Usuario;
-  listCandidato: Usuario[] = [];
+  listCandidatos: Usuario[];
+  selectedCandidatos: Usuario[] = [];
 
   ngOnInit(): void {
+    this.getCandidatos();
     this.cols = [
       { field: 'id', header: 'ID', width: '10%' },
       { field: 'nome', header: 'Nome', width: '45%' },
@@ -35,19 +36,52 @@ export class ListarCandidatosComponent implements OnInit {
     ]
   }
 
-  edit() {
-    this.editCandidato.emit(this.listCandidato[0]);
-    this.listCandidato = [];
+  getCandidatos() {
+    this.candidatoService.listarCandidatos().subscribe(
+      response => {
+        this.listCandidatos = response;
+      },
+      erro => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos')
+      }
+    )
+    console.log(this.listCandidatos)
   }
 
-  delete() {
-    this.deleteCandidato.emit(this.listCandidato);
-    this.listCandidato = [];
+  viewCandidato() {
+    this.visualizarCandidato.openDialog(this.selectedCandidatos[0], 'visualizar');
+    this.selectedCandidatos = [];
   }
 
-  view() {
-    this.viewCandidato.emit(this.listCandidato[0]);
-    this.listCandidato = [];
+  editCandidato() {
+    this.visualizarCandidato.openDialog(this.selectedCandidatos[0], 'edicao');
+    this.selectedCandidatos = [];
+  }
+
+  deleteCandidato() {
+    this.selectedCandidatos.forEach(element => {
+      this.candidatoService.excluirCandidatos(element.id).subscribe(
+        () => {
+          this.alert.montarAlerta('success', 'Sucesso', `${element.nome} excluido com sucesso`);
+        }, erro => {
+          this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${element.nome}`)
+        });
+    })
+    this.selectedCandidatos = [];
+    this.getCandidatos();
+  }
+
+  editarCandidato(candidato: Usuario) {
+    this.candidatoService.editarCandidato(candidato).subscribe(
+      response => {
+        this.listCandidatos = response;
+        this.alert.montarAlerta('success', 'Sucesso', 'Candidato alterado com sucesso')
+      },
+      erro => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato')
+      }
+    )
+    this.getCandidatos();
   }
 
   next() {
@@ -63,7 +97,7 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   isLastPage(): boolean {
-    return this.first === (this.candidatos.length - this.rows);
+    return this.first === (this.listCandidatos.length - this.rows);
   }
 
   isFirstPage(): boolean {

@@ -46,4 +46,12 @@ export class ListarCandidatosService {
     }
     return of(null);
   }
+
+  editarCandidato(candidato: Usuario): Observable<Usuario[]> {
+    var pos = this.candidatos.findIndex(element => element.id == candidato.id);
+    if (pos != -1) {
+      this.candidatos[pos] = candidato;
+    }
+    return of(this.candidatos);
+  }
 }
