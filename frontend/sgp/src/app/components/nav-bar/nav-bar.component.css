@@ -8,7 +8,7 @@
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .25);
 }
 
-.nav-bar > i, .nav-bar > h1 {
+.nav-bar > i, .nav-bar h1 {
   color: white;
 }
 
@@ -20,7 +20,18 @@
   font-size: 30px;
 }
 
-.nav-bar > img:hover, .nav-bar > i:hover {
+.mid-navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mid-navbar img {
+  height: 40px;
+  margin-right: 12px;
+}
+
+.nav-bar img:hover, .nav-bar > i:hover {
   cursor: pointer;
 }
 
