@@ -1,0 +1,73 @@
+<p-dialog header="Avaliação {{ avaliacao.id }}" [(visible)]="exibir">
+  <app-alert></app-alert>
+  <p-card>
+    <div class="linha-avaliacao">
+      <div>Nome: {{ avaliacao.candidato.nome }}</div>
+      <div>
+        Data avaliacao: {{ avaliacao.dataAvaliacao.toLocaleDateString() }}
+      </div>
+    </div>
+  </p-card>
+  <div
+    class="card-questao"
+    *ngFor="let questao of avaliacao.prova.questoes; let i = index"
+  >
+    <p-card header="Questao {{ i + 1 }}">
+      {{ questao.descricao }}
+      <div class="grupoBotoes">
+        <p-radioButton
+          name="{{ i }}"
+          value="1"
+          [(ngModel)]="avaliacao.prova.questoes[i].resposta"
+          label="{{ questao.alternativa1 }}"
+        >
+        </p-radioButton>
+        <p-radioButton
+          name="{{ i }}"
+          value="2"
+          [(ngModel)]="avaliacao.prova.questoes[i].resposta"
+          label="{{ questao.alternativa2 }}"
+        >
+        </p-radioButton>
+        <p-radioButton
+          name="{{ i }}"
+          value="3"
+          [(ngModel)]="avaliacao.prova.questoes[i].resposta"
+          label="{{ questao.alternativa3 }}"
+        >
+        </p-radioButton>
+        <p-radioButton
+          name="{{ i }}"
+          value="4"
+          [(ngModel)]="avaliacao.prova.questoes[i].resposta"
+          label="{{ questao.alternativa4 }}"
+        >
+        </p-radioButton>
+        <p-radioButton
+          name="{{ i }}"
+          value="5"
+          [(ngModel)]="avaliacao.prova.questoes[i].resposta"
+          label="{{ questao.alternativa5 }}"
+        >
+        </p-radioButton>
+      </div>
+    </p-card>
+  </div>
+  <div class="botao-footer">
+    <button
+      class="ui-button-secondary"
+      pButton
+      type="button"
+      label="Cancelar"
+      (click)="fecharDialog()"
+    ></button>
+    <button
+      [disabled]="verificaquestoes()"
+      class="ui-button-info"
+      pButton
+      type="button"
+      label="Finalizar"
+      (click)="FinalizarProva()"
+    ></button>
+  </div>
+</p-dialog>
