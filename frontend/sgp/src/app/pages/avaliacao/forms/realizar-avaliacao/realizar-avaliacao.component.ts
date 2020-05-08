@@ -107,7 +107,7 @@ export class RealizarAvaliacaoComponent implements OnInit {
     this.exibir = false;
   }
 
-  FinalizarProva() {
+  finalizarProva() {
     this.avaliacaoService.responder(this.avaliacao).subscribe((avaliacao) => {
       this.alertService.montarAlerta(
         'success',
