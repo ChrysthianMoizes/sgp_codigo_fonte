@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MenuItem} from 'primeng/api/menuitem';
-import {Observable} from 'rxjs';
-import {BreadcrumbService} from 'src/app/components/breadcrumb/breadcrumb.service';
-import {isNullOrUndefined} from 'util';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { MenuItem } from 'primeng/api/menuitem';
+import { Observable } from 'rxjs';
+import { BreadcrumbService } from 'src/app/components/breadcrumb/breadcrumb.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -13,11 +13,11 @@ import {isNullOrUndefined} from 'util';
 export class BreadcrumbComponent implements OnInit {
 
   crumbs$: Observable<MenuItem[]>;
-  showBreadCrumb:boolean= true;
+  showBreadCrumb: boolean = true;
 
-  constructor(private breadcrumb: BreadcrumbService,private activatedRoute: ActivatedRoute) { }
+  constructor(private breadcrumb: BreadcrumbService, private activatedRoute: ActivatedRoute) { }
 
-  @Output() shownavbar= new EventEmitter();
+  @Output() shownavbar = new EventEmitter();
 
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
@@ -29,10 +29,14 @@ export class BreadcrumbComponent implements OnInit {
     this.crumbs$ = this.breadcrumb.crumbs$;
   }
 
+  refresh() {
+    this.ngOnInit();
+  }
+
   private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
     if (children.length === 0) {
-      breadcrumbs.unshift({label:'Página Inicial', url:'/home'})
+      breadcrumbs.unshift({ label: 'Página Inicial', routerLink: '/home' })
       return breadcrumbs;
     }
 
@@ -46,7 +50,7 @@ export class BreadcrumbComponent implements OnInit {
       this.showBreadCrumb = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT];
       this.shownavbar.emit(child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT]);
       if (!isNullOrUndefined(label) && label != 'Home') {
-        breadcrumbs.push({label, url});
+        breadcrumbs.push({ label: label, routerLink: url });
       }
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
