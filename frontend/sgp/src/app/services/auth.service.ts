@@ -1,5 +1,5 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import { Usuario } from './../pages/usuario/models/usuario.model';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -12,49 +12,49 @@ export class AuthService {
   }
 
   public getUsuarioSessionStorage(): Usuario {
-    if(this.containsUsuarioSessionStorage()){
+    if (this.containsUsuarioSessionStorage()) {
       return JSON.parse(sessionStorage.getItem(this.KEY));
     }
     return new Usuario();
   }
 
   public getNomeUsuarioSessionStorage(): string {
-    if(this.containsUsuarioSessionStorage()){
+    if (this.containsUsuarioSessionStorage()) {
       return this.getUsuarioSessionStorage().nome;
     }
     return '';
   }
 
   public getIdUsuarioSessionStorage(): number {
-    if(this.containsUsuarioSessionStorage()){
+    if (this.containsUsuarioSessionStorage()) {
       return this.getUsuarioSessionStorage().id;
     }
     return 0;
   }
 
   public getEmailUsuarioSessionStorage(): string {
-    if(this.containsUsuarioSessionStorage()){
+    if (this.containsUsuarioSessionStorage()) {
       return this.getUsuarioSessionStorage().email;
     }
     return '';
   }
 
   public getCpflUsuarioSessionStorage(): string {
-    if(this.containsUsuarioSessionStorage()){
+    if (this.containsUsuarioSessionStorage()) {
       return this.getUsuarioSessionStorage().cpf;
     }
     return '';
   }
 
-  public getPermissaoUsuarioSessionStorage(): string {
-    if(this.containsUsuarioSessionStorage()){
-      return this.getUsuarioSessionStorage().permissao;
+  public getPermissaoUsuarioSessionStorage(): boolean {
+    if (this.containsUsuarioSessionStorage()) {
+      return this.getUsuarioSessionStorage().admin;
     }
-    return '';
+    return false;
   }
 
-  public temPermissao(permissao: string): boolean {
-    return this.getPermissaoUsuarioSessionStorage() == permissao;
+  public temPermissao(): boolean {
+    return this.getPermissaoUsuarioSessionStorage();
   }
 
   public containsUsuarioSessionStorage(): boolean {
@@ -66,6 +66,6 @@ export class AuthService {
   }
 
   public isAdmin(): boolean {
-    return this.temPermissao('ROLE_ADMIN');
+    return this.temPermissao();
   }
 }

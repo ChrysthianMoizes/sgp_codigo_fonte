@@ -3,7 +3,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
 
-import { Questao } from '../models/questao.model';
+import { Questao } from '../models/questao';
 import { QuestaoService } from '../service/questao.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
@@ -113,12 +113,12 @@ export class QuestaoComponent implements OnInit {
     let questao: Questao = new Questao();
     questao.descricao = this.formQuestao.value.descricao;
     questao.senioridade = this.formQuestao.value.senioridadeQ;
-    questao.tipo_questao = this.formQuestao.value.tipo_questaoQ;
-    questao.alternativa_1 = this.formQuestao.value.alternativa1;
-    questao.alternativa_2 = this.formQuestao.value.alternativa2;
-    questao.alternativa_3 = this.formQuestao.value.alternativa3;
-    questao.alternativa_4 = this.formQuestao.value.alternativa4;
-    questao.alternativa_5 = this.formQuestao.value.alternativa5;
+    questao.tipoQuestao = this.formQuestao.value.tipo_questaoQ;
+    questao.alternativa1 = this.formQuestao.value.alternativa1;
+    questao.alternativa2 = this.formQuestao.value.alternativa2;
+    questao.alternativa3 = this.formQuestao.value.alternativa3;
+    questao.alternativa4 = this.formQuestao.value.alternativa4;
+    questao.alternativa5 = this.formQuestao.value.alternativa5;
     questao.resposta = parseInt(this.formQuestao.value.selectedValue, 10);
     console.log(questao);
     this.questaoService.criarQuestao(questao);

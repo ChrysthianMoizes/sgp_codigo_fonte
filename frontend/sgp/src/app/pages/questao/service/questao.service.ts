@@ -1,4 +1,4 @@
-import { Questao } from './../models/questao.model';
+import { Questao } from '../models/questao';
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -90,91 +90,121 @@ export class QuestaoService {
       id: 1,
       descricao:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
-      alternativa_1:
+      alternativa1:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_2:
+      alternativa2:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_3:
+      alternativa3:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_4:
+      alternativa4:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_5:
+      alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: 'Pleno',
-      tipo_questao: 'Codificação',
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
     },
     {
       id: 2,
       descricao:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
-      alternativa_1:
+      alternativa1:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_2:
+      alternativa2:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_3:
+      alternativa3:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_4:
+      alternativa4:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_5:
+      alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 4,
-      senioridade: 'Júnior',
-      tipo_questao: 'Requisitos',
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
     },
     {
       id: 3,
       descricao:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
-      alternativa_1:
+      alternativa1:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_2:
+      alternativa2:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_3:
+      alternativa3:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_4:
+      alternativa4:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_5:
+      alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: 'Sênior',
-      tipo_questao: 'Teste e Arquitetura',
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
     },
     {
       id: 4,
       descricao:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
-      alternativa_1:
+      alternativa1:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_2:
+      alternativa2:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_3:
+      alternativa3:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_4:
+      alternativa4:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_5:
+      alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 4,
-      senioridade: 'Estagiário',
-      tipo_questao: 'Codificação',
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
     },
     {
       id: 5,
       descricao:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra nisi quis ante dignissim ultricies. Mauris aliquet ultricies dui. Sed laoreet neque ut blandit bibendum. Sed porttitor porta scelerisque. Vivamus vel nunc arcu. Vivamus sagittis urna at neque vulputate iaculis. Suspendisse consequat tincidunt elit eget porta. Phasellus cursus, nibh in suscipit dapibus, mauris arcu luctus est, ut tincidunt orci eros vel arcu.',
-      alternativa_1:
+      alternativa1:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_2:
+      alternativa2:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_3:
+      alternativa3:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_4:
+      alternativa4:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
-      alternativa_5:
+      alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: 'Pleno',
-      tipo_questao: 'Codificação',
+      senioridade: {
+        id: 1,
+        descricao: 'Pleno',
+      },
+      tipoQuestao: {
+        id: 1,
+        descricao: 'Codigo',
+      },
     },
   ];
 
@@ -208,15 +238,15 @@ export class QuestaoService {
 
   public atualizarQuestao(questao: Questao): Questao {
     let questaoPut: Questao = this.getQuestaoById(questao.id);
-    questaoPut.alternativa_1 = questao.alternativa_1;
-    questaoPut.alternativa_2 = questao.alternativa_2;
-    questaoPut.alternativa_3 = questao.alternativa_3;
-    questaoPut.alternativa_4 = questao.alternativa_4;
-    questaoPut.alternativa_5 = questao.alternativa_5;
+    questaoPut.alternativa1 = questao.alternativa1;
+    questaoPut.alternativa2 = questao.alternativa2;
+    questaoPut.alternativa3 = questao.alternativa3;
+    questaoPut.alternativa4 = questao.alternativa4;
+    questaoPut.alternativa5 = questao.alternativa5;
     questaoPut.resposta = questao.resposta;
     questaoPut.descricao = questao.descricao;
     questaoPut.senioridade = questao.senioridade;
-    questaoPut.tipo_questao = questao.tipo_questao;
+    questaoPut.tipoQuestao = questao.tipoQuestao;
     return questaoPut;
   }
 }

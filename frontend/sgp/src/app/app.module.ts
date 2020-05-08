@@ -27,20 +27,19 @@ import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
+
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 import { ListarAvaliacaoComponent } from './pages/avaliação/list/listar-avaliacao/listar-avaliacao.component';
+import { HomeComponent } from './components/home/home.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PerfilComponent,
     LayoutComponent,
     NavBarComponent,
     BreadcrumbComponent,

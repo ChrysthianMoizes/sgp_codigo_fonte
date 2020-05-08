@@ -1,5 +1,5 @@
-import { MenuModel } from './../../models/menu.model';
-import { menu } from './../../menu';
+import { MenuModel } from '../menu/menu.model';
+import { menu } from '../menu/menu';
 import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
@@ -25,17 +25,17 @@ export class NavBarComponent implements OnInit {
     // TODO: Adicionar lógica do logout
   }
 
-  verificaPermissao(permissaoMenu: string): boolean {
+  verificaPermissao(permissaoMenu: boolean): boolean {
     if (
       permissaoMenu === this.authService.getPermissaoUsuarioSessionStorage() ||
-      permissaoMenu === ''
+      permissaoMenu === false
     ) {
       return true;
     }
     return false;
   }
 
-  onClickHamburguerMenu(event): void {
+  onClickHamburguerMenu(): void {
     let btn = document.querySelector('.sidebar');
     let icone = document.querySelector('.pi-bars');
 

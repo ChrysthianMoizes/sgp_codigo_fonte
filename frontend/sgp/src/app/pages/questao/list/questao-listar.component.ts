@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng';
 
 import { QuestaoService } from '../service/questao.service';
-import { Questao } from '../models/questao.model';
+import { Questao } from '../models/questao';
 
 @Component({
   selector: 'app-questao-listar',

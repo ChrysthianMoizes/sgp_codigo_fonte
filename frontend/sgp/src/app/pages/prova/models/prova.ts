@@ -1,6 +1,6 @@
-import { Questao } from '../../questao/models/questao.model';
+import { Questao } from '../../questao/models/questao';
 export class Prova {
-  codigo: number;
+  id: number;
   titulo: string;
   percentualAprovacao: number;
   questoes: Questao[];
