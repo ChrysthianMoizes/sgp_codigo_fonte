@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class NavBarComponent implements OnInit {
 
   items: MenuItem[];
-  @Input() title = 'Gestão de Provas - Basis';
+  @Input() title = 'Gestão de Provas';
 
   constructor(private router: Router) { }
 
@@ -21,8 +21,12 @@ export class NavBarComponent implements OnInit {
     ];
   }
 
+  onClickLogo(): void {
+    this.router.navigateByUrl('home');
+  }
+
   onEditarPerfil(): void {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('perfil');
   }
 
   onLogout(event): void {
