@@ -25,7 +25,6 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CadastrarAvaliacaoComponent } from './pages/avaliacao/forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
 import { CadastrarProvaComponent } from './pages/prova/form/cadastrar-prova.component';
-import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
 import { CadastroComponent } from './pages/usuario/form/cadastro/cadastro.component';
 import { FormCadastroComponent } from './pages/usuario/form/form-cadastro/form-cadastro.component';
 import { LoginComponent } from './pages/usuario/form/login/login.component';
@@ -42,6 +41,7 @@ import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component'
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { QuestaoComponent } from './pages/questao/form/questao.component';
 import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliacao/listar-avaliacao.component';
+import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +70,6 @@ import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliaca
     QuestaoComponent,
     ListarAvaliacaoComponent,
     LoadingComponent,
-    ListarProvasComponent,
     CadastrarAvaliacaoComponent,
   ],
   imports: [
@@ -92,20 +91,17 @@ import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliaca
     AutoCompleteModule,
   ],
   providers: [
-    LoadingComponent,
-    ListarProvasComponent,
-    CadastrarAvaliacaoComponent,
     AuthService,
     AuthGuard,
     MessageService,
     LoadingService,
-    UsuarioService
+    UsuarioService,
+    ConfirmationService
   ],
   entryComponents: [
     VisualizarCandidatoComponent,
     BreadcrumbService,
     MessageService,
-    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

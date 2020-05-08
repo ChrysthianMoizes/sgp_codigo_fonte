@@ -28,6 +28,6 @@ menu.push(prova);
 
 const candidato = new MenuModel();
 candidato.descricao = 'Candidato';
-candidato.path = '/candidato';
+candidato.path = '/candidatos';
 candidato.permissao = true;
 menu.push(candidato);

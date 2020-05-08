@@ -11,6 +11,7 @@ import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/reseta
 import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliacao/listar-avaliacao.component';
+import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,11 @@ const routes: Routes = [
         path: 'avaliacao',
         component: ListarAvaliacaoComponent,
         data: { breadcrumb: 'Avaliacao', toplayout: true },
+      },
+      {
+        path: 'prova',
+        component: ListarProvasComponent,
+        data: { breadcrumb: 'Prova', toplayout: true },
       },
       { path: '**', redirectTo: 'notFound' }
     ]
