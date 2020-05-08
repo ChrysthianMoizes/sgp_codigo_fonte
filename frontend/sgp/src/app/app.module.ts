@@ -1,95 +1,86 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { CardComponent } from './components/card/card.component';
-import { SendEmailComponent } from './components/send-email/send-email.component';
-import { HomeComponent } from './pages/home/home.component';
-import { CadastroComponent } from './pages/cadastro/cadastro.component';
-import { FormCadastroComponent } from './components/form-cadastro/form-cadastro.component';
-import { ResetarSenhaComponent } from './pages/resetar-senha/resetar-senha.component';
-import { ReenviarEmailComponent } from './pages/reenviar-email/reenviar-email.component';
-import { ReenviarEmailService } from './stores/reenviar-email/reenviar-email.service';
-import { ResetarSenhaService } from './stores/resetar-senha/resetar-senha.service';
-import { LoginComponent } from './pages/login/login.component';
-import { LoginService } from './stores/login/login.service';
-import { CadastroUsuarioService } from './stores/cadastro/cadastro-usuario.service';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingService } from './components/loading/loading.service';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { AlertComponent } from './components/alert/alert.component';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuModule } from 'primeng/menu';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AppComponent } from './app.component';
+import { AppRoutes } from './app.routes';
+import { AlertComponent } from './components/alert/alert.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { BreadcrumbService } from './components/breadcrumb/breadcrumb.service';
+import { CardComponent } from './components/card/card.component';
+import { HomeComponent } from './components/home/home.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './components/loading/loading.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
-import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
-import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.service';
-import { VisualizarCandidatoComponent } from './components/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+import { CadastrarAvaliacaoComponent } from './pages/avaliacao/forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
+import { CadastrarProvaComponent } from './pages/prova/cadastrar-prova.component';
+import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
+import { CadastroComponent } from './pages/usuario/form/cadastro/cadastro.component';
+import { FormCadastroComponent } from './pages/usuario/form/form-cadastro/form-cadastro.component';
+import { LoginComponent } from './pages/usuario/form/login/login.component';
+import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';
+import { ReenviarEmailComponent } from './pages/usuario/form/reenviar-email/reenviar-email.component';
+import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/resetar-senha.component';
+import { SendEmailComponent } from './pages/usuario/form/send-email/send-email.component';
+import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
+import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos/listar-candidatos/listar-candidatos.component';
+import { UsuarioService } from './pages/usuario/service/usuario.service';
+import { PrimengModule } from './primeng.module';
+import { AuthGuard } from './services/auth.guard';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CardComponent,
-    SendEmailComponent,
-    ReenviarEmailComponent,
-    ResetarSenhaComponent,
-    CadastroComponent,
-    FormCadastroComponent,
-    LoginComponent,
-    PerfilComponent,
     LayoutComponent,
     NavBarComponent,
     BreadcrumbComponent,
     NotfoundComponent,
+    LoadingComponent,
+    CadastrarProvaComponent,
     AlertComponent,
+    CardComponent,
     ListarCandidatosComponent,
+    CadastroComponent,
+    LoginComponent,
+    ResetarSenhaComponent,
+    ReenviarEmailComponent,
+    UsuarioComponent,
+    SendEmailComponent,
+    FormCadastroComponent,
+    CadastrarAvaliacaoComponent,
+    ListarProvasComponent,
     VisualizarCandidatoComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    CardModule,
-    InputTextModule,
-    PasswordModule,
     ReactiveFormsModule,
-    ButtonModule,
+    BrowserAnimationsModule,
     FormsModule,
     NgxSpinnerModule,
-    ToastModule,
-    MenuModule,
-    BrowserAnimationsModule,
-    BreadcrumbModule,
-    TableModule,
-    DialogModule
+    PrimengModule,
+    AppRoutes,
   ],
   providers: [
-    ReenviarEmailService,
-    ResetarSenhaService,
-    LoginService,
-    CadastroUsuarioService,
+    LoadingComponent,
+    ListarProvasComponent,
+    CadastrarAvaliacaoComponent,
     AuthService,
     AuthGuard,
     MessageService,
     LoadingService,
-    ListarCandidatosService,
+    UsuarioService
   ],
   entryComponents: [
-    VisualizarCandidatoComponent
+    VisualizarCandidatoComponent,
+    BreadcrumbService,
+    MessageService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })
