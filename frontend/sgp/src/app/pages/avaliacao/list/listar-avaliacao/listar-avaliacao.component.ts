@@ -44,7 +44,6 @@ export class ListarAvaliacaoComponent implements OnInit {
   }
 
   exibir() {
-    console.log(this.viewOnly);
     this.viewOnly = true;
     this.cadastroAvaliacao.abrirDialog();
   }
