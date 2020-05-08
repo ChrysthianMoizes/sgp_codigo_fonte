@@ -12,16 +12,21 @@ export class NavBarComponent implements OnInit {
   items: MenuItem[];
   @Input() title = 'Gestão de Provas';
 
-  constructor(private router: Router) { };
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.items = [
+      {label: 'Editar Perfil', command: () => this.onEditarPerfil()},
       {label: 'Logout', command: this.onLogout}
     ];
   }
 
   onClickLogo(): void {
     this.router.navigateByUrl('home');
+  }
+
+  onEditarPerfil(): void {
+    this.router.navigateByUrl('perfil');
   }
 
   onLogout(event): void {
