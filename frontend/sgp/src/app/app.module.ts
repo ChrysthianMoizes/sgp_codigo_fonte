@@ -38,7 +38,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { ListarCandidatosService } from './stores/candidatos/listar-candidatos.service';
-import { CandidatosComponent } from './pages/candidatos/candidatos.component';
 import { VisualizarCandidatoComponent } from './components/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
 
 @NgModule({
@@ -59,7 +58,6 @@ import { VisualizarCandidatoComponent } from './components/visualizarCandidato/v
     NotfoundComponent,
     AlertComponent,
     ListarCandidatosComponent,
-    CandidatosComponent,
     VisualizarCandidatoComponent
   ],
   imports: [

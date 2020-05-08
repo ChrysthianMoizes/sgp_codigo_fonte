@@ -1,8 +1,8 @@
 <div class='p-grid'>
   <div class="p-col-11">
-    <p-table [columns]="cols" [value]="candidatos" [resizableColumns]="true" [paginator]="true" [rows]="20"
+    <p-table [columns]="cols" [value]="listCandidatos" [resizableColumns]="true" [paginator]="true" [rows]="20"
       [showCurrentPageReport]="true" (onLazyLoad)='filter($event)' [lazy]='true' selectionMode="multiple"
-      [(selection)]="listCandidato">
+      [(selection)]="selectedCandidatos">
 
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
@@ -37,11 +37,14 @@
     </p-table>
   </div>
   <div class="p-col-1 container-buttons">
-    <button [disabled]='listCandidato.length === 0' type="button" icon="pi pi-trash" (click)='delete()'
+    <button [disabled]='selectedCandidatos.length === 0' type="button" icon="pi pi-trash" (click)='deleteCandidato()'
       style="font-size: 0.8em;" pButton class="ui-button-rounded"></button>
-    <button [disabled]='listCandidato.length === 0 || listCandidato.length > 1' type="button" icon="pi pi-pencil"
-      (click)='edit()' style="font-size: 0.8em;" pButton class="ui-button-rounded"></button>
-    <button [disabled]='listCandidato.length === 0 || listCandidato.length > 1' type="button" icon="pi pi-eye"
-      (click)='view()' style="font-size: 0.8em;" pButton class="ui-button-rounded"></button>
+    <button [disabled]='selectedCandidatos.length === 0 || selectedCandidatos.length > 1' type="button"
+      icon="pi pi-pencil" (click)='editCandidato()' style="font-size: 0.8em;" pButton
+      class="ui-button-rounded"></button>
+    <button [disabled]='selectedCandidatos.length === 0 || selectedCandidatos.length > 1' type="button" icon="pi pi-eye"
+      (click)='viewCandidato()' style="font-size: 0.8em;" pButton class="ui-button-rounded"></button>
   </div>
 </div>
+
+<app-visualizar-candidato #VisualizarCandidato (editarCandidato)='editarCandidato($event)'></app-visualizar-candidato>

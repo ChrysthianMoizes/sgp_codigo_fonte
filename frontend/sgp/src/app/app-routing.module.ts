@@ -9,7 +9,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ListarCandidatosComponent } from './components/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { AuthGuard } from './services/auth.guard';
-import { CandidatosComponent } from './pages/candidatos/candidatos.component';
 
 const routes: Routes = [
   {
@@ -32,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
       { path: 'perfil', component: PerfilComponent, data: { breadcrumb: 'Perfil' } },
-      { path: 'candidatos', component: CandidatosComponent, data: { breadcrumb: 'Candidatos' } }
+      { path: 'candidatos', component: ListarCandidatosComponent, data: { breadcrumb: 'Candidatos' } }
     ]
   }
 ];

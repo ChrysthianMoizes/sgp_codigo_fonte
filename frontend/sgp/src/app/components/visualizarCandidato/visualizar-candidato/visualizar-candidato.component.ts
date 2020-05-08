@@ -23,6 +23,10 @@ export class VisualizarCandidatoComponent implements OnInit {
     this.visible = true;
     this.usuario = usuario;
     this.modo = edicao;
+
+    if (edicao == 'edicao') {
+      this.usuario = Object.assign({}, usuario);
+    }
   }
 
   save() {
