@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Prova } from 'src/app/pages/prova/models/prova';
 import { AlertService } from '../../../../components/alert/alert.service';
 import { LoadingService } from '../../../../components/loading/loading.service';
 import { ProvaService } from '../../../prova/service/prova.service';
 import { Usuario } from '../../../usuario/models/usuario';
 import { UsuarioService } from '../../../usuario/service/usuario.service';
-import { Avaliacao } from '../../models/avaliacao';
 import { AvaliacaoService } from '../../service/avaliacao.service';
-import { Prova } from 'src/app/pages/prova/models/prova';
+import { Avaliacao } from './../../models/avaliacao';
 
 @Component({
   selector: 'app-cadastrar-avaliacao',
@@ -15,7 +15,7 @@ import { Prova } from 'src/app/pages/prova/models/prova';
   styleUrls: ['./cadastrar-avaliacao.component.css'],
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
-  @Input() avaliacaoSendoEditada: any;
+  @Input() avaliacaoSendoEditada: Avaliacao;
   @Input() viewOnly = false;
   avaliacaoForm: FormGroup;
   usuariosFiltrados: Usuario[];
@@ -54,7 +54,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     if (this.avaliacaoSendoEditada) {
       this.avaliacaoForm
         .get('usuario')
-        .setValue(this.avaliacaoSendoEditada.usuario);
+        .setValue(this.avaliacaoSendoEditada.candidato);
       this.avaliacaoForm
         .get('prova')
         .setValue(this.avaliacaoSendoEditada.prova);
@@ -65,11 +65,11 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     }
   }
 
-  abrirDialog() {
+  abrirDialog(): void {
     this.exibir = true;
   }
 
-  fecharDialog() {
+  fecharDialog(): void {
     this.exibir = false;
   }
 

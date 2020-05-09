@@ -9,13 +9,11 @@ import { AlertService } from '../alert/alert.service';
 export class HomeComponent implements OnInit {
   usuario = { nome: 'Teste', id: 1 };
 
-  constructor(private alertService: AlertService) {
-  }
+  constructor(private alertService: AlertService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  abrirModal(tipo: string, titulo: string, mensagem: string) {
+  abrirModal(tipo: string, titulo: string, mensagem: string): void {
     this.alertService.montarAlerta(tipo, titulo, mensagem);
   }
 }

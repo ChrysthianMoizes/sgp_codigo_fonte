@@ -6,31 +6,27 @@ import { UsuarioService } from '../../service/usuario.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  styleUrls: ['./usuario.component.css'],
 })
 export class UsuarioComponent implements OnInit {
-
   perfil: Usuario = new Usuario();
 
   constructor(
     private perfilService: UsuarioService,
     private location: Location
-    // authStore: AuthStore
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.perfilService.show(1).subscribe(perfil => {
+    this.perfilService.show(1).subscribe((perfil) => {
       this.perfil = perfil as Usuario;
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     console.log(this.perfil);
   }
 
-  onCancel() {
+  onCancel(): void {
     this.location.back();
   }
-
 }

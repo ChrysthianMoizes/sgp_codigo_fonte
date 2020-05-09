@@ -15,15 +15,8 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    if (!this.authService.containsUsuarioSessionStorage()) {
+  canActivate(next: ActivatedRouteSnapshot): boolean {
+    if (!this.authService.containsUsuario()) {
       this.router.navigate(['/login']);
       return false;
     }

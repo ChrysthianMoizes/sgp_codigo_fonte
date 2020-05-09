@@ -27,7 +27,7 @@ export class NavBarComponent implements OnInit {
 
   verificaPermissao(permissaoMenu: boolean): boolean {
     if (
-      permissaoMenu === this.authService.getPermissaoUsuarioSessionStorage() ||
+      permissaoMenu === this.authService.getPermissaoUsuario() ||
       permissaoMenu === false
     ) {
       return true;
@@ -36,6 +36,10 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickHamburguerMenu(): void {
+    this.toogleSidebar();
+  }
+
+  toogleSidebar(): void {
     let btn = document.querySelector('.sidebar');
     let icone = document.querySelector('.pi-bars');
 

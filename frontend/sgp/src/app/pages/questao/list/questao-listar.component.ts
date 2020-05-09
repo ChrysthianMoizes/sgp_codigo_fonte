@@ -43,7 +43,7 @@ export class QuestaoListarComponent implements OnInit {
     return this.questoesSelecionadas.length == 1;
   }
 
-  excluir() {
+  excluir(): void {
     this.questoesSelecionadas.forEach((element) => {
       this.questaoService.deletarQuestao(element).subscribe(
         (response) => {
@@ -68,13 +68,12 @@ export class QuestaoListarComponent implements OnInit {
     this.questoesSelecionadas = [];
   }
 
-  showDialog(id: string) {
+  showDialog(id: string): void {
     this.dialogQuestao.exibirDialog(id, this.questoesSelecionadas[0]);
   }
 
-  atualizar() {
+  atualizar(): void {
     //get na lista do banco
-    console.log('teste');
   }
 
   habilitar(): boolean {
@@ -85,11 +84,11 @@ export class QuestaoListarComponent implements OnInit {
     return this.questoesSelecionadas.length > 0;
   }
 
-  deletarQuestao() {
+  deletarQuestao(): void {
     this.questaoService.deletarQuestao(this.questoesSelecionadas.pop());
   }
 
-  walk(objeto: Object, caminho: string) {
+  walk(objeto: Object, caminho: string): Object {
     return this.objectUtil.walk(objeto, caminho);
   }
 }

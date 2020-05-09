@@ -1,22 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+  styleUrls: ['./layout.component.css'],
 })
-export class LayoutComponent implements OnInit {
-
+export class LayoutComponent {
   public exibirTopLayout: boolean;
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  shownav(event: any) {
+  shownav(event: any): void {
     this.exibirTopLayout = event;
   }
-
 }

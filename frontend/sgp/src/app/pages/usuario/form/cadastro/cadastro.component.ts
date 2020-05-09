@@ -8,27 +8,24 @@ import { UsuarioToken } from '../../models/usuarioToken';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
-
   usuario = new UsuarioToken();
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private usuarioService: UsuarioService,
     private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService
+  ) {}
+  ngOnInit(): void {}
 
-  }
-  ngOnInit(): void {
-  }
-
-  save(usuario: UsuarioToken) {
-    this.usuario = usuario
-    this.usuarioService.cadastrarUsuario(this.usuario)
-      .subscribe(response => {
-        this.usuarioService.logar(response.email, response.senha)
-        this.authService.setUsuarioSessionStorage(response)
-        this.router.navigate(['/home'])
-      })
+  save(usuario: UsuarioToken): void {
+    this.usuario = usuario;
+    this.usuarioService.cadastrarUsuario(this.usuario).subscribe((response) => {
+      this.usuarioService.logar(response.email, response.senha);
+      this.authService.setUsuario(response);
+      this.router.navigate(['/home']);
+    });
   }
 }

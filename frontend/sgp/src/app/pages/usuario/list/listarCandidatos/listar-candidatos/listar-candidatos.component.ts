@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api/public_api';
 import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
 import { AlertService } from 'src/app/components/alert/alert.service';
@@ -9,21 +16,21 @@ import { VisualizarCandidatoComponent } from '../../../form/visualizarCandidato/
 @Component({
   selector: 'app-listar-candidatos',
   templateUrl: './listar-candidatos.component.html',
-  styleUrls: ['./listar-candidatos.component.css']
+  styleUrls: ['./listar-candidatos.component.css'],
 })
 export class ListarCandidatosComponent implements OnInit {
-
   constructor(
     private alert: AlertService,
     private usuarioService: UsuarioService
-  ) { }
+  ) {}
 
-  @ViewChild('VisualizarCandidato') visualizarCandidato: VisualizarCandidatoComponent;
+  @ViewChild('VisualizarCandidato')
+  visualizarCandidato: VisualizarCandidatoComponent;
 
   cols: any[];
   filtro = new FiltroCandidato();
-  rows = 20;
-  first = 0;
+  rows: number = 20;
+  first: number = 0;
   listCandidatos: Usuario[];
   selectedCandidatos: Usuario[] = [];
 
@@ -32,80 +39,95 @@ export class ListarCandidatosComponent implements OnInit {
     this.cols = [
       { field: 'id', header: 'ID', width: '10%' },
       { field: 'nome', header: 'Nome', width: '45%' },
-      { field: 'email', header: 'Email', width: '45%' }
-    ]
+      { field: 'email', header: 'Email', width: '45%' },
+    ];
   }
 
-  getCandidatos() {
+  getCandidatos(): void {
     this.usuarioService.listarCandidatos().subscribe(
-      response => {
+      (response) => {
         this.listCandidatos = response;
       },
-      erro => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos')
+      (erro) => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
       }
-    )
-    console.log(this.listCandidatos)
+    );
   }
 
-  viewCandidato() {
-    this.visualizarCandidato.openDialog(this.selectedCandidatos[0], 'visualizar');
+  viewCandidato(): void {
+    this.visualizarCandidato.openDialog(
+      this.selectedCandidatos[0],
+      'visualizar'
+    );
     this.selectedCandidatos = [];
   }
 
-  editCandidato() {
+  editCandidato(): void {
     this.visualizarCandidato.openDialog(this.selectedCandidatos[0], 'edicao');
     this.selectedCandidatos = [];
   }
 
-  deleteCandidato() {
-    this.selectedCandidatos.forEach(element => {
+  deleteCandidato(): void {
+    this.selectedCandidatos.forEach((element) => {
       this.usuarioService.excluirCandidatos(element.id).subscribe(
         () => {
-          this.alert.montarAlerta('success', 'Sucesso', `${element.nome} excluido com sucesso`);
-        }, erro => {
-          this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${element.nome}`)
-        });
-    })
+          this.alert.montarAlerta(
+            'success',
+            'Sucesso',
+            `${element.nome} excluido com sucesso`
+          );
+        },
+        (erro) => {
+          this.alert.montarAlerta(
+            'error',
+            'Erro',
+            `Não foi possível excluir o candidato ${element.nome}`
+          );
+        }
+      );
+    });
     this.selectedCandidatos = [];
     this.getCandidatos();
   }
 
-  editarCandidato(candidato: Usuario) {
+  editarCandidato(candidato: Usuario): void {
     this.usuarioService.editarCandidato(candidato).subscribe(
-      response => {
+      (response) => {
         this.listCandidatos = response;
-        this.alert.montarAlerta('success', 'Sucesso', 'Candidato alterado com sucesso')
+        this.alert.montarAlerta(
+          'success',
+          'Sucesso',
+          'Candidato alterado com sucesso'
+        );
       },
-      erro => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato')
+      (erro) => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
       }
-    )
+    );
     this.getCandidatos();
   }
 
-  next() {
+  next(): void {
     this.first = this.first + this.rows;
   }
 
-  prev() {
+  prev(): void {
     this.first = this.first - this.rows;
   }
 
-  reset() {
+  reset(): void {
     this.first = 0;
   }
 
   isLastPage(): boolean {
-    return this.first === (this.listCandidatos.length - this.rows);
+    return this.first === this.listCandidatos.length - this.rows;
   }
 
   isFirstPage(): boolean {
     return this.first === 0;
   }
 
-  filter(event: LazyLoadEvent) {
+  filter(event: LazyLoadEvent): void {
     console.log(event);
   }
-
 }

@@ -22,6 +22,7 @@
       label="{{ menuItem.descricao }}"
       [routerLink]="menuItem.path"
       class="btn-sidebar"
+      (click)="toogleSidebar()"
     ></a>
   </div>
 </div>

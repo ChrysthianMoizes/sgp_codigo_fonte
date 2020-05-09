@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {MenuItem} from 'primeng';
-import {Observable, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { MenuItem } from 'primeng';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BreadcrumbService {
-
   crumbs$: Observable<MenuItem[]>;
   private crumbs: Subject<MenuItem[]>;
 
@@ -15,11 +14,11 @@ export class BreadcrumbService {
     this.crumbs$ = this.crumbs.asObservable();
   }
 
-  setCrumbs(items: MenuItem[]) {
+  setCrumbs(items: MenuItem[]): void {
     this.crumbs.next(
-      (items || []).map(item =>
+      (items || []).map((item) =>
         Object.assign({}, item, {
-          routerLinkActiveOptions: {exact: true}
+          routerLinkActiveOptions: { exact: true },
         })
       )
     );
