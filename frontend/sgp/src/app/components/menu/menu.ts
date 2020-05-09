@@ -27,7 +27,12 @@ prova.permissao = true;
 menu.push(prova);
 
 const candidato = new MenuModel();
+<<<<<<< HEAD
 candidato.descricao = 'Candidatos';
 candidato.path = '/candidato';
+=======
+candidato.descricao = 'Candidato';
+candidato.path = '/candidatos';
+>>>>>>> c055003cd6acb6cbd523b3543a7504fb3b9032fa
 candidato.permissao = true;
 menu.push(candidato);

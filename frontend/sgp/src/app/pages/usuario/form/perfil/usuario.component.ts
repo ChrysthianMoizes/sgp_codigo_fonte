@@ -1,7 +1,7 @@
-import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {Usuario} from './models/usuario';
-import {UsuarioService} from './service/usuario.service';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../../models/usuario';
+import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
   selector: 'app-perfil',
