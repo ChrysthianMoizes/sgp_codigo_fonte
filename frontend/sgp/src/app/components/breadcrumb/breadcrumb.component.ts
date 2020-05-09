@@ -18,6 +18,10 @@ import { filter, distinctUntilChanged, map } from 'rxjs/operators';
   styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
+  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+  static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
+
+  @Output() shownavbar = new EventEmitter();
   showBreadCrumb: boolean = true;
   menuItems: MenuItem[];
 
@@ -25,11 +29,6 @@ export class BreadcrumbComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
-
-  @Output() shownavbar = new EventEmitter();
-
-  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
-  static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
 
   ngOnInit(): void {
     this.menuItems = this.createBreadcrumbs(this.activatedRoute.root)
