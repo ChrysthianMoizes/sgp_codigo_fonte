@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  public exibirTopLayout: boolean;
+  exibirTopLayout: boolean = true;
 
   constructor() {
   }
