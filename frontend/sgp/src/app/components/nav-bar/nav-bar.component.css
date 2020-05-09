@@ -40,8 +40,8 @@
 
 .ativo {
   display: block !important;
-  animation-duration: 400ms;
   animation-name: slideright;
+  animation-duration: 400ms;
 }
 
 .sidebar {
@@ -94,9 +94,11 @@
 
 @keyframes slideright {
   from {
+    display: none;
     margin-left: -300px;
   }
   to {
+    display: block;
     margin-left: 0;
   }
 }
