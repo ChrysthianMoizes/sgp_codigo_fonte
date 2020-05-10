@@ -1,18 +1,14 @@
 .caracteres {
   color: #ff0000;
-  text-align: center
+  text-align: center;
 }
 
 .espacamento {
   padding: 10px 0;
 }
 
-.borderInput {
+.border-input {
   border-color: #ff0000;
-}
-
-#leftText {
-  text-align: left;
 }
 
 .ng-invalid.ng-touched:not(form) {

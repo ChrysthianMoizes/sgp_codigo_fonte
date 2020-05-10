@@ -6,15 +6,14 @@
   padding: 10px 0;
 }
 
-.borderInput {
+.border-input {
   border-color: #ff0000;
 }
 
-#centerText {
+#center-text {
   text-align: center;
 }
 
-#leftText {
+#left-text {
   text-align: left;
 }
-

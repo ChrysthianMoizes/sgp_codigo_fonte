@@ -1,14 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  OnChanges,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
-import { Observable } from 'rxjs';
-import { BreadcrumbService } from 'src/app/components/breadcrumb/breadcrumb.service';
+import { filter } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
 
 @Component({
@@ -17,26 +10,23 @@ import { isNullOrUndefined } from 'util';
   styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
-  crumbs$: Observable<MenuItem[]>;
-  showBreadCrumb: boolean = true;
-
-  constructor(
-    private breadcrumb: BreadcrumbService,
-    private activatedRoute: ActivatedRoute
-  ) {}
-
-  @Output() shownavbar = new EventEmitter();
-
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
 
+  @Output() shownavbar = new EventEmitter();
+  showBreadCrumb: boolean = true;
+  menuItems: MenuItem[];
+
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
+
   ngOnInit(): void {
-    setInterval(() => {
-      this.breadcrumb.setCrumbs(
-        this.createBreadcrumbs(this.activatedRoute.root)
+    this.menuItems = this.createBreadcrumbs(this.activatedRoute.root);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(
+        () =>
+          (this.menuItems = this.createBreadcrumbs(this.activatedRoute.root))
       );
-    }, 200);
-    this.crumbs$ = this.breadcrumb.crumbs$;
   }
 
   private createBreadcrumbs(
@@ -57,7 +47,6 @@ export class BreadcrumbComponent implements OnInit {
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
-
       const label =
         child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
       this.showBreadCrumb =

@@ -1,3 +1,4 @@
+<app-alert></app-alert>
 <p-card>
   <div class="p-grid p-justify-between" id="campos">
     <div>
@@ -15,7 +16,7 @@
   </div>
   <br>
   <div class="p-grid p-justify-between" id="botoes">
-    <p-button label="CANCELAR" styleClass="ui-button-secondary"></p-button>
-    <p-button (onClick)="onSubmit()" label="CONFIRMAR" styleClass="ui-button-success"></p-button>
+    <p-button routerLink="/home" routerLinkActive="selected" label="CANCELAR" styleClass="ui-button-secondary"></p-button>
+    <p-button (click)="onSubmit()" label="CONFIRMAR" styleClass="ui-button-success"></p-button>
   </div>
 </p-card>

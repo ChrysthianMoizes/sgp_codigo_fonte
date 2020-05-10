@@ -1,23 +1,23 @@
 td {
   text-align: center;
 }
-#buttonDelete,
-#buttonEdit,
-#buttonVisualize {
+#button-delete,
+#button-edit,
+#button-visualize {
   position: fixed;
 }
-#buttonNew {
+#button-new {
   margin: 5px 0 5px 0;
 }
 
-#buttonDelete {
+#button-delete {
   margin-top: 50px;
 }
 
-#buttonEdit {
+#button-edit {
   margin-top: 90px;
 }
 
-#buttonVisualize {
+#button-visualize {
   margin-top: 130px;
 }

@@ -32,19 +32,18 @@ export class ListarAvaliacaoComponent implements OnInit {
     return this.avaliacaoSelecionada != null;
   }
 
-  cadastrar() {
+  cadastrar(): void {
     this.viewOnly = false;
     this.avaliacaoSelecionada = null;
     this.cadastroAvaliacao.abrirDialog();
   }
 
-  editar() {
+  editar(): void {
     this.viewOnly = false;
     this.cadastroAvaliacao.abrirDialog();
   }
 
-  exibir() {
-    console.log(this.viewOnly);
+  exibir(): void {
     this.viewOnly = true;
     this.cadastroAvaliacao.abrirDialog();
   }

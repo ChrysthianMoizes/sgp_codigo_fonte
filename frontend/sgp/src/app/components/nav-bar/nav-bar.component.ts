@@ -3,6 +3,7 @@ import { menu } from '../menu/menu';
 import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,7 +11,10 @@ import { MenuItem } from 'primeng/api/menuitem';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) {}
 
   items: MenuItem[];
   menuSideBar: MenuModel[];
@@ -18,16 +22,23 @@ export class NavBarComponent implements OnInit {
   @Input() title = 'Gestão de Provas - Basis';
   ngOnInit(): void {
     this.menuSideBar = menu;
-    this.items = [{ label: 'Logout', command: this.onLogout }];
+    this.items = [
+      { label: 'Perfil', command: toPerfil => {this.toPerfil()}},
+      { label: 'Logout', command: onLogout => {this.logout()} }
+    ];
   }
 
-  onLogout(event): void {
-    // TODO: Adicionar lógica do logout
+  toPerfil(): void {
+    this.router.navigate(['/perfil']);
+  }
+
+  logout(): void {
+    this.authService.removerSessao();
   }
 
   verificaPermissao(permissaoMenu: boolean): boolean {
     if (
-      permissaoMenu === this.authService.getPermissaoUsuarioSessionStorage() ||
+      permissaoMenu === this.authService.getPermissaoUsuario() ||
       permissaoMenu === false
     ) {
       return true;
@@ -36,6 +47,10 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickHamburguerMenu(): void {
+    this.toogleSidebar();
+  }
+
+  toogleSidebar(): void {
     let btn = document.querySelector('.sidebar');
     let icone = document.querySelector('.pi-bars');
 
