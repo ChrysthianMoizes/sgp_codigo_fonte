@@ -7,16 +7,18 @@ import { AlertService } from 'src/app/components/alert/alert.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css'],
+  styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
+
   perfil: Usuario = new Usuario();
 
   constructor(
     private perfilService: UsuarioService,
     private location: Location,
     private alert: AlertService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.perfilService.getUsuarioLogado().subscribe(
@@ -40,7 +42,8 @@ export class UsuarioComponent implements OnInit {
     )
   }
 
-  onCancel(): void {
+  onCancel() {
     this.location.back();
   }
+
 }

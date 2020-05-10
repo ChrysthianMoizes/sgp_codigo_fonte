@@ -18,7 +18,16 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home'
+    redirectTo: 'login'
+  },
+  {
+    path: '',
+    children: [
+      { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login' } },
+      { path: 'cadastro', component: CadastroComponent, data: { breadcrumb: 'Cadastro' } },
+      { path: 'resetarsenha', component: ResetarSenhaComponent, data: { breadcrumb: 'Resetar Senha' } },
+      { path: 'reenviaremail', component: ReenviarEmailComponent, data: { breadcrumb: 'Reenviar Email' } },
+    ]
   },
   {
     path: '',

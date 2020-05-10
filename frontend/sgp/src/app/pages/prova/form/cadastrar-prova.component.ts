@@ -33,7 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) {}
+  ) { }
 
   get titulo(): string {
     if (this.visualizando) {

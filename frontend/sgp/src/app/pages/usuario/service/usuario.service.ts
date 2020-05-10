@@ -100,14 +100,14 @@ export class UsuarioService {
 
   editarUsuario(usuario: Usuario): Observable<void> {
     this.editarCandidato(usuario).subscribe(
-      response => {
+      () => {
         this.oauth.setUsuario(usuario);
       }
     );
     return of(null);
   }
 
-  existeUser(email: string, senha: string) {
+  existeUser(email: string, senha: string): Usuario {
     return this.candidatos.find(element => element.email === email && element.senha === senha);
   }
 
