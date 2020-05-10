@@ -46,7 +46,7 @@ export class UsuarioService {
     }
   ];
 
-  constructor() {}
+  constructor(private oauth: AuthService) {}
 
   findByNome(query: string): Observable<Usuario[]> {
     return of(
@@ -93,13 +93,22 @@ export class UsuarioService {
     return of(this.candidatos);
   }
 
+  getUsuarioLogado(): Observable<Usuario> {
+    return of(this.candidatos.find(element => element.id === this.oauth.getIdUsuario()));
+  }
+
+  editarUsuario(usuario: Usuario): Observable<void> {
+    this.editarCandidato(usuario);
+    this.oauth.setUsuario(usuario);
+    return of(null);
+  }
+
   existeUser(email: string, senha: string) {
     return this.candidatos.find(element => element.email === email && element.senha === senha);
   }
 
   logar(email: string, senha: string): Observable<Usuario> {
     const candidato: Usuario = this.existeUser(email, senha);
-    console.log(this.candidatos)
     return candidato ? of(candidato) : of (null);
   }
 

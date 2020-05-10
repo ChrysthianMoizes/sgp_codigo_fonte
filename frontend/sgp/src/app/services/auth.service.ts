@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../pages/usuario/models/usuario';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private KEY: string = 'sgp';
+
+  constructor(private router: Router){}
 
   public setUsuario(usuario: Usuario): void {
     sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
@@ -45,10 +48,6 @@ export class AuthService {
     return '';
   }
 
-  public lougout(): void{
-    sessionStorage.removeItem(this.KEY);
-  }
-
   public getPermissaoUsuario(): boolean {
     if (this.containsUsuario()) {
       return this.getUsuario().admin;
@@ -66,6 +65,7 @@ export class AuthService {
 
   public removerSessao(): void {
     sessionStorage.clear();
+    this.router.navigate(['/login'])
   }
 
   public isAdmin(): boolean {
