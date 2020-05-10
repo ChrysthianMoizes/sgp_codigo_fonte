@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService} from 'primeng';
-import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
-import {AlertService} from '../../../components/alert/alert.service';
-import {LoadingService} from '../../../components/loading/loading.service';
-import {CadastrarProvaComponent} from '../cadastrar-prova.component';
-import {Prova} from '../models/prova.model';
-import {ProvaService} from '../service/prova.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService } from 'primeng';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AlertService } from '../../../components/alert/alert.service';
+import { LoadingService } from '../../../components/loading/loading.service';
+import { ProvaService } from '../service/prova.service';
+import { Prova } from '../models/prova';
+import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
 
 @Component({
   selector: 'app-listar-provas',
@@ -33,9 +33,9 @@ export class ListarProvasComponent implements OnInit {
     });
 
     this.definicaoColunas = [
-      {field: 'id', header: 'ID'},
-      {field: 'titulo', header: 'Titulo'},
-      {field: 'percentualAprovacao', header: '% para aprovação'},
+      { field: 'id', header: 'ID' },
+      { field: 'titulo', header: 'Titulo' },
+      { field: 'percentualAprovacao', header: '% para aprovação' },
     ];
   }
 

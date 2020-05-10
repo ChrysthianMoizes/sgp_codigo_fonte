@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Prova } from '../models/prova.model';
+import { Prova } from '../models/prova';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class ProvaService {
     { id: 10, titulo: 'Título ', percentualAprovacao: 60 },
   ];
 
-  constructor() {}
+  constructor() { }
 
   index(page = 0, size = 20): Observable<any> {
     return of(this.provas);

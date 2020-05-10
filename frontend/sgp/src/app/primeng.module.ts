@@ -1,5 +1,5 @@
-import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import {
   AccordionModule,
   ButtonModule,
@@ -8,32 +8,37 @@ import {
   DataViewModule,
   DialogModule,
   InputTextModule,
-  TableModule
+  TableModule,
+  AutoCompleteModule,
+  PasswordModule,
+  InputMaskModule,
 } from 'primeng';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
-import {MenuModule} from 'primeng/menu';
-import {PaginatorModule} from 'primeng/paginator';
-import {PickListModule} from 'primeng/picklist';
-import {ToastModule} from 'primeng/toast';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { MenuModule } from 'primeng/menu';
+import { PaginatorModule } from 'primeng/paginator';
+import { PickListModule } from 'primeng/picklist';
+import { ToastModule } from 'primeng/toast';
 
 const modules = [
-    ButtonModule,
-    CardModule,
-    InputTextModule,
-    BreadcrumbModule,
-    MenuModule,
-    PaginatorModule,
-    PickListModule,
-    ToastModule,
-    DataViewModule,
-    TableModule,
-    DynamicDialogModule,
-    AccordionModule,
-    ConfirmDialogModule,
-    DialogModule,
-  ]
-;
+  ButtonModule,
+  CardModule,
+  InputTextModule,
+  BreadcrumbModule,
+  MenuModule,
+  PaginatorModule,
+  PickListModule,
+  ToastModule,
+  DataViewModule,
+  TableModule,
+  DynamicDialogModule,
+  AccordionModule,
+  ConfirmDialogModule,
+  DialogModule,
+  AutoCompleteModule,
+  PasswordModule,
+  InputMaskModule
+];
 
 
 @NgModule({
