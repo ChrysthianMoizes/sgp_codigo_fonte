@@ -1,7 +1,7 @@
 <div class='p-grid'>
   <div class="p-col-11">
     <p-table [columns]="cols" [value]="listCandidatos" [resizableColumns]="true" [paginator]="true" [rows]="20"
-      [showCurrentPageReport]="true" (onLazyLoad)='filter($event)' [lazy]='true' selectionMode="multiple"
+      [showCurrentPageReport]="true" [lazy]='true' selectionMode="multiple"
       [(selection)]="selectedCandidatos">
 
       <ng-template pTemplate="colgroup" let-columns>

@@ -53,12 +53,18 @@ export class AuthService {
     return false;
   }
 
+  public recoverToken(){
+    let user = sessionStorage.getItem('sgp');
+    console.log(user);
+  }
+
+
   public temPermissao(): boolean {
     return this.getPermissaoUsuarioSessionStorage();
   }
 
   public containsUsuarioSessionStorage(): boolean {
-    return sessionStorage.key(0) === this.KEY;
+    return sessionStorage.getItem(this.KEY) ? true : false;
   }
 
   public retirarUsuarioDoSessionStorage(): void {

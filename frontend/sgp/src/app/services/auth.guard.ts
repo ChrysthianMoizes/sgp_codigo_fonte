@@ -15,21 +15,14 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivate(next: ActivatedRouteSnapshot): boolean {
     if (!this.authService.containsUsuarioSessionStorage()) {
       this.router.navigate(['/login']);
       return false;
     }
 
     if (next.data.role && !this.authService.temPermissao()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
       return false;
     }
 

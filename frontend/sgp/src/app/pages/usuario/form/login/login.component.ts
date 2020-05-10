@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../service/usuario.service';
 import { Usuario } from '../../models/usuario';
+import { AlertService } from 'src/app/components/alert/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,13 @@ import { Usuario } from '../../models/usuario';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private usuarioService: UsuarioService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private usuarioService: UsuarioService,
+    private authService: AuthService,
+    private router: Router,
+    private alert: AlertService) {
+      this.authService.recoverToken();
+    }
 
   necessitaCabecalho = true;
 
@@ -20,8 +27,13 @@ export class LoginComponent implements OnInit {
   requisitarLogin() {
     this.usuarioService.logar(this.usuario.email, this.usuario.senha).subscribe(
       response => {
-        this.authService.setUsuarioSessionStorage(response),
-          this.router.navigate(["home"]);
+        if(response){
+          this.authService.setUsuarioSessionStorage(response),
+            this.router.navigate(["home"]);
+        }
+        else {
+          this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
+        }
       }
     )
   }

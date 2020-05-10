@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Usuario } from '../models/usuario';
 import { UsuarioToken } from '../models/usuarioToken';
+import { AuthService } from 'src/app/services/auth.service';
+import { element } from 'protractor';
+import { error } from '@angular/compiler/src/util';
+import { AuthGuard } from 'src/app/services/auth.guard';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +39,8 @@ export class UsuarioService {
     },
   ]
 
-  constructor() {
+  constructor(private oauth: AuthService) {
+    this.oauth.recoverToken();
   }
 
   findByNome(query: string): Observable<Usuario[]> {
@@ -53,6 +58,7 @@ export class UsuarioService {
   }
 
   cadastrarUsuario(usuario: UsuarioToken): Observable<Usuario> {
+    this.candidatos.push(<Usuario>usuario);
     return of<Usuario>(usuario)
   }
 
@@ -76,20 +82,14 @@ export class UsuarioService {
     return of(this.candidatos);
   }
 
+  existeUser(email: string, senha: string) {
+    return this.candidatos.find(element => element.email === email && element.senha === senha);
+  }
+
   logar(email: string, senha: string): Observable<Usuario> {
-
-    const user = {
-      id: 1,
-      nome: "abc",
-      senha: senha,
-      email: email,
-      cpf: "321",
-      admin: true,
-    }
-    console.log(user);
-
-    return of<Usuario>(user)
-
+    const candidato: Usuario = this.existeUser(email, senha);
+    console.log(this.candidatos)
+    return candidato ? of(candidato) : of (null);
   }
 
   reenviarEmailConfirmacao(email: string): Observable<void> {

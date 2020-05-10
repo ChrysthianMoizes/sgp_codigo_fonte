@@ -104,8 +104,4 @@ export class ListarCandidatosComponent implements OnInit {
     return this.first === 0;
   }
 
-  filter(event: LazyLoadEvent) {
-    console.log(event);
-  }
-
 }

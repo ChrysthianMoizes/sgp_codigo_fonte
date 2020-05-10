@@ -12,6 +12,7 @@ import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliacao/listar-avaliacao.component';
 import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -22,34 +23,77 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'login', component: LoginComponent, data: { breadcrumb: 'Login' } },
-      { path: 'cadastro', component: CadastroComponent, data: { breadcrumb: 'Cadastro' } },
-      { path: 'resetarsenha', component: ResetarSenhaComponent, data: { breadcrumb: 'Resetar Senha' } },
-      { path: 'reenviaremail', component: ReenviarEmailComponent, data: { breadcrumb: 'Reenviar Email' } },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Login', role: false }
+      },
+      {
+        path: 'cadastro',
+        component: CadastroComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Cadastro', role: false }
+      },
+      {
+        path: 'resetarsenha',
+        component: ResetarSenhaComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Resetar Senha', role: false }
+      },
+      {
+        path: 'reenviaremail',
+        component: ReenviarEmailComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Reenviar Email', role: false}
+      },
     ]
   },
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home', toplayout: true } },
-      { path: 'perfil', component: UsuarioComponent, data: { breadcrumb: 'Perfil', toplayout: true } },
-      { path: 'candidatos', component: ListarCandidatosComponent, data: { breadcrumb: 'Candidatos', toplayout: true } },
-      { path: 'notFound', component: NotfoundComponent, data: { breadcrumb: 'Not Found', toplayout: true } },
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Home', toplayout: true, role: true }
+      },
+      {
+        path: 'perfil',
+        component: UsuarioComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Perfil', toplayout: true, role: true }
+      },
+      {
+        path: 'candidatos',
+        component: ListarCandidatosComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Candidatos', toplayout: true, role: true}
+      },
+      {
+        path: 'notFound',
+        component: NotfoundComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Not Found', toplayout: true, role: true }
+      },
       {
         path: 'questoes',
         component: QuestaoListarComponent,
-        data: { breadcrumb: 'Questões', toplayout: true },
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Questões', toplayout: true, role: true },
       },
       {
         path: 'avaliacao',
         component: ListarAvaliacaoComponent,
-        data: { breadcrumb: 'Avaliacao', toplayout: true },
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Avaliacao', toplayout: true, role: true },
       },
       {
         path: 'prova',
         component: ListarProvasComponent,
-        data: { breadcrumb: 'Prova', toplayout: true },
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Prova', toplayout: true, role: true },
       },
       { path: '**', redirectTo: 'notFound' }
     ]
