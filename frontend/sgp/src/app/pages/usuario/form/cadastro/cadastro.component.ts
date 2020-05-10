@@ -9,13 +9,13 @@ import { AlertService } from 'src/app/components/alert/alert.service';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
-
   usuario = new UsuarioToken();
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private usuarioService: UsuarioService,
     private router: Router,
     private authService: AuthService,
     private alert: AlertService) {
@@ -31,7 +31,7 @@ export class CadastroComponent implements OnInit {
         this.usuarioService.logar(response.email, response.senha).subscribe(
           response => {
             if(response){
-              this.authService.setUsuarioSessionStorage(response),
+              this.authService.setUsuario(response),
                 this.router.navigate(["home"]);
             }
             else {

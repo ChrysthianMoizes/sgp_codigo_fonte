@@ -8,10 +8,9 @@ import { error } from '@angular/compiler/src/util';
 import { AuthGuard } from 'src/app/services/auth.guard';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
-
   private candidatos: Usuario[] = [
     {
       id: 1,
@@ -19,7 +18,7 @@ export class UsuarioService {
       senha: '010101',
       email: 'jpedrocalixto@outlook.com',
       cpf: '901239013-98',
-      admin: false
+      admin: false,
     },
     {
       id: 2,
@@ -27,7 +26,7 @@ export class UsuarioService {
       senha: '696969',
       email: 'lehmanjr@gmail.com',
       cpf: '151231312-48',
-      admin: false
+      admin: false,
     },
     {
       id: 3,
@@ -35,26 +34,30 @@ export class UsuarioService {
       senha: '666666',
       email: 'staulfertito@hotmail.com',
       cpf: '891298471-38',
-      admin: false
+      admin: false,
     },
-  ]
+    {
+      id: 4,
+      nome: 'Administrador',
+      senha: 'admin',
+      email: 'admin@admin',
+      cpf: '901239013-98',
+      admin: true,
+    }
+  ];
 
-  constructor(private oauth: AuthService) {
-    this.oauth.recoverToken();
-  }
+  constructor() {}
 
   findByNome(query: string): Observable<Usuario[]> {
     return of(
-      USUARIOS.filter(
-        elem => elem.nome.toLowerCase().includes(
-          query.toLowerCase()
-        )
+      this.candidatos.filter((elem) =>
+        elem.nome.toLowerCase().includes(query.toLowerCase())
       ) as Usuario[]
     );
   }
 
-  show(i: number) {
-    return of(USUARIOS[i]);
+  show(i: number): Observable<Usuario> {
+    return of(this.candidatos[i]);
   }
 
   cadastrarUsuario(usuario: UsuarioToken): Observable<Usuario> {
@@ -63,11 +66,17 @@ export class UsuarioService {
   }
 
   listarCandidatos(): Observable<Usuario[]> {
-    return of<Usuario[]>(this.candidatos);
+    let candidatosAv: Usuario[] = [];
+    this.candidatos.forEach(element => {
+      if(!element.admin){
+        candidatosAv.push(element);
+      }
+    })
+    return of<Usuario[]>(candidatosAv);
   }
 
   excluirCandidatos(id: number): Observable<void> {
-    var pos = this.candidatos.findIndex(element => element.id == id);
+    var pos = this.candidatos.findIndex((element) => element.id == id);
     if (pos != -1) {
       this.candidatos.splice(pos, 1);
     }
@@ -75,7 +84,9 @@ export class UsuarioService {
   }
 
   editarCandidato(candidato: Usuario): Observable<Usuario[]> {
-    var pos = this.candidatos.findIndex(element => element.id == candidato.id);
+    var pos = this.candidatos.findIndex(
+      (element) => element.id == candidato.id
+    );
     if (pos != -1) {
       this.candidatos[pos] = candidato;
     }
@@ -99,19 +110,4 @@ export class UsuarioService {
   resetarSenha(email: string): Observable<void> {
     return of(null);
   }
-
 }
-
-const USUARIOS = [{
-  nome: 'tito',
-  email: 'flavio',
-  id: 1,
-  senha: '123',
-  cpf: '123',
-  permissao: 'true'
-},
-{ nome: 'flavio', cpf: '12312321' },
-{ nome: 'jean' },
-{ nome: 'xandao' },
-{ nome: 'crithian' }
-];

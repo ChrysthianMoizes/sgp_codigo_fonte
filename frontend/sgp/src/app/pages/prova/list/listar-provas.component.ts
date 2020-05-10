@@ -23,8 +23,7 @@ export class ListarProvasComponent implements OnInit {
   constructor(
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
-    private alertService: AlertService,
-    private loadingService: LoadingService
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -48,18 +47,18 @@ export class ListarProvasComponent implements OnInit {
   }
 
   visualizarProva(): void {
-    this.dialogProvaForm.abrirDialog(3, 3);
+    this.dialogProvaForm.abrirDialog(3);
   }
 
   editarProva(): void {
-    this.dialogProvaForm.abrirDialog(3, 2);
+    this.dialogProvaForm.abrirDialog(2);
   }
 
   cadastrarProva(): void {
-    this.dialogProvaForm.abrirDialog(null, 1);
+    this.dialogProvaForm.abrirDialog(1);
   }
 
-  atualizarListagem() {
+  atualizarListagem(): void {
     // atualizar a lista com o banco
   }
 

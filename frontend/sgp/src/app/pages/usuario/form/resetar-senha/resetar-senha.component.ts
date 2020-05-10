@@ -5,27 +5,26 @@ import { UsuarioService } from '../../service/usuario.service';
 @Component({
   selector: 'app-resetar-senha',
   templateUrl: './resetar-senha.component.html',
-  styleUrls: ['./resetar-senha.component.css']
+  styleUrls: ['./resetar-senha.component.css'],
 })
-export class ResetarSenhaComponent implements OnInit {
-
+export class ResetarSenhaComponent {
   constructor(
     private usuarioService: UsuarioService,
     private alerts: AlertService
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
-
-  send(email: string) {
+  send(email: string): void {
     this.usuarioService.resetarSenha(email).subscribe(
-      response => {
-        this.alerts.montarAlerta('success', 'Sucesso', 'Sua nova senha foi enviada para seu email')
+      (response) => {
+        this.alerts.montarAlerta(
+          'success',
+          'Sucesso',
+          'Sua nova senha foi enviada para seu email'
+        );
       },
-      erro => {
-        this.alerts.montarAlerta('error', 'Erro', 'Erro ao resetar senha')
+      (erro) => {
+        this.alerts.montarAlerta('error', 'Erro', 'Erro ao resetar senha');
       }
-    )
+    );
   }
-
 }

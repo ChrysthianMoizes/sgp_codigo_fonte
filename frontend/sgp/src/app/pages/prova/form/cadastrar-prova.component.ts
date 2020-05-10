@@ -33,7 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) { }
+  ) {}
 
   get titulo(): string {
     if (this.visualizando) {
@@ -86,7 +86,7 @@ export class CadastrarProvaComponent implements OnInit {
     });
   }
 
-  abrirDialog(id, modo) {
+  abrirDialog(modo): void {
     if (modo === 1) {
       this.edicao = false;
       this.visualizando = false;
@@ -184,17 +184,17 @@ export class CadastrarProvaComponent implements OnInit {
     this.exibir = false;
   }
 
-  paginate(event) {
+  paginate(event): void {
     this.questaoService
       .index(event.page)
       .subscribe((questoes) => (this.origemQuestoes = questoes));
   }
 
-  removeRepetitions(arr: any[]) {
+  removeRepetitions(arr: any[]): Array<Questao> {
     return arr.filter((questao, i) => arr.indexOf(questao) === i);
   }
 
-  onMoveToTarget(event): void {
+  onMoveToTarget(): void {
     this.destinoQuestoes = this.removeRepetitions(this.destinoQuestoes);
   }
 

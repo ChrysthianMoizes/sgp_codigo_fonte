@@ -89,12 +89,12 @@ export class QuestaoComponent implements OnInit {
   }
   ngOnInit(): void {}
 
-  salvar() {
+  salvar(): void {
     //pegar os dados e salvar
     this.alterar.emit(null);
   }
 
-  exibirDialog(id: string, questaoSelecionada: Questao) {
+  exibirDialog(id: string, questaoSelecionada: Questao): void {
     if (id == '2') {
       this.exibir = true;
       this.hader = 'Editar Questão';
@@ -118,7 +118,7 @@ export class QuestaoComponent implements OnInit {
     }
   }
 
-  cadastar() {
+  cadastar(): void {
     if (!this.isQuestaoEditando) {
       let questao: Questao = new Questao();
       questao.descricao = this.formQuestao.value.descricao;
@@ -178,7 +178,7 @@ export class QuestaoComponent implements OnInit {
     this.exibir = false;
   }
 
-  cancelar() {
+  cancelar(): void {
     this.exibir = false;
   }
 }

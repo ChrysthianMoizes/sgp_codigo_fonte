@@ -17,9 +17,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usuario = this.oauth.getUsuarioSessionStorage()  }
+    this.usuario = this.oauth.getUsuario()  }
 
-  abrirModal(tipo: string, titulo: string, mensagem: string) {
+  abrirModal(tipo: string, titulo: string, mensagem: string): void {
     this.alertService.montarAlerta(tipo, titulo, mensagem);
   }
 }

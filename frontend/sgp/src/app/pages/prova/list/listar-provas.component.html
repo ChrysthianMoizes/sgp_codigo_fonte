@@ -1,7 +1,12 @@
 <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
 <app-loading></app-loading>
 <app-alert></app-alert>
-<button id="buttonNew" label="Novo" (click)="cadastrarProva()" pButton></button>
+<button
+  id="button-new"
+  label="Novo"
+  (click)="cadastrarProva()"
+  pButton
+></button>
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
     <p-table
@@ -33,7 +38,7 @@
       [disabled]="!isAtLeastOneSelected()"
       class="ui-button-rounded"
       icon="pi pi-trash"
-      id="buttonDelete"
+      id="button-delete"
       (click)="excluirProva()"
       pButton
     ></button>
@@ -41,7 +46,7 @@
       [disabled]="!isOneSelected()"
       class="ui-button-rounded"
       icon="pi pi-pencil"
-      id="buttonEdit"
+      id="button-edit"
       (click)="editarProva()"
       pButton
     ></button>
@@ -49,7 +54,7 @@
       [disabled]="!isOneSelected()"
       class="ui-button-rounded"
       icon="pi pi-eye"
-      id="buttonVisualize"
+      id="button-visualize"
       (click)="visualizarProva()"
       pButton
     ></button>

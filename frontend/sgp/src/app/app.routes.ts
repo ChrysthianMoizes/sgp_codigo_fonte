@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login'
+    redirectTo: 'home'
   },
   {
     path: '',
@@ -26,26 +26,22 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: 'Login', role: false }
+        data: { breadcrumb: 'Login' }
       },
       {
         path: 'cadastro',
         component: CadastroComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: 'Cadastro', role: false }
+        data: { breadcrumb: 'Cadastro'}
       },
       {
         path: 'resetarsenha',
         component: ResetarSenhaComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: 'Resetar Senha', role: false }
+        data: { breadcrumb: 'Resetar Senha' }
       },
       {
         path: 'reenviaremail',
         component: ReenviarEmailComponent,
-        canActivate: [AuthGuard],
-        data: { breadcrumb: 'Reenviar Email', role: false}
+        data: { breadcrumb: 'Reenviar Email'}
       },
     ]
   },
@@ -57,13 +53,13 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Home', toplayout: true, role: true }
+        data: { breadcrumb: 'Home', toplayout: true, role: false }
       },
       {
         path: 'perfil',
         component: UsuarioComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Perfil', toplayout: true, role: true }
+        data: { breadcrumb: 'Perfil', toplayout: true, role: false}
       },
       {
         path: 'candidatos',
@@ -75,7 +71,7 @@ const routes: Routes = [
         path: 'notFound',
         component: NotfoundComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Not Found', toplayout: true, role: true }
+        data: { breadcrumb: 'Not Found', toplayout: true, role: false }
       },
       {
         path: 'questoes',
@@ -87,13 +83,13 @@ const routes: Routes = [
         path: 'avaliacao',
         component: ListarAvaliacaoComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Avaliacao', toplayout: true, role: true },
+        data: { breadcrumb: 'Avaliacao', toplayout: true, role: false },
       },
       {
         path: 'prova',
         component: ListarProvasComponent,
         canActivate: [AuthGuard],
-        data: { breadcrumb: 'Prova', toplayout: true, role: true },
+        data: { breadcrumb: 'Prova', toplayout: true, role: true},
       },
       { path: '**', redirectTo: 'notFound' }
     ]

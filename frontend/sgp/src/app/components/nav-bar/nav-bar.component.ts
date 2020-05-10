@@ -21,13 +21,14 @@ export class NavBarComponent implements OnInit {
     this.items = [{ label: 'Logout', command: this.onLogout }];
   }
 
-  onLogout(event): void {
-    // TODO: Adicionar lógica do logout
+  onLogout(): void {
+    console.log('teste')
+    this.authService.lougout();
   }
 
   verificaPermissao(permissaoMenu: boolean): boolean {
     if (
-      permissaoMenu === this.authService.getPermissaoUsuarioSessionStorage() ||
+      permissaoMenu === this.authService.getPermissaoUsuario() ||
       permissaoMenu === false
     ) {
       return true;
@@ -36,6 +37,10 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickHamburguerMenu(): void {
+    this.toogleSidebar();
+  }
+
+  toogleSidebar(): void {
     let btn = document.querySelector('.sidebar');
     let icone = document.querySelector('.pi-bars');
 
