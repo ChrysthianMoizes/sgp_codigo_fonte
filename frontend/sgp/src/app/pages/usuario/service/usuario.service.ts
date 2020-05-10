@@ -94,12 +94,16 @@ export class UsuarioService {
   }
 
   getUsuarioLogado(): Observable<Usuario> {
-    return of(this.candidatos.find(element => element.id === this.oauth.getIdUsuario()));
+    let idUsuarioLogado = this.oauth.getIdUsuario();
+    return of(this.candidatos.find(element => element.id === idUsuarioLogado));
   }
 
   editarUsuario(usuario: Usuario): Observable<void> {
-    this.editarCandidato(usuario);
-    this.oauth.setUsuario(usuario);
+    this.editarCandidato(usuario).subscribe(
+      response => {
+        this.oauth.setUsuario(usuario);
+      }
+    );
     return of(null);
   }
 
