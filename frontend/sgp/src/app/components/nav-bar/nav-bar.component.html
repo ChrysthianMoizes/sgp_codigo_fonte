@@ -1,6 +1,6 @@
 <div class="nav-bar">
   <i
-    (click)="onClickHamburguerMenu($event)"
+    (click)="onClickHamburguerMenu()"
     class="pi pi-bars"
   ></i>
 
@@ -20,8 +20,11 @@
       src="../../../assets/profile.svg"
     />
   </div>
-  <p-menu #menu [model]="items" [popup]="true"></p-menu>
-</div>
+  <p-menu
+    #menu
+    [model]="items"
+    [popup]="true"
+  ></p-menu>
 <div class="sidebar">
   <div *ngFor="let menuItem of menuSideBar">
     <a
