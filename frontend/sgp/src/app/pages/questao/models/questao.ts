@@ -1,5 +1,5 @@
-import {Senioridade} from '../../senioridade/models/senioridade';
-import {TipoQuestao} from '../../tipo-questao/models/tipo-questao';
+import { Senioridade } from '../../senioridade/models/senioridade';
+import { TipoQuestao } from '../../tipo-questao/models/tipo-questao';
 
 export class Questao {
   id: number;

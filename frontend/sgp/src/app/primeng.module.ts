@@ -9,6 +9,9 @@ import {
   DialogModule,
   InputTextModule,
   TableModule,
+  AutoCompleteModule,
+  PasswordModule,
+  InputMaskModule,
 } from 'primeng';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -34,7 +37,12 @@ const modules = [
   ConfirmDialogModule,
   DialogModule,
   RadioButtonModule,
+  AutoCompleteModule,
+  PasswordModule,
+  InputMaskModule
 ];
+
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, ...modules],

@@ -1,0 +1,19 @@
+.caracteres {
+  color: #ff0000;
+}
+
+.espacamento {
+  padding: 10px 0;
+}
+
+.border-input {
+  border-color: #ff0000;
+}
+
+#center-text {
+  text-align: center;
+}
+
+#left-text {
+  text-align: left;
+}

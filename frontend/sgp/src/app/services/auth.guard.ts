@@ -1,36 +1,31 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
-import {AuthService} from './auth.service';
+import { Injectable } from '@angular/core';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {
-  }
-
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    if (!this.authService.containsUsuarioSessionStorage()) {
+  canActivate(next: ActivatedRouteSnapshot): boolean {
+    if (!this.authService.containsUsuario()) {
       this.router.navigate(['/login']);
       return false;
     }
 
-    if (next.data.role
-      && !this.authService.temPermissao(next.data.role)) {
-
-      this.router.navigate(['/login']);
+    if (next.data.role && !this.authService.temPermissao()) {
+      this.router.navigate(['/home']);
       return false;
     }
 
     return true;
   }
-
 }
