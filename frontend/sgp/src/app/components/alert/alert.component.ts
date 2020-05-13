@@ -1,20 +1,19 @@
-import { AlertService } from './alert.service';
 import { Component } from '@angular/core';
+import { AlertService } from './alert.service';
 
 @Component({
   selector: 'app-alert',
-  providers: [AlertService],
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent {
   constructor(private alertService: AlertService) {}
 
-  confirmar() {
+  confirmar(): void {
     this.alertService.confirmar();
   }
 
-  rejeitar() {
+  rejeitar(): void {
     this.alertService.rejeitar();
   }
 }

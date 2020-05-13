@@ -1,19 +1,28 @@
-<div class="nav-bar">
-  <i
-    (click)="onClickHamburguerMenu($event)"
-    class="pi pi-bars"
-  ></i>
-  <h1> {{ title }} </h1>
+<div class="container">
+  <div class="nav-bar">
+    <i (click)="onClickHamburguerMenu()" class="pi pi-bars"></i>
+    <h1>{{ title }}</h1>
 
-  <img
-    (click)="menu.toggle($event)"
-    alt="PERFIL"
-    height="40px"
-    src="../../../assets/profile.svg"
-  >
+    <img
+      (click)="menu.toggle($event)"
+      alt="PERFIL"
+      height="40px"
+      src="../../../assets/profile.svg"
+    />
+  </div>
+  <p-menu #menu [model]="items" [popup]="true"></p-menu>
 </div>
-<p-menu
-  #menu
-  [model]=items
-  [popup]="true"
-></p-menu>
+<div class="sidebar">
+  <div *ngFor="let menuItem of menuSideBar">
+    <a
+      *ngIf="verificaPermissao(menuItem.permissao)"
+      type="button"
+      id="primeiro"
+      pButton
+      label="{{ menuItem.descricao }}"
+      [routerLink]="menuItem.path"
+      class="btn-sidebar"
+      (click)="toogleSidebar()"
+    ></a>
+  </div>
+</div>

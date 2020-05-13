@@ -1,19 +1,23 @@
-import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoadingService {
   private showSpinner = new Subject();
-  getData() {
+
+  constructor() {}
+
+  getData(): Subject<any> {
     return this.showSpinner;
   }
-  activate() {
+
+  activate(): void {
     this.showSpinner.next(true);
   }
-  deactivate() {
+
+  deactivate(): void {
     this.showSpinner.next(false);
   }
-  constructor() {}
 }

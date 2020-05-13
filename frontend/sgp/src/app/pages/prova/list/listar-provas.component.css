@@ -1,0 +1,21 @@
+#button-delete,
+#button-edit,
+#button-visualize {
+  position: fixed;
+}
+
+#button-delete {
+  margin-top: 50px;
+}
+
+#button-edit {
+  margin-top: 90px;
+}
+
+#button-visualize {
+  margin-top: 130px;
+}
+
+#button-new {
+  margin: 5px 0 5px 0;
+}

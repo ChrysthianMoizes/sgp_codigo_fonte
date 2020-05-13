@@ -1,12 +1,5 @@
-<p-toast
-  [showTransitionOptions]="'200ms'"
-  [hideTransitionOptions]="'200ms'"
-  position="center"
-  key="c"
-  (onClose)="rejeitar()"
-  [modal]="true"
-  [baseZIndex]="9000"
->
+<p-toast (onClose)="rejeitar()" [baseZIndex]="9000" [hideTransitionOptions]="'200ms'" [modal]="true"
+  [showTransitionOptions]="'200ms'" key="c" position="center">
   <ng-template let-message pTemplate="message">
     <div style="text-align: center;">
       <h3>{{ message.summary }}</h3>
@@ -14,13 +7,7 @@
     </div>
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
-        <button
-          type="button"
-          pButton
-          (click)="confirmar()"
-          label="Ok"
-          class="ui-button-secondary"
-        ></button>
+        <button (click)="confirmar()" class="ui-button-secondary" label="Ok" pButton type="button"></button>
       </div>
     </div>
   </ng-template>

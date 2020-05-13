@@ -1,50 +1,64 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api/menuitem';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api/menuitem';
+import { filter } from 'rxjs/operators';
 import { isNullOrUndefined } from 'util';
-import { filter } from 'rxjs/operators'
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.css']
+  styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
+  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+  static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
 
-  constructor(private router: Router,private activatedRoute: ActivatedRoute) { }
+  @Output() shownavbar = new EventEmitter();
+  showBreadCrumb: boolean = true;
+  menuItems: MenuItem[];
+
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadCrumbs()
+    this.menuItems = this.createBreadcrumbs(this.activatedRoute.root);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(
+        () =>
+          (this.menuItems = this.createBreadcrumbs(this.activatedRoute.root))
+      );
   }
-  menuItems: MenuItem [];
-  static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
 
-  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
+  private createBreadcrumbs(
+    route: ActivatedRoute,
+    url: string = '',
+    breadcrumbs: MenuItem[] = []
+  ): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
-
     if (children.length === 0) {
+      breadcrumbs.unshift({ label: 'Página Inicial', url: '/home' });
       return breadcrumbs;
     }
 
-    for (const child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
+    for (let child of children) {
+      const routeURL: string = child.snapshot.url
+        .map((segment) => segment.path)
+        .join('/');
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
-
-      const label = child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
-      if (!isNullOrUndefined(label)) {
-        breadcrumbs.push({label, url});
+      const label =
+        child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_BREADCRUMB];
+      this.showBreadCrumb =
+        child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT];
+      this.shownavbar.emit(
+        child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT]
+      );
+      if (!isNullOrUndefined(label) && label != 'Home') {
+        breadcrumbs.push({ label, url });
       }
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
     }
   }
-
-  loadCrumbs(){
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
-  }
-
 }

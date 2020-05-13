@@ -1,0 +1,63 @@
+<app-alert></app-alert>
+<p-dialog
+  header=" {{ titulo }}"
+  [(visible)]="exibir"
+  [style]="{ width: '85%' }"
+  [modal]="true"
+>
+  <header>
+    <h1>{{ titulo }}</h1>
+    <p>Associe um candidato a uma prova.</p>
+  </header>
+
+  <form [formGroup]="avaliacaoForm">
+    <section>
+      <span class="ui-float-label">
+        <p-autoComplete
+          formControlName="usuario"
+          [suggestions]="usuariosFiltrados"
+          (completeMethod)="updateUsuariosFiltrados($event)"
+          field="nome"
+          id="float-input"
+        ></p-autoComplete>
+        <label for="float-input">
+          Usuário
+        </label>
+      </span>
+
+      <span class="ui-float-label">
+        <p-autoComplete
+          formControlName="prova"
+          [suggestions]="provasFiltradas"
+          (completeMethod)="updateProvasFiltradas($event)"
+          field="titulo"
+          id="float-input1"
+        ></p-autoComplete>
+        <label for="float-input1">
+          Prova
+        </label>
+      </span>
+    </section>
+
+    <section *ngIf="candidatoSelecionado">
+      CPF: {{ candidatoSelecionado.cpf }}
+    </section>
+
+    <footer>
+      <button
+        pButton
+        type="button"
+        class="ui-button-secondary"
+        (click)="onCancel()"
+        label="CANCELAR"
+      ></button>
+      <button
+        pButton
+        type="button"
+        (click)="onSubmit()"
+        [disabled]="!isFormValid"
+        label="SALVAR"
+      ></button>
+    </footer>
+  </form>
+</p-dialog>

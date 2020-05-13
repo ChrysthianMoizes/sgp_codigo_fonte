@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   width: 100vw;
   min-height: 100vh;
@@ -7,6 +8,6 @@ html, body {
 }
 
 :root {
-  --color-primary: #fcab28;
+  --color-primary: #ff5722;
   --color-secondary: whitesmoke;
 }

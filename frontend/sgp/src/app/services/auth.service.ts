@@ -1,54 +1,74 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Usuario } from '../models/usuario.model';
+import { Injectable } from '@angular/core';
+import { Usuario } from '../pages/usuario/models/usuario';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private KEY: string = 'sgp';
 
-  public setUsuarioSessionStorage(usuario: Usuario): void{
+  constructor(private router: Router){}
+
+  public setUsuario(usuario: Usuario): void {
     sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
   }
 
-  public getUsuarioSessionStorage(): Usuario {
-    return JSON.parse(sessionStorage.getItem(this.KEY));
+  public getUsuario(): Usuario {
+    if (this.containsUsuario()) {
+      return JSON.parse(sessionStorage.getItem(this.KEY));
+    }
   }
 
-  public getNomeUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().nome;
+  public getNomeUsuario(): string {
+    if (this.containsUsuario()) {
+      return this.getUsuario().nome;
+    }
+    return '';
   }
 
-  public getIdUsuarioSessionStorage(): number {
-    return this.getUsuarioSessionStorage().id;
+  public getIdUsuario(): number {
+    if (this.containsUsuario()) {
+      return this.getUsuario().id;
+    }
+    return 0;
   }
 
-  public getEmailUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().email;
+  public getEmailUsuario(): string {
+    if (this.containsUsuario()) {
+      return this.getUsuario().email;
+    }
+    return '';
   }
 
-  public getCpflUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().cpf;
+  public getCpflUsuario(): string {
+    if (this.containsUsuario()) {
+      return this.getUsuario().cpf;
+    }
+    return '';
   }
 
-  public getPermissaoUsuarioSessionStorage(): string {
-    return this.getUsuarioSessionStorage().permissao;
+  public getPermissaoUsuario(): boolean {
+    if (this.containsUsuario()) {
+      return this.getUsuario().admin;
+    }
+    return false;
   }
 
-  public temPermissao(permissao: string): boolean {
-    return this.getPermissaoUsuarioSessionStorage() == permissao;
+  public temPermissao(): boolean {
+    return this.getPermissaoUsuario();
   }
 
-  public containsUsuarioSessionStorage(): boolean {
-    return sessionStorage.key(0) == this.KEY ? true : false;
+  public containsUsuario(): boolean {
+    return sessionStorage.key(0) === this.KEY;
   }
 
-  public retirarUsuarioDoSessionStorage(): void {
+  public removerSessao(): void {
     sessionStorage.clear();
+    this.router.navigate(['/login'])
   }
 
   public isAdmin(): boolean {
-    return this.temPermissao('ROLE_ADMIN');
+    return this.temPermissao();
   }
 }

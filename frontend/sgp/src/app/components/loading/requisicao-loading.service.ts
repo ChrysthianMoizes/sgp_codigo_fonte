@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LoadingService } from './loading.service';
 import { of } from 'rxjs';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 export class RequisicaoLoadingService {
   constructor(private loadingService: LoadingService) {}
 
-  requisicaoLoading() {
+  requisicaoLoading(): void {
     this.loadingService.activate();
     of<string>('nome').subscribe(
       (x) => {
