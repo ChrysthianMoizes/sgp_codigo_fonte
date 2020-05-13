@@ -1,0 +1,20 @@
+.caracteres {
+  color: #ff0000;
+  text-align: center;
+}
+
+.espacamento {
+  padding: 10px 0;
+}
+
+.border-input {
+  border-color: #ff0000;
+}
+
+.ng-invalid.ng-touched:not(form) {
+  border: 1px solid black;
+}
+
+p-card header {
+  text-align: center;
+}

@@ -1,0 +1,104 @@
+.container {
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.nav-bar {
+  height: 60px;
+  background-color: var(--color-primary);
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  z-index: 800;
+}
+
+.nav-bar > i,
+.nav-bar > h1 {
+  color: white;
+}
+
+.nav-bar > img {
+  filter: invert(1);
+}
+
+.nav-bar > i {
+  font-size: 30px;
+}
+
+.nav-bar > img:hover,
+.nav-bar > i:hover {
+  cursor: pointer;
+}
+
+.icone {
+  transform: rotate(90deg);
+  transition: ease-in 400ms;
+}
+
+.ativo {
+  display: block !important;
+  animation-name: slideright;
+  animation-duration: 400ms;
+}
+
+.sidebar {
+  display: none;
+  position: fixed;
+  max-width: 250px;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--color-primary);
+  top: 60px;
+  z-index: 600;
+}
+
+.sidebar .btn-sidebar {
+  width: 100vw;
+  max-width: 250px;
+  display: block;
+  margin: 10px 0;
+  padding: 20px 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  color: var(--color-secondary);
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-top: 1px solid #c0c0c0;
+  border-bottom: 1px solid #c0c0c0;
+  border-radius: 0;
+}
+
+.sidebar .btn-sidebar:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: var(--color-secondary);
+}
+#primeiro {
+  margin-top: 17px;
+}
+
+@media screen and (max-width: 640px) {
+  .nav-bar > h1 {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .nav-bar > h1 {
+    font-size: 16px;
+  }
+}
+
+@keyframes slideright {
+  from {
+    display: none;
+    margin-left: -300px;
+  }
+  to {
+    display: block;
+    margin-left: 0;
+  }
+}
