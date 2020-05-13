@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="1" author="maxson.zucolotto">
+        <createTable tableName="PROVA" remarks="Tabela de provas">
+            <column name="ID" type="number" remarks="Campo de indentificação">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PROVA" ></constraints>
+            </column>
+            <column name="TITULO" type="varchar(80)" >
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="PERCENTUAL_APROVACAO" type="number(10,2)" >
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="maxson.zucolotto">
+        <createTable tableName="PROVA_QUESTAO">
+            <column name="ID_PROVA" type="number">
+                <constraints nullable="false" ></constraints>
+            </column>
+            <column name="ID_QUESTAO" type="number">
+                <constraints nullable="false" ></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="maxson.zucolotto" id="3">
+        <addPrimaryKey columnNames="ID_PROVA, ID_QUESTAO"
+                       constraintName="PK_PROVA_QUESTAO"
+                       tableName="PROVA_QUESTAO"/>
+    </changeSet>
+    <changeSet id="4" author="maxson.zucolotto">
+        <addForeignKeyConstraint baseColumnNames="ID_PROVA"
+                                 baseTableName="PROVA_QUESTAO"
+                                 constraintName="FK_PROVA_QUESTAO_PROVA"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="PROVA"/>
+    </changeSet>
+
+    <changeSet id="5" author="maxson.zucolotto">
+        <addForeignKeyConstraint baseColumnNames="ID_QUESTAO"
+                                 baseTableName="PROVA_QUESTAO"
+                                 constraintName="FK_PROVA_QUESTAO_QUESTAO"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="QUESTAO"/>
+    </changeSet>
+</databaseChangeLog>
