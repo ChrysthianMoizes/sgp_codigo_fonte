@@ -1,15 +1,21 @@
 package br.com.basis.sgp.servico.dto;
 
+
+
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
-public class UsuarioCadastroDTO {
+public class UsuarioEdicaoDTO {
+
+    @NotNull
+    private Long id;
+
+    @NotNull
+    private String cpf;
 
     @NotNull
     private String nome;
@@ -18,13 +24,8 @@ public class UsuarioCadastroDTO {
     @Email
     private String email;
 
-    @NotNull
-    @CPF
-    private String cpf;
-
-    @NotNull
     private String senha;
 
     @NotNull
-    private String token;
+    private Integer admin;
 }
