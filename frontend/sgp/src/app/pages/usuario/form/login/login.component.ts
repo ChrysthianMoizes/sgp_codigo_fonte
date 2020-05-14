@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../service/usuario.service';
-import { Usuario } from '../../models/usuario';
+import { catchError } from 'rxjs/operators';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -12,28 +12,24 @@ import { AlertService } from 'src/app/components/alert/alert.service';
 })
 export class LoginComponent {
   constructor(
-    private usuarioService: UsuarioService,
-    private authService: AuthService,
     private router: Router,
-    private alert: AlertService) {
-    }
+    private alert: AlertService,
+    private authService: AuthService
+  ) { }
 
   necessitaCabecalho = true;
-
   usuario: Usuario = new Usuario();
 
-  requisitarLogin() {
-    this.usuarioService.logar(this.usuario.email, this.usuario.senha).subscribe(
-      response => {
-        if(response){
-          this.authService.setUsuario(response),
-            this.router.navigate(["home"]);
-        }
-        else {
-          this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
-        }
+  onSubmit(): void {
+    this.authService.login(this.usuario).subscribe(
+      res => {
+        this.authService.setUsuario(res);
+        this.router.navigate(["home"]);
+      },
+      err => {
+        this.alert.montarAlerta('error', 'Erro', err.message);
       }
-    )
+    );
   }
 
   verificaValidTouched(campo): void {

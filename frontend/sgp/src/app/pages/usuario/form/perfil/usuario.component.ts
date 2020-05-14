@@ -21,25 +21,25 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.perfilService.getUsuarioLogado().subscribe(
-      response => {
-        this.perfil = response
-      },
-      erro => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao recuperar usuario logado')
-      }
-    );
+    // this.perfilService.getUsuarioLogado().subscribe(
+    //   response => {
+    //     this.perfil = response
+    //   },
+    //   erro => {
+    //     this.alert.montarAlerta('error', 'Erro', 'Erro ao recuperar usuario logado')
+    //   }
+    // );
   }
 
   onSubmit(): void {
-    this.perfilService.editarUsuario(this.perfil).subscribe(
-      () => {
-        this.alert.montarAlerta('success', 'Sucesso', 'Perfil editado com sucesso')
-      },
-      erro => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar perfil')
-      }
-    )
+    // this.perfilService.editarUsuario(this.perfil).subscribe(
+    //   () => {
+    //     this.alert.montarAlerta('success', 'Sucesso', 'Perfil editado com sucesso')
+    //   },
+    //   erro => {
+    //     this.alert.montarAlerta('error', 'Erro', 'Erro ao editar perfil')
+    //   }
+    // )
   }
 
   onCancel() {

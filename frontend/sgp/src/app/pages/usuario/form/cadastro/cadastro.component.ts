@@ -24,20 +24,20 @@ export class CadastroComponent implements OnInit {
   }
 
   save(usuario: UsuarioToken) {
-    this.usuario = usuario
-    this.usuarioService.cadastrarUsuario(this.usuario)
-      .subscribe(response => {
-        this.usuarioService.logar(response.email, response.senha).subscribe(
-          response => {
-            if(response){
-              this.authService.setUsuario(response),
-                this.router.navigate(["home"]);
-            }
-            else {
-              this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
-            }
-          }
-        )
-      })
+    // this.usuario = usuario
+    // this.usuarioService.cadastrarUsuario(this.usuario)
+    //   .subscribe(response => {
+    //     this.usuarioService.logar(response.email, response.senha).subscribe(
+    //       response => {
+    //         if(response){
+    //           this.authService.setUsuario(response),
+    //             this.router.navigate(["home"]);
+    //         }
+    //         else {
+    //           this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
+    //         }
+    //       }
+    //     )
+    //   })
   }
 }
