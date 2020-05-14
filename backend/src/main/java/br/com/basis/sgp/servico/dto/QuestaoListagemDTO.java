@@ -9,6 +9,6 @@ public class QuestaoListagemDTO {
 
     private Long id;
     private String titulo;
-    private String descSenioridade;
-    private String descTipo;
+    private String descricaoSenioridade;
+    private String descricaoTipo;
 }
