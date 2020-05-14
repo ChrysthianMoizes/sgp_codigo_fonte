@@ -1,22 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../pages/usuario/models/usuario';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private KEY: string = 'sgp';
 
-  constructor(private router: Router){}
+  key = environment.key;
+  url = environment.url;
+
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient
+  ){}
 
   public setUsuario(usuario: Usuario): void {
-    sessionStorage.setItem(this.KEY, JSON.stringify(usuario));
+
+    sessionStorage.setItem(this.key, JSON.stringify(usuario));
+  }
+
+  login(usuario: Usuario): Observable<any> {
+    return this.httpClient.post(`${this.url}/usuarios/login`, usuario);
   }
 
   public getUsuario(): Usuario {
     if (this.containsUsuario()) {
-      return JSON.parse(sessionStorage.getItem(this.KEY));
+      return JSON.parse(sessionStorage.getItem(this.key));
     }
   }
 
@@ -60,7 +73,7 @@ export class AuthService {
   }
 
   public containsUsuario(): boolean {
-    return sessionStorage.key(0) === this.KEY;
+    return sessionStorage.key(0) === this.key;
   }
 
   public removerSessao(): void {
