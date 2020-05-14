@@ -30,7 +30,7 @@ export class ProvaService {
     { id: 10, titulo: 'Título ', percentualAprovacao: 60 },
   ];
 
-  url = 'http://localhost:3000/provas';
+  url = 'http://localhost:3000/api/provas';
   constructor(private httpClient: HttpClient) {
    }
 
