@@ -33,12 +33,12 @@ public class UsuarioFiltro implements EntityFiltro {
         }
 
         if (!StringUtils.isEmpty(cpf)) {
-            Predicate predicate = cb.equal(root.get(Usuario_.cpf),cpf);
+            Predicate predicate = cb.equal(root.get(Usuario_.cpf), cpf);
             predicates.add(predicate);
         }
 
         if (!StringUtils.isEmpty(admin)) {
-            Predicate predicate = cb.equal(root.get(Usuario_.admin),admin);
+            Predicate predicate = cb.equal(root.get(Usuario_.admin), admin);
             predicates.add(predicate);
         }
         return predicates;

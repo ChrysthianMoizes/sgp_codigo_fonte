@@ -1,7 +1,7 @@
 package br.com.basis.sgp.servico.impl;
 
-import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.dominio.Usuario;
+import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.repositorio.UsuarioRepositorio;
 import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -26,13 +26,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioServicoImpl implements UsuarioServico {
 
+    private static final String TOKEN_ADMIN = "pindaiba";
+    private static final String TOKEN_USER = "abacate";
     private final UsuarioMapper usuarioMapper;
     private final UsuarioCadastroMapper usuarioCadastroMapper;
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioDropdownMapper usuarioDropdownMapper;
-
-    private static final String TOKEN_ADMIN = "pindaiba";
-    private static final String TOKEN_USER = "abacate";
 
     @Override
     public Page<UsuarioDTO> listarCandidatos(@ModelAttribute UsuarioFiltro filtro, Pageable pageable) {
@@ -58,11 +57,11 @@ public class UsuarioServicoImpl implements UsuarioServico {
     public UsuarioDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioCadastroMapper.toEntity(usuarioCadastroDTO);
 
-        if(verificarCpf(usuarioCadastroDTO)){
+        if (verificarCpf(usuarioCadastroDTO)) {
             throw new RegraNegocioException("CPF existente");
         }
 
-        if(verificarEmail(usuarioCadastroDTO)){
+        if (verificarEmail(usuarioCadastroDTO)) {
             throw new RegraNegocioException("Email existente");
         }
 
@@ -89,7 +88,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Integer validarToken(UsuarioCadastroDTO usuarioCadastroDTO) {
-        switch (usuarioCadastroDTO.getToken()){
+        switch (usuarioCadastroDTO.getToken()) {
             case TOKEN_ADMIN:
                 return TipoUsuarioEnum.ADMIN.getCodigo();
             case TOKEN_USER:

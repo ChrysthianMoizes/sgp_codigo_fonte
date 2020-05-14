@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties({LiquibaseProperties.class})
 public class SgpApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SgpApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SgpApplication.class, args);
+    }
 
 }

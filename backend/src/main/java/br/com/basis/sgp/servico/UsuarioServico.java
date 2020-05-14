@@ -12,16 +12,16 @@ import java.util.List;
 
 public interface UsuarioServico {
 
-    public Page<UsuarioDTO> listarCandidatos(UsuarioFiltro usuarioFiltro, Pageable pageable);
+    Page<UsuarioDTO> listarCandidatos(UsuarioFiltro usuarioFiltro, Pageable pageable);
 
-    public List<SelectDTO> listarCandidatosDropdown();
+    List<SelectDTO> listarCandidatosDropdown();
 
-    public UsuarioDTO logar(UsuarioCadastroDTO usuarioCadastroDTO);
+    UsuarioDTO logar(UsuarioCadastroDTO usuarioCadastroDTO);
 
-    public UsuarioDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO);
+    UsuarioDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO);
 
-    public UsuarioCadastroDTO obterPorId(Long id);
+    UsuarioCadastroDTO obterPorId(Long id);
 
-    public void excluir(Long id);
+    void excluir(Long id);
 
 }

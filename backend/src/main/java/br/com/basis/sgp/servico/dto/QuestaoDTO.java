@@ -1,7 +1,5 @@
 package br.com.basis.sgp.servico.dto;
 
-import br.com.basis.sgp.dominio.Senioridade;
-import br.com.basis.sgp.dominio.TipoQuestao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,9 +40,9 @@ public class QuestaoDTO {
     private Integer resposta;
 
     @NotNull(message = "Campo SENIORIDADE não deve ficar em branco")
-    private Senioridade senioridade;
+    private Long idSenioridade;
 
     @NotNull(message = "Campo TIPO DE QUESTÃO não deve ficar em branco")
-    private TipoQuestao tipoQuestao;
+    private Long idTipoQuestao;
 
 }

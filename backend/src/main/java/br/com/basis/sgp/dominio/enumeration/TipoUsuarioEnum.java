@@ -10,5 +10,5 @@ public enum TipoUsuarioEnum {
     ADMIN(1),
     CANDIDATO(0);
 
-    private Integer codigo;
+    private final Integer codigo;
 }

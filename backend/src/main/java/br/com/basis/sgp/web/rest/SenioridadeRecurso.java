@@ -1,7 +1,7 @@
 package br.com.basis.sgp.web.rest;
 
 import br.com.basis.sgp.servico.SenioridadeServico;
-import br.com.basis.sgp.servico.dto.SenioridadeDTO;
+import br.com.basis.sgp.servico.dto.SelectDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class SenioridadeRecurso {
     private final SenioridadeServico servico;
 
     @GetMapping
-    public ResponseEntity<List<SenioridadeDTO>> listar() {
+    public ResponseEntity<List<SelectDTO>> listar() {
         return ResponseEntity.ok().body(servico.listar());
     }
 }
