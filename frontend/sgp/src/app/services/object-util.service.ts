@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ObjectUtil {
-  walk(objeto: Object, caminho: string): Object {
+  walk(objeto: Object, caminho: string): any {
     const campo = caminho.split('.');
     let objetoAtual = objeto;
     campo.forEach((cp) => {

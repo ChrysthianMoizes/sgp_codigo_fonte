@@ -25,7 +25,7 @@ export class QuestaoListarComponent implements OnInit {
     private questaoService: QuestaoService,
     public dialogService: DialogService
   ) {}
-  ref: DynamicDialogRef;
+
   ngOnInit(): void {
     this.definicaoColunas = [
       { field: 'id', header: 'Código' },
@@ -34,9 +34,11 @@ export class QuestaoListarComponent implements OnInit {
       { field: 'tipoQuestao.descricao', header: 'Tipo da Questão' },
     ];
 
-    this.questaoService.getQuestoes().subscribe((response) => {
-      this.questoes = response;
-    });
+    this.questaoService.getQuestoes().subscribe(
+      (response) => {
+        this.questoes = response;
+      }
+    );
   }
 
   isSelected(): boolean {
@@ -68,27 +70,33 @@ export class QuestaoListarComponent implements OnInit {
     this.questoesSelecionadas = [];
   }
 
-  showDialog(id: string): void {
-    this.dialogQuestao.exibirDialog(id, this.questoesSelecionadas[0]);
+  showDialogVisualizar() {
+    this.dialogQuestao.exibirDialogVisualisar(this.questoesSelecionadas[0]);
+    this.questoesSelecionadas = [];
   }
 
-  atualizar(): void {
-    //get na lista do banco
+  showDialogEditar(){
+    this.dialogQuestao.exibirDialogEditar(this.questoesSelecionadas[0]);
+    this.questoesSelecionadas = [];
+  }
+
+  showDialogCadastro(){
+    this.dialogQuestao.exibirDialogCadastro();
+    this.questoesSelecionadas = [];
   }
 
   habilitar(): boolean {
     return this.questoesSelecionadas.length > 0;
   }
 
-  canEnabled(): boolean {
-    return this.questoesSelecionadas.length > 0;
-  }
-
-  deletarQuestao(): void {
-    this.questaoService.deletarQuestao(this.questoesSelecionadas.pop());
-  }
-
-  walk(objeto: Object, caminho: string): Object {
+  walk(objeto: Object, caminho: string) {
     return this.objectUtil.walk(objeto, caminho);
+  }
+
+  checkNumberCharacter(descricao: string): string {
+    if(descricao.length > 50){
+      return descricao.substr(0, 50) + '...';
+    }
+    return descricao;
   }
 }
