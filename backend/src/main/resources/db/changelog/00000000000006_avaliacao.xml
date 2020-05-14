@@ -6,7 +6,7 @@
 
     <changeSet id="12" author="maxson.zucolotto">
         <createTable tableName="AVALIACAO" remarks="Avaliação">
-            <column name="ID" type="number" remarks="Campo de indentificação">
+            <column name="ID" type="BIGINT" remarks="Campo de indentificação" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TIPO_QUESTAO"/>
             </column>
             <column name="DATA_AVALIACAO" type="date">
@@ -16,11 +16,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ID_CANDIDATO" type="number">
+            <column name="ID_CANDIDATO" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="ID_PROVA" type="number">
+            <column name="ID_PROVA" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>

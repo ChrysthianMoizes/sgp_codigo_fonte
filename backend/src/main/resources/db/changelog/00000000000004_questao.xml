@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet id="4" author="maxson.zucolotto">
         <createTable tableName="QUESTAO" remarks="Tabela de questões">
-            <column name="ID" type="number" remarks="Campo de indentificação">
+            <column name="ID" type="BIGINT" remarks="Campo de indentificação" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TIPO_QUESTAO"/>
             </column>
             <column name="DESCRICAO" type="varchar(400)" remarks="Descrição">
