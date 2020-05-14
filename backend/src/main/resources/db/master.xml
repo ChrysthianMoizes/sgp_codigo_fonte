@@ -5,6 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-<!--    <include file="db/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>-->
-
+    <include file="db/changelog/00000000000001_criando_tabela_usuario.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/00000000000002_criando_tabela_tipo_questao.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/00000000000003_senioridade.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/00000000000004_questao.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/00000000000005_prova.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/00000000000006_avaliacao.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

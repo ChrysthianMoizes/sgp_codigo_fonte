@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="1" author="maxson.zucolotto">
+        <createTable tableName="USUARIO">
+            <column name="ID" type="BIGINT" remarks="Id do usuario" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="USUARIO_PK" nullable="false" />
+            </column>
+            <column name="NOME" type="varchar(200)" remarks="Nome do usuario">
+                <constraints nullable="false" />
+            </column>
+            <column name="CPF" type="varchar(11)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="EMAIL" type="varchar(100)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="SENHA" type="varchar(20)" >
+                <constraints nullable="false" />
+            </column>
+            <column name="ADMIN" type="number" >
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

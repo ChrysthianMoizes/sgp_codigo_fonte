@@ -1,9 +1,9 @@
-import { MenuModel } from '../menu/menu.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api/menuitem';
 import { menu } from '../menu/menu';
 import { AuthService } from './../../services/auth.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api/menuitem';
-import { Router } from '@angular/router';
+import { MenuModel } from '../menu/menu.model';
 
 @Component({
   selector: 'app-nav-bar',
@@ -17,19 +17,24 @@ export class NavBarComponent implements OnInit {
     ) {}
 
   items: MenuItem[];
+  @Input() title = 'Gestão de Provas';
+
   menuSideBar: MenuModel[];
 
-  @Input() title = 'Gestão de Provas - Basis';
   ngOnInit(): void {
     this.menuSideBar = menu;
     this.items = [
-      { label: 'Perfil', command: toPerfil => {this.toPerfil()}},
-      { label: 'Logout', command: onLogout => {this.logout()} }
+      {label: 'Editar Perfil', command: () => this.onEditarPerfil()},
+      {label: 'Logout', command: () => this.logout()}
     ];
   }
 
-  toPerfil(): void {
-    this.router.navigate(['/perfil']);
+  onClickLogo(): void {
+    this.router.navigateByUrl('home');
+  }
+
+  onEditarPerfil(): void {
+    this.router.navigateByUrl('perfil');
   }
 
   logout(): void {

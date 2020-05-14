@@ -59,4 +59,8 @@ export class AvaliacaoService {
   update(avaliacao: Avaliacao): Observable<Avaliacao> {
     return of(avaliacao);
   }
+
+  responder(avaliacao: Avaliacao): Observable<Avaliacao> {
+    return of(avaliacao);
+  }
 }
