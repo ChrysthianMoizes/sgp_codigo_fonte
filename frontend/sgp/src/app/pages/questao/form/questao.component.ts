@@ -1,10 +1,10 @@
 import { Questao } from './../models/questao';
-import { TipoQuestao } from './../../tipo-questao/models/tipo-questao';
-import { Senioridade } from './../../senioridade/models/senioridade';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { QuestaoService } from '../service/questao.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { Senioridade } from 'src/app/models/senioridade';
+import { TipoQuestao } from 'src/app/models/tipo-questao';
 
 @Component({
   selector: 'app-questao',
@@ -87,7 +87,7 @@ export class QuestaoComponent implements OnInit {
       { id: 4, descricao: 'Teste e Arquitetura' },
     ];
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   salvar(): void {
     //pegar os dados e salvar
