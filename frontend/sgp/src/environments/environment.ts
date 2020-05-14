@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  keySessionStorage: 'sgp'
+  keySessionStorage: 'sgp',
+  url: 'http://localhost:8080/api/'
 };
 
 /*
