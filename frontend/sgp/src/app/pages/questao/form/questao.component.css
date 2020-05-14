@@ -42,3 +42,7 @@ textarea.ng-valid.ng-touched {
 textarea.ng-invalid.ng-touched {
   border: solid 1px red;
 }
+
+.border-label{
+  margin-bottom: 15px;
+}

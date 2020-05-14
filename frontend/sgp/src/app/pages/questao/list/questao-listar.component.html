@@ -2,7 +2,7 @@
 <button
   pButton
   label="Novo"
-  (click)="showDialog('1')"
+  (click)="showDialogCadastro()"
   class="btn-margin"
 ></button>
 <div class="p-grid">
@@ -25,7 +25,7 @@
       <ng-template pTemplate="body" let-questao let-colunas="columns">
         <tr [pSelectableRow]="questao">
           <td *ngFor="let coluna of colunas">
-            {{ walk(questao, coluna.field) }}
+            {{ checkNumberCharacter(walk(questao, coluna.field)) }}
           </td>
         </tr>
       </ng-template>
@@ -46,7 +46,7 @@
       icon="pi pi-pencil"
       class="ui-button-rounded"
       [disabled]="!isSelected()"
-      (click)="showDialog('2')"
+      (click)="showDialogEditar()"
     ></button>
     <button
       pButton
@@ -54,8 +54,9 @@
       icon="pi pi-eye"
       class="ui-button-rounded"
       [disabled]="!isSelected()"
+      (click)="showDialogVisualizar()"
     ></button>
   </div>
 </div>
 
-<app-questao #DialogCadastrar (alterar)="atualizar()"></app-questao>
+<app-questao #DialogCadastrar></app-questao>

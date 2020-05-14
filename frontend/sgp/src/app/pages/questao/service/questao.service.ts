@@ -27,7 +27,8 @@ export class QuestaoService {
         retry(1),
         map((response: Response) => {
           return this.convertJSONtoQuestaoModel(response.json());
-        })
+        }),
+        // catchError(err => of([]))
       );
   }
 
