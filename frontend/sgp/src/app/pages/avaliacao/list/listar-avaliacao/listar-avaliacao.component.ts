@@ -9,7 +9,7 @@ import { AvaliacaoService } from '../../service/avaliacao.service';
   styleUrls: ['./listar-avaliacao.component.css'],
 })
 export class ListarAvaliacaoComponent implements OnInit {
-  constructor(private avaliacaoService: AvaliacaoService) {}
+  constructor(private avaliacaoService: AvaliacaoService) { }
 
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
@@ -18,7 +18,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   avaliacaoSelecionada: Avaliacao;
   avaliacoesRecebidas: Avaliacao[];
   ngOnInit(): void {
-    this.avaliacaoService.getAvaliacoes().subscribe({
+    this.avaliacaoService.index().subscribe({
       next: (avaliacoes) => {
         this.avaliacoesRecebidas = avaliacoes;
       },

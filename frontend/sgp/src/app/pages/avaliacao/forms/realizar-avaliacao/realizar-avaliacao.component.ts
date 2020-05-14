@@ -12,7 +12,7 @@ export class RealizarAvaliacaoComponent implements OnInit {
   constructor(
     private avaliacaoService: AvaliacaoService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   selectedValue: number;
 
@@ -108,14 +108,14 @@ export class RealizarAvaliacaoComponent implements OnInit {
   }
 
   finalizarProva() {
-    this.avaliacaoService.responder(this.avaliacao).subscribe((avaliacao) => {
-      this.alertService.montarAlerta(
-        'success',
-        'Sucesso!',
-        'Prova finalizada!'
-      );
-    });
-    console.log(this.avaliacao.prova);
+    // this.avaliacaoService.responder(this.avaliacao).subscribe((avaliacao) => {
+    //   this.alertService.montarAlerta(
+    //     'success',
+    //     'Sucesso!',
+    //     'Prova finalizada!'
+    //   );
+    // });
+    // console.log(this.avaliacao.prova);
   }
 
   verificaQuestoes(): boolean {
