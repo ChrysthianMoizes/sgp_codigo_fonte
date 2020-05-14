@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Usuario } from '../models/usuario';
-import { UsuarioToken } from '../models/usuarioToken';
+import { UsuarioToken } from '../models/usuario-token';
 import { AuthService } from 'src/app/services/auth.service';
 import { element } from 'protractor';
 import { error } from '@angular/compiler/src/util';
 import { AuthGuard } from 'src/app/services/auth.guard';
+import { HttpClient } from '@angular/common/http';
+import { url } from 'inspector';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +49,7 @@ export class UsuarioService {
     }
   ];
 
-  constructor(private oauth: AuthService) {}
+  constructor(private oauth: AuthService, private http: HttpClient) { }
 
   findByNome(query: string): Observable<Usuario[]> {
     return of(
@@ -65,14 +68,14 @@ export class UsuarioService {
     return of<Usuario>(usuario)
   }
 
-  listarCandidatos(): Observable<Usuario[]> {
+  listarCandidatos(): Observable<any> {
     let candidatosAv: Usuario[] = [];
     this.candidatos.forEach(element => {
-      if(!element.admin){
+      if (!element.admin) {
         candidatosAv.push(element);
       }
     })
-    return of<Usuario[]>(candidatosAv);
+    return this.http.get(environment.url);
   }
 
   excluirCandidatos(id: number): Observable<void> {
@@ -83,7 +86,7 @@ export class UsuarioService {
     return of(null);
   }
 
-  editarCandidato(candidato: Usuario): Observable<Usuario[]> {
+  editarCandidato(candidato: Usuario): Observable<any> {
     var pos = this.candidatos.findIndex(
       (element) => element.id == candidato.id
     );
@@ -113,7 +116,7 @@ export class UsuarioService {
 
   logar(email: string, senha: string): Observable<Usuario> {
     const candidato: Usuario = this.existeUser(email, senha);
-    return candidato ? of(candidato) : of (null);
+    return candidato ? of(candidato) : of(null);
   }
 
   reenviarEmailConfirmacao(email: string): Observable<void> {

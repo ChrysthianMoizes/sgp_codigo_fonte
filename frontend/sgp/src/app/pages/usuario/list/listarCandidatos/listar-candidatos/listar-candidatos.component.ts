@@ -1,17 +1,14 @@
 import {
   Component,
   OnInit,
-  Input,
-  Output,
-  EventEmitter,
   ViewChild,
 } from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
+
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../service/usuario.service';
 import { VisualizarCandidatoComponent } from '../../../form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
+import { FiltroCandidato } from '../../../models/filtro-candidato';
 
 @Component({
   selector: 'app-listar-candidatos',
@@ -22,7 +19,7 @@ export class ListarCandidatosComponent implements OnInit {
   constructor(
     private alert: AlertService,
     private usuarioService: UsuarioService
-  ) {}
+  ) { }
 
   @ViewChild('VisualizarCandidato')
   visualizarCandidato: VisualizarCandidatoComponent;

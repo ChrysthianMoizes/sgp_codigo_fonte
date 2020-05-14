@@ -8,6 +8,7 @@ import { Usuario } from '../../../usuario/models/usuario';
 import { UsuarioService } from '../../../usuario/service/usuario.service';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
+import { avaliacaCadastro } from '../../models/avaliacao-cadastro';
 
 @Component({
   selector: 'app-cadastrar-avaliacao',
@@ -15,7 +16,7 @@ import { Avaliacao } from './../../models/avaliacao';
   styleUrls: ['./cadastrar-avaliacao.component.css'],
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
-  @Input() avaliacaoSendoEditada: Avaliacao;
+  @Input() avaliacaoSendoEditada: avaliacaCadastro;
   @Input() viewOnly = false;
   avaliacaoForm: FormGroup;
   usuariosFiltrados: Usuario[];
@@ -29,7 +30,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     private avaliacaoService: AvaliacaoService,
     private alertService: AlertService,
     private loadingService: LoadingService
-  ) {}
+  ) { }
   ngOnChanges(): void {
     if (this.avaliacaoSendoEditada) {
       this.avaliacaoForm
@@ -46,6 +47,17 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
+    this.usuarioService.listarCandidatos()
+      .subscribe(
+        response => {
+          this.usuariosFiltrados = response;
+        },
+        erro => {
+          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter usuarios')
+        }
+      )
+
     this.avaliacaoForm = this.formBuilder.group({
       usuario: ['', Validators.required],
       prova: ['', Validators.required],

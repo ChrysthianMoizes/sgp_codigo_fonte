@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { UsuarioToken } from '../../models/usuarioToken';
+import { UsuarioToken } from '../../models/usuario-token';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -11,7 +11,7 @@ export class FormCadastroComponent {
   @Input() modo: string;
   @Output() cadastrarUsuario = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
   save(): void {
     this.cadastrarUsuario.emit(this.usuario);

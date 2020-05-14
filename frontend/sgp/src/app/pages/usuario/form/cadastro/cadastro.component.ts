@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from '../../service/usuario.service';
-import { UsuarioToken } from '../../models/usuarioToken';
+import { UsuarioToken } from '../../models/usuario-token';
 import { AlertService } from 'src/app/components/alert/alert.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class CadastroComponent implements OnInit {
       .subscribe(response => {
         this.usuarioService.logar(response.email, response.senha).subscribe(
           response => {
-            if(response){
+            if (response) {
               this.authService.setUsuario(response),
                 this.router.navigate(["home"]);
             }
