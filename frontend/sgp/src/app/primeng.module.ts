@@ -19,6 +19,7 @@ import { MenuModule } from 'primeng/menu';
 import { PaginatorModule } from 'primeng/paginator';
 import { PickListModule } from 'primeng/picklist';
 import { ToastModule } from 'primeng/toast';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 const modules = [
   ButtonModule,
@@ -35,6 +36,7 @@ const modules = [
   AccordionModule,
   ConfirmDialogModule,
   DialogModule,
+  RadioButtonModule,
   AutoCompleteModule,
   PasswordModule,
   InputMaskModule
@@ -43,11 +45,7 @@ const modules = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule, ...modules
-  ],
+  imports: [CommonModule, ...modules],
   exports: [...modules],
 })
-
-export class PrimengModule {
-}
+export class PrimengModule {}
