@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("/api/provas")
@@ -31,9 +33,9 @@ public class ProvaRecurso {
     }
 
     @PostMapping
-    public ResponseEntity<ProvaCadastroDTO> Cadastrar(@Valid @RequestBody ProvaCadastroDTO provaCadastroDTO){
-        ProvaCadastroDTO provaCadastroDTO1 = provaServico.salvar(provaCadastroDTO);
-        return ResponseEntity.ok(provaCadastroDTO);
+    public ResponseEntity<ProvaCadastroDTO> Cadastrar(@Valid @RequestBody ProvaCadastroDTO provaCadastroDTO) throws URISyntaxException {
+        ProvaCadastroDTO provaCadastro = provaServico.salvar(provaCadastroDTO);
+        return ResponseEntity.created(new URI("/provas/" + provaCadastro.getId())).body(provaCadastro);
     }
 
     @PutMapping
@@ -44,7 +46,7 @@ public class ProvaRecurso {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id){
-
+        provaServico.excluir(id);
         return ResponseEntity.ok(null);
     }
 

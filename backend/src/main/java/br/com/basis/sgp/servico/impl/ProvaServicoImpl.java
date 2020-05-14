@@ -14,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,10 +31,8 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
-    public ProvaCadastroDTO exibirPorID(Long id) {
-        Prova prova = provaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
-        return provaCadastroMapper.toDto(prova);
+    public ProvaCadastroDTO exibirPorID(Long id){
+        return provaCadastroMapper.toDto(buscarPorId(id));
     }
 
     @Override
@@ -47,7 +43,16 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
-    public void excluir() {
-
+    public void excluir(Long id) {
+        provaRepositorio.delete(buscarPorId(id));
+        return ;
     }
+
+    private Prova buscarPorId(Long id){
+        Prova prova = provaRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
+
+        return prova;
+    }
+
 }

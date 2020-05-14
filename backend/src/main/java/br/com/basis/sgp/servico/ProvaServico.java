@@ -15,6 +15,6 @@ public interface ProvaServico {
 
     public ProvaCadastroDTO salvar(ProvaCadastroDTO provaCadastroDTO);
 
-    public void excluir();
+    public void excluir(Long id);
 
 }
