@@ -1,8 +1,8 @@
-import { Senioridade } from '../../senioridade/models/senioridade';
-import { TipoQuestao } from '../../tipo-questao/models/tipo-questao';
+import { Senioridade } from '../../../models/senioridade';
+import { TipoQuestao } from '../../../models/tipo-questao';
+import { Resource } from 'src/app/models/resource.model';
 
-export class Questao {
-  id: number;
+export class Questao extends Resource {
   descricao: string;
   alternativa1: string;
   alternativa2: string;
