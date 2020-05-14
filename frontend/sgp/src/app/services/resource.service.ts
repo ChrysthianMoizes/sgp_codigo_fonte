@@ -1,12 +1,12 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Resource } from '../models/resource.model';
+import { environment } from 'src/environments/environment';
 
 export class ResourceService<T extends Resource> {
-
+  url = environment.url;
   constructor(
     private httpClient: HttpClient,
-    private url: string,
     private endpoint: string
   ) { }
 
