@@ -1,3 +1,4 @@
+import { Usuario } from './../../models/usuario';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,27 +18,29 @@ export class CadastroComponent implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     private authService: AuthService,
-    private alert: AlertService) {
-
-  }
-  ngOnInit(): void {
-  }
+    private alert: AlertService
+  ) {}
+  ngOnInit(): void {}
 
   save(usuario: UsuarioToken) {
-    // this.usuario = usuario
-    // this.usuarioService.cadastrarUsuario(this.usuario)
-    //   .subscribe(response => {
-    //     this.usuarioService.logar(response.email, response.senha).subscribe(
-    //       response => {
-    //         if(response){
-    //           this.authService.setUsuario(response),
-    //             this.router.navigate(["home"]);
-    //         }
-    //         else {
-    //           this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
-    //         }
-    //       }
-    //     )
-    //   })
+    this.usuario = usuario;
+    this.usuarioService.create(this.usuario).subscribe(
+      (response) => {
+        this.authService
+          .login({ email: response.email, senha: response.senha } as Usuario)
+          .subscribe(
+            (response) => {
+              this.authService.setUsuario(response),
+                this.router.navigate(['home']);
+            },
+            (error) => {
+              this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
+            }
+          );
+      },
+      (error) => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao criar usuário');
+      }
+    );
   }
 }
