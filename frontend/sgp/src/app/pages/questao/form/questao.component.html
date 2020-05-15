@@ -1,5 +1,5 @@
 <p-dialog
-  header="{{ hader }}"
+  header="{{ header }}"
   [modal]="true"
   [(visible)]="exibir"
   [style]="{ width: '60vw' }"
@@ -9,7 +9,7 @@
       <div class="ui-g-10">
         <h3>Questão</h3>
         <div class="ui-g-10">
-          <div *ngIf="isQuestaoEditando">
+          <div *ngIf="isQuestaoVisualizando">
             <div class="border-label">
               <span style="font-weight: bold;">Código: </span>
               <label>{{ getControlLabel('id') }}</label>

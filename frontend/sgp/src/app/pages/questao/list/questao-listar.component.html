@@ -2,7 +2,7 @@
 <button
   pButton
   label="Novo"
-  (click)="showDialogCadastro()"
+  (click)="showDialog(false)"
   class="btn-margin"
 ></button>
 <div class="p-grid">
@@ -25,7 +25,7 @@
       <ng-template pTemplate="body" let-questao let-colunas="columns">
         <tr [pSelectableRow]="questao">
           <td *ngFor="let coluna of colunas">
-            {{ coluna.field }}
+            {{questao[coluna.field]}}
           </td>
         </tr>
       </ng-template>
@@ -46,7 +46,7 @@
       icon="pi pi-pencil"
       class="ui-button-rounded"
       [disabled]="!isSelected()"
-      (click)="showDialogEditar()"
+      (click)="showDialog(false)"
     ></button>
     <button
       pButton
@@ -54,7 +54,7 @@
       icon="pi pi-eye"
       class="ui-button-rounded"
       [disabled]="!isSelected()"
-      (click)="showDialogVisualizar()"
+      (click)="showDialog(true)"
     ></button>
   </div>
 </div>
