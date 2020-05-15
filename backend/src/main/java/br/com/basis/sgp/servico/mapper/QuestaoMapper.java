@@ -1,11 +1,7 @@
 package br.com.basis.sgp.servico.mapper;
 
 import br.com.basis.sgp.dominio.Questao;
-<<<<<<< HEAD:backend/src/main/java/br/com/basis/sgp/servico/mapper/QuestaoMapper.java
 import br.com.basis.sgp.servico.dto.QuestaoDTO;
-=======
-import br.com.basis.sgp.servico.dto.QuestaoListagemDTO;
->>>>>>> develop:backend/src/main/java/br/com/basis/sgp/servico/mapper/QuestaoListagemMapper.java
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
