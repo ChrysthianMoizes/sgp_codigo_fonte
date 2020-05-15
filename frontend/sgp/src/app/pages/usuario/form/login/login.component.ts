@@ -15,18 +15,18 @@ export class LoginComponent {
     private router: Router,
     private alert: AlertService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   necessitaCabecalho = true;
   usuario: Usuario = new Usuario();
 
   onSubmit(): void {
     this.authService.login(this.usuario).subscribe(
-      res => {
-        this.authService.setUsuario(res);
-        this.router.navigate(["home"]);
+      (response) => {
+        this.authService.setUsuario(response);
+        this.router.navigate(['home']);
       },
-      err => {
+      (err) => {
         this.alert.montarAlerta('error', 'Erro', err.message);
       }
     );

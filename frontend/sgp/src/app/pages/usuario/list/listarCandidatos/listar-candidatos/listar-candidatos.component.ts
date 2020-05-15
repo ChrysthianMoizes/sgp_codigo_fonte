@@ -1,18 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-} from '@angular/core';
-import { LazyLoadEvent } from 'primeng/api/public_api';
-import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
+import { VisualizarCandidatoComponent } from '../../../form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../service/usuario.service';
-import { VisualizarCandidatoComponent } from '../../../form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
-import { Page } from 'src/app/models/page.model';
 
 @Component({
   selector: 'app-listar-candidatos',
@@ -33,10 +24,15 @@ export class ListarCandidatosComponent implements OnInit {
   rows: number = 20;
   first: number = 0;
   listCandidatos: Usuario[];
+  candidatoSelecionado: Usuario;
   selectedCandidatos: Usuario[] = [];
 
   ngOnInit(): void {
     this.getCandidatos();
+    this.inicializarTabela();
+  }
+
+  inicializarTabela() {
     this.cols = [
       { field: 'id', header: 'ID', width: '10%' },
       { field: 'nome', header: 'Nome', width: '45%' },
@@ -47,7 +43,6 @@ export class ListarCandidatosComponent implements OnInit {
   getCandidatos(): void {
     this.usuarioService.index().subscribe(
       (response) => {
-        console.log(response);
         this.listCandidatos = response.content;
       },
       (erro) => {
@@ -57,9 +52,17 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   viewCandidato(): void {
-    this.visualizarCandidato.openDialog(
-      this.selectedCandidatos[0],
-      'visualizar'
+    this.usuarioService.show(this.selectedCandidatos[0].id).subscribe(
+      (response) => {
+        this.visualizarCandidato.openDialog(response, 'visualizar');
+      },
+      (err) => {
+        this.alert.montarAlerta(
+          'error',
+          'Erro',
+          'Erro ao selecionar Candidato'
+        );
+      }
     );
     this.selectedCandidatos = [];
   }
@@ -93,20 +96,20 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   editarCandidato(candidato: Usuario): void {
-    // this.usuarioService.editarCandidato(candidato).subscribe(
-    //   (response) => {
-    //     this.listCandidatos = response;
-    //     this.alert.montarAlerta(
-    //       'success',
-    //       'Sucesso',
-    //       'Candidato alterado com sucesso'
-    //     );
-    //   },
-    //   (erro) => {
-    //     this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
-    //   }
-    // );
-    // this.getCandidatos();
+    this.usuarioService.update(candidato).subscribe(
+      (response) => {
+        this.getCandidatos();
+        this.alert.montarAlerta(
+          'success',
+          'Sucesso',
+          'Candidato alterado com sucesso'
+        );
+      },
+      (erro) => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
+      }
+    );
+    this.getCandidatos();
   }
 
   next(): void {

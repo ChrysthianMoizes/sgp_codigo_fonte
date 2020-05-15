@@ -1,13 +1,21 @@
 <div [ngSwitch]="modo">
   <!-- EDIÇÃO -->
-  <div *ngSwitchCase=" 'edicao' ">
-
+  <div *ngSwitchCase="'edicao'">
     <form class="ui-inputgroup">
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-user" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.nome" name="nome">
+            <input
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.nome"
+              name="nome"
+            />
             <label for="float-input">Nome</label>
           </span>
         </div>
@@ -15,9 +23,18 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-id-card" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-id-card" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.cpf" name="cpf">
+            <input
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.cpf"
+              name="cpf"
+            />
             <label for="float-input">CPF</label>
           </span>
         </div>
@@ -25,9 +42,18 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-envelope" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="email" size="27" pInputText [(ngModel)]="usuario.email" name="email">
+            <input
+              id="float-input"
+              type="email"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.email"
+              name="email"
+            />
             <label for="float-input">Email</label>
           </span>
         </div>
@@ -35,30 +61,53 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-key" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="password" size="27" pInputText [(ngModel)]="usuario.senha" name="senha">
+            <input
+              id="float-input"
+              type="password"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.senha"
+              name="senha"
+            />
             <label for="float-input">Senha</label>
           </span>
         </div>
       </div>
-
     </form>
 
     <div id="buttons">
-      <button pButton type="button" label="Confirmar" (click)="save()" class="ui-button-success"></button>
+      <button
+        pButton
+        type="button"
+        label="Confirmar"
+        (click)="save()"
+        class="ui-button-success"
+      ></button>
     </div>
-
   </div>
 
-  <div *ngSwitchCase=" 'visualizar' ">
+  <div *ngSwitchCase="'visualizar'">
     <!-- VISUALIZAR -->
     <form class="ui-inputgroup">
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-user" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input disabled id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.nome" name="nome">
+            <input
+              disabled
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.nome"
+              name="nome"
+            />
             <label for="float-input">Nome</label>
           </span>
         </div>
@@ -66,9 +115,19 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-id-card" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-id-card" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input disabled id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.cpf" name="cpf">
+            <input
+              disabled
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.cpf"
+              name="cpf"
+            />
             <label for="float-input">CPF</label>
           </span>
         </div>
@@ -76,15 +135,25 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-envelope" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input disabled id="float-input" type="email" size="27" pInputText [(ngModel)]="usuario.email" name="email">
+            <input
+              disabled
+              id="float-input"
+              type="email"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.email"
+              name="email"
+            />
             <label for="float-input">Email</label>
           </span>
         </div>
       </div>
 
-      <div class="ui-g-12 ui-md-4">
+      <!-- <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
           <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
           <span class="ui-float-label">
@@ -93,8 +162,7 @@
             <label for="float-input">Senha</label>
           </span>
         </div>
-      </div>
-
+      </div> -->
     </form>
   </div>
 
@@ -103,9 +171,18 @@
     <form class="ui-inputgroup">
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-user" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.nome" name="nome">
+            <input
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.nome"
+              name="nome"
+            />
             <label for="float-input">Nome</label>
           </span>
         </div>
@@ -113,9 +190,18 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-id-card" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-id-card" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.cpf" name="cpf">
+            <input
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.cpf"
+              name="cpf"
+            />
             <label for="float-input">CPF</label>
           </span>
         </div>
@@ -123,9 +209,18 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-lock" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-lock" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="text" size="27" pInputText [(ngModel)]="usuario.token" name="token">
+            <input
+              id="float-input"
+              type="text"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.token"
+              name="token"
+            />
             <label for="float-input">Token</label>
           </span>
         </div>
@@ -133,9 +228,18 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-envelope" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-envelope" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="email" size="27" pInputText [(ngModel)]="usuario.email" name="email">
+            <input
+              id="float-input"
+              type="email"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.email"
+              name="email"
+            />
             <label for="float-input">Email</label>
           </span>
         </div>
@@ -143,22 +247,40 @@
 
       <div class="ui-g-12 ui-md-4">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+          <span class="ui-inputgroup-addon"
+            ><i class="pi pi-key" style="line-height: 1.25;"></i
+          ></span>
           <span class="ui-float-label">
-            <input id="float-input" type="password" size="27" pInputText [(ngModel)]="usuario.senha" name="senha">
+            <input
+              id="float-input"
+              type="password"
+              size="27"
+              pInputText
+              [(ngModel)]="usuario.senha"
+              name="senha"
+            />
             <label for="float-input">Senha</label>
           </span>
         </div>
       </div>
-
     </form>
 
     <div id="buttons">
-      <button pButton type="button" label="Confirmar" (click)="save()" class="ui-button-success"></button>
-      <button routerLink="/login" routerLinkActive="active" pButton type="button" label="Cancelar"
-        class="ui-button-danger"></button>
+      <button
+        pButton
+        type="button"
+        label="Confirmar"
+        (click)="save()"
+        class="ui-button-success"
+      ></button>
+      <button
+        routerLink="/login"
+        routerLinkActive="active"
+        pButton
+        type="button"
+        label="Cancelar"
+        class="ui-button-danger"
+      ></button>
     </div>
-
   </div>
-
 </div>
