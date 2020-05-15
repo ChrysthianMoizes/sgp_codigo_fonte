@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {SelectItem} from 'primeng';
-import {AlertService} from 'src/app/components/alert/alert.service';
-import {QuestaoDTO} from '../models/questao.dto';
-import {QuestaoService} from '../service/questao.service';
-import {SenioridadeService} from '../service/senioridade.service';
-import {TipoQuestaoService} from '../service/tipo-questao.service';
-import {Questao} from './../models/questao';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SelectItem } from 'primeng';
+import { AlertService } from 'src/app/components/alert/alert.service';
+import { QuestaoDTO } from '../models/questao.dto';
+import { QuestaoService } from '../service/questao.service';
+import { SenioridadeService } from '../service/senioridade.service';
+import { TipoQuestaoService } from '../service/tipo-questao.service';
+import { Questao } from './../models/questao';
 
 @Component({
   selector: 'app-questao',
@@ -16,6 +16,7 @@ import {Questao} from './../models/questao';
 export class QuestaoComponent implements OnInit {
   exibir: boolean = false;
   hader: string = '';
+  questao: QuestaoDTO = new QuestaoDTO();
   @Output() alterar = new EventEmitter();
 
   senioridades: SelectItem[];
@@ -41,23 +42,18 @@ export class QuestaoComponent implements OnInit {
     this.getSenioridades();
 
     this.getTipoQuestoes();
-
   }
 
-  getSenioridades(){
-    this.senioridadeService.getSenioridades().subscribe(
-      (resposta) => {
-        this.senioridades = resposta;
-      }
-    )
+  getSenioridades() {
+    this.senioridadeService.getSenioridades().subscribe((resposta) => {
+      this.senioridades = resposta;
+    });
   }
 
   getTipoQuestoes() {
-    this.tipoQuestaoService.getTipoQuestoes().subscribe(
-      (resposta) => {
-        this.tipoQuestoes = resposta;
-      }
-    )
+    this.tipoQuestaoService.getTipoQuestoes().subscribe((resposta) => {
+      this.tipoQuestoes = resposta;
+    });
   }
 
   exibirDialogVisualisar(questaoSelecionada: Questao) {
@@ -65,10 +61,7 @@ export class QuestaoComponent implements OnInit {
     this.hader = 'Visualizar Questão';
     this.isQuestaoEditando = true;
     this.isQuestaoVisualizando = true;
-    questaoSelecionada.id = this.questaoDTO.id;
-    questaoSelecionada.descricao = this.questaoDTO.descricao;
-    questaoSelecionada.senioridade = this.questaoDTO.senioridade;
-    questaoSelecionada.tipoQuestao = this.questaoDTO.tipoQuestao;
+
     this.preencherCamposDoForm(questaoSelecionada);
   }
 
@@ -90,9 +83,9 @@ export class QuestaoComponent implements OnInit {
 
   persistir() {
     let questaoDTO: QuestaoDTO = this.getQuestaoForm();
-    if(questaoDTO.id === null){
+    if (questaoDTO.id === null) {
       this.cadastar(questaoDTO);
-    }else{
+    } else {
       this.atualizar(questaoDTO);
     }
   }
@@ -242,7 +235,7 @@ export class QuestaoComponent implements OnInit {
     return this.formQuestao.get(type).value;
   }
 
-  getQuestaoForm(): QuestaoDTO{
+  getQuestaoForm(): QuestaoDTO {
     let questaoDTO: QuestaoDTO = new QuestaoDTO();
     questaoDTO.id = this.formQuestao.value.id;
     questaoDTO.descricao = this.formQuestao.value.descricao;

@@ -1,14 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService} from 'primeng';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DialogService } from 'primeng';
 
-
-import {ObjectUtil} from 'src/app/services/object-util.service';
-import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
-import {Page} from '../service/page';
-import {QuestaoService} from '../service/questao.service';
-import {AlertService} from './../../../components/alert/alert.service';
-import {QuestaoComponent} from './../form/questao.component';
-import {Questao} from './../models/questao';
+import { ObjectUtil } from 'src/app/services/object-util.service';
+import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
+import { Page } from '../service/page';
+import { QuestaoService } from '../service/questao.service';
+import { AlertService } from './../../../components/alert/alert.service';
+import { QuestaoComponent } from './../form/questao.component';
+import { Questao } from './../models/questao';
 
 @Component({
   selector: 'app-questao-listar',
@@ -18,7 +17,7 @@ import {Questao} from './../models/questao';
 })
 export class QuestaoListarComponent implements OnInit {
   questoesSelecionadas: Questao[] = [];
-  questoes: Page<QuestaoListagemDTO> = new Page;
+  questoes: Page<QuestaoListagemDTO> = new Page();
   definicaoColunas: any[];
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
@@ -26,7 +25,7 @@ export class QuestaoListarComponent implements OnInit {
     private objectUtil: ObjectUtil,
     private alertService: AlertService,
     public dialogService: DialogService,
-    public questoesService: QuestaoService
+    public questaoService: QuestaoService
   ) {}
 
   ngOnInit(): void {
@@ -37,12 +36,10 @@ export class QuestaoListarComponent implements OnInit {
       { field: 'descricaoTipo', header: 'Tipo da Questão' },
     ];
 
-    this.questaoService.obterQuestoes().subscribe(
-      (response) => {
-        this.questoes = response;
-      }
-    );
-    this.questoesService.index().subscribe((response) => {
+    this.questaoService.obterQuestoes().subscribe((response) => {
+      this.questoes = response;
+    });
+    this.questaoService.index().subscribe((response) => {
       // this.questoes = response;
     });
   }
@@ -53,7 +50,7 @@ export class QuestaoListarComponent implements OnInit {
 
   excluir(): void {
     this.questoesSelecionadas.forEach((element) => {
-      this.questoesService
+      this.questaoService
         .destroy(`${this.questoesSelecionadas[0].id}`)
         .subscribe(
           (response) => {
@@ -62,7 +59,7 @@ export class QuestaoListarComponent implements OnInit {
               'Sucesso',
               'Questão Excluida com sucesso'
             );
-            this.questaoService.getQuestoes().subscribe((response) => {
+            this.questaoService.obterQuestoes().subscribe((response) => {
               // this.questoes = response;
             });
           },
