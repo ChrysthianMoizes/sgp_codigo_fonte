@@ -1,5 +1,6 @@
 package br.com.basis.sgp.servico.filtro;
 
+import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.dominio.Usuario_;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,18 +15,18 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UsuarioFiltro implements EntityFiltro {
+public class UsuarioFiltro implements EntityFiltro<Usuario> {
     private String nome;
     private String cpf;
     private Integer admin;
 
     @Override
-    public Specification filter() {
+    public Specification<Usuario> filter() {
         return (root, cq, cb) ->
                 cb.and(getPredicates(root, cb).toArray(new Predicate[0]));
     }
 
-    private List<Predicate> getPredicates(Root root, CriteriaBuilder cb) {
+    private List<Predicate> getPredicates(Root<Usuario> root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(nome)) {
             Predicate predicate = cb.like(cb.lower(root.get(Usuario_.nome)), "%" + nome.toLowerCase() + "%");

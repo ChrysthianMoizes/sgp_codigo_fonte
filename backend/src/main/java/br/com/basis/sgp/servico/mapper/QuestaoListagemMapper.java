@@ -5,7 +5,7 @@ import br.com.basis.sgp.servico.dto.QuestaoListagemDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface QuestaoListagemMapper extends EntityMapper<QuestaoListagemDTO, Questao> {
 
     @Override

@@ -5,7 +5,7 @@ import br.com.basis.sgp.servico.dto.SelectDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface SenioridadeDropdownMapper extends EntityMapper<SelectDTO, Senioridade> {
 
     @Override

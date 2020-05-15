@@ -9,8 +9,9 @@ import org.mapstruct.Mapping;
 public interface QuestaoMapper extends EntityMapper<QuestaoDTO, Questao> {
 
     @Override
-    @Mapping(target = "idSenioridade", source = "senioridade.id")
-    @Mapping(target = "idTipoQuestao", source = "tipoQuestao.id")
-    QuestaoDTO toDto(Questao usuario);
+    @Mapping(target = "senioridade.id", source = "idSenioridade")
+    @Mapping(target = "tipoQuestao.id", source = "idTipoQuestao")
+    Questao toEntity(QuestaoDTO dto);
 
 }
+

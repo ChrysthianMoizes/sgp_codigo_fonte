@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class QuestaoDTO {
-
     private Long id;
 
     @Size(max = 400, message = "Tamanho da DESCRIÇÃO inválido")
@@ -44,5 +43,4 @@ public class QuestaoDTO {
 
     @NotNull(message = "Campo TIPO DE QUESTÃO não deve ficar em branco")
     private Long idTipoQuestao;
-
 }

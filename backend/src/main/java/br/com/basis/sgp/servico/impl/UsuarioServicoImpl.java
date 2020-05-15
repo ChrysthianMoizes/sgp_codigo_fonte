@@ -79,11 +79,15 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
     private boolean verificarCpf(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioRepositorio.findByCpf(usuarioCadastroDTO.getCpf());
-        return !(usuario == null || usuario.getId().equals(usuarioCadastroDTO.getId()));
+        return verificarUsuarioJaCadastrado(usuario, usuarioCadastroDTO);
     }
 
     private boolean verificarEmail(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioRepositorio.findByEmail(usuarioCadastroDTO.getEmail());
+        return verificarUsuarioJaCadastrado(usuario, usuarioCadastroDTO);
+    }
+
+    private boolean verificarUsuarioJaCadastrado(Usuario usuario, UsuarioCadastroDTO usuarioCadastroDTO) {
         return !(usuario == null || usuario.getId().equals(usuarioCadastroDTO.getId()));
     }
 
@@ -99,9 +103,8 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Usuario obterUsuario(Long id) {
-        Usuario usuario = usuarioRepositorio.findById(id)
+        return usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Usuário inválido"));
-        return usuario;
     }
 
     @Override
