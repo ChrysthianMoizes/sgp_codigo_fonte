@@ -1,10 +1,16 @@
+import { QuestoesService } from './../service/questoes.service';
 import { Questao } from './../models/questao';
-import { TipoQuestao } from './../../tipo-questao/models/tipo-questao';
-import { Senioridade } from './../../senioridade/models/senioridade';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { QuestaoService } from '../service/questao.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { Senioridade } from 'src/app/models/senioridade';
+import { TipoQuestao } from 'src/app/models/tipo-questao';
 
 @Component({
   selector: 'app-questao',
@@ -22,13 +28,15 @@ export class QuestaoComponent implements OnInit {
   idQuestao: number = 0;
   isQuestaoEditando: boolean = true;
   isQuestaoVisualizando: boolean = false;
+  questaoDTO: Questao;
 
   public formQuestao: FormGroup;
 
   constructor(
     private questaoService: QuestaoService,
     private alertService: AlertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public questoesService: QuestoesService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +54,6 @@ export class QuestaoComponent implements OnInit {
       { id: 3, descricao: 'Codificação' },
       { id: 4, descricao: 'Teste e Arquitetura' },
     ];
-
   }
 
   exibirDialogVisualisar(questaoSelecionada: Questao) {
@@ -55,10 +62,14 @@ export class QuestaoComponent implements OnInit {
     this.isQuestaoEditando = true;
     this.isQuestaoVisualizando = true;
     this.idQuestao = questaoSelecionada.id;
+    questaoSelecionada.id = this.questaoDTO.id;
+    questaoSelecionada.descricao = this.questaoDTO.descricao;
+    questaoSelecionada.senioridade = this.questaoDTO.senioridade;
+    questaoSelecionada.tipoQuestao = this.questaoDTO.tipoQuestao;
     this.preencherCamposDoForm(questaoSelecionada);
   }
 
-  exibirDialogEditar(questaoSelecionada: Questao){
+  exibirDialogEditar(questaoSelecionada: Questao) {
     this.exibir = true;
     this.hader = 'Editar Questão';
     this.isQuestaoEditando = true;
@@ -68,7 +79,7 @@ export class QuestaoComponent implements OnInit {
     // this.formQuestao.get('descricao')
   }
 
-  exibirDialogCadastro(){
+  exibirDialogCadastro() {
     this.exibir = true;
     this.hader = 'Cadastrar Questão';
     this.isQuestaoEditando = false;
@@ -76,19 +87,19 @@ export class QuestaoComponent implements OnInit {
     this.formQuestao.reset();
   }
 
-  persistir(){
+  persistir() {
     let questao: Questao = Object.assign({}, this.formQuestao.value);
-    console.log(questao.id)
-    if(!this.isQuestaoEditando){
+    console.log(questao.id);
+    if (!this.isQuestaoEditando) {
       this.cadastar(questao);
-    }else{
+    } else {
       this.atualizar(questao);
     }
   }
 
   atualizar(questao: Questao) {
     questao.id = this.idQuestao;
-    this.questaoService.atualizarQuestao(questao).subscribe(
+    this.questoesService.update(questao).subscribe(
       (response) => {
         this.alertService.montarAlerta(
           'success',
@@ -110,7 +121,7 @@ export class QuestaoComponent implements OnInit {
   }
 
   cadastar(questao: Questao) {
-    this.questaoService.criarQuestao(questao).subscribe(
+    this.questoesService.create(questao).subscribe(
       (response) => {
         this.alertService.montarAlerta(
           'success',
@@ -135,7 +146,7 @@ export class QuestaoComponent implements OnInit {
     this.exibir = false;
   }
 
-  preencherCamposDoForm(questao: Questao){
+  preencherCamposDoForm(questao: Questao) {
     this.formQuestao.setValue({
       id: questao.id,
       descricao: questao.descricao,
@@ -150,61 +161,100 @@ export class QuestaoComponent implements OnInit {
     });
   }
 
-  construirForm(){
+  construirForm() {
     this.formQuestao = this.formBuilder.group({
       id: [null],
-      descricao: ['', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(800),
-      ]],
-      senioridade: ['', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(100),
-      ]],
-      tipoQuestao: ['', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(100),
-      ]],
-      alternativa1: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]],
-      alternativa2: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]],
-      alternativa3: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]],
-      alternativa4: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]],
-      alternativa5: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(100),
-      ]],
-      resposta: ['', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(100),
-      ]],
-    })
+      descricao: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(800),
+        ],
+      ],
+      senioridade: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+      tipoQuestao: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa1: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa2: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa3: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa4: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa5: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      resposta: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+    });
   }
 
-  getControlLabel(type: string){
+  getControlLabel(type: string) {
     return this.formQuestao.get(type).value;
-   }
+  }
 
-
-
+  buscarPorId(id: number): void {
+    this.questoesService.show(id.toString()).subscribe(
+      (response) => {
+        this.questaoDTO = response;
+      },
+      (error) => {
+        this.alertService.montarAlerta(
+          'error',
+          'Erro',
+          'Erro ao Excluir questão'
+        );
+      }
+    );
+  }
 }

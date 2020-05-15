@@ -1,3 +1,4 @@
+import { QuestoesService } from './../service/questoes.service';
 import { Questao } from './../models/questao';
 import { AlertService } from './../../../components/alert/alert.service';
 import { QuestaoComponent } from './../form/questao.component';
@@ -23,7 +24,8 @@ export class QuestaoListarComponent implements OnInit {
     private objectUtil: ObjectUtil,
     private alertService: AlertService,
     private questaoService: QuestaoService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    public questoesService: QuestoesService
   ) {}
 
   ngOnInit(): void {
@@ -34,11 +36,9 @@ export class QuestaoListarComponent implements OnInit {
       { field: 'tipoQuestao.descricao', header: 'Tipo da Questão' },
     ];
 
-    this.questaoService.getQuestoes().subscribe(
-      (response) => {
-        this.questoes = response;
-      }
-    );
+    this.questoesService.index().subscribe((response) => {
+      this.questoes = response;
+    });
   }
 
   isSelected(): boolean {
@@ -47,25 +47,27 @@ export class QuestaoListarComponent implements OnInit {
 
   excluir(): void {
     this.questoesSelecionadas.forEach((element) => {
-      this.questaoService.deletarQuestao(element).subscribe(
-        (response) => {
-          this.alertService.montarAlerta(
-            'success',
-            'Sucesso',
-            'Questão Excluida com sucesso'
-          );
-          this.questaoService.getQuestoes().subscribe((response) => {
-            this.questoes = response;
-          });
-        },
-        (error) => {
-          this.alertService.montarAlerta(
-            'error',
-            'Erro',
-            'Erro ao Excluir questão'
-          );
-        }
-      );
+      this.questoesService
+        .destroy(`${this.questoesSelecionadas[0].id}`)
+        .subscribe(
+          (response) => {
+            this.alertService.montarAlerta(
+              'success',
+              'Sucesso',
+              'Questão Excluida com sucesso'
+            );
+            this.questaoService.getQuestoes().subscribe((response) => {
+              this.questoes = response;
+            });
+          },
+          (error) => {
+            this.alertService.montarAlerta(
+              'error',
+              'Erro',
+              'Erro ao Excluir questão'
+            );
+          }
+        );
     });
     this.questoesSelecionadas = [];
   }
@@ -75,12 +77,12 @@ export class QuestaoListarComponent implements OnInit {
     this.questoesSelecionadas = [];
   }
 
-  showDialogEditar(){
+  showDialogEditar() {
     this.dialogQuestao.exibirDialogEditar(this.questoesSelecionadas[0]);
     this.questoesSelecionadas = [];
   }
 
-  showDialogCadastro(){
+  showDialogCadastro() {
     this.dialogQuestao.exibirDialogCadastro();
     this.questoesSelecionadas = [];
   }
@@ -94,7 +96,7 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   checkNumberCharacter(descricao: string): string {
-    if(descricao.length > 50){
+    if (descricao.length > 50) {
       return descricao.substr(0, 50) + '...';
     }
     return descricao;
