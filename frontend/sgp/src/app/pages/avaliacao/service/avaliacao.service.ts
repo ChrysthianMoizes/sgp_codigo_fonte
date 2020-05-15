@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AvaliacaoService extends ResourceService<Avaliacao>{
 
   constructor(private http: HttpClient) {
-    super(http, 'avaliacoes')
+    super(http, `/api/avaliacoes`);
   }
 
 }

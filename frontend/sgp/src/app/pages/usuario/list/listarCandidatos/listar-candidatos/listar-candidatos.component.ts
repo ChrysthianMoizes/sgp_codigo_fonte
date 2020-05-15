@@ -41,14 +41,14 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   getCandidatos(): void {
-    this.usuarioService.listarCandidatos().subscribe(
-      (response) => {
-        this.listCandidatos = response;
-      },
-      (erro) => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
-      }
-    );
+    // this.usuarioService.listarCandidatos().subscribe(
+    //   (response) => {
+    //     this.listCandidatos = response;
+    //   },
+    //   (erro) => {
+    //     this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
+    //   }
+    // );
   }
 
   viewCandidato(): void {
@@ -65,43 +65,43 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   deleteCandidato(): void {
-    this.selectedCandidatos.forEach((element) => {
-      this.usuarioService.excluirCandidatos(element.id).subscribe(
-        () => {
-          this.alert.montarAlerta(
-            'success',
-            'Sucesso',
-            `${element.nome} excluido com sucesso`
-          );
-        },
-        (erro) => {
-          this.alert.montarAlerta(
-            'error',
-            'Erro',
-            `Não foi possível excluir o candidato ${element.nome}`
-          );
-        }
-      );
-    });
-    this.selectedCandidatos = [];
-    this.getCandidatos();
+    // this.selectedCandidatos.forEach((element) => {
+    //   this.usuarioService.excluirCandidatos(element.id).subscribe(
+    //     () => {
+    //       this.alert.montarAlerta(
+    //         'success',
+    //         'Sucesso',
+    //         `${element.nome} excluido com sucesso`
+    //       );
+    //     },
+    //     (erro) => {
+    //       this.alert.montarAlerta(
+    //         'error',
+    //         'Erro',
+    //         `Não foi possível excluir o candidato ${element.nome}`
+    //       );
+    //     }
+    //   );
+    // });
+    // this.selectedCandidatos = [];
+    // this.getCandidatos();
   }
 
   editarCandidato(candidato: Usuario): void {
-    this.usuarioService.editarCandidato(candidato).subscribe(
-      (response) => {
-        this.listCandidatos = response;
-        this.alert.montarAlerta(
-          'success',
-          'Sucesso',
-          'Candidato alterado com sucesso'
-        );
-      },
-      (erro) => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
-      }
-    );
-    this.getCandidatos();
+    // this.usuarioService.editarCandidato(candidato).subscribe(
+    //   (response) => {
+    //     this.listCandidatos = response;
+    //     this.alert.montarAlerta(
+    //       'success',
+    //       'Sucesso',
+    //       'Candidato alterado com sucesso'
+    //     );
+    //   },
+    //   (erro) => {
+    //     this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
+    //   }
+    // );
+    // this.getCandidatos();
   }
 
   next(): void {

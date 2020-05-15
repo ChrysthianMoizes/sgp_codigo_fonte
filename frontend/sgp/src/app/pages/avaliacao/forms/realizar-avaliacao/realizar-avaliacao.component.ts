@@ -107,7 +107,11 @@ export class RealizarAvaliacaoComponent implements OnInit {
     //     'Prova finalizada!'
     //   );
     // });
+<<<<<<< HEAD
     // console.log(this.avaliacao.prova);
+=======
+    console.log(this.avaliacao.prova);
+>>>>>>> 7d1f84368b56190ae6c05ac450da03b391015e0b
   }
 
   verificaQuestoes() {

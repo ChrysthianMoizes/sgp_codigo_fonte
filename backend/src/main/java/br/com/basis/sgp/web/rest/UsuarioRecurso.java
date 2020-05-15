@@ -3,13 +3,13 @@ package br.com.basis.sgp.web.rest;
 import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.dto.UsuarioCadastroDTO;
-import br.com.basis.sgp.servico.dto.UsuarioDTO;
+import br.com.basis.sgp.servico.dto.UsuarioDetalhadoDTO;
+import br.com.basis.sgp.servico.dto.UsuarioEdicaoDTO;
+import br.com.basis.sgp.servico.dto.UsuarioListagemDTO;
 import br.com.basis.sgp.servico.filtro.UsuarioFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +34,8 @@ public class UsuarioRecurso {
     private final UsuarioServico usuarioServico;
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioDTO>> listarCandidatos(@ModelAttribute UsuarioFiltro filtro, Pageable pageable) {
-        Page<UsuarioDTO> page = usuarioServico.listarCandidatos(filtro, pageable);
+    public ResponseEntity<Page<UsuarioListagemDTO>> listarCandidatos(@ModelAttribute UsuarioFiltro filtro, Pageable pageable) {
+        Page<UsuarioListagemDTO> page = usuarioServico.listarCandidatos(filtro, pageable);
         return ResponseEntity.ok(page);
     }
 
@@ -46,27 +46,27 @@ public class UsuarioRecurso {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioCadastroDTO> obterPorId(@PathVariable("id") Long id) {
-        UsuarioCadastroDTO usuarioDTO = usuarioServico.obterPorId(id);
+    public ResponseEntity<UsuarioDetalhadoDTO> obterPorId(@PathVariable("id") Long id) {
+        UsuarioDetalhadoDTO usuarioDTO = usuarioServico.obterPorId(id);
         return ResponseEntity.ok(usuarioDTO);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioDTO> logar(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO) {
-        UsuarioDTO usuarioDTO = usuarioServico.logar(usuarioCadastroDTO);
-        return ResponseEntity.ok(usuarioDTO);
+    public ResponseEntity<UsuarioDetalhadoDTO> logar(@RequestBody UsuarioCadastroDTO usuarioCadastroDTO) {
+        UsuarioDetalhadoDTO usuarioDetalhadoDTO = usuarioServico.logar(usuarioCadastroDTO);
+        return ResponseEntity.ok(usuarioDetalhadoDTO);
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> cadastrar(@Valid @RequestBody UsuarioCadastroDTO usuarioCadastroDTO) throws URISyntaxException {
-        UsuarioDTO usuarioDTO = usuarioServico.salvar(usuarioCadastroDTO);
-        return ResponseEntity.created(new URI("/usuarios/" + usuarioDTO.getId())).body(usuarioDTO);
+    public ResponseEntity<UsuarioDetalhadoDTO> cadastrar(@Valid @RequestBody UsuarioCadastroDTO usuarioCadastroDTO) throws URISyntaxException {
+        UsuarioDetalhadoDTO usuarioDetalhadoDTO = usuarioServico.salvar(usuarioCadastroDTO);
+        return ResponseEntity.created(new URI("/usuarios/" + usuarioDetalhadoDTO.getId())).body(usuarioDetalhadoDTO);
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioDTO> alterar(@Valid @RequestBody UsuarioCadastroDTO usuarioCadastroDTO) {
-        UsuarioDTO usuarioDTO = usuarioServico.salvar(usuarioCadastroDTO);
-        return ResponseEntity.ok(usuarioDTO);
+    public ResponseEntity<UsuarioDetalhadoDTO> alterar(@Valid @RequestBody UsuarioEdicaoDTO usuarioEdicaoDTO) {
+        UsuarioDetalhadoDTO usuarioDetalhadoDTO = usuarioServico.alterar(usuarioEdicaoDTO);
+        return ResponseEntity.ok(usuarioDetalhadoDTO);
     }
 
     @DeleteMapping("/{id}")
