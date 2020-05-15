@@ -28,3 +28,7 @@ spring:
 #        drop-first: true
 server:
     port: 8080
+
+app:
+    TOKEN_ADMIN: pindaiba
+    TOKEN_USER: abacate

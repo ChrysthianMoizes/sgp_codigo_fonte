@@ -14,17 +14,17 @@ export class ReenviarEmailComponent {
   ) {}
 
   send(email: string): void {
-    this.usuarioService.reenviarEmailConfirmacao(email).subscribe(
-      (response) => {
-        this.alerts.montarAlerta(
-          'success',
-          'Sucesso',
-          'Email reenviado com sucesso'
-        );
-      },
-      (erro) => {
-        this.alerts.montarAlerta('error', 'Erro', 'Erro ao reenviar email');
-      }
-    );
+    // this.usuarioService.reenviarEmailConfirmacao(email).subscribe(
+    //   (response) => {
+    //     this.alerts.montarAlerta(
+    //       'success',
+    //       'Sucesso',
+    //       'Email reenviado com sucesso'
+    //     );
+    //   },
+    //   (erro) => {
+    //     this.alerts.montarAlerta('error', 'Erro', 'Erro ao reenviar email');
+    //   }
+    // );
   }
 }

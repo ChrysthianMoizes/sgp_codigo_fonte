@@ -138,9 +138,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   updateUsuariosFiltrados(event): void {
-    this.usuarioService
-      .findByNome(event.query)
-      .subscribe((usuarios) => (this.usuariosFiltrados = usuarios));
+    // this.usuarioService
+    //   .findByNome(event.query)
+    //   .subscribe((usuarios) => (this.usuariosFiltrados = usuarios));
   }
 
   updateProvasFiltradas(event): void {
