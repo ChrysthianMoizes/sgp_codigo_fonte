@@ -24,6 +24,7 @@ export class CadastroComponent implements OnInit {
 
   save(usuario: UsuarioToken) {
     this.usuario = usuario;
+    console.log(usuario);
     this.usuarioService.create(this.usuario).subscribe(
       (response) => {
         this.authService
