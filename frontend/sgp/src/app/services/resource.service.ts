@@ -14,7 +14,7 @@ export class ResourceService<T extends Resource> {
     return this.httpClient.put<T>(`${this.url}`, item);
   }
 
-  show(id: string): Observable<T> {
+  show(id: number): Observable<T> {
     return this.httpClient.get(`${this.url}/${id}`) as Observable<T>;
   }
 
