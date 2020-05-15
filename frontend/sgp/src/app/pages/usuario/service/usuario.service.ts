@@ -12,7 +12,7 @@ export class UsuarioService extends ResourceService<Usuario> {
   constructor(
     private http: HttpClient
   ) {
-    super(http, 'usuarios');
+    super(http, '/api/usuarios');
   }
 
 }

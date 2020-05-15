@@ -137,7 +137,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
         usuario.setNome(usuarioEdicaoDTO.getNome());
         usuario.setEmail(usuarioEdicaoDTO.getEmail());
-        if(!usuarioEdicaoDTO.getSenha().isEmpty()){
+        if(usuarioEdicaoDTO.getSenha() != null && !usuarioEdicaoDTO.getSenha().isEmpty()){
             usuario.setSenha(usuarioEdicaoDTO.getSenha());
         }
 
