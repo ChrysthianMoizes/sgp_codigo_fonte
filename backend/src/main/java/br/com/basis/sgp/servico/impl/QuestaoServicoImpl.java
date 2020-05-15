@@ -32,8 +32,8 @@ public class QuestaoServicoImpl implements QuestaoServico {
 
     @Override
     public Page<QuestaoListagemDTO> listarQuestoes(QuestaoFiltro questaoFiltro, Pageable pageable) {
-        Page<Questao> questoes = questaoRepositorio.findAll(questaoFiltro.filter(), pageable);
-        return questoes.map(questaoListagemMapper::toDto);
+        return questaoRepositorio.findAll(questaoFiltro.filter(), pageable)
+                .map(questaoListagemMapper::toDto);
     }
 
     @Override
