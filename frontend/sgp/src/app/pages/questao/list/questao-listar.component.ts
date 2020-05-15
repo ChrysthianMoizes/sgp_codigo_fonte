@@ -1,14 +1,14 @@
-import { QuestoesService } from './../service/questoes.service';
-import { Questao } from './../models/questao';
-import { AlertService } from './../../../components/alert/alert.service';
-import { QuestaoComponent } from './../form/questao.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {DialogService} from 'primeng';
 
 
-import { ObjectUtil } from 'src/app/services/object-util.service';
-import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
-import { Page } from '../service/page';
+import {ObjectUtil} from 'src/app/services/object-util.service';
+import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
+import {Page} from '../service/page';
+import {QuestaoService} from '../service/questao.service';
+import {AlertService} from './../../../components/alert/alert.service';
+import {QuestaoComponent} from './../form/questao.component';
+import {Questao} from './../models/questao';
 
 @Component({
   selector: 'app-questao-listar',
@@ -18,7 +18,7 @@ import { Page } from '../service/page';
 })
 export class QuestaoListarComponent implements OnInit {
   questoesSelecionadas: Questao[] = [];
-  questoes: Page<QuestaoListagemDTO> =  new Page;
+  questoes: Page<QuestaoListagemDTO> = new Page;
   definicaoColunas: any[];
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
@@ -26,7 +26,7 @@ export class QuestaoListarComponent implements OnInit {
     private objectUtil: ObjectUtil,
     private alertService: AlertService,
     public dialogService: DialogService,
-    public questoesService: QuestoesService
+    public questoesService: QuestaoService
   ) {}
 
   ngOnInit(): void {

@@ -1,20 +1,12 @@
-import { QuestoesService } from './../service/questoes.service';
-import { Questao } from './../models/questao';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
-import { AlertService } from 'src/app/components/alert/alert.service';
-import { Senioridade } from 'src/app/models/senioridade';
-import { TipoQuestao } from 'src/app/models/tipo-questao';
-import { SenioridadeService } from '../service/senioridade.service';
-import { map } from 'rxjs/operators';
-import { SelectItem } from 'primeng';
-import { TipoQuestaoService } from '../service/tipo-questao.service';
-import { QuestaoDTO } from '../models/questao.dto';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {SelectItem} from 'primeng';
+import {AlertService} from 'src/app/components/alert/alert.service';
+import {QuestaoDTO} from '../models/questao.dto';
+import {QuestaoService} from '../service/questao.service';
+import {SenioridadeService} from '../service/senioridade.service';
+import {TipoQuestaoService} from '../service/tipo-questao.service';
+import {Questao} from './../models/questao';
 
 @Component({
   selector: 'app-questao',
@@ -40,7 +32,7 @@ export class QuestaoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private senioridadeService: SenioridadeService,
     private tipoQuestaoService: TipoQuestaoService,
-    public questoesService: QuestoesService
+    public questoesService: QuestaoService
   ) {}
 
   ngOnInit(): void {

@@ -1,17 +1,16 @@
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Questao } from './../models/questao';
-import { Injectable } from '@angular/core';
-import { ResourceService } from 'src/app/services/resource.service';
-import { Page } from './page';
-import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
-import { Observable, throwError } from 'rxjs';
-import { QuestaoDTO } from '../models/questao.dto';
-import { catchError } from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {ResourceService} from 'src/app/services/resource.service';
+import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
+import {QuestaoDTO} from '../models/questao.dto';
+import {Page} from './page';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QuestoesService extends ResourceService<QuestaoDTO> {
+export class QuestaoService extends ResourceService<QuestaoDTO> {
 
   constructor(private http: HttpClient) {
     super(http, 'questoes');
@@ -20,14 +19,14 @@ export class QuestoesService extends ResourceService<QuestaoDTO> {
   private readonly urlNova = '/api/questoes';
 
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
 
-  obterQuestoes(): Observable<Page<QuestaoListagemDTO[]>>{
+  obterQuestoes(): Observable<Page<QuestaoListagemDTO[]>> {
     return this.http.get<Page<QuestaoListagemDTO[]>>(this.url, this.httpOptions);
   }
 
-  salvarQuestao(questao: QuestaoDTO): Observable<QuestaoDTO>{
+  salvarQuestao(questao: QuestaoDTO): Observable<QuestaoDTO> {
     return this.http.post<QuestaoDTO>(this.url, questao, this.httpOptions)
       .pipe(
         catchError(this.handleError)
