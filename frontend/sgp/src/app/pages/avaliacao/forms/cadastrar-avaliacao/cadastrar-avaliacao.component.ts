@@ -8,7 +8,7 @@ import { Usuario } from '../../../usuario/models/usuario';
 import { UsuarioService } from '../../../usuario/service/usuario.service';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
@@ -49,21 +49,26 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
 
-    this.usuarioService.listarCandidatos()
-      .pipe(catchError(err => of(null)))
+    this.usuarioService.index()
+      .pipe(
+        catchError(err => {
+          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos');
+          return err;
+        }),
+        finalize(() => {
+          this.fecharDialog();
+        })
+      )
       .subscribe(
         response => {
-          this.usuariosFiltrados = response;
-        },
-        erro => {
-          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos')
+          console.log(response)
+          // this.usuariosFiltrados = response;
         }
       )
 
     this.provaService.index().subscribe(
       response => {
         this.provasFiltradas = response
-        console.log(this.provasFiltradas)
       },
       erro => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos')

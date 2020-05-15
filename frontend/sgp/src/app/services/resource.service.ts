@@ -24,7 +24,7 @@ export class ResourceService<T extends Resource> {
   }
 
   index(): Observable<T[]> {
-    return this.httpClient.get(`${this.url}`) as Observable<T[]>;
+    return this.httpClient.get<T[]>(`${this.url}`) as Observable<T[]>;
   }
 
   destroy(id: string) {

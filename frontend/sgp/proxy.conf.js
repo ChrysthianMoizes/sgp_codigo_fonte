@@ -4,7 +4,7 @@ const proxy = [
     target: 'http://localhost:8080/',
     secure: false,
     logLevel: 'debug',
-    pathRewrite: { '^/api': 'http://localhost:8080/api' }
+    pathRewrite: { '^/api': 'http://172.17.0.1:8080/api' }
   }
 ];
 
