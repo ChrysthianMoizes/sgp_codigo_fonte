@@ -9,7 +9,7 @@
   <div class="p-col-11">
     <p-table
       [columns]="definicaoColunas"
-      [value]="questoes"
+      [value]="questoes.content"
       selectionMode="multiple"
       [(selection)]="questoesSelecionadas"
       rows="20"
@@ -25,7 +25,7 @@
       <ng-template pTemplate="body" let-questao let-colunas="columns">
         <tr [pSelectableRow]="questao">
           <td *ngFor="let coluna of colunas">
-            {{ checkNumberCharacter(walk(questao, coluna.field)) }}
+            {{ coluna.field }}
           </td>
         </tr>
       </ng-template>

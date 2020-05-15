@@ -6,6 +6,8 @@ import { DialogService, DynamicDialogRef } from 'primeng';
 
 import { QuestaoService } from '../service/questao.service';
 import { ObjectUtil } from 'src/app/services/object-util.service';
+import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
+import { Page } from '../service/page';
 
 @Component({
   selector: 'app-questao-listar',
@@ -15,7 +17,7 @@ import { ObjectUtil } from 'src/app/services/object-util.service';
 })
 export class QuestaoListarComponent implements OnInit {
   questoesSelecionadas: Questao[] = [];
-  questoes: Questao[];
+  questoes: Page<QuestaoListagemDTO> =  new Page;
   definicaoColunas: any[];
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
@@ -30,11 +32,11 @@ export class QuestaoListarComponent implements OnInit {
     this.definicaoColunas = [
       { field: 'id', header: 'Código' },
       { field: 'descricao', header: 'Descrição' },
-      { field: 'senioridade.descricao', header: 'Senioridade' },
-      { field: 'tipoQuestao.descricao', header: 'Tipo da Questão' },
+      { field: 'descricaoSenioridade', header: 'Senioridade' },
+      { field: 'descricaoTipo', header: 'Tipo da Questão' },
     ];
 
-    this.questaoService.getQuestoes().subscribe(
+    this.questaoService.obterQuestoes().subscribe(
       (response) => {
         this.questoes = response;
       }
@@ -55,7 +57,7 @@ export class QuestaoListarComponent implements OnInit {
             'Questão Excluida com sucesso'
           );
           this.questaoService.getQuestoes().subscribe((response) => {
-            this.questoes = response;
+            // this.questoes = response;
           });
         },
         (error) => {

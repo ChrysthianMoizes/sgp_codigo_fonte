@@ -9,6 +9,7 @@ import { SenioridadeService } from '../service/senioridade.service';
 import { map } from 'rxjs/operators';
 import { SelectItem } from 'primeng';
 import { TipoQuestaoService } from '../service/tipo-questao.service';
+import { QuestaoDTO } from '../models/questao.dto';
 
 @Component({
   selector: 'app-questao',
@@ -23,7 +24,6 @@ export class QuestaoComponent implements OnInit {
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
 
-  idQuestao: number = 0;
   isQuestaoEditando: boolean = true;
   isQuestaoVisualizando: boolean = false;
 
@@ -67,7 +67,6 @@ export class QuestaoComponent implements OnInit {
     this.hader = 'Visualizar Questão';
     this.isQuestaoEditando = true;
     this.isQuestaoVisualizando = true;
-    this.idQuestao = questaoSelecionada.id;
     this.preencherCamposDoForm(questaoSelecionada);
   }
 
@@ -76,9 +75,7 @@ export class QuestaoComponent implements OnInit {
     this.hader = 'Editar Questão';
     this.isQuestaoEditando = true;
     this.isQuestaoVisualizando = false;
-    // this.idQuestao = questaoSelecionada.id;
     this.preencherCamposDoForm(questaoSelecionada);
-    // this.formQuestao.get('descricao')
   }
 
   exibirDialogCadastro(){
@@ -90,58 +87,56 @@ export class QuestaoComponent implements OnInit {
   }
 
   persistir(){
-    let questao: Questao = Object.assign({}, this.formQuestao.value);
-    console.log(questao.id)
-    if(!this.isQuestaoEditando){
-      this.cadastar(questao);
+    let questaoDTO: QuestaoDTO = this.getQuestaoForm();
+    if(questaoDTO.id === null){
+      this.cadastar(questaoDTO);
     }else{
-      this.atualizar(questao);
+      this.atualizar(questaoDTO);
     }
   }
 
-  atualizar(questao: Questao) {
-    questao.id = this.idQuestao;
-    this.questaoService.atualizarQuestao(questao).subscribe(
-      (response) => {
-        this.alertService.montarAlerta(
-          'success',
-          'Sucesso',
-          'Questão editada com Sucesso'
-        );
-      },
-      (error) => {
-        this.alertService.montarAlerta(
-          'error',
-          'Erro',
-          'Erro ao editar questão'
-        );
-      },
-      () => {
-        this.exibir = false;
-      }
-    );
+  atualizar(questao: QuestaoDTO) {
+    // this.questaoService.atualizarQuestao(questao).subscribe(
+    //   (response) => {
+    //     this.alertService.montarAlerta(
+    //       'success',
+    //       'Sucesso',
+    //       'Questão editada com Sucesso'
+    //     );
+    //   },
+    //   (error) => {
+    //     this.alertService.montarAlerta(
+    //       'error',
+    //       'Erro',
+    //       'Erro ao editar questão'
+    //     );
+    //   },
+    //   () => {
+    //     this.exibir = false;
+    //   }
+    // );
   }
 
-  cadastar(questao: Questao) {
-    this.questaoService.criarQuestao(questao).subscribe(
+  cadastar(questao: QuestaoDTO) {
+    this.questaoService.salvarQuestao(questao).subscribe(
       (response) => {
         this.alertService.montarAlerta(
-          'success',
-          'Sucesso',
-          'Questão cadastrada com Sucesso'
+               'success',
+               'Sucesso',
+               'Questão ' + response.id +' cadastrada com Sucesso'
         );
       },
       (error) => {
         this.alertService.montarAlerta(
           'error',
-          'Erro',
-          'Erro ao cadastrar questão'
+          'Sucesso',
+          'Erro ao cadastrar questão' + error.defaultMessage
         );
       },
       () => {
-        this.exibir = false;
+        this.exibir = false
       }
-    );
+    )
   }
 
   cancelar() {
@@ -216,8 +211,21 @@ export class QuestaoComponent implements OnInit {
 
   getControlLabel(type: string){
     return this.formQuestao.get(type).value;
-   }
+  }
 
-
+  getQuestaoForm(): QuestaoDTO{
+    let questaoDTO: QuestaoDTO = new QuestaoDTO();
+    questaoDTO.id = this.formQuestao.value.id;
+    questaoDTO.descricao = this.formQuestao.value.descricao;
+    questaoDTO.alternativa1 = this.formQuestao.value.alternativa1;
+    questaoDTO.alternativa2 = this.formQuestao.value.alternativa2;
+    questaoDTO.alternativa3 = this.formQuestao.value.alternativa3;
+    questaoDTO.alternativa4 = this.formQuestao.value.alternativa4;
+    questaoDTO.alternativa5 = this.formQuestao.value.alternativa5;
+    questaoDTO.resposta = this.formQuestao.value.resposta;
+    questaoDTO.idSenioridade = this.formQuestao.value.senioridade.value;
+    questaoDTO.idTipoQuestao = this.formQuestao.value.tipoQuestao.value;
+    return questaoDTO;
+  }
 
 }

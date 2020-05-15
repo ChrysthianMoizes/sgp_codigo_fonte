@@ -31,7 +31,7 @@
           <span class="ui-float-label dropdown">
             <p-dropdown
               [options]="senioridades"
-              optionLabel="descricao"
+              optionLabel="label"
               placeholder="Selecione uma senioridade"
               formControlName="senioridade"
             >
@@ -42,7 +42,7 @@
           <span class="ui-float-label dropdown">
             <p-dropdown
               [options]="tipoQuestoes"
-              optionLabel="descricao"
+              optionLabel="label"
               placeholder="Selecione o tipo de questão"
               formControlName="tipoQuestao"
             >
@@ -173,8 +173,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!isQuestaoVisualizando">
-          <button
+          <button *ngIf="!isQuestaoVisualizando"
             pButton
             type="button"
             label="Salvar"
@@ -182,7 +181,6 @@
             [disabled]="formQuestao.invalid"
             (click)="persistir()"
           ></button>
-        </div>
         <button
           pButton
           type="button"

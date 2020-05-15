@@ -1,9 +1,12 @@
 import { Questao } from '../models/questao';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { retry, map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { retry, map, catchError } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
+import { QuestaoDTO } from '../models/questao.dto';
+import { Page } from './page';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,21 @@ export class QuestaoService {
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+
+  private readonly url = '/api/questoes';
+
   constructor(private http: HttpClient) {}
+
+  obterQuestoes(): Observable<Page<QuestaoListagemDTO[]>>{
+    return this.http.get<Page<QuestaoListagemDTO[]>>(this.url, this.httpOptions);
+  }
+
+  salvarQuestao(questao: QuestaoDTO): Observable<QuestaoDTO>{
+    return this.http.post<QuestaoDTO>(this.url, questao, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   createQuestao(questao: Questao): Observable<Questao> {
     return this.http
@@ -93,6 +110,10 @@ export class QuestaoService {
    */
   private convertJSONtoQuestaoModel(json: any): Questao {
     return Object.assign(new Questao(), json);
+  }
+
+  private convertJSONtoQuestaoDTO(json: any): QuestaoDTO {
+    return Object.assign(new QuestaoDTO(), json);
   }
 
   private questoes: Array<Questao> = [
@@ -263,4 +284,20 @@ export class QuestaoService {
     });
     return of(questaoPut);
   }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 }
