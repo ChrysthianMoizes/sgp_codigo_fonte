@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Prova } from '../models/prova';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ResourceService } from 'src/app/services/resource.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,24 +30,37 @@ export class ProvaService {
     { id: 10, titulo: 'Título ', percentualAprovacao: 60 },
   ];
 
-  constructor() { }
+  url = 'http://localhost:3000/api/provas';
+  constructor(private httpClient: HttpClient) {
+   }
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
+
 
   index(page = 0, size = 20): Observable<any> {
     return of(this.provas);
   }
 
-  create(prova: Prova): Observable<any> {
-    console.log(prova);
-    return of(true);
+  create(prova: Prova): Observable<Prova> {
+    return this.httpClient.post<Prova>(this.url, JSON.stringify(prova), this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
-  update(prova: Prova): Observable<any> {
-    console.log(prova);
-    return of(true);
+  update(prova: Prova): Observable<Prova> {
+    return this.httpClient.put<Prova>(this.url + '/' + prova.id, JSON.stringify(prova), this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
-  buscaProva(): Observable<any> {
-    return of(this.provas[0]);
+  buscaProva(): Observable<Prova[]> {
+    return this.httpClient.get<Prova[]>(this.url)
+      .pipe(
+        catchError(this.handleError))
   }
 
   findByTitulo(query: string): Observable<Prova[]> {
@@ -54,6 +70,27 @@ export class ProvaService {
       ) as Prova[]
     );
   }
+
+  delete(prova: Prova) {
+    return this.httpClient.delete<Prova>(this.url + '/' + prova.id, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+    // Manipulação de erros
+    handleError(error: HttpErrorResponse) {
+      let errorMessage = '';
+      if (error.error instanceof ErrorEvent) {
+        // Erro ocorreu no lado do client
+        errorMessage = error.error.message;
+      } else {
+        // Erro ocorreu no lado do servidor
+        errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
+      }
+      console.log(errorMessage);
+      return throwError(errorMessage);
+    };
 }
 
 const PROVAS = [
