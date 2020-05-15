@@ -5,7 +5,7 @@ import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
-import br.com.basis.sgp.servico.dto.UsuarioDTO;
+import br.com.basis.sgp.servico.dto.UsuarioListagemDTO;
 import br.com.basis.sgp.servico.filtro.UsuarioFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

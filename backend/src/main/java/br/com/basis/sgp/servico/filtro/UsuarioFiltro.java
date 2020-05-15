@@ -44,5 +44,4 @@ public class UsuarioFiltro implements EntityFiltro {
         return predicates;
     }
 
-
 }
