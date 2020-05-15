@@ -3,36 +3,39 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet id="1" author="maxson.zucolotto">
+
+    <changeSet id="7" author="maxson.zucolotto">
         <createTable tableName="PROVA" remarks="Tabela de provas">
-            <column name="ID" type="number" remarks="Campo de indentificação">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PROVA" ></constraints>
+            <column name="ID" type="BIGINT" remarks="Campo de indentificação" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PROVA"/>
             </column>
-            <column name="TITULO" type="varchar(80)" >
-                <constraints nullable="false"></constraints>
+            <column name="TITULO" type="varchar(200)" >
+                <constraints nullable="false"/>
             </column>
             <column name="PERCENTUAL_APROVACAO" type="number(10,2)" >
-                <constraints nullable="false"></constraints>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet id="2" author="maxson.zucolotto">
-        <createTable tableName="PROVA_QUESTAO">
-            <column name="ID_PROVA" type="number">
-                <constraints nullable="false" ></constraints>
-            </column>
-            <column name="ID_QUESTAO" type="number">
-                <constraints nullable="false" ></constraints>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet author="maxson.zucolotto" id="3">
+    <changeSet id="8" author="maxson.zucolotto">
+        <createTable tableName="PROVA_QUESTAO">
+            <column name="ID_PROVA" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID_QUESTAO" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="9" author="maxson.zucolotto">
         <addPrimaryKey columnNames="ID_PROVA, ID_QUESTAO"
                        constraintName="PK_PROVA_QUESTAO"
                        tableName="PROVA_QUESTAO"/>
     </changeSet>
-    <changeSet id="4" author="maxson.zucolotto">
+
+    <changeSet id="10" author="maxson.zucolotto">
         <addForeignKeyConstraint baseColumnNames="ID_PROVA"
                                  baseTableName="PROVA_QUESTAO"
                                  constraintName="FK_PROVA_QUESTAO_PROVA"
@@ -40,7 +43,7 @@
                                  referencedTableName="PROVA"/>
     </changeSet>
 
-    <changeSet id="5" author="maxson.zucolotto">
+    <changeSet id="11" author="maxson.zucolotto">
         <addForeignKeyConstraint baseColumnNames="ID_QUESTAO"
                                  baseTableName="PROVA_QUESTAO"
                                  constraintName="FK_PROVA_QUESTAO_QUESTAO"

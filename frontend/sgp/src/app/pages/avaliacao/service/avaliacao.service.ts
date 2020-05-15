@@ -1,62 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Avaliacao } from '../models/avaliacao';
+import { ResourceService } from 'src/app/services/resource.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
 })
-export class AvaliacaoService {
-  constructor() {}
+export class AvaliacaoService extends ResourceService<Avaliacao>{
 
-  avaliacoes: Avaliacao[] = [
-    {
-      id: 1,
-      dataAvaliacao: new Date(),
-      aproveitamento: 71,
-      candidato: {
-        id: 1,
-        nome: 'Tito',
-        cpf: '15663033700',
-        senha: '1234',
-        email: 'tito.stauffer@gmail.com',
-        admin: false,
-      },
-      prova: {
-        id: 1,
-        titulo: 'Prova para entrar na BASIS',
-        percentualAprovacao: 70,
-        questoes: [
-          {
-            id: 1,
-            descricao: 'como mockar dados sem ter que digitar tudo?',
-            alternativa1: 'Não dá',
-            alternativa2: 'cria um backend antes do front',
-            alternativa3: 'enfia o dedo no cu e rasga',
-            alternativa4: 'digita tudo na mão',
-            alternativa5: 'joga tudo pro alto, grita foda-se e mete o pé',
-            resposta: 2,
-            senioridade: {
-              id: 1,
-              descricao: 'Junior',
-            },
-            tipoQuestao: {
-              id: 1,
-              descricao: 'Programação',
-            },
-          },
-        ],
-      },
-    },
-  ];
-  getAvaliacoes(): Observable<any> {
-    return of(this.avaliacoes);
+  url = `${environment.url}/api/`;
+
+  constructor(private http: HttpClient) {
+    super(http, 'avaliacoes')
   }
 
-  create(avaliacao: Avaliacao): Observable<Avaliacao> {
-    return of(avaliacao);
-  }
-
-  update(avaliacao: Avaliacao): Observable<Avaliacao> {
-    return of(avaliacao);
-  }
 }

@@ -3,29 +3,30 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet id="1" author="maxson.zucolotto">
+
+    <changeSet id="12" author="maxson.zucolotto">
         <createTable tableName="AVALIACAO" remarks="Avaliação">
-            <column name="ID" type="number" remarks="Campo de indentificação">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TIPO_QUESTAO" ></constraints>
+            <column name="ID" type="BIGINT" remarks="Campo de indentificação" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TIPO_QUESTAO"/>
             </column>
             <column name="DATA_AVALIACAO" type="date">
-                <constraints nullable="false" ></constraints>
+                <constraints nullable="false"/>
             </column>
             <column name="APROVEITAMENTO" type="number(10,2)">
-                <constraints nullable="false" ></constraints>
+                <constraints nullable="false"/>
             </column>
 
-            <column name="ID_CANDIDATO" type="number">
-                <constraints nullable="false" ></constraints>
+            <column name="ID_CANDIDATO" type="BIGINT">
+                <constraints nullable="false"/>
             </column>
 
-            <column name="ID_PROVA" type="number">
-                <constraints nullable="false" ></constraints>
+            <column name="ID_PROVA" type="BIGINT">
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="maxson.zucolotto">
+    <changeSet id="13" author="maxson.zucolotto">
         <addForeignKeyConstraint baseColumnNames="ID_PROVA"
                                  baseTableName="AVALIACAO"
                                  constraintName="FK_AVALIACAO_PROVA"
@@ -33,7 +34,7 @@
                                  referencedTableName="PROVA"/>
     </changeSet>
 
-    <changeSet id="3" author="maxson.zucolotto">
+    <changeSet id="14" author="maxson.zucolotto">
         <addForeignKeyConstraint baseColumnNames="ID_CANDIDATO"
                                  baseTableName="AVALIACAO"
                                  constraintName="FK_AVALIACAO_USUARIO"

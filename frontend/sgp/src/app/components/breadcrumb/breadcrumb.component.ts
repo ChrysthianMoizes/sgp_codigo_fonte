@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { BreadcrumbService } from 'src/app/components/breadcrumb/breadcrumb.service';
 import { isNullOrUndefined } from 'util';
 
 @Component({
@@ -10,12 +12,14 @@ import { isNullOrUndefined } from 'util';
   styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
+
   static readonly ROUTE_DATA_BREADCRUMB = 'breadcrumb';
   static readonly ROUTE_DATA_TOPLAYOUT = 'toplayout';
+  menuItems: MenuItem[];
+  crumbs$: Observable<MenuItem[]>;
+  showBreadCrumb: boolean = true;
 
   @Output() shownavbar = new EventEmitter();
-  showBreadCrumb: boolean = true;
-  menuItems: MenuItem[];
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
@@ -29,14 +33,14 @@ export class BreadcrumbComponent implements OnInit {
       );
   }
 
-  private createBreadcrumbs(
-    route: ActivatedRoute,
-    url: string = '',
-    breadcrumbs: MenuItem[] = []
-  ): MenuItem[] {
+  refresh() {
+    this.ngOnInit();
+  }
+
+  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
     if (children.length === 0) {
-      breadcrumbs.unshift({ label: 'Página Inicial', url: '/home' });
+      breadcrumbs.unshift({ label: 'Página Inicial', routerLink: '/home' })
       return breadcrumbs;
     }
 
@@ -55,7 +59,7 @@ export class BreadcrumbComponent implements OnInit {
         child.snapshot.data[BreadcrumbComponent.ROUTE_DATA_TOPLAYOUT]
       );
       if (!isNullOrUndefined(label) && label != 'Home') {
-        breadcrumbs.push({ label, url });
+        breadcrumbs.push({ label: label, routerLink: url });
       }
 
       return this.createBreadcrumbs(child, url, breadcrumbs);
