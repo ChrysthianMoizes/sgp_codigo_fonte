@@ -1,16 +1,16 @@
 package br.com.basis.sgp.servico.mapper;
 
-import br.com.basis.sgp.dominio.TipoQuestao;
+import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface TipoQuestaoDropdownMapper extends EntityMapper<SelectDTO, TipoQuestao> {
+public interface QuestaoDropdownMapper extends EntityMapper<SelectDTO, Questao> {
 
     @Override
     @Mapping(source = "id", target = "value")
     @Mapping(source = "descricao", target = "label")
-    SelectDTO toDto(TipoQuestao entity);
+    SelectDTO toDto(Questao entity);
 
 }

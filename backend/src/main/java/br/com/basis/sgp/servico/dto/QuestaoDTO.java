@@ -1,7 +1,5 @@
 package br.com.basis.sgp.servico.dto;
 
-import br.com.basis.sgp.dominio.Senioridade;
-import br.com.basis.sgp.dominio.TipoQuestao;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +9,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class QuestaoDTO {
-
     private Long id;
 
     @Size(max = 400, message = "Tamanho da DESCRIÇÃO inválido")
@@ -42,9 +39,8 @@ public class QuestaoDTO {
     private Integer resposta;
 
     @NotNull(message = "Campo SENIORIDADE não deve ficar em branco")
-    private Senioridade senioridade;
+    private Long idSenioridade;
 
     @NotNull(message = "Campo TIPO DE QUESTÃO não deve ficar em branco")
-    private TipoQuestao tipoQuestao;
-
+    private Long idTipoQuestao;
 }
