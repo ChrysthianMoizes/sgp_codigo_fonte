@@ -6,6 +6,5 @@ export class Usuario extends Resource {
   cpf: string;
   senha: string;
   email: string;
-  admin: boolean;
 
 }

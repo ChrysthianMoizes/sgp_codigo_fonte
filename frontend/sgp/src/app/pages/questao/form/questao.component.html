@@ -1,9 +1,4 @@
-<p-dialog
-  header="{{ hader }}"
-  [modal]="true"
-  [(visible)]="exibir"
-  [style]="{ width: '60vw' }"
->
+<p-dialog header="{{ header }}" [modal]="true" [(visible)]="exibir" [style]="{ width: '60vw' }">
   <div class="ui-g">
     <form [formGroup]="formQuestao" novalidate>
       <div class="ui-g-10">
@@ -11,35 +6,21 @@
         <div class="ui-g-10">
           <small>Descricão</small>
           <span class="ui-float-label margem-top">
-            <textarea
-              rows="5"
-              cols="68"
-              pInputTextarea
-              autoResize="autoResize"
-              formControlName="descricao"
-            ></textarea>
+            <textarea rows="5" cols="68" pInputTextarea autoResize="autoResize" formControlName="descricao"></textarea>
             <!-- <label for="float-input">Descrição</label> -->
           </span>
         </div>
         <div class="ui-g ui-g-5">
           <span class="ui-float-label dropdown">
-            <p-dropdown
-              [options]="senioridade"
-              optionLabel="descricao"
-              placeholder="Selecione uma senioridade"
-              formControlName="senioridade"
-            >
+            <p-dropdown [options]="senioridade" optionLabel="descricao" placeholder="Selecione uma senioridade"
+              formControlName="senioridade">
             </p-dropdown>
           </span>
         </div>
         <div class="ui-g ui-g-5">
           <span class="ui-float-label dropdown">
-            <p-dropdown
-              [options]="tipoQuestao"
-              optionLabel="descricao"
-              placeholder="Selecione o tipo de questão"
-              formControlName="tipoQuestao"
-            >
+            <p-dropdown [options]="tipoQuestao" optionLabel="descricao" placeholder="Selecione o tipo de questão"
+              formControlName="tipoQuestao">
             </p-dropdown>
           </span>
         </div>
@@ -48,138 +29,71 @@
           <h3 class="first">Alternativas da Questão</h3>
           <div class="ui-g-12">
             <div class="ui-g-2">
-              <p-radioButton
-                name="group1"
-                inputId="Option 1"
-                value="1"
-                formControlName="selectedValue"
-              >
+              <p-radioButton name="group1" inputId="Option 1" value="1" formControlName="selectedValue">
               </p-radioButton>
             </div>
             <div class="ui-g-10">
               <span class="ui-float-label margem-top">
-                <input
-                  id="float-input1"
-                  type="text"
-                  size="60"
-                  pInputText
-                  formControlName="alternativa1"
-                />
+                <input id="float-input1" type="text" size="60" pInputText formControlName="alternativa1" />
                 <label for="float-input">Alternativa_1</label>
               </span>
             </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-2">
-              <p-radioButton
-                name="group1"
-                inputId="Option 1"
-                value="2"
-                formControlName="selectedValue"
-              >
+              <p-radioButton name="group1" inputId="Option 1" value="2" formControlName="selectedValue">
               </p-radioButton>
             </div>
             <div class="ui-g-10">
               <span class="ui-float-label margem-top">
-                <input
-                  id="float-input2"
-                  type="text"
-                  size="60"
-                  pInputText
-                  formControlName="alternativa2"
-                />
+                <input id="float-input2" type="text" size="60" pInputText formControlName="alternativa2" />
                 <label for="float-input">Alternativa_2</label>
               </span>
             </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-2">
-              <p-radioButton
-                name="group1"
-                inputId="Option 1"
-                value="3"
-                formControlName="selectedValue"
-              >
+              <p-radioButton name="group1" inputId="Option 1" value="3" formControlName="selectedValue">
               </p-radioButton>
             </div>
             <div class="ui-g-10">
               <span class="ui-float-label margem-top">
-                <input
-                  id="float-input3"
-                  type="text"
-                  size="60"
-                  pInputText
-                  formControlName="alternativa3"
-                />
+                <input id="float-input3" type="text" size="60" pInputText formControlName="alternativa3" />
                 <label for="float-input">Alternativa_3</label>
               </span>
             </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-2">
-              <p-radioButton
-                name="group1"
-                inputId="Option 1"
-                value="4"
-                formControlName="selectedValue"
-              >
+              <p-radioButton name="group1" inputId="Option 1" value="4" formControlName="selectedValue">
               </p-radioButton>
             </div>
             <div class="ui-g-10">
               <span class="ui-float-label margem-top">
-                <input
-                  id="float-input4"
-                  type="text"
-                  size="60"
-                  pInputText
-                  formControlName="alternativa4"
-                />
+                <input id="float-input4" type="text" size="60" pInputText formControlName="alternativa4" />
                 <label for="float-input">Alternativa_4</label>
               </span>
             </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-2">
-              <p-radioButton
-                name="group1"
-                inputId="Option 1"
-                value="5"
-                formControlName="selectedValue"
-              >
+              <p-radioButton name="group1" inputId="Option 1" value="5" formControlName="selectedValue">
               </p-radioButton>
             </div>
             <div class="ui-g-10">
               <span class="ui-float-label margem-top">
-                <input
-                  id="float-input5"
-                  type="text"
-                  size="60"
-                  pInputText
-                  formControlName="alternativa5"
-                />
+                <input id="float-input5" type="text" size="60" pInputText formControlName="alternativa5" />
                 <label for="float-input">Alternativa_5</label>
               </span>
             </div>
           </div>
         </div>
 
-        <button
-          pButton
-          type="button"
-          label="Salvar"
-          class="ui-button-raised margem-top"
-          [disabled]="formQuestao.invalid"
-          (click)="cadastar()"
-        ></button>
+        <button pButton type="button" label="Salvar" class="ui-button-raised margem-top"
+          [disabled]="formQuestao.invalid" (click)="validarForm()"></button>
 
-        <button
-          pButton
-          type="button"
-          label="Cancelar"
-          class="ui-button-raised margem-top"
-          (click)="cancelar()"
-          style="margin-left: 15px;"
-        ></button>
+        <button pButton type="button" label="Cancelar" class="ui-button-raised margem-top" (click)="cancelar()"
+          style="margin-left: 15px;"></button>
       </div>
     </form>
   </div>
