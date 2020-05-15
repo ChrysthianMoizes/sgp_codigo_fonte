@@ -5,6 +5,8 @@ import { Resource } from 'src/app/models/resource.model';
 export class Avaliacao extends Resource {
   dataAvaliacao: Date;
   aproveitamento: number;
-  candidato: Usuario;
-  prova: Prova;
+  idCandidato: number;
+  nomeCandidato: string;
+  idProva: number;
+  tituloProva: string;
 }

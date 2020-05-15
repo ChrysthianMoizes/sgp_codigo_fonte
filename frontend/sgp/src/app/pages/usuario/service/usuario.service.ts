@@ -9,6 +9,7 @@ import { AuthGuard } from 'src/app/services/auth.guard';
 import { HttpClient } from '@angular/common/http';
 import { url } from 'inspector';
 import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -75,7 +76,8 @@ export class UsuarioService {
         candidatosAv.push(element);
       }
     })
-    return this.http.get(environment.url);
+    return this.http.get(environment.url)
+      .pipe(catchError(err => err));
   }
 
   excluirCandidatos(id: number): Observable<void> {

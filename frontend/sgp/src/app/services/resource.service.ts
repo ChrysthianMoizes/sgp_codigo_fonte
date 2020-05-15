@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Resource } from '../models/resource.model';
 import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators';
 
 export class ResourceService<T extends Resource> {
   url = environment.url;

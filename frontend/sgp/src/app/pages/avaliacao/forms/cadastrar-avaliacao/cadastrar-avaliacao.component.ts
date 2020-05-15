@@ -8,7 +8,8 @@ import { Usuario } from '../../../usuario/models/usuario';
 import { UsuarioService } from '../../../usuario/service/usuario.service';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
-import { avaliacaCadastro } from '../../models/avaliacao-cadastro';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-cadastrar-avaliacao',
@@ -16,7 +17,7 @@ import { avaliacaCadastro } from '../../models/avaliacao-cadastro';
   styleUrls: ['./cadastrar-avaliacao.component.css'],
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
-  @Input() avaliacaoSendoEditada: avaliacaCadastro;
+  @Input() avaliacaoSendoEditada: Avaliacao;
   @Input() viewOnly = false;
   avaliacaoForm: FormGroup;
   usuariosFiltrados: Usuario[];
@@ -35,10 +36,10 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     if (this.avaliacaoSendoEditada) {
       this.avaliacaoForm
         .get('usuario')
-        .setValue(this.avaliacaoSendoEditada.candidato);
+        .setValue(this.avaliacaoSendoEditada.idCandidato);
       this.avaliacaoForm
         .get('prova')
-        .setValue(this.avaliacaoSendoEditada.prova);
+        .setValue(this.avaliacaoSendoEditada.idProva);
     }
 
     if (this.viewOnly) {
@@ -49,14 +50,25 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.usuarioService.listarCandidatos()
+      .pipe(catchError(err => of(null)))
       .subscribe(
         response => {
           this.usuariosFiltrados = response;
         },
         erro => {
-          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter usuarios')
+          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos')
         }
       )
+
+    this.provaService.index().subscribe(
+      response => {
+        this.provasFiltradas = response
+        console.log(this.provasFiltradas)
+      },
+      erro => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos')
+      }
+    )
 
     this.avaliacaoForm = this.formBuilder.group({
       usuario: ['', Validators.required],
@@ -66,10 +78,10 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     if (this.avaliacaoSendoEditada) {
       this.avaliacaoForm
         .get('usuario')
-        .setValue(this.avaliacaoSendoEditada.candidato);
+        .setValue(this.avaliacaoSendoEditada.idCandidato);
       this.avaliacaoForm
         .get('prova')
-        .setValue(this.avaliacaoSendoEditada.prova);
+        .setValue(this.avaliacaoSendoEditada.idProva);
     }
 
     if (this.viewOnly) {
