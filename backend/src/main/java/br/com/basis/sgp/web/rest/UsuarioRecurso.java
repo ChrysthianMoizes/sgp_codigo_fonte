@@ -29,7 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
-public class UsuarioRecurso {
+public class    UsuarioRecurso {
 
     private final UsuarioServico usuarioServico;
 
