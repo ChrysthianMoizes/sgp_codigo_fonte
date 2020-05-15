@@ -9,28 +9,11 @@ import { ResourceService } from 'src/app/services/resource.service';
   providedIn: 'root',
 })
 export class ProvaService {
-  provas: any[] = [
-    { id: 1, titulo: 'Título ', percentualAprovacao: 70 },
-    { id: 2, titulo: 'Título ', percentualAprovacao: 100 },
-    {
-      id: 3,
-      titulo: 'Lorem ipsum dolor',
-      percentualAprovacao: 40,
-    },
-    { id: 4, titulo: 'Título ', percentualAprovacao: 10 },
-    { id: 5, titulo: 'Título ', percentualAprovacao: 60 },
-    {
-      id: 6,
-      titulo: 'Lorem ipsum dolor',
-      percentualAprovacao: 70,
-    },
-    { id: 7, titulo: 'Título ', percentualAprovacao: 100 },
-    { id: 8, titulo: 'Título ', percentualAprovacao: 40 },
-    { id: 9, titulo: 'Título ', percentualAprovacao: 10 },
-    { id: 10, titulo: 'Título ', percentualAprovacao: 60 },
-  ];
 
-  url = 'http://localhost:3000/api/provas';
+  private provas : Prova;
+
+  url = 'http://localhost:3000/provas';
+
   constructor(private httpClient: HttpClient) {
    }
 
@@ -39,8 +22,10 @@ export class ProvaService {
   }
 
 
-  index(page = 0, size = 20): Observable<any> {
-    return of(this.provas);
+  index(page = 0, size = 20): Observable<Prova[]> {
+    return this.httpClient.get<Prova[]>(this.url)
+      .pipe(
+        catchError(this.handleError))
   }
 
   create(prova: Prova): Observable<Prova> {
@@ -57,8 +42,8 @@ export class ProvaService {
       )
   }
 
-  buscaProva(): Observable<Prova[]> {
-    return this.httpClient.get<Prova[]>(this.url)
+  buscaProva(): Observable<Prova> {
+    return this.httpClient.get<Prova>(this.url)
       .pipe(
         catchError(this.handleError))
   }
@@ -71,7 +56,7 @@ export class ProvaService {
     );
   }
 
-  delete(prova: Prova) {
+  excluirProva(prova: Prova) {
     return this.httpClient.delete<Prova>(this.url + '/' + prova.id, this.httpOptions)
       .pipe(
         catchError(this.handleError)

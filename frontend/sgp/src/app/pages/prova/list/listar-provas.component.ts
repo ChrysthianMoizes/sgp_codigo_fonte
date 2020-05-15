@@ -14,6 +14,7 @@ import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
   providers: [DialogService],
 })
 export class ListarProvasComponent implements OnInit {
+  prova = {} as Prova;
   provas: Prova[];
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
