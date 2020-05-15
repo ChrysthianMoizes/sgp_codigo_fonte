@@ -26,6 +26,7 @@ export class CadastroComponent implements OnInit {
     this.usuario = usuario;
     this.usuarioService.create(this.usuario).subscribe(
       (response) => {
+        this.alert.montarAlerta('sucess', 'Sucesso', 'Usuário salvo');
         this.authService
           .login({ email: usuario.email, senha: usuario.senha } as Usuario)
           .subscribe(
