@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Prova } from '../models/prova';
+import { SelectItem } from 'primeng';
 
 @Injectable({
   providedIn: 'root',
@@ -47,12 +48,8 @@ export class ProvaService {
     return of(this.provas[0]);
   }
 
-  findByTitulo(query: string): Observable<Prova[]> {
-    return of(
-      PROVAS.filter((elem) =>
-        elem.titulo.toLowerCase().includes(query.toLowerCase())
-      ) as Prova[]
-    );
+  findByTitulo(query: string): Observable<SelectItem[]> {
+    return null;
   }
 }
 

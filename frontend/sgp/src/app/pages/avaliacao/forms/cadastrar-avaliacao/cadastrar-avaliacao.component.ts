@@ -9,7 +9,7 @@ import { UsuarioService } from '../../../usuario/service/usuario.service';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
 import { catchError, finalize } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { SelectItem } from 'primeng';
 
 @Component({
   selector: 'app-cadastrar-avaliacao',
@@ -19,9 +19,12 @@ import { of } from 'rxjs';
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   @Input() avaliacaoSendoEditada: Avaliacao;
   @Input() viewOnly = false;
+
+  avaliacao: Avaliacao = new Avaliacao();
   avaliacaoForm: FormGroup;
-  usuariosFiltrados: Usuario[];
-  provasFiltradas: Prova[];
+  candidatosFiltrados: SelectItem[];
+  provasFiltradas: SelectItem[];
+
   exibir: boolean;
 
   constructor(
@@ -32,6 +35,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     private alertService: AlertService,
     private loadingService: LoadingService
   ) { }
+
   ngOnChanges(): void {
     if (this.avaliacaoSendoEditada) {
       this.avaliacaoForm
@@ -48,49 +52,41 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
-    this.usuarioService.index()
-      .pipe(
-        catchError(err => {
-          this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos');
-          return err;
-        }),
-        finalize(() => {
-          this.fecharDialog();
-        })
-      )
-      .subscribe(
-        response => {
-          console.log(response)
-          // this.usuariosFiltrados = response;
-        }
-      )
-
-    this.provaService.index().subscribe(
-      response => {
-        this.provasFiltradas = response
-      },
-      erro => {
-        this.alertService.montarAlerta('error', 'Erro', 'Erro ao obter candidatos')
-      }
-    )
-
-    this.avaliacaoForm = this.formBuilder.group({
-      usuario: ['', Validators.required],
-      prova: ['', Validators.required],
-    });
-
-    if (this.avaliacaoSendoEditada) {
-      this.avaliacaoForm
-        .get('usuario')
-        .setValue(this.avaliacaoSendoEditada.idCandidato);
-      this.avaliacaoForm
-        .get('prova')
-        .setValue(this.avaliacaoSendoEditada.idProva);
-    }
+    this.iniciarForm();
+    this.carregarFiltroCandidato();
+    this.carregarFiltroProva();
 
     if (this.viewOnly) {
       this.avaliacaoForm.disable();
+    }
+  }
+
+  iniciarForm() {
+    this.avaliacaoForm = this.formBuilder.group({
+      usuario: [null, Validators.required],
+      prova: [null, Validators.required],
+    });
+  }
+
+  carregarFiltroCandidato() {
+
+  }
+
+  carregarFiltroProva() {
+
+  }
+
+  validarForm() {
+    if (this.avaliacaoForm.invalid) {
+      this.alertService.montarAlerta('error', 'Erro', 'Preenchimento obrigatório dos campos: Candidato, Prova, Data da Avaliação');
+      return;
+    }
+
+    if (!this.avaliacao.id) {
+      this.cadastrarNovaAvaliacao();
+    }
+    else {
+      this.atualizarAvaliacao();
     }
   }
 
@@ -102,9 +98,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     this.exibir = false;
   }
 
-  cadastrarNovaAvaliacao(avaliacao: Avaliacao): void {
+  cadastrarNovaAvaliacao(): void {
     this.avaliacaoService
-      .create(avaliacao)
+      .create(this.avaliacao)
       .subscribe(
         () => {
           this.alertService.montarAlerta(
@@ -126,9 +122,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       .add(() => this.loadingService.deactivate());
   }
 
-  atualizarAvaliacao(avaliacao: Avaliacao): void {
+  atualizarAvaliacao(): void {
     this.avaliacaoService
-      .update(avaliacao)
+      .update(this.avaliacao)
       .subscribe(
         () => {
           this.alertService.montarAlerta(
@@ -148,18 +144,6 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
         }
       )
       .add(() => this.loadingService.deactivate());
-  }
-
-  onSubmit(): void {
-    this.loadingService.activate();
-    if (!this.avaliacaoSendoEditada) {
-      this.cadastrarNovaAvaliacao(this.avaliacaoForm.value);
-    } else {
-      this.atualizarAvaliacao({
-        ...this.avaliacaoForm.value,
-        id: this.avaliacaoSendoEditada.id,
-      });
-    }
   }
 
   onCancel(): void {

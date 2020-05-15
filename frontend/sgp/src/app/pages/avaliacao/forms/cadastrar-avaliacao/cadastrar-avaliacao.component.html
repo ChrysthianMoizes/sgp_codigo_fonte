@@ -24,13 +24,9 @@
       </span>
     </section>
 
-    <section *ngIf="candidatoSelecionado">
-      CPF: {{ candidatoSelecionado.cpf }}
-    </section>
-
     <footer>
       <button pButton type="button" class="ui-button-secondary" (click)="onCancel()" label="CANCELAR"></button>
-      <button pButton type="button" (click)="onSubmit()" [disabled]="!isFormValid" label="SALVAR"></button>
+      <button pButton type="button" (click)="validarForm()" [disabled]="!isFormValid" label="SALVAR"></button>
     </footer>
   </form>
 </p-dialog>
