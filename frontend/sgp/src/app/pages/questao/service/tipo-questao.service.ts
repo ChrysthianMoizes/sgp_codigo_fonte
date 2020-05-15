@@ -11,7 +11,7 @@ import { SelectItem } from 'primeng';
 })
 export class TipoQuestaoService {
 
-  url = environment.url + 'tipo-questoes';
+  private readonly url = '/api/tipos-questao';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
