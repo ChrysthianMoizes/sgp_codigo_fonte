@@ -63,12 +63,14 @@ export class ListarProvasComponent implements OnInit {
     // atualizar a lista com o banco
   }
 
-  excluirProva(): void {
+  excluirProva(prova: Prova) {
     this.confirmationService.confirm({
       message: 'Deseja realmente excluir?',
       header: 'Excluir prova',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        this.provaService.excluirProva(prova).subscribe(() => {
+        });
         this.alertService.montarAlerta(
           'success',
           'Sucesso!',

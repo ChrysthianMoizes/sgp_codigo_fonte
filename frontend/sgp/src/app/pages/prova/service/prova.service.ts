@@ -3,7 +3,6 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Prova } from '../models/prova';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { ResourceService } from 'src/app/services/resource.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,14 +28,14 @@ export class ProvaService {
   }
 
   create(prova: Prova): Observable<Prova> {
-    return this.httpClient.post<Prova>(this.url, JSON.stringify(prova), this.httpOptions)
+    return this.httpClient.post<Prova>(this.url, JSON.stringify(prova))
       .pipe(
         catchError(this.handleError)
       )
   }
 
   update(prova: Prova): Observable<Prova> {
-    return this.httpClient.put<Prova>(this.url + '/' + prova.id, JSON.stringify(prova), this.httpOptions)
+    return this.httpClient.put<Prova>(this.url + '/' + prova.id, JSON.stringify(prova))
       .pipe(
         catchError(this.handleError)
       )
@@ -57,7 +56,7 @@ export class ProvaService {
   }
 
   excluirProva(prova: Prova) {
-    return this.httpClient.delete<Prova>(this.url + '/' + prova.id, this.httpOptions)
+    return this.httpClient.delete<Prova>(this.url + '/' + prova.id)
       .pipe(
         catchError(this.handleError)
       )
