@@ -2,12 +2,17 @@ package br.com.basis.sgp.web.rest;
 
 import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.QuestaoDTO;
+import br.com.basis.sgp.servico.dto.QuestaoListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
+import br.com.basis.sgp.servico.filtro.QuestaoFiltro;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,11 +30,6 @@ public class QuestaoRecurso {
 
     private final QuestaoServico questaoServico;
 
-    //    public ResponseEntity<Page<QuestaoDTO>> listarCandidatos(@ModelAttribute QuestaoFiltro questaoFiltro, Pageable pageable) {
-//        Page<QuestaoDTO> page = questaoServico.listarQuestoesDropdown(questaoFiltro, pageable);
-//        return ResponseEntity.ok(page);
-//    }
-
     @PostMapping
     public ResponseEntity<QuestaoDTO> cadastrar(@Valid @RequestBody QuestaoDTO questaoDTO) {
         QuestaoDTO questao = questaoServico.salvar(questaoDTO);
@@ -40,6 +40,12 @@ public class QuestaoRecurso {
     public ResponseEntity<QuestaoDTO> alterar(@Valid @RequestBody QuestaoDTO questaoDTO) {
         QuestaoDTO questao = questaoServico.salvar(questaoDTO);
         return ResponseEntity.ok(questao);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<QuestaoListagemDTO>> listarCandidatos(@ModelAttribute QuestaoFiltro questaoFiltro, Pageable pageable) {
+        Page<QuestaoListagemDTO> page = questaoServico.listarQuestoes(questaoFiltro, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/dropdown")
