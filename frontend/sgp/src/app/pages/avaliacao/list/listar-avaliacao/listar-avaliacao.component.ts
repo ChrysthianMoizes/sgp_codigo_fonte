@@ -18,14 +18,14 @@ export class ListarAvaliacaoComponent implements OnInit {
   avaliacaoSelecionada: Avaliacao;
   avaliacoesRecebidas: Avaliacao[];
   ngOnInit(): void {
-    this.avaliacaoService.getAvaliacoes().subscribe({
-      next: (avaliacoes) => {
-        this.avaliacoesRecebidas = avaliacoes;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    // this.avaliacaoService.getAvaliacoes().subscribe({
+    //   next: (avaliacoes) => {
+    //     this.avaliacoesRecebidas = avaliacoes;
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
+    // });
   }
 
   isOneSelected(): boolean {

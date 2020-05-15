@@ -11,10 +11,7 @@ import { MenuModel } from '../menu/menu.model';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-    ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   items: MenuItem[];
   @Input() title = 'Gestão de Provas';
@@ -24,8 +21,8 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.menuSideBar = menu;
     this.items = [
-      {label: 'Editar Perfil', command: () => this.onEditarPerfil()},
-      {label: 'Logout', command: () => this.logout()}
+      { label: 'Editar Perfil', command: () => this.onEditarPerfil() },
+      { label: 'Logout', command: () => this.logout() },
     ];
   }
 
@@ -43,7 +40,7 @@ export class NavBarComponent implements OnInit {
 
   verificaPermissao(permissaoMenu: boolean): boolean {
     if (
-      permissaoMenu === this.authService.getPermissaoUsuario() ||
+      permissaoMenu === this.authService.temPermissao() ||
       permissaoMenu === false
     ) {
       return true;
