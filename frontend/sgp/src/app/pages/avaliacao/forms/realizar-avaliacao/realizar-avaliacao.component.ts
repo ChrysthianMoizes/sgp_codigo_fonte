@@ -108,13 +108,13 @@ export class RealizarAvaliacaoComponent implements OnInit {
   }
 
   finalizarProva() {
-    this.avaliacaoService.responder(this.avaliacao).subscribe((avaliacao) => {
-      this.alertService.montarAlerta(
-        'success',
-        'Sucesso!',
-        'Prova finalizada!'
-      );
-    });
+    // this.avaliacaoService.responder(this.avaliacao).subscribe((avaliacao) => {
+    //   this.alertService.montarAlerta(
+    //     'success',
+    //     'Sucesso!',
+    //     'Prova finalizada!'
+    //   );
+    // });
     console.log(this.avaliacao.prova);
   }
 

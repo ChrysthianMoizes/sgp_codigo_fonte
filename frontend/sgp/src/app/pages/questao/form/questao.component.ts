@@ -1,10 +1,14 @@
 import { Questao } from './../models/questao';
-import { TipoQuestao } from './../../tipo-questao/models/tipo-questao';
-import { Senioridade } from './../../senioridade/models/senioridade';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { QuestaoService } from '../service/questao.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { Senioridade } from 'src/app/models/senioridade';
+import { TipoQuestao } from 'src/app/models/tipo-questao';
+import { SenioridadeService } from '../service/senioridade.service';
+import { map } from 'rxjs/operators';
+import { SelectItem } from 'primeng';
+import { TipoQuestaoService } from '../service/tipo-questao.service';
 
 @Component({
   selector: 'app-questao',
@@ -16,8 +20,8 @@ export class QuestaoComponent implements OnInit {
   hader: string = '';
   @Output() alterar = new EventEmitter();
 
-  senioridades: Senioridade[];
-  tipoQuestoes: TipoQuestao[];
+  senioridades: SelectItem[];
+  tipoQuestoes: SelectItem[];
 
   idQuestao: number = 0;
   isQuestaoEditando: boolean = true;
@@ -28,25 +32,33 @@ export class QuestaoComponent implements OnInit {
   constructor(
     private questaoService: QuestaoService,
     private alertService: AlertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private senioridadeService: SenioridadeService,
+    private tipoQuestaoService: TipoQuestaoService
   ) {}
 
   ngOnInit(): void {
     this.construirForm();
 
-    this.senioridades = [
-      { id: 1, descricao: 'Estagiário' },
-      { id: 2, descricao: 'Júnior' },
-      { id: 3, descricao: 'Pleno' },
-      { id: 4, descricao: 'Sênior' },
-    ];
-    this.tipoQuestoes = [
-      { id: 1, descricao: 'Requisito' },
-      { id: 2, descricao: 'Análise e Projeto' },
-      { id: 3, descricao: 'Codificação' },
-      { id: 4, descricao: 'Teste e Arquitetura' },
-    ];
+    this.getSenioridades();
 
+    this.getTipoQuestoes();
+  }
+
+  getSenioridades(){
+    this.senioridadeService.getSenioridades().subscribe(
+      (resposta) => {
+        this.senioridades = resposta;
+      }
+    )
+  }
+
+  getTipoQuestoes() {
+    this.tipoQuestaoService.getTipoQuestoes().subscribe(
+      (resposta) => {
+        this.tipoQuestoes = resposta;
+      }
+    )
   }
 
   exibirDialogVisualisar(questaoSelecionada: Questao) {

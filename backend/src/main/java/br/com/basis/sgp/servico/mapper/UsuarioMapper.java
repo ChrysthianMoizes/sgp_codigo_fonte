@@ -4,7 +4,7 @@ import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.servico.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface UsuarioMapper extends EntityMapper<UsuarioDTO, Usuario> {
 
 }

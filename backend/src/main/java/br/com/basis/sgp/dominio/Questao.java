@@ -3,7 +3,6 @@ package br.com.basis.sgp.dominio;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ public class Questao {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "DESCRICAO", nullable = false)
+    @Column(name = "DESCRICAO", nullable = false, length = 400)
     private String descricao;
 
     @Column(name = "ALTERNATIVA_1", nullable = false, length = 400)
