@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   key = environment.key;
-  url = environment.url;
 
   constructor(
     private router: Router,
@@ -19,12 +18,11 @@ export class AuthService {
   ){}
 
   public setUsuario(usuario: Usuario): void {
-
     sessionStorage.setItem(this.key, JSON.stringify(usuario));
   }
 
   login(usuario: Usuario): Observable<any> {
-    return this.httpClient.post(`${this.url}/usuarios/login`, usuario);
+    return this.httpClient.post(`/api/usuarios/login`, usuario);
   }
 
   public getUsuario(): Usuario {
