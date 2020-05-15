@@ -3,17 +3,17 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Prova } from '../models/prova';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { ResourceService } from 'src/app/services/resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProvaService {
+export class ProvaService extends ResourceService<Prova>{
 
   private provas : Prova;
 
-  url = 'http://localhost:3000/provas';
-
-  constructor(private httpClient: HttpClient) {
+  constructor(private http: HttpClient) {
+    super(http, '/api/provas');
    }
 
   httpOptions = {
@@ -43,6 +43,12 @@ export class ProvaService {
 
   buscaProva(): Observable<Prova> {
     return this.httpClient.get<Prova>(this.url)
+      .pipe(
+        catchError(this.handleError))
+  }
+
+  buscaProvas(): Observable<Prova[]> {
+    return this.httpClient.get<Prova[]>(this.url)
       .pipe(
         catchError(this.handleError))
   }

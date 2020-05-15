@@ -6,6 +6,7 @@ import { Questao } from '../../questao/models/questao';
 import { QuestaoService } from '../../questao/service/questao.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -13,8 +14,10 @@ import { ProvaService } from '../service/prova.service';
   styleUrls: ['./cadastrar-prova.component.css'],
 })
 export class CadastrarProvaComponent implements OnInit {
+  formulario: FormGroup;
+  prova: Prova = new Prova();
+  formSubmetido: boolean = false;
   @Input() provaSendoEditada: Prova;
-  provaForm: FormGroup;
   visualizando: boolean;
   edicao: boolean;
   modoDialog: number;
@@ -30,10 +33,41 @@ export class CadastrarProvaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private provaService: ProvaService,
-    private alertService: AlertService,
+    private alert: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
   ) { }
+
+  iniciarForm() {
+    this.formulario = this.formBuilder.group(
+      {
+        titulo: [null, [Validators.required]],
+        percentualDeAprovacao: [null, [Validators.required]],
+      },
+      { updateOn: "blur" }
+    );
+  }
+
+  validarForm() {
+
+    if (this.formulario.invalid) {
+      this.alert.montarAlerta('error', 'Erro', 'Preenchimento obrigatório dos campos: titulo e Percentual de Aprovação');
+      return;
+    }
+
+    this.salvar();
+
+  }
+
+  salvar() {
+    this.provaService.update(this.prova).pipe(catchError(err => {
+      this.alert.montarAlerta('error', 'Erro', err.message);
+      return err;
+    })).subscribe(() => {
+        this.alert.montarAlerta('success', 'Sucesso', 'Perfil editado com sucesso');
+      }
+    );
+  }
 
   get titulo(): string {
     if (this.visualizando) {
@@ -46,16 +80,16 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   get inputSize(): number {
-    const inputTitulo = this.provaForm.get('titulo').value;
+    const inputTitulo = this.formulario.get('titulo').value;
     return inputTitulo ? inputTitulo.length : 20;
   }
 
   get isFormValid(): boolean {
-    const percentualDeAprovacao = +this.provaForm.get('percentualDeAprovacao')
+    const percentualDeAprovacao = +this.formulario.get('percentualDeAprovacao')
       .value;
 
     return (
-      this.provaForm.valid &&
+      this.formulario.valid &&
       this.destinoQuestoes.length > 0 &&
       percentualDeAprovacao <= 100 &&
       percentualDeAprovacao >= 0
@@ -63,6 +97,9 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.iniciarForm();
+
     this.questaoService.index().subscribe((questoes) => {
       this.origemQuestoes = questoes;
       this.destinoQuestoes = [];
@@ -70,15 +107,15 @@ export class CadastrarProvaComponent implements OnInit {
     this.questaoService
       .getNumberOfElements()
       .subscribe((total) => (this.totalDeQuestoes = total));
-    this.provaForm = this.formBuilder.group({
+    this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
       percentualDeAprovacao: ['', Validators.required],
     });
   }
 
   preencherFormParaEdicao(): void {
-    this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.provaForm
+    this.formulario.get('titulo').setValue(this.provaSendoEditada.titulo);
+    this.formulario
       .get('percentualDeAprovacao')
       .setValue(this.provaSendoEditada.percentualAprovacao);
     this.questaoService.index().subscribe((questoes) => {
@@ -100,8 +137,8 @@ export class CadastrarProvaComponent implements OnInit {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
-      this.provaForm.get('titulo').enable();
-      this.provaForm.get('percentualDeAprovacao').enable();
+      this.formulario.get('titulo').enable();
+      this.formulario.get('percentualDeAprovacao').enable();
       // ediçao
     } else {
       console.log(this.visualizando);
@@ -112,8 +149,8 @@ export class CadastrarProvaComponent implements OnInit {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
-      this.provaForm.get('titulo').disable();
-      this.provaForm.get('percentualDeAprovacao').disable();
+      this.formulario.get('titulo').disable();
+      this.formulario.get('percentualDeAprovacao').disable();
       //visualizar
     }
     if (this.modoDialog > 1) {
@@ -122,8 +159,8 @@ export class CadastrarProvaComponent implements OnInit {
       });
       this.preencherFormParaEdicao();
       if (this.modoDialog === 3) {
-        this.provaForm.get('titulo').disable();
-        this.provaForm.get('percentualDeAprovacao').disable();
+        this.formulario.get('titulo').disable();
+        this.formulario.get('percentualDeAprovacao').disable();
       }
     } else {
       console.log('Cadastrar nova prova.');
@@ -134,15 +171,15 @@ export class CadastrarProvaComponent implements OnInit {
     this.provaService.create(prova).subscribe(
       () => {
         this.loadingService.deactivate();
-        this.provaForm.reset();
-        this.alertService.montarAlerta(
+        this.formulario.reset();
+        this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova cadastrada com suscesso!'
         );
       },
       (err) => {
-        this.alertService.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', err);
       }
     );
   }
@@ -151,15 +188,15 @@ export class CadastrarProvaComponent implements OnInit {
     this.provaService.update(prova).subscribe(
       () => {
         this.loadingService.deactivate();
-        this.provaForm.reset();
-        this.alertService.montarAlerta(
+        this.formulario.reset();
+        this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova atualizada com suscesso!'
         );
       },
       (err) => {
-        this.alertService.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', err);
       }
     );
   }
@@ -168,12 +205,12 @@ export class CadastrarProvaComponent implements OnInit {
     this.loadingService.activate();
     if (!this.provaSendoEditada) {
       this.cadastrarNovo({
-        ...this.provaForm.value,
+        ...this.formulario.value,
         questoes: this.destinoQuestoes,
       });
     } else {
       this.atualizarProva({
-        ...this.provaForm.value,
+        ...this.formulario.value,
         questoes: this.destinoQuestoes,
         id: this.provaSendoEditada.id,
       });

@@ -70,6 +70,7 @@ export class ListarProvasComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.provaService.excluirProva(prova).subscribe(() => {
+          this.provaService.buscaProvas();
         });
         this.alertService.montarAlerta(
           'success',

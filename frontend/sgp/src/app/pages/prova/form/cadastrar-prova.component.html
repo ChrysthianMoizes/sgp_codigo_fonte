@@ -16,12 +16,13 @@
       </p>
     </div>
 
-    <div class="card-body">
-      <form [formGroup]="provaForm">
+    <form [formGroup]="formulario">
+      <div class="card-body">
         <span class="ui-float-label">
           <input
             [size]="inputSize"
             formControlName="titulo"
+            [(ngModel)]="prova.titulo"
             id="float-input1"
             pInputText
           />
@@ -34,6 +35,7 @@
             [size]="inputSize"
             autocomplete="off"
             formControlName="percentualDeAprovacao"
+            [(ngModel)]="prova.percentualDeAprovacao"
             id="float-input"
             max="100"
             min="0"
@@ -106,12 +108,13 @@
           <button
             pButton
             type="button"
-            (click)="onSubmit()"
+            (click)="validarForm()"
             [disabled]="!isFormValid"
             label="SALVAR"
           ></button>
         </footer>
+      </div>
       </form>
-    </div>
+
   </section>
 </p-dialog>
