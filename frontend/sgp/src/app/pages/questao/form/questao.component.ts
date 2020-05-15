@@ -43,6 +43,7 @@ export class QuestaoComponent implements OnInit {
     this.getSenioridades();
 
     this.getTipoQuestoes();
+
   }
 
   getSenioridades(){

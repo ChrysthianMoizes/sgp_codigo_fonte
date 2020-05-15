@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SenioridadeService {
 
-  url = environment.url + 'questoes';
+  private readonly url = '/api/senioridades';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
