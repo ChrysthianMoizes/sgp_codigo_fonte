@@ -27,7 +27,7 @@ export class CadastroComponent implements OnInit {
     this.usuarioService.create(this.usuario).subscribe(
       (response) => {
         this.authService
-          .login({ email: response.email, senha: response.senha } as Usuario)
+          .login({ email: usuario.email, senha: usuario.senha } as Usuario)
           .subscribe(
             (response) => {
               this.authService.setUsuario(response),
