@@ -67,11 +67,11 @@ public class UsuarioServicoImpl implements UsuarioServico {
         return usuarioDetalhadoMapper.toDto(usuario);
     }
 
-    private void validarUsuario(UsuarioEdicaoDTO usuarioEdicaoDTO){
-        if(verificarCpf(usuarioEdicaoDTO)){
+    private void validarUsuario(Usuario usuario){
+        if(verificarCpf(usuario)){
             throw new RegraNegocioException("CPF existente");
         }
-        if(verificarEmail(usuarioEdicaoDTO)){
+        if(verificarEmail(usuario)){
             throw new RegraNegocioException("Email existente");
         }
     }
@@ -81,7 +81,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
         UsuarioEdicaoDTO usuarioEdicaoDTO = usuarioEdicaoMapper.toDto(usuario);
 
-        validarUsuario(usuarioEdicaoDTO);
+        validarUsuario(usuario);
 
         usuario.setAdmin(validarToken(usuarioCadastroDTO));
         usuarioRepositorio.save(usuario);
@@ -91,9 +91,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
     @Override
     public UsuarioDetalhadoDTO alterar(UsuarioEdicaoDTO usuarioEdicaoDTO) {
-        Usuario usuario = usuarioEdicaoMapper.toEntity(usuarioEdicaoDTO);
+        Usuario usuario = preencherEdicao(usuarioEdicaoDTO);
 
-        validarUsuario(usuarioEdicaoDTO);
+        validarUsuario(usuario);
 
         usuario = usuarioRepositorio.save(usuario);
 
@@ -106,14 +106,14 @@ public class UsuarioServicoImpl implements UsuarioServico {
         return usuarioDetalhadoMapper.toDto(usuario);
     }
 
-    private boolean verificarCpf(UsuarioEdicaoDTO usuarioEdicaoDTO) {
-        Usuario usuario = usuarioRepositorio.findByCpf(usuarioEdicaoDTO.getCpf());
-        return !(usuario == null || usuario.getId().equals(usuarioEdicaoDTO.getId()));
+    private boolean verificarCpf(Usuario usuario) {
+        Usuario usuarioBusca = usuarioRepositorio.findByCpf(usuario.getCpf());
+        return !(usuarioBusca == null || usuarioBusca.getId().equals(usuario.getId()));
     }
 
-    private boolean verificarEmail(UsuarioEdicaoDTO usuarioEdicaoDTO) {
-        Usuario usuario = usuarioRepositorio.findByEmail(usuarioEdicaoDTO.getEmail());
-        return !(usuario == null || usuario.getId().equals(usuarioEdicaoDTO.getId()));
+    private boolean verificarEmail(Usuario usuario) {
+        Usuario usuarioBusca = usuarioRepositorio.findByEmail(usuario.getEmail());
+        return !(usuarioBusca == null || usuarioBusca.getId().equals(usuario.getId()));
     }
 
     private Integer validarToken(UsuarioCadastroDTO usuarioCadastroDTO) {
@@ -132,6 +132,17 @@ public class UsuarioServicoImpl implements UsuarioServico {
         return usuario;
     }
 
+    private Usuario preencherEdicao(UsuarioEdicaoDTO usuarioEdicaoDTO){
+        Usuario usuario = obterUsuario(usuarioEdicaoDTO.getId());
+
+        usuario.setNome(usuarioEdicaoDTO.getNome());
+        usuario.setEmail(usuarioEdicaoDTO.getEmail());
+        if(!usuarioEdicaoDTO.getSenha().isEmpty()){
+            usuario.setSenha(usuarioEdicaoDTO.getSenha());
+        }
+
+        return usuario;
+    }
     @Override
     public void excluir(Long id) {
         Usuario usuario = obterUsuario(id);

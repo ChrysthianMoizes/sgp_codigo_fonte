@@ -3,19 +3,15 @@ import { Usuario } from '../pages/usuario/models/usuario';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
   key = environment.key;
 
-  constructor(
-    private router: Router,
-    private httpClient: HttpClient
-  ){}
+  constructor(private router: Router, private httpClient: HttpClient) {}
 
   public setUsuario(usuario: Usuario): void {
     sessionStorage.setItem(this.key, JSON.stringify(usuario));
@@ -28,46 +24,13 @@ export class AuthService {
   public getUsuario(): Usuario {
     if (this.containsUsuario()) {
       return JSON.parse(sessionStorage.getItem(this.key));
+    } else {
+      this.router.navigate(['/login']);
     }
-  }
-
-  public getNomeUsuario(): string {
-    if (this.containsUsuario()) {
-      return this.getUsuario().nome;
-    }
-    return '';
-  }
-
-  public getIdUsuario(): number {
-    if (this.containsUsuario()) {
-      return this.getUsuario().id;
-    }
-    return 0;
-  }
-
-  public getEmailUsuario(): string {
-    if (this.containsUsuario()) {
-      return this.getUsuario().email;
-    }
-    return '';
-  }
-
-  public getCpflUsuario(): string {
-    if (this.containsUsuario()) {
-      return this.getUsuario().cpf;
-    }
-    return '';
-  }
-
-  public getPermissaoUsuario(): boolean {
-    if (this.containsUsuario()) {
-      return this.getUsuario().admin;
-    }
-    return false;
   }
 
   public temPermissao(): boolean {
-    return this.getPermissaoUsuario();
+    return this.getUsuario().admin;
   }
 
   public containsUsuario(): boolean {
@@ -76,7 +39,7 @@ export class AuthService {
 
   public removerSessao(): void {
     sessionStorage.clear();
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
   }
 
   public isAdmin(): boolean {

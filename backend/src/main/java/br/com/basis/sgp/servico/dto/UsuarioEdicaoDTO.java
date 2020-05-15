@@ -15,9 +15,6 @@ public class UsuarioEdicaoDTO {
     private Long id;
 
     @NotNull
-    private String cpf;
-
-    @NotNull
     private String nome;
 
     @NotNull
@@ -26,6 +23,4 @@ public class UsuarioEdicaoDTO {
 
     private String senha;
 
-    @NotNull
-    private Integer admin;
 }
