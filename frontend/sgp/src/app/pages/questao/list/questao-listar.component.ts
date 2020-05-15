@@ -5,7 +5,7 @@ import { QuestaoComponent } from './../form/questao.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng';
 
-import { QuestaoService } from '../service/questao.service';
+
 import { ObjectUtil } from 'src/app/services/object-util.service';
 import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
 import { Page } from '../service/page';
@@ -25,7 +25,6 @@ export class QuestaoListarComponent implements OnInit {
   constructor(
     private objectUtil: ObjectUtil,
     private alertService: AlertService,
-    private questaoService: QuestaoService,
     public dialogService: DialogService,
     public questoesService: QuestoesService
   ) {}

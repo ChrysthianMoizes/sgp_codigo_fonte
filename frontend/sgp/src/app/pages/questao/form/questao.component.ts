@@ -1,7 +1,6 @@
 import { QuestoesService } from './../service/questoes.service';
 import { Questao } from './../models/questao';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { QuestaoService } from '../service/questao.service';
 import {
   FormGroup,
   FormControl,
@@ -37,7 +36,6 @@ export class QuestaoComponent implements OnInit {
   public formQuestao: FormGroup;
 
   constructor(
-    private questaoService: QuestaoService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private senioridadeService: SenioridadeService,
@@ -108,26 +106,25 @@ export class QuestaoComponent implements OnInit {
   }
 
   atualizar(questao: QuestaoDTO) {
-    // questao.id = this.idQuestao;
-    // this.questoesService.update(questao).subscribe(
-    //   (response) => {
-    //     this.alertService.montarAlerta(
-    //       'success',
-    //       'Sucesso',
-    //       'Questão editada com Sucesso'
-    //     );
-    //   },
-    //   (error) => {
-    //     this.alertService.montarAlerta(
-    //       'error',
-    //       'Erro',
-    //       'Erro ao editar questão'
-    //     );
-    //   },
-    //   () => {
-    //     this.exibir = false;
-    //   }
-    // );
+    this.questoesService.update(questao).subscribe(
+      (response) => {
+        this.alertService.montarAlerta(
+          'success',
+          'Sucesso',
+          'Questão editada com Sucesso'
+        );
+      },
+      (error) => {
+        this.alertService.montarAlerta(
+          'error',
+          'Erro',
+          'Erro ao editar questão'
+        );
+      },
+      () => {
+        this.exibir = false;
+      }
+    );
   }
 
   cadastar(questao: QuestaoDTO) {
@@ -271,7 +268,7 @@ export class QuestaoComponent implements OnInit {
   buscarPorId(id: number): void {
     this.questoesService.show(id.toString()).subscribe(
       (response) => {
-        this.questaoDTO = response;
+        // this.questaoDTO = response;
       },
       (error) => {
         this.alertService.montarAlerta(
