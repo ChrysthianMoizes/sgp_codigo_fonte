@@ -23,7 +23,7 @@ public class Questao {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "DESCRICAO", nullable = false)
+    @Column(name = "DESCRICAO", nullable = false, length = 400)
     private String descricao;
 
     @Column(name = "ALTERNATIVA_1", nullable = false, length = 400)
