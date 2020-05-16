@@ -93,6 +93,6 @@ export class CadastroComponent implements OnInit {
   cancelar(): void {
     this.formulario.reset();
     this.usuario = new Usuario();
-    this.usuario.id && this.router.navigateByUrl('login');
+    !this.usuario.id && this.router.navigateByUrl('login');
   }
 }
