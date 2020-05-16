@@ -7,6 +7,7 @@ import { QuestaoService } from '../../questao/service/questao.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
 import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -35,8 +36,26 @@ export class CadastrarProvaComponent implements OnInit {
     private provaService: ProvaService,
     private alert: AlertService,
     private loadingService: LoadingService,
-    private questaoService: QuestaoService
+    private questaoService: QuestaoService,
+    private router: Router
   ) { }
+
+  ngOnInit() {
+
+    this.iniciarForm();
+
+    this.questaoService.index().subscribe((questoes) => {
+      this.origemQuestoes = questoes;
+      this.destinoQuestoes = [];
+    });
+    this.questaoService
+      .getNumberOfElements()
+      .subscribe((total) => (this.totalDeQuestoes = total));
+    this.formulario = this.formBuilder.group({
+      titulo: ['', Validators.required],
+      percentualDeAprovacao: ['', Validators.required],
+    });
+  }
 
   iniciarForm() {
     this.formulario = this.formBuilder.group(
@@ -60,7 +79,7 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   salvar() {
-    this.provaService.update(this.prova).pipe(catchError(err => {
+    this.provaService.create(this.prova).pipe(catchError(err => {
       this.alert.montarAlerta('error', 'Erro', err.message);
       return err;
     })).subscribe(() => {
@@ -96,22 +115,7 @@ export class CadastrarProvaComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
 
-    this.iniciarForm();
-
-    this.questaoService.index().subscribe((questoes) => {
-      this.origemQuestoes = questoes;
-      this.destinoQuestoes = [];
-    });
-    this.questaoService
-      .getNumberOfElements()
-      .subscribe((total) => (this.totalDeQuestoes = total));
-    this.formulario = this.formBuilder.group({
-      titulo: ['', Validators.required],
-      percentualDeAprovacao: ['', Validators.required],
-    });
-  }
 
   preencherFormParaEdicao(): void {
     this.formulario.get('titulo').setValue(this.provaSendoEditada.titulo);

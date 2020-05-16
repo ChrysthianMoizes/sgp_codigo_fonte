@@ -10,45 +10,39 @@ import { ResourceService } from 'src/app/services/resource.service';
 })
 export class ProvaService extends ResourceService<Prova>{
 
-  private provas : Prova;
-
   constructor(private http: HttpClient) {
     super(http, '/api/provas');
    }
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  }
 
-
-  index(page = 0, size = 20): Observable<Prova[]> {
-    return this.httpClient.get<Prova[]>(this.url)
+/*   index(page = 0, size = 20): Observable<Prova[]> {
+    return this.http.get<Prova[]>(this.url)
       .pipe(
         catchError(this.handleError))
   }
 
   create(prova: Prova): Observable<Prova> {
-    return this.httpClient.post<Prova>(this.url, JSON.stringify(prova))
+    return this.http.post<Prova>(this.url, JSON.stringify(prova))
       .pipe(
         catchError(this.handleError)
       )
   }
 
   update(prova: Prova): Observable<Prova> {
-    return this.httpClient.put<Prova>(this.url + '/' + prova.id, JSON.stringify(prova))
+    return this.http.put<Prova>(this.url + '/' + prova.id, JSON.stringify(prova))
       .pipe(
         catchError(this.handleError)
       )
   }
 
   buscaProva(): Observable<Prova> {
-    return this.httpClient.get<Prova>(this.url)
+    return this.http.get<Prova>(this.url)
       .pipe(
         catchError(this.handleError))
   }
 
   buscaProvas(): Observable<Prova[]> {
-    return this.httpClient.get<Prova[]>(this.url)
+    return this.http.get<Prova[]>(this.url)
       .pipe(
         catchError(this.handleError))
   }
@@ -62,7 +56,7 @@ export class ProvaService extends ResourceService<Prova>{
   }
 
   excluirProva(prova: Prova) {
-    return this.httpClient.delete<Prova>(this.url + '/' + prova.id)
+    return this.http.delete<Prova>(this.url + '/' + prova.id)
       .pipe(
         catchError(this.handleError)
       )
@@ -80,15 +74,5 @@ export class ProvaService extends ResourceService<Prova>{
       }
       console.log(errorMessage);
       return throwError(errorMessage);
-    };
+    };*/
 }
-
-const PROVAS = [
-  { titulo: 'Entrar na Basis' },
-  { titulo: 'Entrar s ss Basis' },
-  { titulo: 'fff na Basis' },
-  { titulo: 'Entrar asa na Basis' },
-  { titulo: 'Entrar na ad zzzz' },
-  { titulo: 'Entrar na Basiada s' },
-  { titulo: 'asd asd aEntrar na Basis' },
-];
