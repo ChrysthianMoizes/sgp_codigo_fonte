@@ -1,4 +1,4 @@
-export class QuestaoDTO{
+export class QuestaoDTO {
   id: number;
   descricao: string;
   alternativa1: string;

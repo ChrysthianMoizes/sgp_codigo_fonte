@@ -1,109 +1,93 @@
-<p-dialog header="{{ header }}" [modal]="true" [(visible)]="exibir" [style]="{ width: '60vw' }">
-  <div class="ui-g">
-    <form [formGroup]="formQuestao" novalidate>
-      <div class="ui-g-10">
-        <h3>Questão</h3>
-        <div class="ui-g-10">
-          <div *ngIf="questao.id">
-            <div class="border-label">
-              <span style="font-weight: bold;">Código: </span>
-              <label>{{ getControlLabel('id') }}</label>
-            </div>
-          </div>
-          <small>Descricão</small>
-          <span class="ui-float-label margem-top">
-            <textarea rows="5" cols="68" pInputTextarea autoResize="autoResize" formControlName="descricao"
-              [readOnly]="isQuestaoVisualizando"></textarea>
-          </span>
-        </div>
-        <div class="ui-g ui-g-5">
-          <span class="ui-float-label dropdown">
-            <p-dropdown [options]="senioridades" optionLabel="label" placeholder="Selecione uma senioridade"
-              formControlName="senioridade">
-            </p-dropdown>
-          </span>
-        </div>
-        <div class="ui-g ui-g-5">
-          <span class="ui-float-label dropdown">
-            <p-dropdown [options]="tipoQuestoes" optionLabel="label" placeholder="Selecione o tipo de questão"
-              formControlName="tipoQuestao">
-            </p-dropdown>
-          </span>
-        </div>
-
-        <div class="ui-g estilo-radio-button">
-          <h3 class="first">Alternativas da Questão</h3>
-          <div class="ui-g-12">
-            <div class="ui-g-2">
-              <p-radioButton name="group1" inputId="Option 1" value=1 formControlName="resposta">
-              </p-radioButton>
-            </div>
-            <div class="ui-g-10">
-              <span class="ui-float-label margem-top">
-                <input id="float-input1" type="text" size="60" pInputText formControlName="alternativa1"
-                  [readOnly]="isQuestaoVisualizando" />
-                <label for="float-input">Alternativa_1</label>
-              </span>
-            </div>
-          </div>
-          <div class="ui-g-12">
-            <div class="ui-g-2">
-              <p-radioButton name="group1" inputId="Option 1" value=2 formControlName="resposta">
-              </p-radioButton>
-            </div>
-            <div class="ui-g-10">
-              <span class="ui-float-label margem-top">
-                <input id="float-input2" type="text" size="60" pInputText formControlName="alternativa2"
-                  [readOnly]="isQuestaoVisualizando" />
-                <label for="float-input">Alternativa_2</label>
-              </span>
-            </div>
-          </div>
-          <div class="ui-g-12">
-            <div class="ui-g-2">
-              <p-radioButton name="group1" inputId="Option 1" value=3 formControlName="resposta">
-              </p-radioButton>
-            </div>
-            <div class="ui-g-10">
-              <span class="ui-float-label margem-top">
-                <input id="float-input3" type="text" size="60" pInputText formControlName="alternativa3"
-                  [readOnly]="isQuestaoVisualizando" />
-                <label for="float-input">Alternativa_3</label>
-              </span>
-            </div>
-          </div>
-          <div class="ui-g-12">
-            <div class="ui-g-2">
-              <p-radioButton name="group1" inputId="Option 1" value=4 formControlName="resposta">
-              </p-radioButton>
-            </div>
-            <div class="ui-g-10">
-              <span class="ui-float-label margem-top">
-                <input id="float-input4" type="text" size="60" pInputText formControlName="alternativa4"
-                  [readOnly]="isQuestaoVisualizando" />
-                <label for="float-input">Alternativa_4</label>
-              </span>
-            </div>
-          </div>
-          <div class="ui-g-12">
-            <div class="ui-g-2">
-              <p-radioButton name="group1" inputId="Option 1" value=5 formControlName="resposta">
-              </p-radioButton>
-            </div>
-            <div class="ui-g-10">
-              <span class="ui-float-label margem-top">
-                <input id="float-input5" type="text" size="60" pInputText formControlName="alternativa5"
-                  [readOnly]="isQuestaoVisualizando" />
-                <label for="float-input">Alternativa_5</label>
-              </span>
-            </div>
-          </div>
-        </div>
-        <button *ngIf="!isQuestaoVisualizando" pButton type="button" label="Salvar" class="ui-button-raised margem-top"
-          [disabled]="formQuestao.invalid" (click)="persistir()"></button>
-        <button pButton type="button" label="Cancelar" class="ui-button-raised margem-top" (click)="cancelar()"
-          style="margin-left: 15px;"></button>
+<p-dialog [(visible)]="exibir" [modal]="true" [style]="{ width: '60vw' }" header="{{ header }}">
+  <form [formGroup]="formQuestao">
+    <div class="p-grid ">
+      <h3 class="p-col-12">Questão</h3>
+      <div *ngIf="questao.id">
+        <h3>Código: {{questao.id}}</h3>
       </div>
-    </form>
-  </div>
+      <div class="p-col-12">
+        <div class="ui-float-label">
+          <textarea [(ngModel)]="questao.descricao" [readOnly]="isVisualizando" autoResize="autoResize" cols="85"
+                    formControlName="descricao" id="descricao" maxlength="400" pInputTextarea rows="1"></textarea>
+          <label for="descricao">Descrição</label>
+        </div>
+      </div>
+      <div class="p-col-12">
+        <div class="p-grid">
+          <div class="p-col-6">
+            <p-dropdown [(ngModel)]="questao.idSenioridade" [options]="senioridades" [readonly]="isVisualizando"
+                        formControlName="senioridade" placeholder="Selecione uma senioridade"></p-dropdown>
+          </div>
+          <div class="p-col-6">
+            <p-dropdown [(ngModel)]="questao.idTipoQuestao" [options]="tiposQuestao" [readonly]="isVisualizando"
+                        formControlName="tipoQuestao" placeholder="Selecione um tipo de questão"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12">
+        <h3>Alternativas</h3>
+        <div>
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
+                           name="resposta" value=1></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa1" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa1" id="alternativa1" maxlength="400" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa1">Alternativa 1</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
+                           name="resposta" value=2></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa2" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa2" id="alternativa2" maxlength="400" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa2">Alternativa 2</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
+                           name="resposta" value=3></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa3" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa3" id="alternativa3" maxlength="400" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa3">Alternativa 3</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
+                           name="resposta" value=4></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa4" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa4" id="alternativa4" maxlength="400" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa4">Alternativa 4</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
+                           name="resposta" value=5></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa5" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa5" id="alternativa5" maxlength="400" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa5">Alternativa 5</label>
+            </div>
+          </div>
+        </div>
+        <button (click)="salvar()" *ngIf="!isVisualizando" [disabled]="formQuestao.invalid"
+                class="ui-button-raised button-spacing" label="Salvar" pButton type="button"></button>
+        <button (click)="cancelar()" class="ui-button-raised button-spacing" label="Cancelar" pButton
+                type="button"></button>
+      </div>
+    </div>
+  </form>
 </p-dialog>
+

@@ -1,6 +1,6 @@
-import { Senioridade } from '../../../models/senioridade';
-import { TipoQuestao } from '../../../models/tipo-questao';
-import { Resource } from 'src/app/models/resource.model';
+import {Resource} from 'src/app/models/resource.model';
+import {Senioridade} from '../../../models/senioridade';
+import {TipoQuestao} from '../../../models/tipo-questao';
 
 export class Questao extends Resource {
   descricao: string;

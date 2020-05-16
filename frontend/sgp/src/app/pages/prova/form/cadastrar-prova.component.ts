@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from 'src/app/components/alert/alert.service';
-import { LoadingService } from 'src/app/components/loading/loading.service';
-import { Questao } from '../../questao/models/questao';
-import { QuestaoService } from '../../questao/service/questao.service';
-import { Prova } from '../models/prova';
-import { ProvaService } from '../service/prova.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AlertService} from 'src/app/components/alert/alert.service';
+import {LoadingService} from 'src/app/components/loading/loading.service';
+import {Questao} from '../../questao/models/questao';
+import {QuestaoService} from '../../questao/service/questao.service';
+import {Prova} from '../models/prova';
+import {ProvaService} from '../service/prova.service';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -64,12 +64,12 @@ export class CadastrarProvaComponent implements OnInit {
 
   ngOnInit() {
     this.questaoService.index().subscribe((questoes) => {
-      this.origemQuestoes = questoes;
-      this.destinoQuestoes = [];
+      // this.origemQuestoes = questoes;
+      // this.destinoQuestoes = [];
     });
-    this.questaoService
-      .getNumberOfElements()
-      .subscribe((total) => (this.totalDeQuestoes = total));
+    // this.questaoService
+    //   .getNumberOfElements()
+    //   .subscribe((total) => (this.totalDeQuestoes = total));
     this.provaForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       percentualDeAprovacao: ['', Validators.required],
@@ -77,13 +77,13 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   preencherFormParaEdicao(): void {
-    this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.provaForm
-      .get('percentualDeAprovacao')
-      .setValue(this.provaSendoEditada.percentualAprovacao);
-    this.questaoService.index().subscribe((questoes) => {
-      this.destinoQuestoes = questoes;
-    });
+    // this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
+    // this.provaForm
+    //   .get('percentualDeAprovacao')
+    //   .setValue(this.provaSendoEditada.percentualAprovacao);
+    // this.questaoService.index().subscribe((questoes) => {
+    //   this.destinoQuestoes = questoes;
+    // });
   }
 
   abrirDialog(modo): void {
@@ -185,9 +185,9 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   paginate(event): void {
-    this.questaoService
-      .index(event.page)
-      .subscribe((questoes) => (this.origemQuestoes = questoes));
+    // this.questaoService
+    //   .index(event.page)
+    //   .subscribe((questoes) => (this.origemQuestoes = questoes));
   }
 
   removeRepetitions(arr: any[]): Array<Questao> {
