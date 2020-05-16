@@ -31,7 +31,6 @@ import { ListarProvasComponent } from './pages/prova/list/listar-provas.componen
 import { QuestaoComponent } from './pages/questao/form/questao.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { CadastroComponent } from './pages/usuario/form/cadastro/cadastro.component';
-import { FormCadastroComponent } from './pages/usuario/form/form-cadastro/form-cadastro.component';
 import { LoginComponent } from './pages/usuario/form/login/login.component';
 import { ReenviarEmailComponent } from './pages/usuario/form/reenviar-email/reenviar-email.component';
 import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/resetar-senha.component';
@@ -43,6 +42,7 @@ import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component'
 import { PrimengModule } from './primeng.module';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
+import {PasswordModule} from 'primeng/password';
 
 @NgModule({
   declarations: [
@@ -61,11 +61,8 @@ import { AuthService } from './services/auth.service';
     ResetarSenhaComponent,
     ReenviarEmailComponent,
     UsuarioComponent,
-    SendEmailComponent,
-    FormCadastroComponent,
-    
+    SendEmailComponent,    
     ListarProvasComponent,
-    
     RealizarAvaliacaoComponent,
     VisualizarCandidatoComponent,
     QuestaoListarComponent,
@@ -76,10 +73,10 @@ import { AuthService } from './services/auth.service';
   ],
   imports: [
     BrowserModule,
-    
     BrowserAnimationsModule,
     FormsModule,
     NgxSpinnerModule,
+    PasswordModule,
     ToastModule,
     TableModule,
     DropdownModule,
