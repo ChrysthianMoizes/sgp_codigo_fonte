@@ -54,7 +54,7 @@ export class ListarCandidatosComponent implements OnInit {
   viewCandidato(): void {
     this.usuarioService.show(this.selectedCandidatos[0].id).subscribe(
       (response) => {
-        this.visualizarCandidato.openDialog(response, 'visualizar');
+        this.visualizarCandidato.openDialog(response, true);
       },
       (err) => {
         this.alert.montarAlerta(
@@ -68,7 +68,7 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   editCandidato(): void {
-    this.visualizarCandidato.openDialog(this.selectedCandidatos[0], 'edicao');
+    this.visualizarCandidato.openDialog(this.selectedCandidatos[0]);
     this.selectedCandidatos = [];
   }
 
