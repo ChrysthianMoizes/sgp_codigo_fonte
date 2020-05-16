@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { Usuario } from '../../../models/usuario';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-visualizar-candidato',
