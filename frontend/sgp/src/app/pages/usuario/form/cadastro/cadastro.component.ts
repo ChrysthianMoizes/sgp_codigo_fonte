@@ -1,10 +1,12 @@
-import { Usuario } from './../../models/usuario';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/components/alert/alert.service';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from '../../service/usuario.service';
-import { UsuarioToken } from '../../models/usuarioToken';
-import { AlertService } from 'src/app/components/alert/alert.service';
+import { Usuario } from './../../models/usuario';
+
 
 @Component({
   selector: 'app-cadastro',
@@ -12,37 +14,80 @@ import { AlertService } from 'src/app/components/alert/alert.service';
   styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent implements OnInit {
-  usuario = new UsuarioToken();
+  
+  @Input() usuario = new Usuario();
+  @Input() redirecionarAoFinalizar = true;
+  @Input() apenasVisualizar = false;
+  @Output() salvar = new EventEmitter();
+  formulario: FormGroup;
 
   constructor(
+    private loadingService: LoadingService,
     private usuarioService: UsuarioService,
-    private router: Router,
+    private alertService: AlertService,
     private authService: AuthService,
-    private alert: AlertService
-  ) {}
-  ngOnInit(): void {}
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) { }
 
-  save(usuario: UsuarioToken) {
-    this.usuario = usuario;
-    console.log(usuario);
-    this.usuarioService.create(this.usuario).subscribe(
-      (response) => {
-        this.alert.montarAlerta('sucess', 'Sucesso', 'Usuário salvo');
-        this.authService
-          .login({ email: usuario.email, senha: usuario.senha } as Usuario)
-          .subscribe(
-            (response) => {
-              this.authService.setUsuario(response),
-                this.router.navigate(['home']);
-            },
-            (error) => {
-              this.alert.montarAlerta('error', 'Erro', 'Usuário inexistente');
+  ngOnInit(): void {
+    this.iniciarFormulario();
+  }
+  
+  iniciarFormulario(): void {
+    this.formulario = this.formBuilder.group({
+      nome: ['', Validators.required],
+      cpf: ['', Validators.required],
+      token: ['', Validators.required],
+      email: ['', Validators.required],
+      senha: ['', Validators.required]
+    });
+
+    if (this.apenasVisualizar) {
+      this.formulario.disable();
+    }
+  }
+
+  validarFormulario(): void {
+    if (this.formulario.valid) {
+      this.cadastrar(this.usuario);
+    }
+  }
+
+  cadastrar(usuario: Usuario): void {
+    this.loadingService.activate();
+    this.usuarioService.create(usuario).subscribe({
+      next: () => {
+        this.authService.login(usuario).subscribe({
+          next: () => {
+            if (this.redirecionarAoFinalizar) {
+              this.authService.setUsuario(usuario);
+              this.router.navigateByUrl('home');
             }
-          );
+            this.salvar.emit(null);
+          },
+          error: error => error.errors.forEach(err => this.alertService.montarAlerta('error', 'Erro', err))
+        });
       },
-      (error) => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao criar usuário');
+      error: error => {
+        if (error.error.errors) {
+          error.error.errors
+            .forEach(err => this.alertService.montarAlerta('error', 'Erro', err.defaultMessage));
+        }
+        else {
+          this.alertService.montarAlerta('error', 'Erro', error.error.errors)
+        }
+        
       }
-    );
+    })
+    .add(() => this.loadingService.deactivate());
+  }
+
+  cancelar(): void {
+    if (this.redirecionarAoFinalizar) {
+      this.router.navigateByUrl('login');
+    }
+    this.formulario.reset();
+    this.usuario = new Usuario();
   }
 }

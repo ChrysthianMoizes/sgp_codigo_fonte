@@ -1,0 +1,19 @@
+.app-input {
+  border-color: red;
+  margin-top: 20px;
+}
+
+form, footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  width: 100%;
+}
+
+button {
+  margin-top: 16px;
+  width: 100%;
+}
