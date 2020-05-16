@@ -1,11 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService} from 'primeng';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DialogService } from 'primeng';
 
-import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
-import {QuestaoService} from '../service/questao.service';
-import {AlertService} from './../../../components/alert/alert.service';
-import {QuestaoComponent} from './../form/questao.component';
-import {Questao} from './../models/questao';
+import { QuestaoListagemDTO } from '../models/questao-listagem.dto';
+import { QuestaoService } from '../service/questao.service';
+import { AlertService } from './../../../components/alert/alert.service';
+import { QuestaoComponent } from './../form/questao.component';
 import { Page } from 'src/app/models/page.model';
 
 @Component({
@@ -28,7 +27,7 @@ export class QuestaoListarComponent implements OnInit {
     private alertService: AlertService,
     public dialogService: DialogService,
     public questaoService: QuestaoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.definirColunasTabela();
@@ -44,34 +43,22 @@ export class QuestaoListarComponent implements OnInit {
   excluir(): void {
     this.questoesSelecionadas.forEach((element) => {
       this.questaoService
-        .destroy(this.questoesSelecionadas[0].id)
+        .destroy(element.id)
         .subscribe(
           (response) => {
-            this.alertService.montarAlerta(
-              'success',
-              'Sucesso',
-              'Questão Excluida com sucesso'
-            );
-            this.questaoService.obterQuestoes().subscribe((response) => {
-              this.questoes = response;
-            });
+            this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
+            this.preencherQuestoes()
           },
           (error) => {
-            this.alertService.montarAlerta(
-              'error',
-              'Erro',
-              'Erro ao Excluir questão'
-            );
+            this.alertService.montarAlerta('error', 'Erro', 'Erro ao Excluir questão');
           }
         );
     });
     this.questoesSelecionadas = [];
   }
 
-  showDialog(visualisar: boolean){
-    console.log(this.questoesSelecionadas[0])
+  showDialog(visualisar: boolean) {
     this.showDialogForm(this.questoesSelecionadas[0].id, visualisar);
-
   }
 
   showDialogForm(id: number, visualisar: boolean) {
@@ -89,7 +76,7 @@ export class QuestaoListarComponent implements OnInit {
     return descricao;
   }
 
-  preencherQuestoes(){
+  preencherQuestoes() {
     this.questaoService.obterQuestoes().subscribe(
       (response) => {
         this.questoes = response;
@@ -97,7 +84,7 @@ export class QuestaoListarComponent implements OnInit {
     );
   }
 
-  definirColunasTabela(){
+  definirColunasTabela() {
     this.definicaoColunas = [
       { field: 'id', header: 'Código' },
       { field: 'descricao', header: 'Descrição' },
