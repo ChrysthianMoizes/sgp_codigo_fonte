@@ -6,4 +6,5 @@ export class Usuario extends Resource {
   senha: string;
   email: string;
   admin: boolean;
+  token: string;
 }

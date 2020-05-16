@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 
 @Component({
@@ -7,24 +7,23 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./visualizar-candidato.component.css'],
 })
 export class VisualizarCandidatoComponent {
-  constructor() {}
-  usuario: Usuario = new Usuario();
+  
   @Output() editarCandidato = new EventEmitter();
-  modo: string;
-  visible: boolean = false;
+  @Input() apenasVisualizar = false;
+  usuario: Usuario = new Usuario();
+  visible = false;
+  
+  constructor() { }
 
-  openDialog(usuario: Usuario, edicao: string): void {
+  openDialog(usuario: Usuario, apenasVisualizar=false): void {
+    this.usuario = {...usuario};
+    this.apenasVisualizar = apenasVisualizar;
     this.visible = true;
-    this.usuario = usuario;
-    this.modo = edicao;
-
-    if (edicao == 'edicao') {
-      this.usuario = Object.assign({}, usuario);
-    }
   }
 
   save(): void {
-    this.editarCandidato.emit(this.usuario);
+    this.editarCandidato.emit({...this.usuario});
+    this.usuario = new Usuario();
     this.visible = false;
   }
 }

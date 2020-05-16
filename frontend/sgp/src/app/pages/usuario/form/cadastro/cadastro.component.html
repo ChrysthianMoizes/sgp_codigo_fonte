@@ -1,7 +1,109 @@
 <app-alert></app-alert>
+<app-loading></app-loading>
 <app-card>
-  <app-form-cadastro
-    [usuario]="usuario"
-    (cadastrarUsuario)="save($event)"
-  ></app-form-cadastro>
+  <header *ngIf="!apenasVisualizar">
+    <h5> Insira seus dados. </h5>
+  </header>
+
+  <form [formGroup]="formulario" (ngSubmit)="validarFormulario()" class="ui-inputgroup">
+    <section>
+      <!-- NOME INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-user"></i>
+        </span>
+        <span class="ui-float-label">
+          <input
+            pInputText
+            [(ngModel)]="usuario.nome"
+            formControlName="nome"
+          />
+          <label for="float-input"> Nome </label>
+        </span>
+      </div>
+
+      <!-- CPF INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-id-card"></i>
+        </span>
+        <span class="ui-float-label">
+          <input
+            pInputText
+            [(ngModel)]="usuario.cpf"
+            formControlName="cpf"
+          />
+          <label for="float-input"> CPF </label>
+        </span>
+      </div>
+
+      <!-- TOKEN INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-lock"></i>
+        </span>
+        <span class="ui-float-label">
+          <input
+            pInputText
+            [(ngModel)]="usuario.token"
+            formControlName="token"
+          />
+          <label for="float-input"> Token </label>
+        </span>
+      </div>
+
+      <!-- EMAIL INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-envelope"></i>
+        </span>
+        <span class="ui-float-label">
+          <input
+            pInputText
+            [(ngModel)]="usuario.email"
+            formControlName="email"
+          />
+          <label for="float-input"> Email </label>
+        </span>
+      </div>
+
+      <!-- SENHA INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-key"></i>
+        </span>
+        <span class="ui-float-label">
+          <input
+            pInputText
+            type="password"
+            pPassword
+            promptLabel="Insira uma senha"
+            weakLabel="Fraca"
+            mediumLabel="Mediana"
+            strongLabel="Forte"
+            [(ngModel)]="usuario.senha"
+            formControlName="senha"
+          />
+          <label for="float-input"> Senha </label>
+        </span>
+      </div>
+    </section>
+
+    <footer>
+      <button
+        pButton
+        type="submit"
+        label="Confirmar"
+        class="ui-button-success"
+        *ngIf="!apenasVisualizar"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Retornar"
+        (click)="cancelar()"
+        class="ui-button-danger"
+      ></button>
+    </footer>
+  </form>
 </app-card>

@@ -1,7 +1,7 @@
 <p-dialog [modal]="true" [(visible)]="visible" [style]="{width: 'auto'}">
 
   <div class="formulario">
-    <app-form-cadastro [modo]='modo' [usuario]='usuario' (cadastrarUsuario)='save()'></app-form-cadastro>
+    <app-cadastro [usuario]="usuario" (salvar)='save()'></app-cadastro>
   </div>
 
 </p-dialog>
