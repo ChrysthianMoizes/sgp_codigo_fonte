@@ -1,7 +1,7 @@
 export class Page<T> {
-  content: any[];
+  content: [];
+  first: boolean;
+  last: boolean;
   totalPages: number;
   totalElements: number;
-  last: boolean;
-  first: boolean;
 }
