@@ -16,7 +16,6 @@ import { Usuario } from './../../models/usuario';
 export class CadastroComponent implements OnInit {
   
   @Input() usuario = new Usuario();
-  @Input() redirecionarAoFinalizar = true;
   @Input() apenasVisualizar = false;
   @Output() salvar = new EventEmitter();
   formulario: FormGroup;
@@ -49,9 +48,19 @@ export class CadastroComponent implements OnInit {
   }
 
   validarFormulario(): void {
-    if (this.formulario.valid) {
-      this.cadastrar(this.usuario);
-    }
+    this.formulario.valid &&
+      this[this.usuario.id ? 'editar' : 'cadastrar'](this.usuario);
+  }
+
+  editar(usuario: Usuario): void {
+    this.loadingService.activate();
+    this.usuarioService.update(usuario).subscribe({
+      next: () => {
+        this.alertService.montarAlerta('success', 'Sucesso', 'Usuário editado com sucesso!');
+        this.salvar.emit();
+      },
+      error: err => this.tratarError(err)
+    });
   }
 
   cadastrar(usuario: Usuario): void {
@@ -60,34 +69,30 @@ export class CadastroComponent implements OnInit {
       next: () => {
         this.authService.login(usuario).subscribe({
           next: () => {
-            if (this.redirecionarAoFinalizar) {
-              this.authService.setUsuario(usuario);
-              this.router.navigateByUrl('home');
-            }
-            this.salvar.emit(null);
+            this.authService.setUsuario(usuario);
+            this.router.navigateByUrl('home');
           },
-          error: error => error.errors.forEach(err => this.alertService.montarAlerta('error', 'Erro', err))
+          error: error => this.tratarError(error)
         });
       },
-      error: error => {
-        if (error.error.errors) {
-          error.error.errors
-            .forEach(err => this.alertService.montarAlerta('error', 'Erro', err.defaultMessage));
-        }
-        else {
-          this.alertService.montarAlerta('error', 'Erro', error.error.errors)
-        }
-        
-      }
+      error: error => this.tratarError(error)
     })
     .add(() => this.loadingService.deactivate());
   }
 
-  cancelar(): void {
-    if (this.redirecionarAoFinalizar) {
-      this.router.navigateByUrl('login');
+  tratarError(error): void {
+    if (error.error.errors) {
+      error.error.errors
+        .forEach(err => this.alertService.montarAlerta('error', 'Erro', err.defaultMessage));
     }
+    else {
+      this.alertService.montarAlerta('error', 'Erro', error.error.errors)
+    }
+  }
+
+  cancelar(): void {
     this.formulario.reset();
     this.usuario = new Usuario();
+    this.usuario.id && this.router.navigateByUrl('login');
   }
 }
