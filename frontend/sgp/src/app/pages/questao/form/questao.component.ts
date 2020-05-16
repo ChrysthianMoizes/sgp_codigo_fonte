@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
-import {SelectItem} from 'primeng';
-import {AlertService} from 'src/app/components/alert/alert.service';
-import {QuestaoDTO} from '../models/questao.dto';
-import {QuestaoService} from '../service/questao.service';
-import {SenioridadeService} from '../service/senioridade.service';
-import {TipoQuestaoService} from '../service/tipo-questao.service';
-import {Questao} from './../models/questao';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, } from '@angular/forms';
+import { SelectItem } from 'primeng';
+import { AlertService } from 'src/app/components/alert/alert.service';
+import { QuestaoDTO } from '../models/questao.dto';
+import { QuestaoService } from '../service/questao.service';
+import { SenioridadeService } from '../service/senioridade.service';
+import { TipoQuestaoService } from '../service/tipo-questao.service';
+import { Questao } from './../models/questao';
 
 @Component({
   selector: 'app-questao',
@@ -35,7 +35,7 @@ export class QuestaoComponent implements OnInit {
     private senioridadeService: SenioridadeService,
     private tipoQuestaoService: TipoQuestaoService,
     public questoesService: QuestaoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.construirForm();
@@ -46,7 +46,7 @@ export class QuestaoComponent implements OnInit {
 
   }
 
-  getSenioridades(){
+  getSenioridades() {
     this.senioridadeService.getSenioridades().subscribe(
       (resposta) => {
         this.senioridades = resposta;
@@ -62,45 +62,35 @@ export class QuestaoComponent implements OnInit {
     )
   }
 
-  exibirDialog(id: number, visualisar: boolean){
+  exibirDialog(id: number, visualisar: boolean) {
     this.isQuestaoVisualizando = visualisar;
 
     this.header = id ? 'Editar Questão' : 'Cadastrar Questão';
 
-    if(id) {
+    if (id) {
       this.buscarPorId(id)
     } else {
       this.questao = new QuestaoDTO();
-      this.exibir = true;
       this.formQuestao.reset();
     }
+    this.exibir = true;
   }
 
-
   persistir() {
-    let questaoDTO = this.questao;
-    if(questaoDTO.id === null){
-      this.cadastar(questaoDTO);
-    }else{
-      this.atualizar(questaoDTO);
+    if (this.questao.id === null) {
+      this.cadastar(this.questao);
+    } else {
+      this.atualizar(this.questao);
     }
   }
 
   atualizar(questao: QuestaoDTO) {
     this.questoesService.update(questao).subscribe(
       (response) => {
-        this.alertService.montarAlerta(
-          'success',
-          'Sucesso',
-          'Questão editada com Sucesso'
-        );
+        this.alertService.montarAlerta('success', 'Sucesso', 'Questão editada com Sucesso');
       },
       (error) => {
-        this.alertService.montarAlerta(
-          'error',
-          'Erro',
-          'Erro ao editar questão'
-        );
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao editar questão');
       },
       () => {
         this.exibir = false;
@@ -109,25 +99,17 @@ export class QuestaoComponent implements OnInit {
   }
 
   cadastar(questao: QuestaoDTO) {
-    // this.questoesService.create(questao).subscribe(
-    //   (response) => {
-    //     this.alertService.montarAlerta(
-    //            'success',
-    //            'Sucesso',
-    //            'Questão ' + response.id +' cadastrada com Sucesso'
-    //     );
-    //   },
-    //   (error) => {
-    //     this.alertService.montarAlerta(
-    //       'error',
-    //       'Sucesso',
-    //       'Erro ao cadastrar questão' + error.defaultMessage
-    //     );
-    //   },
-    //   () => {
-    //     this.exibir = false
-    //   }
-    // )
+    this.questoesService.create(questao).subscribe(
+      (response) => {
+        this.alertService.montarAlerta('success', 'Sucesso', 'Questão ' + response.id + ' cadastrada com Sucesso');
+      },
+      (error) => {
+        this.alertService.montarAlerta('error', 'Sucesso', 'Erro ao cadastrar questão' + error.defaultMessage);
+      },
+      () => {
+        this.exibir = false
+      }
+    )
   }
 
   cancelar() {
@@ -224,11 +206,7 @@ export class QuestaoComponent implements OnInit {
         this.exibir = true;
       },
       (error) => {
-        this.alertService.montarAlerta(
-          'error',
-          'Erro',
-          'Erro ao Excluir questão'
-        );
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar a questão de código ' + id);
       }
     );
   }
