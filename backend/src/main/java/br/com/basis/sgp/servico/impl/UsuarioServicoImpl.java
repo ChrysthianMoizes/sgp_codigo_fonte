@@ -63,7 +63,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
     public UsuarioDetalhadoDTO logar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioRepositorio
                 .findByEmailAndSenha(usuarioCadastroDTO.getEmail(), usuarioCadastroDTO.getSenha())
-                .orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
+                .orElseThrow(() -> new RegraNegocioException("Email e/ou senha incorreto(s)."));
         return usuarioDetalhadoMapper.toDto(usuario);
     }
 
