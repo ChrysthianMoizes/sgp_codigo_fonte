@@ -1,32 +1,15 @@
-.container {
+form, footer {
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
 }
 
-.container p{
-  font-weight: bold;
-  color: red;
-  margin-bottom: 10px;
-}
-
-.container button {
-  margin: 10px;
-}
-
-.espacamento {
-  padding: 5px;
+footer {
   width: 100%;
+  margin-top: 14px;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
+button {
   width: 100%;
-}
-
-p-button {
-  padding: 3px;
-  width: 100%;
+  margin-top: 8px;
 }
