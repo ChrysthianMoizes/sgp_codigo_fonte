@@ -36,7 +36,7 @@ import { LoginComponent } from './pages/usuario/form/login/login.component';
 import { ReenviarEmailComponent } from './pages/usuario/form/reenviar-email/reenviar-email.component';
 import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/resetar-senha.component';
 import { SendEmailComponent } from './pages/usuario/form/send-email/send-email.component';
-import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
+import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizar-candidato/visualizar-candidato.component';
 import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos/listar-candidatos/listar-candidatos.component';
 import { UsuarioService } from './pages/usuario/service/usuario.service';
 import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';

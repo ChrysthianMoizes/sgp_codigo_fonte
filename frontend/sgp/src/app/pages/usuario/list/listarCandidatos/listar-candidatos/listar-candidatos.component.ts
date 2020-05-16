@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
-import { VisualizarCandidatoComponent } from '../../../form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
+import { VisualizarCandidatoComponent } from '../../../form/visualizar-candidato/visualizar-candidato.component';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../service/usuario.service';
 
