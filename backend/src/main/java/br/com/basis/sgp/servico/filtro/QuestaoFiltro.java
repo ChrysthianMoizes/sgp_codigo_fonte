@@ -2,6 +2,7 @@ package br.com.basis.sgp.servico.filtro;
 
 import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.dominio.Questao_;
+import br.com.basis.sgp.dominio.Questoa;
 import br.com.basis.sgp.dominio.Senioridade_;
 import br.com.basis.sgp.dominio.TipoQuestao_;
 import lombok.Getter;
@@ -17,21 +18,21 @@ import java.util.List;
 
 @Getter
 @Setter
-public class QuestaoFiltro implements EntityFiltro<Questao> {
+public class QuestaoFiltro implements EntityFiltro<Questoa> {
 
     private String descricao;
     private String senioridade;
     private String tipoQuestao;
 
     @Override
-    public Specification<Questao> filter() {
+    public Specification<Questoa> filter() {
         return (root, query, builder) -> builder.and(getPredicates(root, builder).toArray(new Predicate[0]));
     }
 
-    private List<Predicate> getPredicates(Root<Questao> root, CriteriaBuilder builder) {
+    private List<Predicate> getPredicates(Root<Questoa> root, CriteriaBuilder builder) {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(descricao)) {
-            Predicate predicate = builder.like(root.get(Questao_.descricao), "%" + descricao.toLowerCase() + "%");
+            Predicate predicate = builder.like(root.get(Questoa_.descricao), "%" + descricao.toLowerCase() + "%");
             predicates.add(predicate);
         }
         if (!StringUtils.isEmpty(senioridade)) {
