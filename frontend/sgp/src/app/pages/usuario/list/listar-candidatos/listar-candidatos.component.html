@@ -32,18 +32,21 @@
       </ng-template>
     </p-table>
   </div>
+
   <div class="p-col-1 container-buttons">
-    <button [disabled]="selectedCandidatos.length === 0" type="button" icon="pi pi-trash" (click)="deleteCandidato()"
-      style="font-size: 0.8em;" pButton class="ui-button-rounded"></button>
-    <button [disabled]="
-        selectedCandidatos.length === 0 || selectedCandidatos.length > 1
-      " type="button" icon="pi pi-pencil" (click)="editCandidato()" style="font-size: 0.8em;" pButton
-      class="ui-button-rounded"></button>
-    <button [disabled]="
-        selectedCandidatos.length === 0 || selectedCandidatos.length > 1
-      " type="button" icon="pi pi-eye" (click)="viewCandidato()" style="font-size: 0.8em;" pButton
-      class="ui-button-rounded"></button>
+    <button [disabled]="selectedCandidatos.length === 0" type="button" icon="pi pi-trash"
+      (click)="deleteCandidato()" style="font-size: 0.8em;" pButton
+      class="ui-button-rounded"
+    ></button>
+    <button [disabled]="selectedCandidatos.length !== 1" type="button"
+      icon="pi pi-pencil" (click)="editarCandidato()" style="font-size: 0.8em;" pButton
+      class="ui-button-rounded"
+    ></button>
+    <button [disabled]="selectedCandidatos.length !== 1" type="button" icon="pi pi-eye"
+      (click)="verCandidato()" style="font-size: 0.8em;" pButton
+      class="ui-button-rounded"
+    ></button>
   </div>
 </div>
 
-<app-visualizar-candidato #VisualizarCandidato (editarCandidato)="editarCandidato($event)"></app-visualizar-candidato>
+<app-visualizar-candidato #VisualizarCandidato (candidatoAtualizado)="atualizarLista()"></app-visualizar-candidato>

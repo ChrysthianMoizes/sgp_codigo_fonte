@@ -3,6 +3,13 @@
   margin-top: 20px;
 }
 
+.align-text {
+  text-align: left;
+  font-size: 18px;
+  line-height: 2.0;
+  width: 92%;
+}
+
 form, footer {
   display: flex;
   flex-direction: column;

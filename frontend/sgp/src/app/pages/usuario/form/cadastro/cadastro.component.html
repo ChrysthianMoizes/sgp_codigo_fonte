@@ -6,9 +6,9 @@
   </header>
 
   <form [formGroup]="formulario" (ngSubmit)="validarFormulario()" class="ui-inputgroup">
-    <section>
+    <section [class.align-text]="apenasVisualizar">
       <!-- NOME INPUT -->
-      <div class="ui-inputgroup app-input">
+      <div class="ui-inputgroup app-input" *ngIf="!apenasVisualizar">
         <span class="ui-inputgroup-addon">
           <i class="pi pi-user"></i>
         </span>
@@ -21,9 +21,12 @@
           <label for="float-input"> Nome </label>
         </span>
       </div>
+      <div *ngIf="apenasVisualizar">
+        <strong> Nome: </strong> {{ usuario.nome }}
+      </div>
 
       <!-- CPF INPUT -->
-      <div class="ui-inputgroup app-input">
+      <div class="ui-inputgroup app-input" *ngIf="!usuario.id">
         <span class="ui-inputgroup-addon">
           <i class="pi pi-id-card"></i>
         </span>
@@ -36,9 +39,12 @@
           <label for="float-input"> CPF </label>
         </span>
       </div>
+      <div *ngIf="apenasVisualizar">
+        <strong> CPF: </strong> {{ usuario.cpf }}
+      </div>
 
       <!-- TOKEN INPUT -->
-      <div class="ui-inputgroup app-input">
+      <div class="ui-inputgroup app-input" *ngIf="!usuario.id">
         <span class="ui-inputgroup-addon">
           <i class="pi pi-lock"></i>
         </span>
@@ -53,7 +59,7 @@
       </div>
 
       <!-- EMAIL INPUT -->
-      <div class="ui-inputgroup app-input">
+      <div class="ui-inputgroup app-input" *ngIf="!apenasVisualizar">
         <span class="ui-inputgroup-addon">
           <i class="pi pi-envelope"></i>
         </span>
@@ -66,9 +72,12 @@
           <label for="float-input"> Email </label>
         </span>
       </div>
+      <div *ngIf="apenasVisualizar">
+        <strong> E-mail: </strong> {{ usuario.email }}
+      </div>
 
       <!-- SENHA INPUT -->
-      <div class="ui-inputgroup app-input">
+      <div class="ui-inputgroup app-input" *ngIf="!apenasVisualizar">
         <span class="ui-inputgroup-addon">
           <i class="pi pi-key"></i>
         </span>
@@ -94,6 +103,7 @@
         pButton
         type="submit"
         label="Confirmar"
+        [disabled]="!formulario.valid"
         class="ui-button-success"
         *ngIf="!apenasVisualizar"
       ></button>
@@ -101,7 +111,7 @@
         pButton
         type="button"
         label="Retornar"
-        (click)="cancelar()"
+        (click)="onCancelar()"
         class="ui-button-danger"
       ></button>
     </footer>

@@ -8,7 +8,7 @@ import { Usuario } from '../../models/usuario';
 })
 export class VisualizarCandidatoComponent {
   
-  @Output() editarCandidato = new EventEmitter();
+  @Output() candidatoAtualizado = new EventEmitter();
   @Input() apenasVisualizar = false;
   usuario: Usuario = new Usuario();
   visible = false;
@@ -21,9 +21,13 @@ export class VisualizarCandidatoComponent {
     this.visible = true;
   }
 
-  save(): void {
-    this.editarCandidato.emit({...this.usuario});
+  resetarConfigs(): void {
     this.usuario = new Usuario();
     this.visible = false;
+    this.apenasVisualizar = false;
+  }
+
+  salvar(): void {
+    this.candidatoAtualizado.emit();
   }
 }

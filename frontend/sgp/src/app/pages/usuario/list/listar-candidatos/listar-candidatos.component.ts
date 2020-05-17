@@ -28,7 +28,7 @@ export class ListarCandidatosComponent implements OnInit {
   selectedCandidatos: Usuario[] = [];
 
   ngOnInit(): void {
-    this.getCandidatos();
+    this.atualizarLista();
     this.inicializarTabela();
   }
 
@@ -40,7 +40,7 @@ export class ListarCandidatosComponent implements OnInit {
     ];
   }
 
-  getCandidatos(): void {
+  atualizarLista(): void {
     this.usuarioService.index().subscribe(
       (response) => {
         this.listCandidatos = response.content;
@@ -50,66 +50,36 @@ export class ListarCandidatosComponent implements OnInit {
       }
     );
   }
-
-  viewCandidato(): void {
-    this.usuarioService.show(this.selectedCandidatos[0].id).subscribe(
-      (response) => {
-        this.visualizarCandidato.openDialog(response, true);
-      },
-      (err) => {
-        this.alert.montarAlerta(
-          'error',
-          'Erro',
-          'Erro ao selecionar Candidato'
-        );
-      }
-    );
+  
+  editarCandidato(): void {
+    this.selectedCandidatos.forEach(candidato =>
+      this.usuarioService.show(candidato.id).subscribe({
+        next: candidatoCompleto => this.visualizarCandidato.openDialog(candidatoCompleto),
+        error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
+      })
+    )
     this.selectedCandidatos = [];
   }
 
-  editCandidato(): void {
-    this.visualizarCandidato.openDialog(this.selectedCandidatos[0]);
+  verCandidato(): void {
+    this.selectedCandidatos.forEach(candidato =>
+      this.usuarioService.show(candidato.id).subscribe({
+        next: candidatoCompleto => this.visualizarCandidato.openDialog(candidatoCompleto, true),
+        error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
+      })
+    );
     this.selectedCandidatos = [];
   }
 
   deleteCandidato(): void {
-    this.selectedCandidatos.forEach((element) => {
-      this.usuarioService.destroy(element.id).subscribe(
-        () => {
-          this.alert.montarAlerta(
-            'success',
-            'Sucesso',
-            `${element.nome} excluido com sucesso`
-          );
-        },
-        (erro) => {
-          this.alert.montarAlerta(
-            'error',
-            'Erro',
-            `Não foi possível excluir o candidato ${element.nome}`
-          );
-        }
-      );
-    });
-    this.selectedCandidatos = [];
-    this.getCandidatos();
-  }
-
-  editarCandidato(candidato: Usuario): void {
-    this.usuarioService.update(candidato).subscribe(
-      (response) => {
-        this.getCandidatos();
-        this.alert.montarAlerta(
-          'success',
-          'Sucesso',
-          'Candidato alterado com sucesso'
-        );
-      },
-      (erro) => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao editar candidato');
-      }
+    this.selectedCandidatos.forEach((candidato) =>
+      this.usuarioService.destroy(candidato.id).subscribe({
+        next: () => this.alert.montarAlerta('success', 'Sucesso', `${candidato.nome} excluido com sucesso!`),
+        error: () => this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${candidato.nome}`)
+      })
     );
-    this.getCandidatos();
+    this.selectedCandidatos = [];
+    this.atualizarLista();
   }
 
   next(): void {

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -13,11 +13,12 @@ import { Usuario } from './../../models/usuario';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css'],
 })
-export class CadastroComponent implements OnInit {
+export class CadastroComponent implements OnInit, OnChanges {
   
   @Input() usuario = new Usuario();
   @Input() apenasVisualizar = false;
   @Output() salvar = new EventEmitter();
+  @Output() cancelar = new EventEmitter();
   formulario: FormGroup;
 
   constructor(
@@ -32,6 +33,10 @@ export class CadastroComponent implements OnInit {
   ngOnInit(): void {
     this.iniciarFormulario();
   }
+
+  ngOnChanges(): void {
+    this.iniciarFormulario();
+  }
   
   iniciarFormulario(): void {
     this.formulario = this.formBuilder.group({
@@ -42,25 +47,55 @@ export class CadastroComponent implements OnInit {
       senha: ['', Validators.required]
     });
 
-    if (this.apenasVisualizar) {
-      this.formulario.disable();
+    if (this.usuario.id) {
+      this.formulario.controls['senha'].setValidators([]);
+      this.formulario.controls['token'].setValidators([]);
+      this.formulario.controls['cpf'].setValidators([]);
     }
+  }
+
+  formParaEdicao(): FormGroup {
+    return this.formBuilder.group({
+      nome: ['', Validators.required],
+      cpf: new FormControl({ value: '', disabled: true }),
+      token: new FormControl({ value: '', disabled: true }),
+      email: ['', Validators.required],
+      senha: ['']
+    });
+    
+  }
+
+  formParaCadastro(): FormGroup {
+    return this.formBuilder.group({
+      nome: ['', Validators.required],
+      cpf: ['', Validators.required],
+      token: ['', Validators.required],
+      email: ['', Validators.required],
+      senha: ['', Validators.required]
+    });
+  }
+
+  formParaVisualizacao(): FormGroup {
+    return this.formBuilder.group({
+      nome: new FormControl({ value: '', disabled: true }),
+      cpf: new FormControl({ value: '', disabled: true }),
+      token: new FormControl({ value: '', disabled: true }),
+      email: new FormControl({ value: '', disabled: true }),
+      senha: new FormControl({ value: '', disabled: true })
+    });
   }
 
   validarFormulario(): void {
     this.formulario.valid &&
-      this[this.usuario.id ? 'editar' : 'cadastrar'](this.usuario);
+      this[this.usuario.id !== null ? 'editar' : 'cadastrar'](this.usuario);
   }
 
   editar(usuario: Usuario): void {
     this.loadingService.activate();
     this.usuarioService.update(usuario).subscribe({
-      next: () => {
-        this.alertService.montarAlerta('success', 'Sucesso', 'Usuário editado com sucesso!');
-        this.salvar.emit();
-      },
+      next: () => this.salvar.emit(),
       error: err => this.tratarError(err)
-    });
+    }).add(() => this.loadingService.deactivate());
   }
 
   cadastrar(usuario: Usuario): void {
@@ -90,9 +125,13 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  cancelar(): void {
-    this.formulario.reset();
+  onCancelar(): void {
+    this.usuario.id ?
+      this.cancelar.emit()
+        : this.router.navigateByUrl('login');
+
+    this.apenasVisualizar = false;
     this.usuario = new Usuario();
-    !this.usuario.id && this.router.navigateByUrl('login');
+    this.formulario.reset();
   }
 }

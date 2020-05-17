@@ -1,7 +1,7 @@
-<p-dialog [modal]="true" [(visible)]="visible" [style]="{width: 'auto'}">
-
-  <div class="formulario">
-    <app-cadastro [usuario]="usuario" (salvar)='save()'></app-cadastro>
+<p-dialog [modal]="true" [visible]="visible">
+  <div class="dialog">
+    <app-cadastro [usuario]="usuario" [apenasVisualizar]="apenasVisualizar"
+      (salvar)="salvar()" (cancelar)="resetarConfigs()" 
+    ></app-cadastro>
   </div>
-
 </p-dialog>
