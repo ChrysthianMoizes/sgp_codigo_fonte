@@ -2,11 +2,11 @@
 <app-card [cabecalho]="necessitaCabecalho">
   <div class="caracteres">
     <span>
-      <label>Login</label>
+      <label> Login </label>
     </span>
   </div>
 
-  <form #formLogin="ngForm" (ngSubmit)="requisitarLogin()" autocomplete="off">
+  <form #formLogin="ngForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="form-group" class="espacamento">
       <div class="ui-inputgroup">
         <span class="ui-inputgroup-addon"
@@ -44,7 +44,6 @@
         <button
           pButton
           class="ui-button-danger"
-          type="submit"
           [style]="{ width: '100%' }"
           label="ENTRAR"
           [disabled]="formLogin.invalid"

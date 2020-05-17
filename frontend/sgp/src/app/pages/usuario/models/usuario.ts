@@ -1,10 +1,10 @@
-export class Usuario {
+import { Resource } from 'src/app/models/resource.model';
 
-  id: number;
+export class Usuario extends Resource {
+
   nome: string;
   cpf: string;
   senha: string;
   email: string;
-  admin: boolean;
 
 }

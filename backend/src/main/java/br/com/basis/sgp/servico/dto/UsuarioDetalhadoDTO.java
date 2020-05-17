@@ -5,10 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class UsuarioDetalhadoDTO {
 
     private Long id;
     private String nome;
     private String email;
     private String cpf;
+    private Integer admin;
+
 }
