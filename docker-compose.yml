@@ -1,0 +1,49 @@
+version: '3'
+
+networks:
+  sgp:
+    driver: bridge
+
+services:
+  db: 
+    image: mysql:5.7
+    container_name: sgp-db
+    environment: 
+      - MYSQL_DATABASE=sgp
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - sgp
+
+  backend:
+    image: diegotesch/spring:latest
+    container_name: sgp-spring
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - sgp
+  
+  frontend:
+    image: diegotesch/angularcli:latest
+    container_name: spg-angular
+    restart: always
+    ports:
+      - 4200:4200
+    volumes:
+      - ./frontend/sgp:/home/node/app
+    depends_on:
+      - db
+      - backend
+    links:
+      - backend
+    networks:
+      - sgp
