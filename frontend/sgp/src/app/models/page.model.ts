@@ -1,5 +1,5 @@
 export class Page<T> {
-  content: [];
+  content: T [];
   first: boolean;
   last: boolean;
   totalPages: number;

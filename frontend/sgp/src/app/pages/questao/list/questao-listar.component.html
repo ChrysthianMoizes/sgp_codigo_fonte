@@ -1,61 +1,38 @@
 <app-alert></app-alert>
-<button
-  pButton
-  label="Novo"
-  (click)="showDialog(false)"
-  class="btn-margin"
-></button>
+<button (click)="openDialog(true,null)" class="btn-margin" label="Novo" pButton></button>
+
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table
-      [columns]="definicaoColunas"
-      [value]="questoes.content"
-      selectionMode="multiple"
-      [(selection)]="questoesSelecionadas"
-      rows="20"
-      paginator="true"
-    >
-      <ng-template pTemplate="header" let-colunas>
+    <p-table [(selection)]="questaoSelecionada" [value]="questoes.content" paginator="true" rows="20"
+             selectionMode="single">
+      <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let coluna of colunas">
-            {{ coluna.header }}
-          </th>
+          <th scope="col">Código</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Senioridade</th>
+          <th scope="col">Tipo Questão</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-questao let-colunas="columns">
+      <ng-template let-questao pTemplate="body">
         <tr [pSelectableRow]="questao">
-          <td *ngFor="let coluna of colunas">
-            {{questao[coluna.field]}}
-          </td>
+          <td>{{questao["id"]}}</td>
+          <td>{{questao["descricao"]}}</td>
+          <td>{{questao["descricaoSenioridade"]}}</td>
+          <td>{{questao["descricaoTipo"]}}</td>
         </tr>
       </ng-template>
     </p-table>
   </div>
-  <div id="botoes" class="p-col-1">
-    <button
-      (click)="excluir()"
-      [disabled]="!habilitar()"
-      pButton
-      id="botao1"
-      icon="pi pi-trash"
-      class="ui-button-rounded"
-    ></button>
-    <button
-      pButton
-      id="botao2"
-      icon="pi pi-pencil"
-      class="ui-button-rounded"
-      [disabled]="!isSelected()"
-      (click)="showDialog(false)"
-    ></button>
-    <button
-      pButton
-      id="botao3"
-      icon="pi pi-eye"
-      class="ui-button-rounded"
-      [disabled]="!isSelected()"
-      (click)="showDialog(true)"
-    ></button>
+  <div class="p-col-1" id="botoes">
+    <button (click)="excluir(questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-trash"
+            id="botao1" pButton type="button"></button>
+    <button (click)="openDialog(true,questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-pencil"
+            id="botao2" pButton type="button"></button>
+    <button (click)="openDialog(false,questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-eye"
+            id="botao3" pButton type="button"></button>
   </div>
 </div>
 
