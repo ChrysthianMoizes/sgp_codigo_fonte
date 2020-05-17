@@ -25,7 +25,7 @@
       <ng-template pTemplate="body" let-questao let-colunas="columns">
         <tr [pSelectableRow]="questao">
           <td *ngFor="let coluna of colunas">
-            {{questao[coluna.field]}}
+            {{ questao[coluna.field] }}
           </td>
         </tr>
       </ng-template>
