@@ -69,8 +69,8 @@ export class ListarProvasComponent implements OnInit {
       header: 'Excluir prova',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.provaService.excluirProva(prova).subscribe(() => {
-          this.provaService.buscaProvas();
+        this.provaService.destroy(this.prova.id).subscribe(() => {
+          this.provaService.show(this.prova.id);
         });
         this.alertService.montarAlerta(
           'success',

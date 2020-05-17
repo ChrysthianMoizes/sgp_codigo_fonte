@@ -79,11 +79,43 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   salvar() {
-    this.provaService.create(this.prova).pipe(catchError(err => {
-      this.alert.montarAlerta('error', 'Erro', err.message);
-      return err;
-    })).subscribe(() => {
-        this.alert.montarAlerta('success', 'Sucesso', 'Perfil editado com sucesso');
+   if (this.prova.id === null) {
+     this.salvarProva(this.prova);
+   } else {
+     this.atualizarProva(this.prova);
+   }
+  }
+
+  salvarProva(prova: Prova): void {
+    this.provaService.create(prova).subscribe(
+      () => {
+        this.loadingService.deactivate();
+        this.formulario.reset();
+        this.alert.montarAlerta(
+          'success',
+          'Sucesso!',
+          'Prova cadastrada com suscesso!'
+        );
+      },
+      (err) => {
+        this.alert.montarAlerta('error', 'Error!', err);
+      }
+    );
+  }
+
+  atualizarProva(prova: Prova): void {
+    this.provaService.update(prova).subscribe(
+      () => {
+        this.loadingService.deactivate();
+        this.formulario.reset();
+        this.alert.montarAlerta(
+          'success',
+          'Sucesso!',
+          'Prova atualizada com suscesso!'
+        );
+      },
+      (err) => {
+        this.alert.montarAlerta('error', 'Error!', err);
       }
     );
   }
@@ -127,6 +159,7 @@ export class CadastrarProvaComponent implements OnInit {
     });
   }
 
+
   abrirDialog(modo): void {
     if (modo === 1) {
       this.edicao = false;
@@ -137,7 +170,7 @@ export class CadastrarProvaComponent implements OnInit {
       this.edicao = true;
       this.visualizando = false;
       this.exibir = true;
-      this.provaService.buscaProva().subscribe((prova) => {
+      this.provaService.show(this.prova.id).subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
@@ -149,7 +182,7 @@ export class CadastrarProvaComponent implements OnInit {
       this.visualizando = true;
       this.edicao = false;
       this.exibir = true;
-      this.provaService.buscaProva().subscribe((prova) => {
+      this.provaService.show(this.prova.id).subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
@@ -158,7 +191,7 @@ export class CadastrarProvaComponent implements OnInit {
       //visualizar
     }
     if (this.modoDialog > 1) {
-      this.provaService.buscaProva().subscribe((prova) => {
+      this.provaService.show(this.prova.id).subscribe((prova) => {
         this.provaSendoEditada = prova;
       });
       this.preencherFormParaEdicao();
@@ -171,44 +204,12 @@ export class CadastrarProvaComponent implements OnInit {
     }
   }
 
-  cadastrarNovo(prova: Prova): void {
-    this.provaService.create(prova).subscribe(
-      () => {
-        this.loadingService.deactivate();
-        this.formulario.reset();
-        this.alert.montarAlerta(
-          'success',
-          'Sucesso!',
-          'Prova cadastrada com suscesso!'
-        );
-      },
-      (err) => {
-        this.alert.montarAlerta('error', 'Error!', err);
-      }
-    );
-  }
 
-  atualizarProva(prova: Prova): void {
-    this.provaService.update(prova).subscribe(
-      () => {
-        this.loadingService.deactivate();
-        this.formulario.reset();
-        this.alert.montarAlerta(
-          'success',
-          'Sucesso!',
-          'Prova atualizada com suscesso!'
-        );
-      },
-      (err) => {
-        this.alert.montarAlerta('error', 'Error!', err);
-      }
-    );
-  }
 
   onSubmit(): void {
     this.loadingService.activate();
     if (!this.provaSendoEditada) {
-      this.cadastrarNovo({
+      this.salvarProva({
         ...this.formulario.value,
         questoes: this.destinoQuestoes,
       });
