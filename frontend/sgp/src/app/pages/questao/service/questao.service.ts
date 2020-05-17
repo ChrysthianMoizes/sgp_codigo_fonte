@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class QuestaoService {
-  private URL_API: string = 'http://localhost:8080';
+  private URL_API: string = 'http://backend:8080';
   private idQuestao: number = 5;
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
