@@ -24,7 +24,7 @@ public class UsuarioFiltro implements EntityFiltro {
         return (root, cq, cb) ->
                 cb.and(getPredicates(root, cb).toArray(new Predicate[0]));
     }
-
+//
     private List<Predicate> getPredicates(Root root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(nome)) {

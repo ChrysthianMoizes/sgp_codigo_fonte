@@ -24,6 +24,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   avaliacaoForm: FormGroup;
   candidatosFiltrados: SelectItem[];
   provasFiltradas: SelectItem[];
+  titulo: string;
 
   exibir: boolean;
 
@@ -52,6 +53,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.iniciarTitulo();
     this.iniciarForm();
     this.carregarFiltroCandidato();
     this.carregarFiltroProva();
@@ -68,12 +70,33 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     });
   }
 
-  carregarFiltroCandidato() {
-
+  iniciarTitulo():void {
+    this.titulo = this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'
   }
 
-  carregarFiltroProva() {
+  carregarFiltroCandidato(): void {
+    this.usuarioService.listarCandidatosDropdown().pipe(
+      catchError( error => {
+        this.alertService.montarAlerta("error", 'Erro', error.message);
+        return error;
+      })
+    ).subscribe(
+      response => {
+        this.candidatosFiltrados = response;
+      }
+    )
+  }
 
+  carregarFiltroProva(): void {
+    this.provaService.listarProvasDropdown().pipe(
+      catchError(error => {
+        this.alertService.montarAlerta('error', 'Erro', error.message)
+        return error;
+      })
+    )
+    .subscribe( response => {
+      this.provasFiltradas = response;
+    })
   }
 
   validarForm() {
@@ -101,6 +124,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   cadastrarNovaAvaliacao(): void {
     this.avaliacaoService
       .create(this.avaliacao)
+      .pipe(
+        catchError(error => {
+          this.alertService.montarAlerta('error', 'Erro', error.message);
+          return error;
+        })
+      )
       .subscribe(
         () => {
           this.alertService.montarAlerta(
@@ -110,13 +139,6 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
           );
           this.avaliacaoForm.reset();
           this.fecharDialog();
-        },
-        (err) => {
-          this.alertService.montarAlerta(
-            'error',
-            'Error!',
-            'Confira seus dados e tente novamente.'
-          );
         }
       )
       .add(() => this.loadingService.deactivate());
@@ -125,6 +147,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   atualizarAvaliacao(): void {
     this.avaliacaoService
       .update(this.avaliacao)
+      .pipe(
+        catchError(error => {
+          this.alertService.montarAlerta('error', 'Erro', error.message);
+          return error;
+        })
+      )
       .subscribe(
         () => {
           this.alertService.montarAlerta(
@@ -134,13 +162,6 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
           );
           this.avaliacaoForm.reset();
           this.fecharDialog();
-        },
-        (err) => {
-          this.alertService.montarAlerta(
-            'error',
-            'Error!',
-            'Confira seus dados e tente novamente.'
-          );
         }
       )
       .add(() => this.loadingService.deactivate());
@@ -151,42 +172,37 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   updateUsuariosFiltrados(event): void {
-    // this.usuarioService
-    //   .findByNome(event.query)
-    //   .subscribe((usuarios) => (this.usuariosFiltrados = usuarios));
+    this.usuarioService.findByNome(event.query)
+      .pipe( catchError(error => {
+        this.alertService.montarAlerta('error', 'Erro', error.message);
+        return error;
+      }))
+      .subscribe((usuarios) => (this.candidatosFiltrados = usuarios));
   }
 
   updateProvasFiltradas(event): void {
-    this.provaService
-      .findByTitulo(event.query)
+    this.provaService.findByTitulo(event.query)
+      .pipe( catchError(error => {
+        this.alertService.montarAlerta('error', 'Erro', error.message);
+        return error;
+      }))
       .subscribe((provas) => (this.provasFiltradas = provas));
   }
 
-  get isFormValid(): boolean {
-    return (
-      this.avaliacaoForm.valid &&
-      this.candidatoSelecionado !== null &&
-      this.provaSelecionada !== null
-    );
-  }
+  // get candidatoSelecionado(): Usuario {
+  //   const candidato = this.avaliacaoForm.get('usuario').value;
+  //   if (typeof candidato === 'object') {
+  //     return candidato;
+  //   }
+  //   return null;
+  // }
 
-  get candidatoSelecionado(): Usuario {
-    const candidato = this.avaliacaoForm.get('usuario').value;
-    if (typeof candidato === 'object') {
-      return candidato;
-    }
-    return null;
-  }
+  // get provaSelecionada(): Prova {
+  //   const prova = this.avaliacaoForm.get('prova').value;
+  //   if (typeof prova === 'object') {
+  //     return prova;
+  //   }
+  //   return null;
+  // }
 
-  get provaSelecionada(): Prova {
-    const prova = this.avaliacaoForm.get('prova').value;
-    if (typeof prova === 'object') {
-      return prova;
-    }
-    return null;
-  }
-
-  get titulo(): string {
-    return `${this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'} avaliação`;
-  }
 }

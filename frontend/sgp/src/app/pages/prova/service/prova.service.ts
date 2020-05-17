@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Prova } from '../models/prova';
 import { SelectItem } from 'primeng';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +29,14 @@ export class ProvaService {
     { id: 10, titulo: 'Título ', percentualAprovacao: 60 },
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   index(page = 0, size = 20): Observable<any> {
     return of(this.provas);
+  }
+
+  listarProvasDropdown(): Observable<any> {
+    return this.http.get("/api/provas/dropdown");
   }
 
   create(prova: Prova): Observable<any> {
@@ -48,8 +53,8 @@ export class ProvaService {
     return of(this.provas[0]);
   }
 
-  findByTitulo(query: string): Observable<SelectItem[]> {
-    return null;
+  findByTitulo(query: string): Observable<any> {
+    return this.http.get("/api/provas/filtro");
   }
 }
 
