@@ -22,7 +22,7 @@ export class QuestaoListarComponent implements OnInit {
 
   questaoSelecionada: QuestaoListagemDTO;
   questoes: Page<QuestaoListagemDTO>;
-  itensPorPagina: number = 3;
+  itensPorPagina: number = 20;
   totalRegistros: number;
 
   constructor(

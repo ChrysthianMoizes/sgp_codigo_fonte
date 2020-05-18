@@ -87,7 +87,7 @@ export class QuestaoComponent implements OnInit {
   }
 
   salvar() {
-    if (typeof this.questao.id === 'undefined' || this.questao.id == null) {
+    if(!Boolean(this.questao.id)) {
       this.cadastar(this.questao);
     } else {
       this.editar(this.questao);
