@@ -1,8 +1,8 @@
 export class QuestaoFiltro {
   id: number;
   descricao: string;
-  senioridade: string;
-  tipoQuestao: string;
+  senioridade: number;
+  tipoQuestao: number;
 
   constructor(){
     this.id = null;
