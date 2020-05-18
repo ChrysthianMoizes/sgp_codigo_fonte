@@ -40,9 +40,9 @@ import { SendEmailComponent } from './pages/usuario/form/send-email/send-email.c
 import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizar-candidato/visualizar-candidato.component';
 import { ListarCandidatosComponent } from './pages/usuario/list/listar-candidatos/listar-candidatos.component';
 import { UsuarioService } from './pages/usuario/service/usuario.service';
-import { PrimengModule } from './primeng.module';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
+import { PrimengModule } from './primeng.module';
 
 @NgModule({
   declarations: [
@@ -83,9 +83,9 @@ import { AuthService } from './services/auth.service';
     RadioButtonModule,
     DynamicDialogModule,
     DialogModule,
+    PrimengModule,
     HttpClientModule,
     ReactiveFormsModule,
-    PrimengModule,
     AppRoutes,
     AutoCompleteModule,
   ],
