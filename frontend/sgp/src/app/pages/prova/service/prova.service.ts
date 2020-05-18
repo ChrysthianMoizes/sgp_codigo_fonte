@@ -54,7 +54,7 @@ export class ProvaService {
   }
 
   findByTitulo(query: string): Observable<any> {
-    return this.http.get("/api/provas/filtro");
+    return this.http.get(`/api/provas/filtro/${query}`);
   }
 }
 

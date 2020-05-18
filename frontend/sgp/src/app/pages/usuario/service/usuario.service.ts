@@ -17,7 +17,7 @@ export class UsuarioService extends ResourceService<Usuario> {
   }
 
   findByNome(nome: string): Observable<any> {
-    return this.http.get("/api/usuarios/filtro");
+    return this.http.get(`/api/usuarios/filtro/${nome}`);
   }
 
   listarCandidatosDropdown(): Observable<any> {

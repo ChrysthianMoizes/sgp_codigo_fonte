@@ -7,10 +7,10 @@ import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
-import br.com.basis.sgp.servico.mapper.ProvaCadastroMapper;
+import br.com.basis.sgp.servico.filtro.ProvaFiltro;
 import br.com.basis.sgp.servico.mapper.ProvaDropdownMapper;
 import br.com.basis.sgp.servico.mapper.ProvaListagemMapper;
-import br.com.basis.sgp.servico.mapper.UsuarioDropdownMapper;
+import br.com.basis.sgp.servico.mapper.ProvaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,10 +28,9 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaListagemMapper provaListagemMapper;
     private final ProvaDropdownMapper provaDropdownMapper;
     private final ProvaRepositorio provaRepositorio;
-    private final ProvaDropdownMapper provaDropdownMapper;
 
     @Override
-    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
+    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro, Pageable pageable) {
         Page<Prova> provas = provaRepositorio.findAll(provaFiltro.filter(),pageable);
         return provas.map(provaListagemMapper::toDto);
     }

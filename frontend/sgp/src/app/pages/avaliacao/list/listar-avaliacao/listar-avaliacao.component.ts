@@ -48,7 +48,7 @@ export class ListarAvaliacaoComponent implements OnInit {
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
-      pageable.setSort(1, 'nome');
+      pageable.setSort(1, 'titulo');
     }
 
     this.avaliacaoService.index(this.filtro, pageable)
@@ -59,7 +59,7 @@ export class ListarAvaliacaoComponent implements OnInit {
           this.avaliacaoSelecionada = [];
         },
         () => {
-          this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
+          this.alert.montarAlerta('error', 'Erro', 'Erro ao listar avaliações');
         }
       );
   }

@@ -22,7 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("/api/avaliacao")
+@RequestMapping("/api/avaliacoes")
 @RequiredArgsConstructor
 public class AvaliacaoRecurso {
     private final AvalicaoServico avaliacaoServico;

@@ -29,7 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
-public class    UsuarioRecurso {
+public class UsuarioRecurso {
 
     private final UsuarioServico usuarioServico;
 
@@ -45,9 +45,9 @@ public class    UsuarioRecurso {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/filtro")
-    public ResponseEntity<List<SelectDTO>> listarNomeCandidatosDropdown(String query) {
-        List<SelectDTO> usuarios = usuarioServico.autocomplete(query);
+    @GetMapping("/filtro/{filtro}")
+    public ResponseEntity<List<SelectDTO>> listarNomeCandidatosDropdown(@PathVariable String filtro) {
+        List<SelectDTO> usuarios = usuarioServico.autocomplete(filtro);
         return ResponseEntity.ok(usuarios);
     }
 

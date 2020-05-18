@@ -15,8 +15,8 @@
 
         <tr>
           <th *ngFor="let col of cols">
-            <input pInputText [(ngModel)]='filtro[col.field]' placeholder="{{col.header}}" type="text"
-              style="width: 100%;">
+            <input pInputText (keyup.enter)="atualizarLista()" [(ngModel)]='filtro[col.field]'
+              placeholder="{{col.header}}" type="text" style="width: 100%;">
           </th>
         </tr>
       </ng-template>

@@ -28,9 +28,9 @@ public class ProvaRecurso {
 //        return ResponseEntity.ok(provas);
 //    }
 
-    @GetMapping("/filtro")
-    public ResponseEntity<List<SelectDTO>> listarTituloProvasDropdown(String query) {
-        List<SelectDTO> provas = provaServico.autocomplete(query);
+    @GetMapping("/filtro/{filtro}")
+    public ResponseEntity<List<SelectDTO>> listarTituloProvasDropdown(@PathVariable String filtro) {
+        List<SelectDTO> provas = provaServico.autocomplete(filtro);
         return ResponseEntity.ok(provas);
     }
 
