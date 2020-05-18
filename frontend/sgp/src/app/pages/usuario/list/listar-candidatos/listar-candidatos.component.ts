@@ -13,7 +13,6 @@ import { FiltroCandidato } from '../../models/filtro-candidato';
   styleUrls: ['./listar-candidatos.component.css'],
 })
 export class ListarCandidatosComponent implements OnInit {
-
   @ViewChild('VisualizarCandidato')
   visualizarCandidato: VisualizarCandidatoComponent;
 
@@ -34,7 +33,7 @@ export class ListarCandidatosComponent implements OnInit {
     private alert: AlertService,
     private usuarioService: UsuarioService,
     private confirmationService: ConfirmationService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.atualizarLista(null);
@@ -50,8 +49,7 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   atualizarLista(event = null): void {
-
-    const pageable = new Pageable(0, 20);
+    const pageable = new Pageable<Usuario>(0, 20);
 
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
@@ -63,7 +61,7 @@ export class ListarCandidatosComponent implements OnInit {
       (response) => {
         this.listCandidatos = response.content;
         this.notFilteredListCandidatos = response.content;
-        this.totalDeElementos = response.totalElements;
+        this.totalDeElementos = response.numberOfElements;
         this.selectedCandidatos = [];
       },
       () => {
@@ -73,21 +71,32 @@ export class ListarCandidatosComponent implements OnInit {
   }
 
   editarCandidato(): void {
-    this.selectedCandidatos.forEach(candidato =>
+    this.selectedCandidatos.forEach((candidato) =>
       this.usuarioService.show(candidato.id).subscribe({
-        next: candidatoCompleto => {
+        next: (candidatoCompleto) => {
           this.visualizarCandidato.openDialog(candidatoCompleto);
         },
-        error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
+        error: () =>
+          this.alert.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar candidato. Tente novamente.'
+          ),
       })
     );
   }
 
   verCandidato(): void {
-    this.selectedCandidatos.forEach(candidato =>
+    this.selectedCandidatos.forEach((candidato) =>
       this.usuarioService.show(candidato.id).subscribe({
-        next: candidatoCompleto => this.visualizarCandidato.openDialog(candidatoCompleto, true),
-        error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
+        next: (candidatoCompleto) =>
+          this.visualizarCandidato.openDialog(candidatoCompleto, true),
+        error: () =>
+          this.alert.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar candidato. Tente novamente.'
+          ),
       })
     );
   }
@@ -101,10 +110,15 @@ export class ListarCandidatosComponent implements OnInit {
             next: () => {
               this.atualizarLista();
             },
-            error: () => this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${candidato.nome}`)
+            error: () =>
+              this.alert.montarAlerta(
+                'error',
+                'Erro',
+                `Não foi possível excluir o candidato ${candidato.nome}`
+              ),
           })
         );
-      }
+      },
     });
   }
 }

@@ -25,6 +25,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   candidatosFiltrados: SelectItem[];
   provasFiltradas: SelectItem[];
   titulo: string;
+  candidato: SelectItem;
+  prova: SelectItem;
 
   exibir: boolean;
 
@@ -67,6 +69,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     this.avaliacaoForm = this.formBuilder.group({
       usuario: [null, Validators.required],
       prova: [null, Validators.required],
+      aproveitamento: [null, Validators.required],
+      data: [null, Validators.required]
     });
   }
 
@@ -105,6 +109,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       return;
     }
 
+    this.avaliacao.idCandidato = this.candidato.value;
+    this.avaliacao.idProva = this.prova.value;
+
     if (!this.avaliacao.id) {
       this.cadastrarNovaAvaliacao();
     }
@@ -122,6 +129,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   cadastrarNovaAvaliacao(): void {
+    console.log(this.avaliacao)
     this.avaliacaoService
       .create(this.avaliacao)
       .pipe(
@@ -179,6 +187,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       })
       )
       .subscribe(response => {
+        console.log(response)
         this.candidatosFiltrados = response;
       })
   }

@@ -8,21 +8,38 @@
   <form [formGroup]="avaliacaoForm">
     <section>
       <span class="ui-float-label">
-        <p-autoComplete formControlName="usuario" [(ngModel)]="avaliacao.idCandidato"
-          [suggestions]="candidatosFiltrados" (completeMethod)="updateUsuariosFiltrados($event)" field="label"
-          id="float-input"></p-autoComplete>
+        <p-autoComplete formControlName="usuario" [(ngModel)]="candidato" [suggestions]="candidatosFiltrados"
+          (completeMethod)="updateUsuariosFiltrados($event)" field="label" id="float-input"></p-autoComplete>
         <label for="float-input">
           Usuário
         </label>
       </span>
 
       <span class="ui-float-label">
-        <p-autoComplete formControlName="prova" [(ngModel)]="avaliacao.idProva" [suggestions]="provasFiltradas"
+        <p-autoComplete formControlName="prova" [(ngModel)]="prova" [suggestions]="provasFiltradas"
           (completeMethod)="updateProvasFiltradas($event)" field="label" id="float-input1"></p-autoComplete>
         <label for="float-input1">
           Prova
         </label>
       </span>
+
+      <span class="ui-float-label">
+        <input autocomplete="off" [(ngModel)]='avaliacao.aproveitamento' formControlName="aproveitamento"
+          id="float-input2" pInputText type="number" />
+        <label for="float-input">
+          Aproveitamento
+        </label>
+      </span>
+
+      <span class="ui-float-label">
+        <p-inputMask mask="9999-99-99" [(ngModel)]="avaliacao.dataAvaliacao">
+        </p-inputMask>
+        <label for="float-input">
+          Data
+        </label>
+      </span>
+
+
     </section>
 
     <footer>

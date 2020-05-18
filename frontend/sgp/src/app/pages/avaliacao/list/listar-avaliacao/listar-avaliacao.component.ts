@@ -43,7 +43,7 @@ export class ListarAvaliacaoComponent implements OnInit {
 
   atualizarLista(event = null): void {
 
-    const pageable = new Pageable(0, 20);
+    const pageable = new Pageable<Avaliacao>(0, 20);
 
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
@@ -55,7 +55,7 @@ export class ListarAvaliacaoComponent implements OnInit {
       .subscribe(
         response => {
           this.avaliacoesRecebidas = response.content;
-          this.totalElementos = response.totalElements;
+          this.totalElementos = response.numberOfElements;
           this.avaliacaoSelecionada = [];
         },
         () => {

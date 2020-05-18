@@ -3,10 +3,8 @@ import { Prova } from '../../prova/models/prova';
 import { Resource } from 'src/app/models/resource.model';
 
 export class Avaliacao extends Resource {
-  dataAvaliacao: Date;
+  dataAvaliacao: String;
   aproveitamento: number;
   idCandidato: number;
-  nomeCandidato: string;
   idProva: number;
-  tituloProva: string;
 }
