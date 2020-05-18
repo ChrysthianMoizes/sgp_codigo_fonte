@@ -89,8 +89,8 @@ export class QuestaoComponent implements OnInit {
   }
 
   salvar() {
-    this.loadingService.activate();
-    if (typeof this.questao.id === 'undefined' || this.questao.id == null) {
+    this.loadingService.activate()
+    if(!Boolean(this.questao.id)) {
       this.cadastar(this.questao);
     } else {
       this.editar(this.questao);
