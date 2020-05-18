@@ -22,4 +22,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario,Long>, JpaSpec
     Optional<Usuario> findByEmailAndSenha(String email, String senha);
 
     List<Usuario> findAllByAdmin(Integer admin);
+
+    List<Usuario> findAllByNomeContainsIgnoreCase(String query);
+
 }

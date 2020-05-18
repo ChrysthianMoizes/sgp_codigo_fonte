@@ -45,6 +45,12 @@ public class    UsuarioRecurso {
         return ResponseEntity.ok(usuarios);
     }
 
+    @GetMapping("/filtro")
+    public ResponseEntity<List<SelectDTO>> listarNomeCandidatosDropdown(String query) {
+        List<SelectDTO> usuarios = usuarioServico.autocomplete(query);
+        return ResponseEntity.ok(usuarios);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDetalhadoDTO> obterPorId(@PathVariable("id") Long id) {
         UsuarioDetalhadoDTO usuarioDTO = usuarioServico.obterPorId(id);

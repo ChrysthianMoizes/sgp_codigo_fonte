@@ -6,13 +6,16 @@ import br.com.basis.sgp.servico.AvalicaoServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
+import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
 import br.com.basis.sgp.servico.mapper.AvaliacaoListagemMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
-import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -30,9 +33,9 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     }
 
     @Override
-    public List<AvaliacaoListagemDTO> listar() {
-        //obter os dados do banco
-        return avaliacaoMapper.toDto(avaliacaoRepositorio.findAll());
+    public Page<AvaliacaoListagemDTO> listar(@ModelAttribute AvaliacaoFiltro filtro, Pageable pageable) {
+        Page<Avaliacao> avaliacoes = avaliacaoRepositorio.findAll(filtro.filter(), pageable);
+        return avaliacoes.map(avaliacaoMapper::toDto);
     }
 
     @Override

@@ -7,10 +7,10 @@ import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
-import br.com.basis.sgp.servico.filtro.ProvaFiltro;
+import br.com.basis.sgp.servico.mapper.ProvaCadastroMapper;
 import br.com.basis.sgp.servico.mapper.ProvaDropdownMapper;
 import br.com.basis.sgp.servico.mapper.ProvaListagemMapper;
-import br.com.basis.sgp.servico.mapper.ProvaMapper;
+import br.com.basis.sgp.servico.mapper.UsuarioDropdownMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +26,7 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private final ProvaMapper provaMapper;
     private final ProvaListagemMapper provaListagemMapper;
+    private final ProvaDropdownMapper provaDropdownMapper;
     private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
 
@@ -45,6 +46,11 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova = provaMapper.toEntity(provaDTO);
         provaRepositorio.save(prova);
         return provaMapper.toDto(prova);
+    }
+
+    @Override
+    public List<SelectDTO> autocomplete(String query) {
+        return provaDropdownMapper.toDto(provaRepositorio.findAllByTituloContainsIgnoreCase(query));
     }
 
     @Override
