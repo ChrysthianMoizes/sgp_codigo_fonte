@@ -15,11 +15,11 @@
   z-index: 800;
 }
 
-.nav-bar > i, .nav-bar h1 {
-  color: white;
+.nav-bar h1 {
+  color: var(--color-secondary);
 }
 
-.nav-bar > img {
+.perfil > img {
   filter: invert(1);
 }
 
@@ -33,12 +33,24 @@
   align-items: center;
 }
 
+.menu-hamburguer {
+  display: flex;
+  align-items: center;
+}
+
+.menu-hamburguer .pi-bars {
+  font-size: 2em;
+  color: var(--color-secondary);
+  margin-right: 15px;
+}
+
 .mid-navbar img {
   height: 40px;
   margin-right: 12px;
 }
 
-.nav-bar img:hover, .nav-bar > i:hover {
+.nav-bar img:hover,
+.nav-bar > i:hover {
   cursor: pointer;
 }
 
