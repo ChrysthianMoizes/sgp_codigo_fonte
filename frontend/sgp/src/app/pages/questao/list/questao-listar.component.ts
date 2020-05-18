@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService, LazyLoadEvent, ConfirmationService} from 'primeng';
+import {DialogService, LazyLoadEvent, ConfirmationService, SelectItem} from 'primeng';
 import {Page} from 'src/app/models/page.model';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
@@ -9,6 +9,9 @@ import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
 import { async } from '@angular/core/testing';
+import { QuestaoFiltro } from '../models/questao-filtro.model';
+import { SenioridadeService } from '../service/senioridade.service';
+import { TipoQuestaoService } from '../service/tipo-questao.service';
 
 @Component({
   selector: 'app-questao-listar',
@@ -24,20 +27,29 @@ export class QuestaoListarComponent implements OnInit {
   questaoSelecionada: QuestaoListagemDTO;
   questoes: Page<QuestaoListagemDTO>;
 
+  senioridades: SelectItem[];
+  tipoQuestoes: SelectItem[];
+
   itensPorPagina: number = 20;
   totalRegistros: number;
+
+  filtro: QuestaoFiltro = new QuestaoFiltro();
 
   constructor(
     private alertService: AlertService,
     public questaoService: QuestaoService,
     public questaoListarService: QuestaoListarService,
     public confirmation: ConfirmationService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    private senioridadeService: SenioridadeService,
+    private tipoQuestaoService: TipoQuestaoService
   ) {
   }
 
   ngOnInit(): void {
     this.questoes = new Page();
+    this.getTiposQuestao();
+    this.getSenioridades();
   }
 
   isOneSelected(): boolean {
@@ -50,14 +62,13 @@ export class QuestaoListarComponent implements OnInit {
       .destroy(id)
       .subscribe(
         () => {
+          this.loadingService.deactivate();
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
           this.preencherQuestoes();
         },
-        (erro) => {
-          this.alertService.montarAlerta('error', 'Erro', 'Erro ao excluir questão'+ erro.defaultMessage);
-        },
         () => {
           this.loadingService.deactivate();
+          this.alertService.montarAlerta('error', 'Erro', 'Erro ao excluir questão');
         }
       );
     this.questaoSelecionada = null;
@@ -68,12 +79,11 @@ export class QuestaoListarComponent implements OnInit {
       (response) => {
         this.questoes = response;
         this.totalRegistros = this.questoes.totalElements;
-      },
-      (erro) => {
-        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar as questões '+ erro.defaultMessage);
+        this.loadingService.deactivate();
       },
       () => {
         this.loadingService.deactivate();
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar as questões');
       }
     )
   }
@@ -110,4 +120,25 @@ export class QuestaoListarComponent implements OnInit {
     });
   }
 
+  atualizarLista(){
+
+  }
+
+  getSenioridades() {
+    this.senioridadeService.index().subscribe(
+      (resposta) => {
+        this.senioridades = resposta;
+        this.senioridades.unshift({value: null, label:"" });
+      }
+    );
+  }
+
+  getTiposQuestao() {
+    this.tipoQuestaoService.index().subscribe(
+      (resposta) => {
+        this.tipoQuestoes = resposta;
+        this.tipoQuestoes.unshift({value: null, label:"" });
+      }
+    );
+  }
 }

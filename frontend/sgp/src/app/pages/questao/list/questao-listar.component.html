@@ -16,6 +16,24 @@
           <th scope="col" style="width: 150px;">Senioridade</th>
           <th scope="col" style="width: 200px;">Tipo Questão</th>
         </tr>
+        <tr>
+          <th>
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades"
+                      placeholder="Selecione" style="width: 150px;"></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes"
+                      placeholder="Selecione" style="width: 200px;"></p-dropdown>
+          </th>
+        </tr>
       </ng-template>
       <ng-template let-questao pTemplate="body">
         <tr [pSelectableRow]="questao">
