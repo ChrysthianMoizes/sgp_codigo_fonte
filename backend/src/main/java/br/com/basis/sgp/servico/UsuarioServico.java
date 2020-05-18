@@ -18,6 +18,8 @@ public interface UsuarioServico {
 
     public List<SelectDTO> listarCandidatosDropdown();
 
+    public List<SelectDTO> autocomplete(String query);
+
     public UsuarioDetalhadoDTO logar(UsuarioCadastroDTO usuarioCadastroDTO);
 
     public UsuarioDetalhadoDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO);

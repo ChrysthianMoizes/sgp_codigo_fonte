@@ -60,6 +60,11 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     @Override
+    public List<SelectDTO> autocomplete(String query) {
+        return usuarioDropdownMapper.toDto(usuarioRepositorio.findAllByNomeContainsIgnoreCase(query));
+    }
+
+    @Override
     public UsuarioDetalhadoDTO logar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioRepositorio
                 .findByEmailAndSenha(usuarioCadastroDTO.getEmail(), usuarioCadastroDTO.getSenha())

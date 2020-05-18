@@ -3,6 +3,7 @@ package br.com.basis.sgp.web.rest;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaCadastroDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
+import br.com.basis.sgp.servico.dto.SelectDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/provas")
@@ -23,6 +25,12 @@ public class ProvaRecurso {
     @GetMapping
     public ResponseEntity<Page<ProvaListagemDTO>> listarProvas(Pageable pageable){
         Page<ProvaListagemDTO> provas = provaServico.listarProvas(pageable);
+        return ResponseEntity.ok(provas);
+    }
+
+    @GetMapping("/filtro")
+    public ResponseEntity<List<SelectDTO>> listarTituloProvasDropdown(String query) {
+        List<SelectDTO> provas = provaServico.autocomplete(query);
         return ResponseEntity.ok(provas);
     }
 
