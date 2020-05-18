@@ -87,4 +87,28 @@ public class UsuarioRecursoTest {
                 .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void naoDeveLogarComSenhaIncorreta() throws Exception {
+        Usuario usuario = usuarioBuilder.construirEntidade();
+        usuarioBuilder.persistir(usuario);
+        usuario.setSenha("1234");
+
+        mockMvc.perform(post(API_USUARIO + "login")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuario)))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void naoDeveLogarComEmailInexistente() throws Exception {
+        Usuario usuario = usuarioBuilder.construirEntidade();
+
+        mockMvc.perform(post(API_USUARIO + "login")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuario)))
+                .andExpect(status().isBadRequest());
+
+    }
 }
