@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { AlertService } from 'src/app/components/alert/alert.service';
-import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
 import { Pageable } from 'src/app/util/pageable-request';
 import { VisualizarCandidatoComponent } from '../../form/visualizar-candidato/visualizar-candidato.component';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../service/usuario.service';
+import { FiltroCandidato } from '../../models/filtro-candidato';
 
 @Component({
   selector: 'app-listar-candidatos',

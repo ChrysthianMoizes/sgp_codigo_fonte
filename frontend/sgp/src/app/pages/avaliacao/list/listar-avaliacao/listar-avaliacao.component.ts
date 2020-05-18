@@ -38,7 +38,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.carregarAvaliacoes();
+    this.atualizarLista();
   }
 
   atualizarLista(event = null): void {
@@ -62,13 +62,6 @@ export class ListarAvaliacaoComponent implements OnInit {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
         }
       );
-  }
-
-  carregarAvaliacoes(): void {
-    this.avaliacaoService.index()
-      .subscribe(response => {
-        this.avaliacoesRecebidas = response;
-      })
   }
 
   isOneSelected(): boolean {
