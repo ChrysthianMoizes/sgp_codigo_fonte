@@ -18,8 +18,8 @@ export class ResourceService<T extends Resource> {
     return this.httpClient.get(`${this.url}/${id}`) as Observable<T>;
   }
 
-  index(): Observable<Page<T>> {
-    return this.httpClient.get(`${this.url}`) as Observable<Page<T>>;
+  index(page = 0, size = 20): Observable<Page<T>> {
+    return this.httpClient.get(`${this.url}?page=${page}&size=${size}`) as Observable<Page<T>>;
   }
 
   destroy(id: number) {

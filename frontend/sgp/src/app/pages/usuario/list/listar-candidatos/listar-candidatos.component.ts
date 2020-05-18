@@ -20,9 +20,14 @@ export class ListarCandidatosComponent implements OnInit {
   cols: any[];
   rows: number = 20;
   first: number = 0;
+  totalDeElementos = 1;
   listCandidatos: Usuario[];
+  notFilteredListCandidatos: Usuario[];
   candidatoSelecionado: Usuario;
   selectedCandidatos: Usuario[] = [];
+
+  lastPage = 0;
+  lastSize = 0;
   
   constructor(
     private alert: AlertService,
@@ -31,11 +36,11 @@ export class ListarCandidatosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.atualizarLista();
+    this.atualizarLista(0, 20);
     this.inicializarTabela();
   }
 
-  inicializarTabela() {
+  inicializarTabela(): void {
     this.cols = [
       { field: 'id', header: 'ID', width: '10%' },
       { field: 'nome', header: 'Nome', width: '45%' },
@@ -43,10 +48,14 @@ export class ListarCandidatosComponent implements OnInit {
     ];
   }
 
-  atualizarLista(): void {
-    this.usuarioService.index().subscribe(
+  atualizarLista(page = this.lastPage, size = this.lastSize): void {
+    this.lastPage = page;
+    this.lastSize = size;
+    this.usuarioService.index(page, size).subscribe(
       (response) => {
         this.listCandidatos = response.content;
+        this.notFilteredListCandidatos = response.content;
+        this.totalDeElementos = response.totalElements;
         this.selectedCandidatos = [];
       },
       () => {
@@ -91,23 +100,12 @@ export class ListarCandidatosComponent implements OnInit {
     });
   }
 
-  next(): void {
-    this.first = this.first + this.rows;
+  onPageChange(event): void {
+    this.atualizarLista(event.page, event.rows);
   }
 
-  prev(): void {
-    this.first = this.first - this.rows;
-  }
-
-  reset(): void {
-    this.first = 0;
-  }
-
-  isLastPage(): boolean {
-    return this.first === this.listCandidatos.length - this.rows;
-  }
-
-  isFirstPage(): boolean {
-    return this.first === 0;
+  filterFields(field: string, filter: string): void {
+    this.listCandidatos = this.notFilteredListCandidatos
+      .filter(candidato => `${candidato[field]}`.toLowerCase().includes(filter.toLowerCase()));
   }
 }
