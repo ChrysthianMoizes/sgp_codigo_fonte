@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 public interface TipoQuestaoDropdownMapper extends EntityMapper<SelectDTO, TipoQuestao> {
 
     @Override
-    @Mapping(target = "value", source = "id")
-    @Mapping(target = "label", source = "descricao")
+    @Mapping(source = "id", target = "value")
+    @Mapping(source = "descricao", target = "label")
     SelectDTO toDto(TipoQuestao entity);
 
 }
