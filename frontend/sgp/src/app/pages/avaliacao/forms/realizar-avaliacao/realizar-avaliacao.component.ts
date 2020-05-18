@@ -44,14 +44,8 @@ export class RealizarAvaliacaoComponent implements OnInit {
           alternativa4: 'alternativa 4',
           alternativa5: 'alternativa 5',
           resposta: null,
-          senioridade: {
-            id: 5,
-            descricao: 'junior',
-          },
-          tipoQuestao: {
-            id: 2,
-            descricao: 'codigo',
-          },
+          idSenioridade: 5,
+          idTipoQuestao: 2
         },
 
         {
@@ -63,14 +57,8 @@ export class RealizarAvaliacaoComponent implements OnInit {
           alternativa4: 'alternativa 4',
           alternativa5: 'alternativa 5',
           resposta: null,
-          senioridade: {
-            id: 5,
-            descricao: 'junior',
-          },
-          tipoQuestao: {
-            id: 2,
-            descricao: 'codigo',
-          },
+          idSenioridade: 5,
+          idTipoQuestao: 2
         },
 
         {
@@ -82,14 +70,8 @@ export class RealizarAvaliacaoComponent implements OnInit {
           alternativa4: 'alternativa 4',
           alternativa5: 'alternativa 5',
           resposta: null,
-          senioridade: {
-            id: 5,
-            descricao: 'junior',
-          },
-          tipoQuestao: {
-            id: 2,
-            descricao: 'codigo',
-          },
+          idSenioridade: 5,
+          idTipoQuestao: 2
         },
       ],
     },

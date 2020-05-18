@@ -14,7 +14,7 @@ import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
   providers: [DialogService],
 })
 export class ListarProvasComponent implements OnInit {
-  prova = {} as Prova;
+  prova: Prova = new Prova();
   provas: Prova[];
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
@@ -62,6 +62,11 @@ export class ListarProvasComponent implements OnInit {
   atualizarListagem(): void {
     // atualizar a lista com o banco
   }
+
+  excluir() {
+      this.excluirProva(this.prova);
+    }
+
 
   excluirProva(prova: Prova) {
     this.confirmationService.confirm({

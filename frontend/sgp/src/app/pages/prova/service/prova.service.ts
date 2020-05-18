@@ -8,11 +8,24 @@ import { ResourceService } from 'src/app/services/resource.service';
 @Injectable({
   providedIn: 'root',
 })
+
+
+
 export class ProvaService extends ResourceService<Prova>{
 
   constructor(private http: HttpClient) {
     super(http, '/api/provas');
    }
+
+   private provas: Prova[];
+
+   findByTitulo(query: string): Observable<Prova[]> {
+    return of(
+      this.provas.filter((elem) =>
+        elem.titulo.toLowerCase().includes(query.toLowerCase())
+      ) as Prova[]
+    );
+  }
 
 
 /*   index(page = 0, size = 20): Observable<Prova[]> {
@@ -47,13 +60,7 @@ export class ProvaService extends ResourceService<Prova>{
         catchError(this.handleError))
   }
 
-  findByTitulo(query: string): Observable<Prova[]> {
-    return of(
-      PROVAS.filter((elem) =>
-        elem.titulo.toLowerCase().includes(query.toLowerCase())
-      ) as Prova[]
-    );
-  }
+
 
   excluirProva(prova: Prova) {
     return this.http.delete<Prova>(this.url + '/' + prova.id)

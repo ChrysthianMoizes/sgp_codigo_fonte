@@ -53,7 +53,7 @@ export class CadastrarProvaComponent implements OnInit {
       .subscribe((total) => (this.totalDeQuestoes = total));
     this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
-      percentualDeAprovacao: ['', Validators.required],
+      percentualAprovacao: ['', Validators.required],
     });
   }
 
@@ -61,7 +61,7 @@ export class CadastrarProvaComponent implements OnInit {
     this.formulario = this.formBuilder.group(
       {
         titulo: [null, [Validators.required]],
-        percentualDeAprovacao: [null, [Validators.required]],
+        percentualAprovacao: [null, [Validators.required]],
       },
       { updateOn: "blur" }
     );
@@ -136,14 +136,14 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    const percentualDeAprovacao = +this.formulario.get('percentualDeAprovacao')
+    const percentualAprovacao = +this.formulario.get('percentualAprovacao')
       .value;
 
     return (
       this.formulario.valid &&
       this.destinoQuestoes.length > 0 &&
-      percentualDeAprovacao <= 100 &&
-      percentualDeAprovacao >= 0
+      percentualAprovacao <= 100 &&
+      percentualAprovacao >= 0
     );
   }
 
@@ -175,7 +175,7 @@ export class CadastrarProvaComponent implements OnInit {
       });
       this.preencherFormParaEdicao();
       this.formulario.get('titulo').enable();
-      this.formulario.get('percentualDeAprovacao').enable();
+      this.formulario.get('percentualAprovacao').enable();
       // ediçao
     } else {
       console.log(this.visualizando);
@@ -187,7 +187,7 @@ export class CadastrarProvaComponent implements OnInit {
       });
       this.preencherFormParaEdicao();
       this.formulario.get('titulo').disable();
-      this.formulario.get('percentualDeAprovacao').disable();
+      this.formulario.get('percentualAprovacao').disable();
       //visualizar
     }
     if (this.modoDialog > 1) {
@@ -197,7 +197,7 @@ export class CadastrarProvaComponent implements OnInit {
       this.preencherFormParaEdicao();
       if (this.modoDialog === 3) {
         this.formulario.get('titulo').disable();
-        this.formulario.get('percentualDeAprovacao').disable();
+        this.formulario.get('percentualAprovacao').disable();
       }
     } else {
       console.log('Cadastrar nova prova.');

@@ -110,14 +110,8 @@ export class QuestaoService {
       alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: {
-        id: 1,
-        descricao: 'Pleno',
-      },
-      tipoQuestao: {
-        id: 1,
-        descricao: 'Codigo',
-      },
+      idSenioridade: 1,
+      idTipoQuestao: 1
     },
     {
       id: 2,
@@ -134,14 +128,8 @@ export class QuestaoService {
       alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 4,
-      senioridade: {
-        id: 1,
-        descricao: 'Pleno',
-      },
-      tipoQuestao: {
-        id: 1,
-        descricao: 'Codigo',
-      },
+      idSenioridade: 1,
+      idTipoQuestao: 1
     },
     {
       id: 3,
@@ -158,14 +146,8 @@ export class QuestaoService {
       alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: {
-        id: 1,
-        descricao: 'Pleno',
-      },
-      tipoQuestao: {
-        id: 1,
-        descricao: 'Codigo',
-      },
+      idSenioridade: 1,
+      idTipoQuestao: 1
     },
     {
       id: 4,
@@ -182,14 +164,8 @@ export class QuestaoService {
       alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 4,
-      senioridade: {
-        id: 1,
-        descricao: 'Pleno',
-      },
-      tipoQuestao: {
-        id: 1,
-        descricao: 'Codigo',
-      },
+      idSenioridade: 1,
+      idTipoQuestao: 1
     },
     {
       id: 5,
@@ -206,14 +182,8 @@ export class QuestaoService {
       alternativa5:
         'In augue ipsum, faucibus eget mauris eget, elementum viverra nulla.',
       resposta: 2,
-      senioridade: {
-        id: 1,
-        descricao: 'Pleno',
-      },
-      tipoQuestao: {
-        id: 1,
-        descricao: 'Codigo',
-      },
+      idSenioridade: 1,
+      idTipoQuestao: 1
     },
   ];
 
@@ -255,8 +225,8 @@ export class QuestaoService {
         element.alternativa5 = questao.alternativa5;
         element.resposta = questao.resposta;
         element.descricao = questao.descricao;
-        element.senioridade = questao.senioridade;
-        element.tipoQuestao = questao.tipoQuestao;
+        element.idSenioridade = questao.idSenioridade;
+        element.idTipoQuestao = questao.idTipoQuestao;
         return of(element);
       }
     });
