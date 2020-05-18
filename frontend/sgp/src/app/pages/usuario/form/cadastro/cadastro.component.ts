@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -91,9 +91,10 @@ export class CadastroComponent implements OnInit, OnChanges {
   }
 
   editar(usuario: Usuario): void {
+    
     this.loadingService.activate();
     this.usuarioService.update(usuario).subscribe({
-      next: () => this.salvar.emit(),
+      next: () => this.salvar.emit(usuario),
       error: err => this.tratarError(err)
     }).add(() => this.loadingService.deactivate());
   }
