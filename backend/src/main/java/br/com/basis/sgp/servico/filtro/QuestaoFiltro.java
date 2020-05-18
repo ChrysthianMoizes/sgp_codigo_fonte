@@ -22,8 +22,8 @@ public class QuestaoFiltro implements EntityFiltro<Questao> {
 
     private Long id;
     private String descricao;
-    private String senioridade;
-    private String tipoQuestao;
+    private Long senioridade;
+    private Long tipoQuestao;
 
     @Override
     public Specification<Questao> filter() {
@@ -36,16 +36,16 @@ public class QuestaoFiltro implements EntityFiltro<Questao> {
             Predicate predicate = builder.equal(root.get(Questao_.id), id);
             predicates.add(predicate);
         }
-        if (!StringUtils.isEmpty(descricao)) {
+        if (StringUtils.isNotEmpty(descricao)) {
             Predicate predicate = builder.like(root.get(Questao_.descricao), "%" + descricao.toLowerCase() + "%");
             predicates.add(predicate);
         }
-        if (!StringUtils.isEmpty(senioridade)) {
-            Predicate predicate = builder.like(root.join("senioridade").get(Senioridade_.DESCRICAO), "%" + senioridade.toLowerCase() + "%");
+        if (ObjectUtils.isNotEmpty(senioridade)) {
+            Predicate predicate = builder.equal(root.join("senioridade").get(Senioridade_.ID), senioridade);
             predicates.add(predicate);
         }
-        if (!StringUtils.isEmpty(tipoQuestao)) {
-            Predicate predicate = builder.like(root.join("tipoQuestao").get(TipoQuestao_.DESCRICAO), "%" + tipoQuestao.toLowerCase() + "%");
+        if (ObjectUtils.isNotEmpty(tipoQuestao)) {
+            Predicate predicate = builder.equal(root.join("tipoQuestao").get(TipoQuestao_.ID), tipoQuestao);
             predicates.add(predicate);
         }
         return predicates;
