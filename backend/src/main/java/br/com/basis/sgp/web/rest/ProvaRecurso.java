@@ -31,7 +31,7 @@ public class ProvaRecurso {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProvaDTO> visualizarProva(@PathVariable("id") Long id){
-        ProvaDTO provaDTO = provaServico.exibirPorID(id);
+        ProvaDTO provaDTO = provaServico.exibirPorId(id);
         return ResponseEntity.ok(provaDTO);
     }
 
