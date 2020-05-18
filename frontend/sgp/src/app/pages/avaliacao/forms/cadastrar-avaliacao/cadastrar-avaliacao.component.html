@@ -8,8 +8,9 @@
   <form [formGroup]="avaliacaoForm">
     <section>
       <span class="ui-float-label">
-        <p-autoComplete formControlName="usuario" [(ngModel)]="avaliacao.idCandidato" [suggestions]="candidatosFiltrados"
-          (completeMethod)="updateUsuariosFiltrados($event)" field="label" id="float-input"></p-autoComplete>
+        <p-autoComplete formControlName="usuario" [(ngModel)]="avaliacao.idCandidato"
+          [suggestions]="candidatosFiltrados" (completeMethod)="updateUsuariosFiltrados($event)" field="label"
+          id="float-input"></p-autoComplete>
         <label for="float-input">
           Usuário
         </label>

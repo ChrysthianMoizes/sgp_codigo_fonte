@@ -2,6 +2,9 @@ import { CadastrarAvaliacaoComponent } from './../../forms/cadastrar-avaliacao/c
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Avaliacao } from '../../models/avaliacao';
 import { AvaliacaoService } from '../../service/avaliacao.service';
+import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato';
+import { catchError } from 'rxjs/operators';
+import { AlertService } from 'src/app/components/alert/alert.service';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -9,23 +12,61 @@ import { AvaliacaoService } from '../../service/avaliacao.service';
   styleUrls: ['./listar-avaliacao.component.css'],
 })
 export class ListarAvaliacaoComponent implements OnInit {
-  constructor(private avaliacaoService: AvaliacaoService) { }
+  constructor(
+    private avaliacaoService: AvaliacaoService,
+    private alert: AlertService
+  ) { }
 
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
+
   viewOnly: boolean;
+  filtro = new FiltroCandidato();
+  totalElementos: number;
   avaliacao: Avaliacao[];
-  avaliacaoSelecionada: Avaliacao;
+
+  avaliacaoSelecionada = new Array<Avaliacao>();
   avaliacoesRecebidas: Avaliacao[];
+  cols = [
+    { field: 'id', header: 'Código' },
+    { field: 'titulo', header: 'Título' },
+    { field: 'candidato', header: 'Candidato' },
+    { field: 'data', header: 'Data' },
+    { field: 'aproveitamento', header: 'Aproveitamento' },
+    { field: 'situacao', header: 'Situação' }
+  ];
+
   ngOnInit(): void {
-    this.avaliacaoService.index().subscribe({
-      next: (avaliacoes) => {
-        this.avaliacoesRecebidas = avaliacoes;
+    this.carregarAvaliacoes();
+  }
+
+  atualizarLista(event = null): void {
+
+    const pageable = new Pageable(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'nome');
+    }
+
+    this.avaliacaoService.index(this.filtro, pageable).subscribe(
+      (response) => {
+        this.avaliacoesRecebidas = response.content;
+        this.totalElementos = response.totalElements;
+        this.avaliacaoSelecionada = [];
       },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+      () => {
+        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
+      }
+    );
+  }
+
+  carregarAvaliacoes(): void {
+    this.avaliacaoService.index()
+      .subscribe(response => {
+        this.avaliacoesRecebidas = response;
+      })
   }
 
   isOneSelected(): boolean {

@@ -70,13 +70,13 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     });
   }
 
-  iniciarTitulo():void {
+  iniciarTitulo(): void {
     this.titulo = this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'
   }
 
   carregarFiltroCandidato(): void {
     this.usuarioService.listarCandidatosDropdown().pipe(
-      catchError( error => {
+      catchError(error => {
         this.alertService.montarAlerta("error", 'Erro', error.message);
         return error;
       })
@@ -94,9 +94,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
         return error;
       })
     )
-    .subscribe( response => {
-      this.provasFiltradas = response;
-    })
+      .subscribe(response => {
+        this.provasFiltradas = response;
+      })
   }
 
   validarForm() {
@@ -173,36 +173,22 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   updateUsuariosFiltrados(event): void {
     this.usuarioService.findByNome(event.query)
-      .pipe( catchError(error => {
-        this.alertService.montarAlerta('error', 'Erro', error.message);
+      .pipe(catchError(error => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao filtrar nome de candidato');
         return error;
-      }))
-      .subscribe((usuarios) => (this.candidatosFiltrados = usuarios));
+      })
+      )
+      .subscribe(response => {
+        this.candidatosFiltrados = response;
+      })
   }
 
   updateProvasFiltradas(event): void {
     this.provaService.findByTitulo(event.query)
-      .pipe( catchError(error => {
+      .pipe(catchError(error => {
         this.alertService.montarAlerta('error', 'Erro', error.message);
         return error;
       }))
       .subscribe((provas) => (this.provasFiltradas = provas));
   }
-
-  // get candidatoSelecionado(): Usuario {
-  //   const candidato = this.avaliacaoForm.get('usuario').value;
-  //   if (typeof candidato === 'object') {
-  //     return candidato;
-  //   }
-  //   return null;
-  // }
-
-  // get provaSelecionada(): Prova {
-  //   const prova = this.avaliacaoForm.get('prova').value;
-  //   if (typeof prova === 'object') {
-  //     return prova;
-  //   }
-  //   return null;
-  // }
-
 }
