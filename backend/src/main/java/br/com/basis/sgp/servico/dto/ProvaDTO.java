@@ -1,17 +1,14 @@
 package br.com.basis.sgp.servico.dto;
 
-import br.com.basis.sgp.dominio.Questao;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class ProvaCadastroDTO {
+public class ProvaDTO {
 
     private Long id;
 
@@ -19,6 +16,6 @@ public class ProvaCadastroDTO {
 
     private BigDecimal percentual;
 
-    private List<Questao> questoes;
+    private List<SelectDTO> questoes;
 
 }

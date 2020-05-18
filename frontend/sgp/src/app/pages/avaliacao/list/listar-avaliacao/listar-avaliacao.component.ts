@@ -50,16 +50,18 @@ export class ListarAvaliacaoComponent implements OnInit {
       pageable.setSort(1, 'nome');
     }
 
-    this.avaliacaoService.index(this.filtro, pageable).subscribe(
-      (response) => {
-        this.avaliacoesRecebidas = response.content;
-        this.totalElementos = response.totalElements;
-        this.avaliacaoSelecionada = [];
-      },
-      () => {
+    this.avaliacaoService.index(this.filtro, pageable)
+      .pipe(catchError(error => {
         this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
-      }
-    );
+        return error;
+      }))
+      .subscribe(
+        (response) => {
+          this.avaliacoesRecebidas = response.content;
+          this.totalElementos = response.totalElements;
+          this.avaliacaoSelecionada = [];
+        }
+      );
   }
 
   carregarAvaliacoes(): void {

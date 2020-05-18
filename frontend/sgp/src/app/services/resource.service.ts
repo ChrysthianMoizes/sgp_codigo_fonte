@@ -19,7 +19,7 @@ export class ResourceService<T extends Resource> {
       .put<T>(`${this.url}`, item);
   }
 
-  show(id: string): Observable<T> {
+  show(id: number): Observable<T> {
     return this.httpClient.get(`${this.url}/${id}`) as Observable<T>;
   }
 
@@ -27,7 +27,7 @@ export class ResourceService<T extends Resource> {
     return this.httpClient.get<T[]>(`${this.url}`) as Observable<T[]>;
   }
 
-  destroy(id: string) {
+  destroy(id: number) {
     return this.httpClient.delete(`${this.url}/${id}`);
   }
 }

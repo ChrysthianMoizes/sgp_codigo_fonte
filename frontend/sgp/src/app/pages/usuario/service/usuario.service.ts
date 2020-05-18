@@ -21,7 +21,7 @@ export class UsuarioService extends ResourceService<Usuario> {
     return this.http.get("/api/usuarios/filtro");
   }
 
-  listarCandidatosDropdown(): Observable<any>{
+  listarCandidatosDropdown(): Observable<any> {
     return this.http.get("/api/usuarios/dropdown");
   }
 
