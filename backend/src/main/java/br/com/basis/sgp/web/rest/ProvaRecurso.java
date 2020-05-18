@@ -4,6 +4,7 @@ import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
+import br.com.basis.sgp.servico.filtro.ProvaFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +24,8 @@ public class ProvaRecurso {
     private final ProvaServico provaServico;
 
     @GetMapping
-    public ResponseEntity<Page<ProvaListagemDTO>> listarProvasPaginadas(Pageable pageable){
-        Page<ProvaListagemDTO> provas = provaServico.listarProvas(pageable);
+    public ResponseEntity<Page<ProvaListagemDTO>> listarProvasPaginadas(@ModelAttribute ProvaFiltro filtro, Pageable pageable){
+        Page<ProvaListagemDTO> provas = provaServico.listarProvas(filtro,pageable);
         return ResponseEntity.ok(provas);
     }
 
@@ -43,7 +44,7 @@ public class ProvaRecurso {
     @PostMapping
     public ResponseEntity<ProvaDTO> Cadastrar(@Valid @RequestBody ProvaDTO provaDTO) throws URISyntaxException {
         ProvaDTO provaCadastro = provaServico.salvar(provaDTO);
-        return ResponseEntity.created(new URI("/provas/" + provaCadastro.getId())).body(provaCadastro);
+        return ResponseEntity.created(new URI("/provas/" + provaCadastro.getId())).body(null);
     }
 
     @PutMapping

@@ -7,6 +7,7 @@ import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
+import br.com.basis.sgp.servico.filtro.ProvaFiltro;
 import br.com.basis.sgp.servico.mapper.ProvaDropdownMapper;
 import br.com.basis.sgp.servico.mapper.ProvaListagemMapper;
 import br.com.basis.sgp.servico.mapper.ProvaMapper;
@@ -29,8 +30,8 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaDropdownMapper provaDropdownMapper;
 
     @Override
-    public Page<ProvaListagemDTO> listarProvas(Pageable pageable) {
-        Page<Prova> provas = provaRepositorio.findAll(pageable);
+    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
+        Page<Prova> provas = provaRepositorio.findAll(provaFiltro.filter(),pageable);
         return provas.map(provaListagemMapper::toDto);
     }
 
