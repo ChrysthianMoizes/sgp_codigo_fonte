@@ -1,4 +1,7 @@
 export class FiltroCandidato {
-  nome: string;
-  email: string;
+  constructor(
+    public id?: number,
+    public nome?: string,
+    public email?: string
+  ) {}
 }
