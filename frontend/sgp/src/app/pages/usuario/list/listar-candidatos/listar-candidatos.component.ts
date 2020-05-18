@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ConfirmationService } from 'primeng';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
 import { VisualizarCandidatoComponent } from '../../form/visualizar-candidato/visualizar-candidato.component';
@@ -11,21 +12,23 @@ import { UsuarioService } from '../../service/usuario.service';
   styleUrls: ['./listar-candidatos.component.css'],
 })
 export class ListarCandidatosComponent implements OnInit {
-  constructor(
-    private alert: AlertService,
-    private usuarioService: UsuarioService
-  ) {}
-
+  
   @ViewChild('VisualizarCandidato')
   visualizarCandidato: VisualizarCandidatoComponent;
 
-  cols: any[];
   filtro = new FiltroCandidato();
+  cols: any[];
   rows: number = 20;
   first: number = 0;
   listCandidatos: Usuario[];
   candidatoSelecionado: Usuario;
   selectedCandidatos: Usuario[] = [];
+  
+  constructor(
+    private alert: AlertService,
+    private usuarioService: UsuarioService,
+    private confirmationService: ConfirmationService
+  ) { }
 
   ngOnInit(): void {
     this.atualizarLista();
@@ -44,8 +47,9 @@ export class ListarCandidatosComponent implements OnInit {
     this.usuarioService.index().subscribe(
       (response) => {
         this.listCandidatos = response.content;
+        this.selectedCandidatos = [];
       },
-      (erro) => {
+      () => {
         this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
       }
     );
@@ -58,7 +62,7 @@ export class ListarCandidatosComponent implements OnInit {
         error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
       })
     )
-    this.selectedCandidatos = [];
+    this.atualizarLista();
   }
 
   verCandidato(): void {
@@ -68,18 +72,23 @@ export class ListarCandidatosComponent implements OnInit {
         error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
       })
     );
-    this.selectedCandidatos = [];
+    this.atualizarLista();
   }
 
   deleteCandidato(): void {
-    this.selectedCandidatos.forEach((candidato) =>
-      this.usuarioService.destroy(candidato.id).subscribe({
-        next: () => this.alert.montarAlerta('success', 'Sucesso', `${candidato.nome} excluido com sucesso!`),
-        error: () => this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${candidato.nome}`)
-      })
-    );
-    this.selectedCandidatos = [];
-    this.atualizarLista();
+    this.confirmationService.confirm({
+      message: 'Você tem certeza?',
+      accept: () => {
+        this.selectedCandidatos.forEach((candidato) =>
+          this.usuarioService.destroy(candidato.id).subscribe({
+            next: () => {
+              this.atualizarLista();
+            },
+            error: () => this.alert.montarAlerta('error', 'Erro', `Não foi possível excluir o candidato ${candidato.nome}`)
+          })
+        );
+      }
+    });
   }
 
   next(): void {

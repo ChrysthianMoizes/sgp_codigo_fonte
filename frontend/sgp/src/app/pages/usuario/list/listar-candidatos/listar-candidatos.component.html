@@ -1,3 +1,6 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<app-visualizar-candidato #VisualizarCandidato (candidatoAtualizado)="atualizarLista()"></app-visualizar-candidato>
+
 <div class="p-grid">
   <div class="p-col-11">
     <p-table [columns]="cols" [value]="listCandidatos" [resizableColumns]="true" [paginator]="true" [rows]="20"
@@ -48,5 +51,3 @@
     ></button>
   </div>
 </div>
-
-<app-visualizar-candidato #VisualizarCandidato (candidatoAtualizado)="atualizarLista()"></app-visualizar-candidato>
