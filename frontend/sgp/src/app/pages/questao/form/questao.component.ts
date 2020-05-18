@@ -6,6 +6,7 @@ import {QuestaoDTO} from '../models/questao.dto';
 import {QuestaoService} from '../service/questao.service';
 import {SenioridadeService} from '../service/senioridade.service';
 import {TipoQuestaoService} from '../service/tipo-questao.service';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 
 @Component({
   selector: 'app-questao',
@@ -29,7 +30,8 @@ export class QuestaoComponent implements OnInit {
     private formBuilder: FormBuilder,
     private senioridadeService: SenioridadeService,
     private tipoQuestaoService: TipoQuestaoService,
-    public questaoService: QuestaoService
+    public questaoService: QuestaoService,
+    public loadingService: LoadingService
   ) {
   }
 
@@ -87,6 +89,7 @@ export class QuestaoComponent implements OnInit {
   }
 
   salvar() {
+    this.loadingService.activate();
     if (typeof this.questao.id === 'undefined' || this.questao.id == null) {
       this.cadastar(this.questao);
     } else {
@@ -103,6 +106,7 @@ export class QuestaoComponent implements OnInit {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao editar questão' + error.defaultMessage);
       },
       () => {
+        this.loadingService.deactivate();
         this.exibir = false;
       }
     );
@@ -117,6 +121,7 @@ export class QuestaoComponent implements OnInit {
         this.alertService.montarAlerta('error', 'Sucesso', 'Erro ao cadastrar questão' + error.defaultMessage);
       },
       () => {
+        this.loadingService.deactivate();
         this.exibir = false;
       }
     );
@@ -124,8 +129,6 @@ export class QuestaoComponent implements OnInit {
 
   cancelar() {
     this.exibir = false;
-    this.questao = null;
-
   }
 
   construirForm() {
@@ -208,13 +211,15 @@ export class QuestaoComponent implements OnInit {
 
 
   buscarPorId(id: number): void {
+    this.loadingService.activate();
     this.questaoService.show(id).subscribe(
       (response) => {
         this.questao = response;
       },
       () => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar a questão de código ' + id);
-      }
+      },
+      () => this.loadingService.deactivate()
     );
   }
 
