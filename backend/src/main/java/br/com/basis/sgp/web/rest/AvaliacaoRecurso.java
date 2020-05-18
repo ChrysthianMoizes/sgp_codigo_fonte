@@ -2,11 +2,7 @@ package br.com.basis.sgp.web.rest;
 import br.com.basis.sgp.servico.AvalicaoServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
-import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
-import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
-import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
-import br.com.basis.sgp.servico.dto.UsuarioDTO;
-import br.com.basis.sgp.servico.filtro.UsuarioFiltro;
+import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/avaliacao")
@@ -33,16 +28,11 @@ public class AvaliacaoRecurso {
     private final AvalicaoServico avaliacaoServico;
 
     @GetMapping
-    public ResponseEntity<List<AvaliacaoListagemDTO>> listar(){
-        List<AvaliacaoListagemDTO> provas = avaliacaoServico.listar();
-        return ResponseEntity.ok(provas);
-    }
+    public ResponseEntity<Page<AvaliacaoListagemDTO>> listar(@ModelAttribute AvaliacaoFiltro filtro, Pageable pageable){
+        Page<AvaliacaoListagemDTO> page = avaliacaoServico.listar(filtro, pageable);
 
-//    @GetMapping
-//    public ResponseEntity<Page<UsuarioDTO>> listarCandidatos(@ModelAttribute UsuarioFiltro filtro, Pageable pageable) {
-//        Page<UsuarioDTO> page = usuarioServico.listarCandidatos(filtro, pageable);
-//        return ResponseEntity.ok(page);
-//    }
+        return ResponseEntity.ok(page);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<AvaliacaoCadastroDTO> obterPorId(@PathVariable("id") Long id) {
