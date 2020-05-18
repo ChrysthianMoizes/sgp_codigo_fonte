@@ -10,7 +10,7 @@
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
     <p-table
-      [(selection)]="provasSelecionadas"
+      [(selection)]="selectedProvas"
       [columns]="definicaoColunas"
       [value]="listProvas"
       [resizableColumns]="true"
@@ -28,28 +28,31 @@
 
         <tr>
           <th>
-            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="prova.id"
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
               (keyup.enter)="atualizarLista()" pInputText />
           </th>
           <th>
-            <input pInputText placeholder="Titulo" style="width: 100%;" [(ngModel)]="prova.titulo"
+            <input pInputText placeholder="Titulo" style="width: 100%;" [(ngModel)]="filtro.titulo"
               (keyup.enter)="atualizarLista()" pInputText />
           </th>
           <th>
-            <input pInputText placeholder="Percentaul de Aprovação" style="width: 100%;" [(ngModel)]="prova.percentualAprovacao"
+            <input pInputText placeholder="Percentaul de Aprovação" style="width: 100%;" [(ngModel)]="filtro.percentual"
               (keyup.enter)="atualizarLista()" pInputText />
           </th>
         </tr>
 
       </ng-template>
-      <ng-template let-colunas="columns" let-prova pTemplate="body">
-        <tr [pSelectableRow]="prova">
+      <ng-template let-colunas="columns" let-prova pTemplate="body" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="prova" [pSelectableRowIndex]="rowIndex">
           <td *ngFor="let coluna of colunas">
             {{ prova[coluna.field] }}
           </td>
         </tr>
       </ng-template>
     </p-table>
+    <p-paginator [totalRecords]="totalDeElementos" [rows]="20" (onPageChange)="atualizarLista($event)"
+    [rowsPerPageOptions]="[20, 50, 100]">
+  </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
     <button
@@ -57,7 +60,7 @@
       class="ui-button-rounded"
       icon="pi pi-trash"
       id="button-delete"
-      (click)="excluir()"
+      (click)="excluirProva()"
       pButton
     ></button>
     <button

@@ -16,15 +16,9 @@ import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
   providers: [DialogService],
 })
 export class ListarProvasComponent implements OnInit {
-  prova: Prova = new Prova();
-  provas: Prova[];
+  filtro = new FiltroProva();
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
-
-  @ViewChild('dialogProvaForm') dialogProvaForm: CadastrarProvaComponent;
-
-  filtro = new FiltroProva();
-  cols: any[];
   rows: number = 20;
   first: number = 0;
   totalDeElementos = 1;
@@ -35,6 +29,8 @@ export class ListarProvasComponent implements OnInit {
 
   lastPage = 0;
   lastSize = 0;
+
+  @ViewChild('dialogProvaForm') dialogProvaForm: CadastrarProvaComponent;
 
   constructor(
     private provaService: ProvaService,
@@ -65,7 +61,7 @@ export class ListarProvasComponent implements OnInit {
       pageable.setSort(1, 'titulo');
     }
 
-    this.provaService.index(this.prova, pageable).subscribe(
+    this.provaService.index(this.filtro, pageable).subscribe(
       (response) => {
         this.listProvas = response.content;
         this.notFilteredListProvas = response.content;
@@ -73,17 +69,17 @@ export class ListarProvasComponent implements OnInit {
         this.selectedProvas = [];
       },
       () => {
-        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar provas');
       }
     );
   }
 
   isOneSelected(): boolean {
-    return this.provasSelecionadas && this.provasSelecionadas.length === 1;
+    return this.selectedProvas && this.selectedProvas.length === 1;
   }
 
   isAtLeastOneSelected(): boolean {
-    return this.provasSelecionadas && this.provasSelecionadas.length >= 1;
+    return this.selectedProvas && this.selectedProvas.length >= 1;
   }
 
   visualizarProva(): void {
@@ -102,24 +98,20 @@ export class ListarProvasComponent implements OnInit {
     // atualizar a lista com o banco
   }
 
-  excluir() {
-      this.excluirProva(this.prova);
-    }
-
-
-  excluirProva(prova: Prova) {
+  excluirProva(): void {
     this.confirmationService.confirm({
       message: 'Deseja realmente excluir?',
       header: 'Excluir prova',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.provaService.destroy(this.prova.id).subscribe(() => {
-          this.provaService.show(this.prova.id);
-        });
-        this.alertService.montarAlerta(
-          'success',
-          'Sucesso!',
-          'Prova excluída com sucesso.'
+        this.selectedProvas.forEach((prova) =>
+          this.provaService.destroy(prova.id).subscribe({
+            next: () => {
+              this.atualizarLista();
+
+            },
+            error: () => this.alertService.montarAlerta('error', 'Erro', `Não foi possível excluir a prova ${prova.id}`)
+          })
         );
       },
     });
