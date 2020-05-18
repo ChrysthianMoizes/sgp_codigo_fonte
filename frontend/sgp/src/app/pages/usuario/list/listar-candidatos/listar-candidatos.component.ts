@@ -5,6 +5,8 @@ import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.m
 import { VisualizarCandidatoComponent } from '../../form/visualizar-candidato/visualizar-candidato.component';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../service/usuario.service';
+import { Page } from 'src/app/models/page.model';
+import { Pageable } from 'src/app/util/pageable-request';
 
 @Component({
   selector: 'app-listar-candidatos',
@@ -12,7 +14,7 @@ import { UsuarioService } from '../../service/usuario.service';
   styleUrls: ['./listar-candidatos.component.css'],
 })
 export class ListarCandidatosComponent implements OnInit {
-  
+
   @ViewChild('VisualizarCandidato')
   visualizarCandidato: VisualizarCandidatoComponent;
 
@@ -28,7 +30,7 @@ export class ListarCandidatosComponent implements OnInit {
 
   lastPage = 0;
   lastSize = 0;
-  
+
   constructor(
     private alert: AlertService,
     private usuarioService: UsuarioService,
@@ -36,7 +38,7 @@ export class ListarCandidatosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.atualizarLista(0, 20);
+    this.atualizarLista(null);
     this.inicializarTabela();
   }
 
@@ -48,10 +50,17 @@ export class ListarCandidatosComponent implements OnInit {
     ];
   }
 
-  atualizarLista(page = this.lastPage, size = this.lastSize): void {
-    this.lastPage = page;
-    this.lastSize = size;
-    this.usuarioService.index(page, size).subscribe(
+  atualizarLista(event = null): void {
+
+    const pageable = new Pageable(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'nome');
+    }
+
+    this.usuarioService.index(this.filtro, pageable).subscribe(
       (response) => {
         this.listCandidatos = response.content;
         this.notFilteredListCandidatos = response.content;
@@ -63,7 +72,7 @@ export class ListarCandidatosComponent implements OnInit {
       }
     );
   }
-  
+
   editarCandidato(): void {
     this.selectedCandidatos.forEach(candidato =>
       this.usuarioService.show(candidato.id).subscribe({
@@ -98,14 +107,5 @@ export class ListarCandidatosComponent implements OnInit {
         );
       }
     });
-  }
-
-  onPageChange(event): void {
-    this.atualizarLista(event.page, event.rows);
-  }
-
-  filterFields(field: string, filter: string): void {
-    this.listCandidatos = this.notFilteredListCandidatos
-      .filter(candidato => `${candidato[field]}`.toLowerCase().includes(filter.toLowerCase()));
   }
 }

@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Resource } from '../models/resource.model';
 import { Page } from '../models/page.model';
+import { Pageable } from '../util/pageable-request';
 
 export class ResourceService<T extends Resource> {
   constructor(private httpClient: HttpClient, protected url: string) {}
@@ -18,10 +19,8 @@ export class ResourceService<T extends Resource> {
     return this.httpClient.get(`${this.url}/${id}`) as Observable<T>;
   }
 
-  index(page = 0, size = 20): Observable<Page<T>> {
-    return this.httpClient.get(
-      `${this.url}?page=${page}&size=${size}`
-    ) as Observable<Page<T>>;
+  index(filtro: any, pageable: Pageable): Observable<Page<T>> {
+    return this.httpClient.get(`${this.url}`, { params:  Object.assign(filtro, pageable) }) as Observable<Page<T>>;
   }
 
   destroy(id: number) {
