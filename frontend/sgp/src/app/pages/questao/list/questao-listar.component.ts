@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService, LazyLoadEvent} from 'primeng';
+import {DialogService, LazyLoadEvent, ConfirmationService} from 'primeng';
 import {Page} from 'src/app/models/page.model';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
@@ -7,6 +7,8 @@ import {QuestaoComponent} from '../form/questao.component';
 import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
 import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
+import { LoadingService } from 'src/app/components/loading/loading.service';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-questao-listar',
@@ -15,20 +17,22 @@ import {QuestaoService} from '../service/questao.service';
   providers: [DialogService],
 })
 
-
 export class QuestaoListarComponent implements OnInit {
 
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   questaoSelecionada: QuestaoListagemDTO;
   questoes: Page<QuestaoListagemDTO>;
+
   itensPorPagina: number = 20;
   totalRegistros: number;
 
   constructor(
     private alertService: AlertService,
     public questaoService: QuestaoService,
-    public questaoListarService: QuestaoListarService
+    public questaoListarService: QuestaoListarService,
+    public confirmation: ConfirmationService,
+    public loadingService: LoadingService
   ) {
   }
 
@@ -41,6 +45,7 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   excluir(id: number): void {
+    this.loadingService.activate();
     this.questaoService
       .destroy(id)
       .subscribe(
@@ -48,18 +53,27 @@ export class QuestaoListarComponent implements OnInit {
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
           this.preencherQuestoes();
         },
+        (erro) => {
+          this.alertService.montarAlerta('error', 'Erro', 'Erro ao excluir questão'+ erro.defaultMessage);
+        },
         () => {
-          this.alertService.montarAlerta('error', 'Erro', 'Erro ao excluir questão');
+          this.loadingService.deactivate();
         }
       );
     this.questaoSelecionada = null;
   }
 
-  preencherQuestoes(pagina = 0) {
+  preencherQuestoes(pagina: number = 0) {
     this.questaoListarService.indexPage(pagina, this.itensPorPagina).subscribe(
       (response) => {
         this.questoes = response;
         this.totalRegistros = this.questoes.totalElements;
+      },
+      (erro) => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar as questões '+ erro.defaultMessage);
+      },
+      () => {
+        this.loadingService.deactivate();
       }
     )
   }
@@ -69,7 +83,31 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   onChangePage(event: LazyLoadEvent){
+    this.loadingService.activate();
     let pagina = event.first / event.rows;
     this.preencherQuestoes(pagina);
   }
+
+  verificaNumeroCaractere(texto: string): string{
+    if (texto.length > 150) {
+      return texto.substr(0, 150) + '...';
+    }
+    return texto;
+  }
+
+  confirmarExclusao(id: number){
+    this.confirmation.confirm({
+      message: 'Deseja realmente excluir?',
+      header: "Excluir questão",
+      icon: "pi pi-question-circle",
+      acceptLabel: "Sim",
+      rejectLabel: "Não",
+      acceptButtonStyleClass: "ui-button-success",
+      rejectButtonStyleClass: "ui-button-warning",
+      accept: () => {
+        this.excluir(id);
+      }
+    });
+  }
+
 }
