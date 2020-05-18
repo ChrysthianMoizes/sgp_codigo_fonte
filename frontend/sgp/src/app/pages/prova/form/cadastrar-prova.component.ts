@@ -227,9 +227,9 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   paginate(event): void {
-    this.questaoService
-      .index(event.page)
-      .subscribe((questoes) => (this.origemQuestoes = questoes));
+    // this.questaoService
+    //   .index(event.page)
+    //   .subscribe((questoes) => (this.origemQuestoes = questoes));
   }
 
   removeRepetitions(arr: any[]): Array<Questao> {

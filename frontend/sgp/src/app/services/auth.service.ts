@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(private router: Router, private httpClient: HttpClient) {}
 
-  public setUsuario(usuario: Usuario): void {
+  setUsuario(usuario: Usuario): void {
     sessionStorage.setItem(this.key, JSON.stringify(usuario));
   }
 
@@ -21,28 +21,23 @@ export class AuthService {
     return this.httpClient.post(`/api/usuarios/login`, usuario);
   }
 
-  public getUsuario(): Usuario {
-    if (this.containsUsuario()) {
-      return JSON.parse(sessionStorage.getItem(this.key));
-    } else {
-      this.router.navigate(['/login']);
-    }
+  getUsuario(): Usuario {
+    !this.containsUsuario() && this.router.navigate(['/login']);
+    const usuario = JSON.parse(sessionStorage.getItem(this.key));
+    return usuario != null
+      ? ({
+          ...usuario,
+          admin: usuario.admin === 1,
+        } as Usuario)
+      : null;
   }
 
-  public temPermissao(): boolean {
-    return this.getUsuario().admin;
+  containsUsuario(): boolean {
+    return sessionStorage.getItem(this.key) != null;
   }
 
-  public containsUsuario(): boolean {
-    return sessionStorage.key(0) === this.key;
-  }
-
-  public removerSessao(): void {
+  removerSessao(): void {
     sessionStorage.clear();
     this.router.navigate(['/login']);
-  }
-
-  public isAdmin(): boolean {
-    return this.temPermissao();
   }
 }

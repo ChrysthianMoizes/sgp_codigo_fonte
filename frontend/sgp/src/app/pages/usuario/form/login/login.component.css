@@ -1,20 +1,29 @@
-.caracteres {
-  color: #ff0000;
-  text-align: center;
+header, label, a {
+  color: red;
 }
 
-.espacamento {
-  padding: 10px 0;
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.border-input {
-  border-color: #ff0000;
+h3 {
+  margin-bottom: 0;
 }
 
-.ng-invalid.ng-touched:not(form) {
-  border: 1px solid black;
+footer button {
+  margin-top: 28px;
+  width: 100%;
 }
 
-p-card header {
-  text-align: center;
+footer .links-uteis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.app-input {
+  margin-top: 12px;
 }
