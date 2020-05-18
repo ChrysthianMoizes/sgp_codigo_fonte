@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService} from 'primeng';
+import {DialogService, LazyLoadEvent} from 'primeng';
 import {Page} from 'src/app/models/page.model';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
@@ -22,6 +22,8 @@ export class QuestaoListarComponent implements OnInit {
 
   questaoSelecionada: QuestaoListagemDTO;
   questoes: Page<QuestaoListagemDTO>;
+  itensPorPagina: number = 3;
+  totalRegistros: number;
 
   constructor(
     private alertService: AlertService,
@@ -32,7 +34,6 @@ export class QuestaoListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.questoes = new Page();
-    this.preencherQuestoes();
   }
 
   isOneSelected(): boolean {
@@ -54,15 +55,21 @@ export class QuestaoListarComponent implements OnInit {
     this.questaoSelecionada = null;
   }
 
-  preencherQuestoes() {
-    this.questaoListarService.index().subscribe(
+  preencherQuestoes(pagina = 0) {
+    this.questaoListarService.indexPage(pagina, this.itensPorPagina).subscribe(
       (response) => {
         this.questoes = response;
+        this.totalRegistros = this.questoes.totalElements;
       }
-    );
+    )
   }
 
   openDialog(edicao: boolean, id: number) {
     this.dialogQuestao.openDialog(edicao, id);
+  }
+
+  onChangePage(event: LazyLoadEvent){
+    let pagina = event.first / event.rows;
+    this.preencherQuestoes(pagina);
   }
 }
