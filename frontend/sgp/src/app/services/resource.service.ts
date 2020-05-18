@@ -4,7 +4,7 @@ import { Resource } from '../models/resource.model';
 import { Page } from '../models/page.model';
 
 export class ResourceService<T extends Resource> {
-  constructor(private httpClient: HttpClient, private url: string) {}
+  constructor(private httpClient: HttpClient, protected url: string) {}
 
   create(item: T): Observable<T> {
     return this.httpClient.post<T>(`${this.url}`, item);
@@ -19,7 +19,9 @@ export class ResourceService<T extends Resource> {
   }
 
   index(page = 0, size = 20): Observable<Page<T>> {
-    return this.httpClient.get(`${this.url}?page=${page}&size=${size}`) as Observable<Page<T>>;
+    return this.httpClient.get(
+      `${this.url}?page=${page}&size=${size}`
+    ) as Observable<Page<T>>;
   }
 
   destroy(id: number) {
