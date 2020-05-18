@@ -87,7 +87,7 @@ export class QuestaoComponent implements OnInit {
   }
 
   salvar() {
-    if (this.questao.id === null) {
+    if(!Boolean(this.questao.id)) {
       this.cadastar(this.questao);
     } else {
       this.editar(this.questao);
@@ -96,11 +96,11 @@ export class QuestaoComponent implements OnInit {
 
   editar(questao: QuestaoDTO) {
     this.questaoService.update(questao).subscribe(
-      () => {
-        this.alertService.montarAlerta('success', 'Sucesso', 'Questão editada com Sucesso');
+      (response) => {
+        this.alertService.montarAlerta('success', 'Sucesso', `Questão ${response.id} editada com Sucesso`);
       },
-      () => {
-        this.alertService.montarAlerta('error', 'Erro', 'Erro ao editar questão');
+      (error) => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao editar questão' + error.defaultMessage);
       },
       () => {
         this.exibir = false;
@@ -111,7 +111,7 @@ export class QuestaoComponent implements OnInit {
   cadastar(questao: QuestaoDTO) {
     this.questaoService.create(questao).subscribe(
       (response) => {
-        this.alertService.montarAlerta('success', 'Sucesso', 'Questão ' + response.id + ' cadastrada com Sucesso');
+        this.alertService.montarAlerta('success', 'Sucesso', `Questão ${response.id} cadastrada com Sucesso`);
       },
       (error) => {
         this.alertService.montarAlerta('error', 'Sucesso', 'Erro ao cadastrar questão' + error.defaultMessage);
@@ -136,7 +136,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.maxLength(800),
+          Validators.maxLength(400),
         ],
       ],
       senioridade: [
@@ -160,7 +160,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.maxLength(400),
         ],
       ],
       alternativa2: [
@@ -168,7 +168,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.maxLength(400),
         ],
       ],
       alternativa3: [
@@ -176,7 +176,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.maxLength(400),
         ],
       ],
       alternativa4: [
@@ -184,7 +184,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.maxLength(400),
         ],
       ],
       alternativa5: [
@@ -192,7 +192,7 @@ export class QuestaoComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(100),
+          Validators.maxLength(400),
         ],
       ],
       resposta: [

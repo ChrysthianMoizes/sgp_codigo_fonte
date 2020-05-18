@@ -3,8 +3,10 @@
 
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table [(selection)]="questaoSelecionada" [value]="questoes.content" paginator="true" rows="20"
-             selectionMode="single">
+    <p-table [(selection)]="questaoSelecionada" [value]="questoes.content" paginator="true"
+            [rows]="itensPorPagina" [lazy]="true" [totalRecords]="totalRegistros"
+            (onLazyLoad)="onChangePage($event)"
+            selectionMode="single" emptymessage="Nenhuma questão encontrado">
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Código</th>
