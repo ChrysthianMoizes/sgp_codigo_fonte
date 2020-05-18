@@ -10,6 +10,4 @@ import java.util.Optional;
 @Repository
 public interface ProvaRepositorio extends JpaRepository<Prova,Long>, JpaSpecificationExecutor<Prova> {
 
-    @Override
-    Optional<Prova> findById(Long id);
 }

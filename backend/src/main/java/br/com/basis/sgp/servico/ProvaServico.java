@@ -13,7 +13,7 @@ public interface ProvaServico {
 
     public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable);
 
-    public ProvaDTO exibirPorID(Long id);
+    public ProvaDTO exibirPorId(Long id);
 
     public ProvaDTO salvar(ProvaDTO provaDTO);
 
