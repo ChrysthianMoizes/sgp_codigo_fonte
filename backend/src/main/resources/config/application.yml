@@ -11,7 +11,7 @@ spring:
     jackson:
         date-format: yyyy-MM-dd
         deserialization:
-            fail-on-unknown-properties: true
+            fail-on-unknown-properties: false
     jpa:
         database: MYSQL
         show-sql: true
@@ -28,3 +28,7 @@ spring:
 #        drop-first: true
 server:
     port: 8080
+
+app:
+    TOKEN_ADMIN: pindaiba
+    TOKEN_USER: abacate
