@@ -136,7 +136,7 @@ export class CadastroComponent implements OnInit, OnChanges {
         this.alertService.montarAlerta('error', 'Erro', err.defaultMessage)
       );
     } else {
-      this.alertService.montarAlerta('error', 'Erro', error.error.errors);
+      this.alertService.montarAlerta('error', 'Erro', error.error.message);
     }
   }
 
