@@ -38,6 +38,10 @@
   align-items: center;
 }
 
+.menu-hamburguer:hover {
+  cursor: pointer;
+}
+
 .menu-hamburguer .pi-bars {
   font-size: 2em;
   color: var(--color-secondary);

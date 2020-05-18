@@ -24,7 +24,7 @@
 <div class="sidebar">
   <div *ngFor="let menuItem of menuSideBar">
     <a
-      *ngIf="!menuItem.permissao || menuItem.permissao === isAdmin"
+      *ngIf="!menuItem.permissao || menuItem.permissao === isAdmin()"
       type="button"
       id="primeiro"
       pButton
