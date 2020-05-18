@@ -75,4 +75,16 @@ public class UsuarioRecursoTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void cadastrarUsuarioEmailDuplicado() throws Exception {
+        usuarioBuilder.customizar(entidade -> {
+            entidade.setCpf("80233824030");
+        }).construir();
+        UsuarioCadastroDTO usuarioCadastroDTO = usuarioBuilder.construirUsuario();
+
+        mockMvc.perform(post(API_USUARIO)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
+                .andExpect(status().isBadRequest());
+    }
 }
