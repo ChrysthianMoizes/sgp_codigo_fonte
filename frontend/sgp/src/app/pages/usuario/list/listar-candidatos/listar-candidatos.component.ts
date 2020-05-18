@@ -2,11 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato.model';
+import { Pageable } from 'src/app/util/pageable-request';
 import { VisualizarCandidatoComponent } from '../../form/visualizar-candidato/visualizar-candidato.component';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../service/usuario.service';
-import { Page } from 'src/app/models/page.model';
-import { Pageable } from 'src/app/util/pageable-request';
 
 @Component({
   selector: 'app-listar-candidatos',
@@ -76,11 +75,12 @@ export class ListarCandidatosComponent implements OnInit {
   editarCandidato(): void {
     this.selectedCandidatos.forEach(candidato =>
       this.usuarioService.show(candidato.id).subscribe({
-        next: candidatoCompleto => this.visualizarCandidato.openDialog(candidatoCompleto),
+        next: candidatoCompleto => {
+          this.visualizarCandidato.openDialog(candidatoCompleto);
+        },
         error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
       })
-    )
-    this.atualizarLista();
+    );
   }
 
   verCandidato(): void {
@@ -90,7 +90,6 @@ export class ListarCandidatosComponent implements OnInit {
         error: () => this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar candidato. Tente novamente.')
       })
     );
-    this.atualizarLista();
   }
 
   deleteCandidato(): void {

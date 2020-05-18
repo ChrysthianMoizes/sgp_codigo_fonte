@@ -14,7 +14,10 @@ export class AuthService {
   constructor(private router: Router, private httpClient: HttpClient) {}
 
   setUsuario(usuario: Usuario): void {
-    sessionStorage.setItem(this.key, JSON.stringify(usuario));
+    sessionStorage.setItem(this.key, JSON.stringify({
+      ...usuario,
+      admin: usuario.admin ? 1 : 0
+    }));
   }
 
   login(usuario: Usuario): Observable<any> {
@@ -31,6 +34,7 @@ export class AuthService {
         } as Usuario)
       : null;
   }
+
 
   containsUsuario(): boolean {
     return sessionStorage.getItem(this.key) != null;
