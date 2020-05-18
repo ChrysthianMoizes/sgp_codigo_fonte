@@ -86,12 +86,12 @@ export class CadastroComponent implements OnInit, OnChanges {
   }
 
   validarFormulario(): void {
+    console.log(this.usuario)
     this.formulario.valid &&
-      this[this.usuario.id !== null ? 'editar' : 'cadastrar'](this.usuario);
+      this[this.usuario.id ? 'editar' : 'cadastrar'](this.usuario);
   }
 
   editar(usuario: Usuario): void {
-    
     this.loadingService.activate();
     this.usuarioService.update(usuario).subscribe({
       next: () => this.salvar.emit(usuario),
