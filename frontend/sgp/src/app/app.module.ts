@@ -8,6 +8,7 @@ import {AutoCompleteModule, DynamicDialogModule, InputTextareaModule} from 'prim
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
+import {PasswordModule} from 'primeng/password';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -31,7 +32,6 @@ import {ListarProvasComponent} from './pages/prova/list/listar-provas.component'
 import {QuestaoComponent} from './pages/questao/form/questao.component';
 import {QuestaoListarComponent} from './pages/questao/list/questao-listar.component';
 import {CadastroComponent} from './pages/usuario/form/cadastro/cadastro.component';
-import {FormCadastroComponent} from './pages/usuario/form/form-cadastro/form-cadastro.component';
 import {LoginComponent} from './pages/usuario/form/login/login.component';
 import {UsuarioComponent} from './pages/usuario/form/perfil/usuario.component';
 import {ReenviarEmailComponent} from './pages/usuario/form/reenviar-email/reenviar-email.component';
@@ -62,8 +62,6 @@ import {AuthService} from './services/auth.service';
     ReenviarEmailComponent,
     UsuarioComponent,
     SendEmailComponent,
-    FormCadastroComponent,
-
     ListarProvasComponent,
 
     RealizarAvaliacaoComponent,
@@ -80,15 +78,16 @@ import {AuthService} from './services/auth.service';
     BrowserAnimationsModule,
     FormsModule,
     NgxSpinnerModule,
+    PasswordModule,
     ToastModule,
     TableModule,
     DropdownModule,
     RadioButtonModule,
     DynamicDialogModule,
     DialogModule,
+    PrimengModule,
     HttpClientModule,
     ReactiveFormsModule,
-    PrimengModule,
     AppRoutes,
     AutoCompleteModule,
     InputTextareaModule,
@@ -108,4 +107,5 @@ import {AuthService} from './services/auth.service';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+}

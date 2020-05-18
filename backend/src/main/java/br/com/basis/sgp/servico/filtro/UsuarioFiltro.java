@@ -19,6 +19,8 @@ public class UsuarioFiltro implements EntityFiltro<Usuario> {
     private String nome;
     private String cpf;
     private Integer admin;
+    private String email;
+    private Integer id;
 
     @Override
     public Specification<Usuario> filter() {
@@ -42,6 +44,17 @@ public class UsuarioFiltro implements EntityFiltro<Usuario> {
             Predicate predicate = cb.equal(root.get(Usuario_.admin), admin);
             predicates.add(predicate);
         }
+
+        if (!StringUtils.isEmpty(email)) {
+            Predicate predicate = cb.like(cb.lower(root.get(Usuario_.email)), "%" + email.toLowerCase() + "%");
+            predicates.add(predicate);
+        }
+
+        if (!StringUtils.isEmpty(id)) {
+            Predicate predicate = cb.equal(root.get(Usuario_.id),id);
+            predicates.add(predicate);
+        }
+
         return predicates;
     }
 

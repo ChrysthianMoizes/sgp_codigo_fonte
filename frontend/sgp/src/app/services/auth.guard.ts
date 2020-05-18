@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  Router,
-} from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -22,7 +15,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    if (next.data.role && !this.authService.temPermissao()) {
+    if (next.data.role && !this.authService.getUsuario().admin) {
       this.router.navigate(['/home']);
       return false;
     }

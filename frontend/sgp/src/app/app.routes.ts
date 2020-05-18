@@ -8,10 +8,10 @@ import { ListarProvasComponent } from './pages/prova/list/listar-provas.componen
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { CadastroComponent } from './pages/usuario/form/cadastro/cadastro.component';
 import { LoginComponent } from './pages/usuario/form/login/login.component';
+import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';
 import { ReenviarEmailComponent } from './pages/usuario/form/reenviar-email/reenviar-email.component';
 import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/resetar-senha.component';
-import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos/listar-candidatos/listar-candidatos.component';
-import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';
+import { ListarCandidatosComponent } from './pages/usuario/list/listar-candidatos/listar-candidatos.component';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [

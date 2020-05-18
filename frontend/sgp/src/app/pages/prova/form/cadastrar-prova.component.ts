@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AlertService} from 'src/app/components/alert/alert.service';
-import {LoadingService} from 'src/app/components/loading/loading.service';
-import {QuestaoDTO} from '../../questao/models/questao.dto';
-import {QuestaoService} from '../../questao/service/questao.service';
-import {Prova} from '../models/prova';
-import {ProvaService} from '../service/prova.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/components/alert/alert.service';
+import { LoadingService } from 'src/app/components/loading/loading.service';
+import { Questao } from '../../questao/models/questao';
+import { QuestaoService } from '../../questao/service/questao.service';
+import { Prova } from '../models/prova';
+import { ProvaService } from '../service/prova.service';
 
 @Component({
   selector: 'app-cadastrar-prova',
@@ -21,8 +21,8 @@ export class CadastrarProvaComponent implements OnInit {
 
   @Output() retornarProva = new EventEmitter();
 
-  origemQuestoes: QuestaoDTO[];
-  destinoQuestoes: QuestaoDTO[];
+  origemQuestoes: Questao[];
+  destinoQuestoes: Questao[];
   totalDeQuestoes = 0;
 
   exibir = false;
@@ -33,10 +33,9 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) {
-  }
+  ) {}
 
-  get titulo(): string {
+  getTitulo(): string {
     if (this.visualizando) {
       return 'Visualizar Prova';
     } else if (this.edicao) {
@@ -63,27 +62,9 @@ export class CadastrarProvaComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.questaoService.index().subscribe((questoes) => {
-      this.origemQuestoes = questoes.content;
-      this.destinoQuestoes = [];
-    });
-    this.questaoService.index().subscribe((total) => (this.totalDeQuestoes = total.totalElements));
-    this.provaForm = this.formBuilder.group({
-      titulo: ['', Validators.required],
-      percentualDeAprovacao: ['', Validators.required],
-    });
-  }
+  ngOnInit() {}
 
-  preencherFormParaEdicao(): void {
-    this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.provaForm
-      .get('percentualDeAprovacao')
-      .setValue(this.provaSendoEditada.percentualAprovacao);
-    this.questaoService.index().subscribe((questoes) => {
-      this.destinoQuestoes = questoes.content;
-    });
-  }
+  preencherFormParaEdicao(): void {}
 
   abrirDialog(modo): void {
     if (modo === 1) {
@@ -103,7 +84,6 @@ export class CadastrarProvaComponent implements OnInit {
       this.provaForm.get('percentualDeAprovacao').enable();
       // ediçao
     } else {
-      console.log(this.visualizando);
       this.visualizando = true;
       this.edicao = false;
       this.exibir = true;
@@ -124,8 +104,6 @@ export class CadastrarProvaComponent implements OnInit {
         this.provaForm.get('titulo').disable();
         this.provaForm.get('percentualDeAprovacao').disable();
       }
-    } else {
-      console.log('Cadastrar nova prova.');
     }
   }
 
@@ -178,18 +156,14 @@ export class CadastrarProvaComponent implements OnInit {
       });
     }
     this.onCancel();
-    // servico.salvar(prova);
+
     this.retornarProva.emit(null);
     this.exibir = false;
   }
 
-  paginate(event): void {
-    this.questaoService
-      .index(event.page)
-      .subscribe((questoes) => (this.origemQuestoes = questoes));
-  }
+  paginate(event): void {}
 
-  removeRepetitions(arr: any[]): Array<QuestaoDTO> {
+  removeRepetitions(arr: any[]): Array<Questao> {
     return arr.filter((questao, i) => arr.indexOf(questao) === i);
   }
 
