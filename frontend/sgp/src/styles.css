@@ -9,5 +9,5 @@ body {
 
 :root {
   --color-primary: #ff5722;
-  --color-secondary: #8affe0;
+  --color-secondary: rgb(247, 247, 247);
 }

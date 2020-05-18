@@ -5,6 +5,7 @@ import { AvaliacaoService } from '../../service/avaliacao.service';
 import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato';
 import { catchError } from 'rxjs/operators';
 import { AlertService } from 'src/app/components/alert/alert.service';
+import { Pageable } from 'src/app/util/pageable-request';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -25,7 +26,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   totalElementos: number;
   avaliacao: Avaliacao[];
 
-  avaliacaoSelecionada = new Array<Avaliacao>();
+  avaliacaoSelecionada: Avaliacao[];
   avaliacoesRecebidas: Avaliacao[];
   cols = [
     { field: 'id', header: 'Código' },
@@ -51,15 +52,14 @@ export class ListarAvaliacaoComponent implements OnInit {
     }
 
     this.avaliacaoService.index(this.filtro, pageable)
-      .pipe(catchError(error => {
-        this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
-        return error;
-      }))
       .subscribe(
-        (response) => {
+        response => {
           this.avaliacoesRecebidas = response.content;
           this.totalElementos = response.totalElements;
           this.avaliacaoSelecionada = [];
+        },
+        () => {
+          this.alert.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
         }
       );
   }

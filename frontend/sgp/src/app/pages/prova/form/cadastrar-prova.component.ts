@@ -33,7 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) { }
+  ) {}
 
   get titulo(): string {
     if (this.visualizando) {
@@ -63,27 +63,27 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.questaoService.index().subscribe((questoes) => {
-      this.origemQuestoes = questoes;
-      this.destinoQuestoes = [];
-    });
-    this.questaoService
-      .getNumberOfElements()
-      .subscribe((total) => (this.totalDeQuestoes = total));
-    this.provaForm = this.formBuilder.group({
-      titulo: ['', Validators.required],
-      percentualDeAprovacao: ['', Validators.required],
-    });
+    // this.questaoService.index().subscribe((questoes) => {
+    //   this.origemQuestoes = questoes;
+    //   this.destinoQuestoes = [];
+    // });
+    // this.questaoService
+    //   .getNumberOfElements()
+    //   .subscribe((total) => (this.totalDeQuestoes = total));
+    // this.provaForm = this.formBuilder.group({
+    //   titulo: ['', Validators.required],
+    //   percentualDeAprovacao: ['', Validators.required],
+    // });
   }
 
   preencherFormParaEdicao(): void {
-    this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.provaForm
-      .get('percentualDeAprovacao')
-      .setValue(this.provaSendoEditada.percentualAprovacao);
-    this.questaoService.index().subscribe((questoes) => {
-      this.destinoQuestoes = questoes;
-    });
+    // this.provaForm.get('titulo').setValue(this.provaSendoEditada.titulo);
+    // this.provaForm
+    //   .get('percentualDeAprovacao')
+    //   .setValue(this.provaSendoEditada.percentualAprovacao);
+    // this.questaoService.index().subscribe((questoes) => {
+    //   this.destinoQuestoes = questoes;
+    // });
   }
 
   abrirDialog(modo): void {
@@ -185,9 +185,9 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   paginate(event): void {
-    this.questaoService
-      .index(event.page)
-      .subscribe((questoes) => (this.origemQuestoes = questoes));
+    // this.questaoService
+    //   .index(event.page)
+    //   .subscribe((questoes) => (this.origemQuestoes = questoes));
   }
 
   removeRepetitions(arr: any[]): Array<Questao> {

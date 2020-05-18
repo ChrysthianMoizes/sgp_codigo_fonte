@@ -8,6 +8,6 @@ export class Questao extends Resource {
   alternativa4: string;
   alternativa5: string;
   resposta: number;
-  idSenioridade: number;
-  idTipoQuestao: number;
+  // idSenioridade: number;
+  // idTipoQuestao: number;
 }

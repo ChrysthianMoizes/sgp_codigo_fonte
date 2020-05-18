@@ -8,6 +8,7 @@ import { AutoCompleteModule, DynamicDialogModule } from 'primeng';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -26,23 +27,22 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CadastrarAvaliacaoComponent } from './pages/avaliacao/forms/cadastrar-avaliacao/cadastrar-avaliacao.component';
 import { RealizarAvaliacaoComponent } from './pages/avaliacao/forms/realizar-avaliacao/realizar-avaliacao.component';
 import { ListarAvaliacaoComponent } from './pages/avaliacao/list/listar-avaliacao/listar-avaliacao.component';
-import { CadastrarProvaComponent } from './pages/prova/form/cadastrar-prova.component'
+import { CadastrarProvaComponent } from './pages/prova/form/cadastrar-prova.component';
 import { ListarProvasComponent } from './pages/prova/list/listar-provas.component';
 import { QuestaoComponent } from './pages/questao/form/questao.component';
 import { QuestaoListarComponent } from './pages/questao/list/questao-listar.component';
 import { CadastroComponent } from './pages/usuario/form/cadastro/cadastro.component';
-import { FormCadastroComponent } from './pages/usuario/form/form-cadastro/form-cadastro.component';
 import { LoginComponent } from './pages/usuario/form/login/login.component';
+import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';
 import { ReenviarEmailComponent } from './pages/usuario/form/reenviar-email/reenviar-email.component';
 import { ResetarSenhaComponent } from './pages/usuario/form/resetar-senha/resetar-senha.component';
 import { SendEmailComponent } from './pages/usuario/form/send-email/send-email.component';
-import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizarCandidato/visualizar-candidato/visualizar-candidato.component';
-import { ListarCandidatosComponent } from './pages/usuario/list/listarCandidatos/listar-candidatos/listar-candidatos.component';
+import { VisualizarCandidatoComponent } from './pages/usuario/form/visualizar-candidato/visualizar-candidato.component';
+import { ListarCandidatosComponent } from './pages/usuario/list/listar-candidatos/listar-candidatos.component';
 import { UsuarioService } from './pages/usuario/service/usuario.service';
-import { UsuarioComponent } from './pages/usuario/form/perfil/usuario.component';
-import { PrimengModule } from './primeng.module';
 import { AuthGuard } from './services/auth.guard';
 import { AuthService } from './services/auth.service';
+import { PrimengModule } from './primeng.module';
 
 @NgModule({
   declarations: [
@@ -61,11 +61,8 @@ import { AuthService } from './services/auth.service';
     ResetarSenhaComponent,
     ReenviarEmailComponent,
     UsuarioComponent,
-    SendEmailComponent,
-    FormCadastroComponent,
-    
+    SendEmailComponent,    
     ListarProvasComponent,
-    
     RealizarAvaliacaoComponent,
     VisualizarCandidatoComponent,
     QuestaoListarComponent,
@@ -76,19 +73,19 @@ import { AuthService } from './services/auth.service';
   ],
   imports: [
     BrowserModule,
-    
     BrowserAnimationsModule,
     FormsModule,
     NgxSpinnerModule,
+    PasswordModule,
     ToastModule,
     TableModule,
     DropdownModule,
     RadioButtonModule,
     DynamicDialogModule,
     DialogModule,
+    PrimengModule,
     HttpClientModule,
     ReactiveFormsModule,
-    PrimengModule,
     AppRoutes,
     AutoCompleteModule,
   ],

@@ -1,18 +1,17 @@
 <div class="nav-bar">
-  <i
-    (click)="onClickHamburguerMenu()"
-    class="pi pi-bars"
-  ></i>
-
-  <div class="mid-navbar">
+  <div class="menu-hamburguer">
+    <i (click)="onClickHamburguerMenu()" class="pi pi-bars"></i>
     <img
       src="../../../assets/logo-basis.png"
       alt="BASIS"
       (click)="onClickLogo()"
-    >
-    <h1> {{ title }} </h1>
+    />
   </div>
 
+  <div class="mid-navbar">
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="perfil">
     <img
       (click)="menu.toggle($event)"
       alt="PERFIL"
@@ -20,15 +19,12 @@
       src="../../../assets/profile.svg"
     />
   </div>
-  <p-menu
-    #menu
-    [model]="items"
-    [popup]="true"
-  ></p-menu>
+</div>
+<p-menu #menu [model]="items" [popup]="true"></p-menu>
 <div class="sidebar">
   <div *ngFor="let menuItem of menuSideBar">
     <a
-      *ngIf="verificaPermissao(menuItem.permissao)"
+      *ngIf="!menuItem.permissao || menuItem.permissao === isAdmin"
       type="button"
       id="primeiro"
       pButton
