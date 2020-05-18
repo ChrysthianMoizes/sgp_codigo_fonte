@@ -29,5 +29,6 @@ export class VisualizarCandidatoComponent {
 
   salvar(): void {
     this.candidatoAtualizado.emit();
+    this.resetarConfigs();
   }
 }
