@@ -6,6 +6,8 @@ import { LoadingService } from '../../../components/loading/loading.service';
 import { ProvaService } from '../service/prova.service';
 import { Prova } from '../models/prova';
 import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
+import { Pageable } from 'src/app/util/pageable-request';
+import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
 
 @Component({
   selector: 'app-listar-provas',
@@ -21,6 +23,19 @@ export class ListarProvasComponent implements OnInit {
 
   @ViewChild('dialogProvaForm') dialogProvaForm: CadastrarProvaComponent;
 
+  filtro = new FiltroProva();
+  cols: any[];
+  rows: number = 20;
+  first: number = 0;
+  totalDeElementos = 1;
+  listProvas: Prova[];
+  notFilteredListProvas: Prova[];
+  provaSelecionada: Prova;
+  selectedProvas: Prova[] = [];
+
+  lastPage = 0;
+  lastSize = 0;
+
   constructor(
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
@@ -28,15 +43,39 @@ export class ListarProvasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.provaService.index().subscribe((provas) => {
-      this.provas = provas;
-    });
+    this.inicializarTabela();
+    this.atualizarLista(null);
+  }
 
+  inicializarTabela(): void {
     this.definicaoColunas = [
       { field: 'id', header: 'ID' },
       { field: 'titulo', header: 'Titulo' },
-      { field: 'percentualAprovacao', header: '% para aprovação' },
+      { field: 'percentual', header: '% para aprovação' },
     ];
+  }
+
+  atualizarLista(event = null): void {
+
+    const pageable = new Pageable(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'titulo');
+    }
+
+    this.provaService.index(this.prova, pageable).subscribe(
+      (response) => {
+        this.listProvas = response.content;
+        this.notFilteredListProvas = response.content;
+        this.totalDeElementos = response.totalElements;
+        this.selectedProvas = [];
+      },
+      () => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar candidatos');
+      }
+    );
   }
 
   isOneSelected(): boolean {

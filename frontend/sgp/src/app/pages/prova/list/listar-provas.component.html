@@ -12,8 +12,10 @@
     <p-table
       [(selection)]="provasSelecionadas"
       [columns]="definicaoColunas"
-      [value]="provas"
-      paginator="true"
+      [value]="listProvas"
+      [resizableColumns]="true"
+      [showCurrentPageReport]="true"
+      [lazy]="true"
       rows="20"
       selectionMode="multiple"
     >
@@ -23,6 +25,22 @@
             {{ coluna.header }}
           </th>
         </tr>
+
+        <tr>
+          <th>
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="prova.id"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Titulo" style="width: 100%;" [(ngModel)]="prova.titulo"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Percentaul de Aprovação" style="width: 100%;" [(ngModel)]="prova.percentualAprovacao"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+        </tr>
+
       </ng-template>
       <ng-template let-colunas="columns" let-prova pTemplate="body">
         <tr [pSelectableRow]="prova">
