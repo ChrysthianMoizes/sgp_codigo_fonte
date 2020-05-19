@@ -52,7 +52,7 @@ public class QuestaoServicoImpl implements QuestaoServico {
 
         if (!senioridadeServico.obterPorId(questaoDTO.getIdSenioridade()))
             throw new RegraNegocioException("Senioridade inválida");
-        if (!tipoQuestaoServico.existe(questaoDTO.getIdTipoQuestao()))
+        if (!tipoQuestaoServico.obterPorId(questaoDTO.getIdTipoQuestao()))
             throw new RegraNegocioException("Tipo de questão inválida");
 
         return questaoMapper.toDto(questaoRepositorio.save(questao));

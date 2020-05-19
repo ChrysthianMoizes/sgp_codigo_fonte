@@ -25,7 +25,7 @@ public class TipoQuestaoServicoImpl implements TipoQuestaoServico {
     }
 
     @Override
-    public Boolean existe(Long id) {
+    public Boolean obterPorId(Long id) {
         return repositorio.existsById(id);
     }
 }
