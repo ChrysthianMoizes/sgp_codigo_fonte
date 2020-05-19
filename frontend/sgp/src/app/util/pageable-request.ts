@@ -3,7 +3,7 @@ export class Pageable<T> {
   size: number;
   sort: string;
   content: T[];
-  numberOfElements: number;
+  totalElements: number;
 
   constructor(page: number, size: number) {
     this.page = page * 0.1;

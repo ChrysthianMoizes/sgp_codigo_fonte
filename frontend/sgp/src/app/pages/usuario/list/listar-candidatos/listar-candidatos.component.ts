@@ -33,7 +33,7 @@ export class ListarCandidatosComponent implements OnInit {
     private alert: AlertService,
     private usuarioService: UsuarioService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.atualizarLista(null);
@@ -61,7 +61,7 @@ export class ListarCandidatosComponent implements OnInit {
       (response) => {
         this.listCandidatos = response.content;
         this.notFilteredListCandidatos = response.content;
-        this.totalDeElementos = response.numberOfElements;
+        this.totalDeElementos = response.totalElements;
         this.selectedCandidatos = [];
       },
       () => {

@@ -1,14 +1,8 @@
 <button *ngIf="temPermissao()" id="button-new" label="Novo" pButton (click)="cadastrar()"></button>
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
-    <p-table [columns]="cols" [value]="avaliacoesRecebidas" [paginator]="true" [rows]="1"
-      [(selection)]="avaliacaoSelecionada" [lazy]='true' selectionMode="single">
-
-      <ng-template pTemplate="colgroup" let-columns>
-        <colgroup>
-          <col *ngFor="let col of columns" />
-        </colgroup>
-      </ng-template>
+    <p-table [columns]="cols" [value]="avaliacoesRecebidas" [(selection)]="avaliacaoSelecionada" [lazy]='true'
+      selectionMode="single" [showCurrentPageReport]="true">
 
       <ng-template pTemplate="header" let-columns>
         <tr>
@@ -26,16 +20,16 @@
       </ng-template>
 
       <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-        <tr [pSelectableRow]="avaliacao" *ngFor="let avaliacao of avaliacoesRecebidas">
-          <td>{{ avaliacao.id }}</td>
-          <td>{{ avaliacao.tituloProva }}</td>
-          <td>{{ avaliacao.nomeCandidato }}</td>
-          <td>{{ avaliacao.data }}</td>
-          <td>{{ avaliacao.aproveitamento }}</td>
-          <td>{{ avaliacao.situacao }}</td>
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{ rowData[col.field] }}
+          </td>
         </tr>
       </ng-template>
     </p-table>
+    <p-paginator [totalRecords]="totalElementos" [rows]="20" (onPageChange)="atualizarLista($event)"
+      [rowsPerPageOptions]="[20, 50, 100]">
+    </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
     <button *ngIf="temPermissao()" [disabled]="!isOneSelected()" (click)="editar()" class="ui-button-rounded"

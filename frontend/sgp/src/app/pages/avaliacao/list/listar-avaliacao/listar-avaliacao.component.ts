@@ -60,14 +60,14 @@ export class ListarAvaliacaoComponent implements OnInit {
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
-      pageable.setSort(1, 'titulo');
+      pageable.setSort(1, 'id');
     }
 
     this.avaliacaoService.index(this.filtro, pageable)
       .subscribe(
         response => {
           this.avaliacoesRecebidas = response.content;
-          this.totalElementos = response.numberOfElements;
+          this.totalElementos = response.totalElements;
           this.avaliacaoSelecionada = new Avaliacao();
           this.resultadoAvaliacao();
         },
@@ -83,8 +83,6 @@ export class ListarAvaliacaoComponent implements OnInit {
       this.provaService.findByTitulo(element.tituloProva).subscribe(
         response => {
           prova = response;
-          console.log(element)
-          console.log(prova)
           element.situacao = element.aproveitamento ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
         },
         erro => {
