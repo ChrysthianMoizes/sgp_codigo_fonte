@@ -5,12 +5,18 @@ import br.com.basis.sgp.servico.dto.QuestaoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface QuestaoMapper extends EntityMapper<QuestaoDTO, Questao> {
 
     @Override
-    @Mapping(source = "senioridade.descricao", target = "descSenioridade")
-    @Mapping(source = "tipoQuestao.descricao", target = "descTipo")
+    @Mapping(target = "senioridade.id", source = "idSenioridade")
+    @Mapping(target = "tipoQuestao.id", source = "idTipoQuestao")
+    Questao toEntity(QuestaoDTO dto);
+
+    @Override
+    @Mapping(target = "idSenioridade", source = "senioridade.id")
+    @Mapping(target = "idTipoQuestao", source = "tipoQuestao.id")
     QuestaoDTO toDto(Questao entity);
 
 }
+

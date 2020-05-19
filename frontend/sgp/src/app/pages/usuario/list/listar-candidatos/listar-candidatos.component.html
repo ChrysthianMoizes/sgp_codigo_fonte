@@ -1,0 +1,61 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<app-visualizar-candidato #VisualizarCandidato (candidatoAtualizado)="atualizarLista()"></app-visualizar-candidato>
+
+<div class="p-grid">
+  <div class="p-col-11">
+    <p-table [columns]="cols" [value]="listCandidatos" [resizableColumns]="true" [showCurrentPageReport]="true"
+      [lazy]="true" selectionMode="multiple" [(selection)]="selectedCandidatos">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of columns" [style.width]="col.width" />
+        </colgroup>
+      </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+
+        <tr>
+          <th>
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Nome" style="width: 100%;" [(ngModel)]="filtro.nome"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Email" style="width: 100%;" [(ngModel)]="filtro.email"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [totalRecords]="totalDeElementos" [rows]="20" (onPageChange)="atualizarLista($event)"
+      [rowsPerPageOptions]="[20, 50, 100]">
+    </p-paginator>
+  </div>
+
+  <div class="p-col-1 container-buttons">
+    <button [disabled]="selectedCandidatos.length === 0" type="button" icon="pi pi-trash" (click)="deleteCandidato()"
+      style="font-size: 0.8em;" pButton class="ui-button-rounded">
+    </button>
+    <button [disabled]="selectedCandidatos.length !== 1" type="button" icon="pi pi-pencil" (click)="editarCandidato()"
+      style="font-size: 0.8em;" pButton class="ui-button-rounded">
+    </button>
+    <button [disabled]="selectedCandidatos.length !== 1" type="button" icon="pi pi-eye" (click)="verCandidato()"
+      style="font-size: 0.8em;" pButton class="ui-button-rounded">
+    </button>
+  </div>
+</div>
