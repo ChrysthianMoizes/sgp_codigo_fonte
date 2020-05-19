@@ -90,9 +90,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
     @Override
     public UsuarioDetalhadoDTO alterar(UsuarioEdicaoDTO usuarioEdicaoDTO) {
+
         Usuario usuario = preencherEdicao(usuarioEdicaoDTO);
 
-        validarUsuario(usuario);
 
         usuario = usuarioRepositorio.save(usuario);
 
@@ -132,8 +132,13 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Usuario preencherEdicao(UsuarioEdicaoDTO usuarioEdicaoDTO){
-        Usuario usuario = obterUsuario(usuarioEdicaoDTO.getId());
 
+        Usuario usuario = usuarioEdicaoMapper.toEntity(usuarioEdicaoDTO);
+
+        if(verificarEmail(usuario)){
+            throw new RegraNegocioException("Email existente");
+        }
+        usuario = obterUsuario(usuarioEdicaoDTO.getId());
         usuario.setNome(usuarioEdicaoDTO.getNome());
         usuario.setEmail(usuarioEdicaoDTO.getEmail());
         if(usuarioEdicaoDTO.getSenha() != null && !usuarioEdicaoDTO.getSenha().isEmpty()){
