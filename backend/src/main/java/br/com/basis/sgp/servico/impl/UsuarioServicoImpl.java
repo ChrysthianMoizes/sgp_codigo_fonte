@@ -78,7 +78,6 @@ public class UsuarioServicoImpl implements UsuarioServico {
     public UsuarioDetalhadoDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioCadastroMapper.toEntity(usuarioCadastroDTO);
 
-        UsuarioEdicaoDTO usuarioEdicaoDTO = usuarioEdicaoMapper.toDto(usuario);
 
         validarUsuario(usuario);
 
@@ -126,9 +125,8 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Usuario obterUsuario(Long id) {
-        Usuario usuario = usuarioRepositorio.findById(id)
+        return usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Usuário inválido"));
-        return usuario;
     }
 
     private Usuario preencherEdicao(UsuarioEdicaoDTO usuarioEdicaoDTO){
