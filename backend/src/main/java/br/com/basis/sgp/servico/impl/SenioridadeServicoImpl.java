@@ -1,5 +1,6 @@
 package br.com.basis.sgp.servico.impl;
 
+import br.com.basis.sgp.dominio.Senioridade;
 import br.com.basis.sgp.repositorio.SenioridadeRepositorio;
 import br.com.basis.sgp.servico.SenioridadeServico;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,5 +24,10 @@ public class SenioridadeServicoImpl implements SenioridadeServico {
     @Override
     public List<SelectDTO> listar() {
         return senioridadeMapper.toDto(repositorio.findAll());
+    }
+
+    @Override
+    public Optional<Senioridade> findById(Long id) {
+        return repositorio.findById(id);
     }
 }

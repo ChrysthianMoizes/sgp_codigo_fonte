@@ -1,8 +1,10 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Questao;
+import br.com.basis.sgp.dominio.Senioridade;
 import br.com.basis.sgp.repositorio.QuestaoRepositorio;
 import br.com.basis.sgp.servico.QuestaoServico;
+import br.com.basis.sgp.servico.SenioridadeServico;
 import br.com.basis.sgp.servico.dto.QuestaoDTO;
 import br.com.basis.sgp.servico.dto.QuestaoListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -27,6 +29,8 @@ public class QuestaoServicoImpl implements QuestaoServico {
     private final QuestaoMapper questaoMapper;
     private final QuestaoDropdownMapper questaoDropdownMapper;
     private final QuestaoListagemMapper questaoListagemMapper;
+
+    private final SenioridadeServico senioridadeServico;
 
     private final QuestaoRepositorio questaoRepositorio;
 
@@ -60,7 +64,13 @@ public class QuestaoServicoImpl implements QuestaoServico {
 
     private Questao obterQuestao(Long id) {
         return questaoRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Usuário inválido"));
+                .orElseThrow(() -> new RegraNegocioException("Questão inválido"));
+
+    }
+
+    private Senioridade obterSenioridade(Long id) {
+        return (Senioridade) senioridadeServico.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Senioridade inválido"));
 
     }
 }

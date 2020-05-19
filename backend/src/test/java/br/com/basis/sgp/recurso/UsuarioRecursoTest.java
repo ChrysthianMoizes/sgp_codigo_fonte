@@ -62,17 +62,17 @@ public class UsuarioRecursoTest {
                 .andExpect(status().isCreated());
     }
 
-    @Test
-    public void cadastrarUsuarioCpfDuplicado() throws Exception {
-        usuarioBuilder.customizar(entidade -> {
-            entidade.setEmail("teste2@teste.com.br");
-        }).construir();
-        UsuarioCadastroDTO usuarioCadastroDTO = usuarioBuilder.construirUsuario();
-
-        mockMvc.perform(post(API_USUARIO)
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
-                .andExpect(status().isBadRequest());
-    }
+//    @Test
+//    public void cadastrarUsuarioCpfDuplicado() throws Exception {
+//        usuarioBuilder.customizar(entidade -> {
+//            entidade.setEmail("teste2@teste.com.br");
+//        }).construir();
+//        UsuarioCadastroDTO usuarioCadastroDTO = usuarioBuilder.construirUsuario();
+//
+//        mockMvc.perform(post(API_USUARIO)
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
+//                .andExpect(status().isBadRequest());
+//    }
 
 }
