@@ -1,37 +1,37 @@
 <app-alert></app-alert>
-<p-confirmDialog ></p-confirmDialog>
+<p-confirmDialog></p-confirmDialog>
 <app-loading></app-loading>
 <button (click)="openDialog(true,null)" class="btn-margin" label="Novo" pButton></button>
 
 <div class="p-grid">
   <div class="p-col-11">
     <p-table [(selection)]="questaoSelecionada" [value]="questoes.content" paginator="true"
-            [rows]="itensPorPagina" [lazy]="true" [totalRecords]="totalRegistros"
-            (onLazyLoad)="onChangePage($event)"
-            selectionMode="single" emptymessage="Nenhuma questão encontrado">
+             (onLazyLoad)="onChangePage($event)" [lazy]="true" [rows]="itensPorPagina"
+             [totalRecords]="totalRegistros"
+             emptymessage="Nenhuma questão encontrado" selectionMode="single">
       <ng-template pTemplate="header">
         <tr>
-          <th scope="col" style="width: 100px;">Código</th>
-          <th scope="col">Descrição</th>
-          <th scope="col" style="width: 150px;">Senioridade</th>
-          <th scope="col" style="width: 200px;">Tipo Questão</th>
+          <th scope="col" style="width: 50px;">Código</th>
+          <th scope="col" style="width: 200px;">Descrição</th>
+          <th scope="col" style="width: 100px;">Senioridade</th>
+          <th scope="col" style="width: 100px;">Tipo Questão</th>
         </tr>
         <tr>
           <th>
             <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
-              (keyup.enter)="atualizarLista()" pInputText />
+                   (keyup.enter)="atualizarLista()" pInputText/>
           </th>
           <th>
             <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
-              (keyup.enter)="atualizarLista()" pInputText />
+                   (keyup.enter)="atualizarLista()" pInputText/>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades"
-                      placeholder="Selecione" style="width: 150px;"></p-dropdown>
+            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades" [showClear]="true"
+                        placeholder="Selecione" style="width: 150px;"></p-dropdown>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes"
-                      placeholder="Selecione" style="width: 200px;"></p-dropdown>
+            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes" [showClear]="true"
+                        placeholder="Selecione" style="width: 200px;"></p-dropdown>
           </th>
         </tr>
       </ng-template>
