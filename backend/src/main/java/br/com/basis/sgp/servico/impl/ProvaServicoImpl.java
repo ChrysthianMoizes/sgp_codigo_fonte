@@ -1,6 +1,8 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Prova;
+import br.com.basis.sgp.dominio.Questao;
+import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
@@ -43,6 +45,9 @@ public class ProvaServicoImpl implements ProvaServico {
     @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
         Prova prova = provaMapper.toEntity(provaDTO);
+
+        validarProva(prova);
+
         provaRepositorio.save(prova);
         return provaMapper.toDto(prova);
     }
@@ -62,6 +67,27 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova = provaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
         return prova;
+    }
+
+    private boolean verificarTitulo(Prova prova){
+        Prova provaBusca = provaRepositorio.findByTitulo(prova.getTitulo());
+        return !(provaBusca == null || provaBusca.getId().equals(prova.getId()));
+    }
+
+    private void validarProva(Prova prova){
+        if(verificarTitulo(prova)){
+            throw new RegraNegocioException("Esse titulo já está em uso");
+        }
+    }
+
+    private boolean validarQuestoes(Prova prova){
+        for (Questao questoes: prova.getQuestoes()) {
+            if(){
+                continue;
+            }else{
+                throw new RegraNegocioException("Questão não encontrada");
+            }
+        }
     }
 
 }
