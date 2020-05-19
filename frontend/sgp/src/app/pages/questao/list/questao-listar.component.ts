@@ -12,6 +12,7 @@ import { async } from '@angular/core/testing';
 import { QuestaoFiltro } from '../models/questao-filtro.model';
 import { SenioridadeService } from '../service/senioridade.service';
 import { TipoQuestaoService } from '../service/tipo-questao.service';
+import { Pageable } from 'src/app/util/pageable-request';
 
 @Component({
   selector: 'app-questao-listar',
@@ -25,7 +26,7 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   questaoSelecionada: QuestaoListagemDTO;
-  questoes: Page<QuestaoListagemDTO>;
+  questoes: Pageable<QuestaoListagemDTO>;
 
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
@@ -47,7 +48,7 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questoes = new Page();
+    this.questoes = new Pageable(0,20);
     this.getTiposQuestao();
     this.getSenioridades();
   }
@@ -64,7 +65,7 @@ export class QuestaoListarComponent implements OnInit {
         () => {
           this.loadingService.deactivate();
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
-          this.preencherQuestoes();
+          this.preencherQuestoes(this.filtro, this.questoes);
         },
         () => {
           this.loadingService.deactivate();
@@ -74,11 +75,11 @@ export class QuestaoListarComponent implements OnInit {
     this.questaoSelecionada = null;
   }
 
-  preencherQuestoes(pagina: number = 0) {
-    this.questaoListarService.indexPage(pagina, this.itensPorPagina).subscribe(
+  preencherQuestoes(filtro: QuestaoFiltro, pageable: Pageable<QuestaoListagemDTO>) {
+    this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
         this.questoes = response;
-        this.totalRegistros = this.questoes.totalElements;
+        this.totalRegistros = this.questoes.numberOfElements;
         this.loadingService.deactivate();
       },
       () => {
@@ -92,10 +93,18 @@ export class QuestaoListarComponent implements OnInit {
     this.dialogQuestao.openDialog(edicao, id);
   }
 
-  onChangePage(event: LazyLoadEvent){
+  onChangePage(event: LazyLoadEvent = null){
     this.loadingService.activate();
-    let pagina = event.first / event.rows;
-    this.preencherQuestoes(pagina);
+
+    const pageable = new Pageable<QuestaoListagemDTO>(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'descricao');
+    }
+
+    this.preencherQuestoes(this.filtro, pageable);
   }
 
   verificaNumeroCaractere(texto: string): string{
@@ -118,10 +127,6 @@ export class QuestaoListarComponent implements OnInit {
         this.excluir(id);
       }
     });
-  }
-
-  atualizarLista(){
-
   }
 
   getSenioridades() {

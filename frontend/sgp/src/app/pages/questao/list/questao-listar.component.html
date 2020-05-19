@@ -19,19 +19,19 @@
         <tr>
           <th>
             <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
-              (keyup.enter)="atualizarLista()" pInputText />
+              (keyup.enter)="onChangePage()" pInputText />
           </th>
           <th>
             <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
-              (keyup.enter)="atualizarLista()" pInputText />
+              (keyup.enter)="onChangePage()" pInputText />
           </th>
           <th>
             <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades"
-                      placeholder="Selecione" style="width: 150px;"></p-dropdown>
+                      placeholder="Selecione"></p-dropdown>
           </th>
           <th>
             <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes"
-                      placeholder="Selecione" style="width: 200px;"></p-dropdown>
+                      placeholder="Selecione"></p-dropdown>
           </th>
         </tr>
       </ng-template>
@@ -57,5 +57,4 @@
             id="botao3" pButton type="button" pTooltip="Visualizar" tooltipPosition="right"></button>
   </div>
 </div>
-
 <app-questao #DialogCadastrar></app-questao>
