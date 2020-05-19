@@ -216,12 +216,19 @@ public class UsuarioRecursoTest {
                 .andExpect(status().isOk());
     }
 
+    //    Buscar todos os registros /dropdown
+    @Test
+    public void buscarUsuariosDropdownComSucesso() throws Exception {
+        mockMvc.perform(get(API_USUARIO + "dropdown"))
+                .andExpect(status().isOk());
+    }
+
     //    Buscar por ID com sucesso
     @Test
     public void buscarPorIdComSucesso() throws Exception {
         Usuario usuario = usuarioBuilder.construir();
         Long id = usuario.getId();
-        mockMvc.perform(get(API_USUARIO, id))
+        mockMvc.perform(get(API_USUARIO + id))
                 .andExpect(status().isOk());
     }
 
