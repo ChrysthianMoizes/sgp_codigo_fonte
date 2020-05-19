@@ -17,10 +17,10 @@ public class AvaliacaoCadastroDTO {
     private LocalDate data;
 
     @NotNull
-    private Integer idCandidato;
+    private Long idCandidato;
 
     @NotNull
-    private Integer idProva;
+    private Long idProva;
 
     private BigDecimal aproveitamento;
 }

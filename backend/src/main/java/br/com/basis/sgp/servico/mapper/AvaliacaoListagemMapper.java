@@ -9,6 +9,11 @@ import org.mapstruct.Mapping;
 public interface AvaliacaoListagemMapper extends EntityMapper<AvaliacaoListagemDTO, Avaliacao> {
 
     @Override
+    @Mapping(source = "nomeCandidato", target = "candidato.nome")
+    @Mapping(source = "tituloProva", target = "prova.titulo")
+    Avaliacao toEntity(AvaliacaoListagemDTO avaliacaoListagemDTO);
+
+    @Override
     @Mapping(source = "candidato.nome", target = "nomeCandidato")
     @Mapping(source = "prova.titulo", target = "tituloProva")
     AvaliacaoListagemDTO toDto(Avaliacao avaliacao);
