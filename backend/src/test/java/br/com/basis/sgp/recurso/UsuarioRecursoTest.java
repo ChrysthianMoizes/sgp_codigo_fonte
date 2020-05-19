@@ -153,10 +153,11 @@ public class UsuarioRecursoTest {
     public void cadastrarUsuarioComTokenInvalido() throws Exception {
         UsuarioCadastroDTO usuarioCadastroDTO = usuarioBuilder.construirUsuario();
         usuarioCadastroDTO.setToken("tokeninvalido");
-        mockMvc.perform(post(API_USUARIO + "login")
+        mockMvc.perform(post(API_USUARIO)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
                 .andExpect(status().isBadRequest());
+
     }
 
     //    Editar Usuario Com Sucesso Sem mudar os Campos
