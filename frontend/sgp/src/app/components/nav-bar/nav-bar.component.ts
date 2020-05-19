@@ -38,7 +38,7 @@ export class NavBarComponent implements OnInit {
     this.authService.removerSessao();
   }
 
-  get isAdmin(): boolean {
+  isAdmin(): boolean {
     return this.authService.getUsuario().admin;
   }
 

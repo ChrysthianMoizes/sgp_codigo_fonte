@@ -1,10 +1,8 @@
-import { FiltroCandidato } from './../models/filtro-candidato.model';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Usuario } from '../models/usuario';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { ResourceService } from 'src/app/services/resource.service';
-import { Observable, of, from } from 'rxjs';
-import { Page } from 'src/app/models/page.model';
+import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +13,5 @@ export class UsuarioService extends ResourceService<Usuario> {
   }
   resetarSenha(email: String): Observable<any> {
     return of(null);
-  }
-
-  filtrarCandidatos(
-    filtro: FiltroCandidato,
-    page = 0,
-    size = 20
-  ): Observable<Page<Usuario>> {
-    return this.http.get(`${this.url}?page=${page}&size=${size}`, {
-      params: Object.assign(filtro),
-    }) as Observable<Page<Usuario>>;
   }
 }

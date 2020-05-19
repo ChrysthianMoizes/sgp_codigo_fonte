@@ -7,16 +7,15 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./visualizar-candidato.component.css'],
 })
 export class VisualizarCandidatoComponent {
-  
   @Output() candidatoAtualizado = new EventEmitter();
   @Input() apenasVisualizar = false;
   usuario: Usuario = new Usuario();
   visible = false;
-  
-  constructor() { }
 
-  openDialog(usuario: Usuario, apenasVisualizar=false): void {
-    this.usuario = {...usuario};
+  constructor() {}
+
+  openDialog(usuario: Usuario, apenasVisualizar = false): void {
+    this.usuario = Object.assign({}, usuario);
     this.apenasVisualizar = apenasVisualizar;
     this.visible = true;
   }

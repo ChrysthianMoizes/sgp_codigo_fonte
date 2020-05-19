@@ -120,7 +120,7 @@ export class CadastrarProvaComponent implements OnInit {
     );
   }
 
-  get titulo(): string {
+  getTitulo(): string {
     if (this.visualizando) {
       return 'Visualizar Prova';
     } else if (this.edicao) {
@@ -178,7 +178,6 @@ export class CadastrarProvaComponent implements OnInit {
       this.formulario.get('percentualAprovacao').enable();
       // ediçao
     } else {
-      console.log(this.visualizando);
       this.visualizando = true;
       this.edicao = false;
       this.exibir = true;
@@ -199,8 +198,6 @@ export class CadastrarProvaComponent implements OnInit {
         this.formulario.get('titulo').disable();
         this.formulario.get('percentualAprovacao').disable();
       }
-    } else {
-      console.log('Cadastrar nova prova.');
     }
   }
 
@@ -221,16 +218,12 @@ export class CadastrarProvaComponent implements OnInit {
       });
     }
     this.onCancel();
-    // servico.salvar(prova);
+
     this.retornarProva.emit(null);
     this.exibir = false;
   }
 
-  paginate(event): void {
-    // this.questaoService
-    //   .index(event.page)
-    //   .subscribe((questoes) => (this.origemQuestoes = questoes));
-  }
+  paginate(event): void {}
 
   removeRepetitions(arr: any[]): Array<Questao> {
     return arr.filter((questao, i) => arr.indexOf(questao) === i);

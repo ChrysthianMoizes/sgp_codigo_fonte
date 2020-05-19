@@ -6,12 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -64,38 +59,7 @@ export class CadastroComponent implements OnInit, OnChanges {
     }
   }
 
-  formParaEdicao(): FormGroup {
-    return this.formBuilder.group({
-      nome: ['', Validators.required],
-      cpf: new FormControl({ value: '', disabled: true }),
-      token: new FormControl({ value: '', disabled: true }),
-      email: ['', Validators.required],
-      senha: [''],
-    });
-  }
-
-  formParaCadastro(): FormGroup {
-    return this.formBuilder.group({
-      nome: ['', Validators.required],
-      cpf: ['', Validators.required],
-      token: ['', Validators.required],
-      email: ['', Validators.required],
-      senha: ['', Validators.required],
-    });
-  }
-
-  formParaVisualizacao(): FormGroup {
-    return this.formBuilder.group({
-      nome: new FormControl({ value: '', disabled: true }),
-      cpf: new FormControl({ value: '', disabled: true }),
-      token: new FormControl({ value: '', disabled: true }),
-      email: new FormControl({ value: '', disabled: true }),
-      senha: new FormControl({ value: '', disabled: true }),
-    });
-  }
-
   validarFormulario(): void {
-    console.log(this.usuario);
     this.formulario.valid &&
       this[this.usuario.id ? 'editar' : 'cadastrar'](this.usuario);
   }
@@ -136,7 +100,7 @@ export class CadastroComponent implements OnInit, OnChanges {
         this.alertService.montarAlerta('error', 'Erro', err.defaultMessage)
       );
     } else {
-      this.alertService.montarAlerta('error', 'Erro', error.error.errors);
+      this.alertService.montarAlerta('error', 'Erro', error.error.message);
     }
   }
 
