@@ -28,8 +28,8 @@ export class QuestaoListarComponent implements OnInit {
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
 
-  itensPorPagina: number = 10;
-  totalRegistros: number = 0;
+  itensPorPagina: number;
+  totalRegistros: number;
 
   filtro: QuestaoFiltro = new QuestaoFiltro();
 
@@ -45,7 +45,9 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.onChangePage(null);
+    this.itensPorPagina = 20;
+    this.totalRegistros = 0;
+    this.atualizarPagina(null);
     this.getTiposQuestao();
     this.getSenioridades();
   }
@@ -62,7 +64,7 @@ export class QuestaoListarComponent implements OnInit {
         () => {
           this.loadingService.deactivate();
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
-          this.onChangePage();
+          this.atualizarPagina();
         },
         () => {
           this.loadingService.deactivate();
@@ -91,7 +93,7 @@ export class QuestaoListarComponent implements OnInit {
     this.dialogQuestao.openDialog(edicao, id);
   }
 
-  onChangePage(event = null){
+  atualizarPagina(event = null){
     this.loadingService.activate();
 
     const pageable = new Pageable<QuestaoListagemDTO>(0, 20);

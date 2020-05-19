@@ -17,19 +17,19 @@
         <tr>
           <th>
             <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
-                   (keyup.enter)="onChangePage()" pInputText pKeyFilter="int"/>
+                   (keyup.enter)="atualizarPagina()" pInputText pKeyFilter="int"/>
           </th>
           <th>
             <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
-                   (keyup.enter)="onChangePage()" pInputText/>
+                   (keyup.enter)="atualizarPagina()" pInputText/>
           </th>
           <th>
             <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades" [showClear]="true"
-                        (onChange)="onChangePage()" ></p-dropdown>
+                        (onChange)="atualizarPagina()" ></p-dropdown>
           </th>
           <th>
             <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes" [showClear]="true"
-                        (onChange)="onChangePage()"></p-dropdown>
+                        (onChange)="atualizarPagina()"></p-dropdown>
           </th>
         </tr>
       </ng-template>
@@ -42,7 +42,7 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator [totalRecords]="totalRegistros" [rows]="itensPorPagina" (onPageChange)="onChangePage($event)"
+    <p-paginator [totalRecords]="totalRegistros" [rows]="itensPorPagina" (onPageChange)="atualizarPagina($event)"
       >
     </p-paginator>
   </div>
@@ -58,4 +58,4 @@
             id="botao3" pButton type="button" pTooltip="Visualizar" tooltipPosition="right"></button>
   </div>
 </div>
-<app-questao #DialogCadastrar (alterar)="onChangePage()"></app-questao>
+<app-questao #DialogCadastrar (alterar)="atualizarPagina()"></app-questao>
