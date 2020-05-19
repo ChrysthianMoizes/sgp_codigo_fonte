@@ -3,6 +3,8 @@ package br.com.basis.sgp.servico.impl;
 import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.repositorio.QuestaoRepositorio;
 import br.com.basis.sgp.servico.QuestaoServico;
+import br.com.basis.sgp.servico.SenioridadeServico;
+import br.com.basis.sgp.servico.TipoQuestaoServico;
 import br.com.basis.sgp.servico.dto.QuestaoDTO;
 import br.com.basis.sgp.servico.dto.QuestaoListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -30,6 +32,9 @@ public class QuestaoServicoImpl implements QuestaoServico {
 
     private final QuestaoRepositorio questaoRepositorio;
 
+    private final SenioridadeServico senioridadeServico;
+    private final TipoQuestaoServico tipoQuestaoServico;
+
     @Override
     public Page<QuestaoListagemDTO> listarQuestoes(QuestaoFiltro questaoFiltro, Pageable pageable) {
         return questaoRepositorio.findAll(questaoFiltro.filter(), pageable)
@@ -44,6 +49,12 @@ public class QuestaoServicoImpl implements QuestaoServico {
     @Override
     public QuestaoDTO salvar(QuestaoDTO questaoDTO) {
         Questao questao = questaoMapper.toEntity(questaoDTO);
+
+        if (!senioridadeServico.obterPorId(questaoDTO.getIdSenioridade()))
+            throw new RegraNegocioException("Senioridade inválida");
+        if (!tipoQuestaoServico.obterPorId(questaoDTO.getIdTipoQuestao()))
+            throw new RegraNegocioException("Tipo de questão inválida");
+
         return questaoMapper.toDto(questaoRepositorio.save(questao));
     }
 
