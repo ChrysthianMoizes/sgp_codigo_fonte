@@ -97,7 +97,7 @@
             </div>
           </p-accordion>
         </div>
-        <footer *ngIf="!visualizando">
+        <footer *ngIf="!apenasVisualizar">
           <button
             pButton
             class="ui-button-secondary"
@@ -109,7 +109,6 @@
             pButton
             type="button"
             (click)="validarForm()"
-            [disabled]="!isFormValid"
             label="SALVAR"
           ></button>
         </footer>

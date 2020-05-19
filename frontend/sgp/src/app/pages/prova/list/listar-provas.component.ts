@@ -82,21 +82,61 @@ export class ListarProvasComponent implements OnInit {
     return this.selectedProvas && this.selectedProvas.length >= 1;
   }
 
-  visualizarProva(): void {
+/*   visualizarProva(): void {
     this.dialogProvaForm.abrirDialog(3);
+  } */
+  visualizarProva(): void {
+    this.selectedProvas.forEach((prova) =>
+      this.provaService.show(prova.id).subscribe({
+        next: (provaCompleta) =>
+          this.dialogProvaForm.abrirDialog(provaCompleta, true),
+        error: () =>
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar prova. Tente novamente.'
+          ),
+      })
+    );
   }
 
-  editarProva(): void {
+/*   editarProvass(): void {
     this.dialogProvaForm.abrirDialog(2);
+  } */
+  editarProva(): void {
+    this.selectedProvas.forEach((prova) =>
+      this.provaService.show(prova.id).subscribe({
+        next: (provaCompleta) => {
+          this.dialogProvaForm.abrirDialog(provaCompleta);
+        },
+        error: () =>
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar prova. Tente novamente.'
+          ),
+      })
+    );
   }
 
   cadastrarProva(): void {
-    this.dialogProvaForm.abrirDialog(1);
-  }
+    this.selectedProvas.forEach((prova) =>
+      this.provaService.show(prova.id).subscribe({
+        next: (provaCompleta) => {
+          this.dialogProvaForm.abrirDialog(provaCompleta);
+        },
+        error: () =>
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar prova. Tente novamente.'
+          ),
+      })
+    );  }
 
-  atualizarListagem(): void {
+/*   atualizarListagem(): void {
     // atualizar a lista com o banco
-  }
+  } */
 
   excluirProva(): void {
     this.confirmationService.confirm({

@@ -19,6 +19,10 @@ export class CadastrarProvaComponent implements OnInit {
   prova: Prova = new Prova();
   formSubmetido: boolean = false;
   @Input() provaSendoEditada: Prova;
+  @Input() apenasVisualizar = false;
+  @Output() salvar = new EventEmitter();
+  @Output() cancelar = new EventEmitter();
+  visible = false;
   visualizando: boolean;
   edicao: boolean;
   modoDialog: number;
@@ -48,9 +52,11 @@ export class CadastrarProvaComponent implements OnInit {
       this.origemQuestoes = questoes;
       this.destinoQuestoes = [];
     });
+
     this.questaoService
       .getNumberOfElements()
       .subscribe((total) => (this.totalDeQuestoes = total));
+
     this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
       percentualAprovacao: ['', Validators.required],
@@ -60,8 +66,8 @@ export class CadastrarProvaComponent implements OnInit {
   iniciarForm() {
     this.formulario = this.formBuilder.group(
       {
-        titulo: ['', [Validators.required]],
-        percentualAprovacao: ['', [Validators.required]],
+        titulo: [this.prova.titulo, [Validators.required]],
+        percentualAprovacao: [this.prova.percentualAprovacao, [Validators.required]],
       },
       { updateOn: "blur" }
     );
@@ -74,11 +80,11 @@ export class CadastrarProvaComponent implements OnInit {
       return;
     }
 
-    this.salvar();
+    this.persistir();
 
   }
 
-  salvar() {
+  persistir() {
    if (this.prova.id === null) {
      this.salvarProva(this.prova);
    } else {
@@ -98,7 +104,7 @@ export class CadastrarProvaComponent implements OnInit {
         );
       },
       (err) => {
-        this.alert.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova');
       }
     );
   }
@@ -115,7 +121,7 @@ export class CadastrarProvaComponent implements OnInit {
         );
       },
       (err) => {
-        this.alert.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', 'Erro ao atualizar a Prova');
       }
     );
   }
@@ -159,8 +165,13 @@ export class CadastrarProvaComponent implements OnInit {
     });
   }
 
+  abrirDialog(prova: Prova, apenasVisualizar = false): void {
+    this.prova = Object.assign({}, prova);
+    this.apenasVisualizar = apenasVisualizar;
+    this.visible = true;
+  }
 
-  abrirDialog(modo): void {
+/*   abrirDialog(modo): void {
     if (modo === 1) {
       this.edicao = false;
       this.visualizando = false;
@@ -199,11 +210,11 @@ export class CadastrarProvaComponent implements OnInit {
         this.formulario.get('percentualAprovacao').disable();
       }
     }
-  }
+  } */
 
 
 
-  onSubmit(): void {
+ /*  onSubmit(): void {
     this.loadingService.activate();
     if (!this.provaSendoEditada) {
       this.salvarProva({
@@ -221,7 +232,7 @@ export class CadastrarProvaComponent implements OnInit {
 
     this.retornarProva.emit(null);
     this.exibir = false;
-  }
+  } */
 
   paginate(event): void {}
 
