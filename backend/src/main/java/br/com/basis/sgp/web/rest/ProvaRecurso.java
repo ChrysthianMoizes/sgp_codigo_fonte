@@ -34,6 +34,12 @@ public class ProvaRecurso {
         return ResponseEntity.ok(provas);
     }
 
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<ProvaListagemDTO> listarTituloProvas(@PathVariable String titulo) {
+        ProvaListagemDTO prova = provaServico.buscarPorTitulo(titulo);
+        return ResponseEntity.ok(prova);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProvaDTO> visualizarProva(@PathVariable("id") Long id){
         ProvaDTO provaDTO = provaServico.exibirPorId(id);

@@ -33,7 +33,7 @@ export class CadastrarProvaComponent implements OnInit {
     private alertService: AlertService,
     private loadingService: LoadingService,
     private questaoService: QuestaoService
-  ) {}
+  ) { }
 
   getTitulo(): string {
     if (this.visualizando) {
@@ -62,9 +62,9 @@ export class CadastrarProvaComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  preencherFormParaEdicao(): void {}
+  preencherFormParaEdicao(): void { }
 
   abrirDialog(modo): void {
     if (modo === 1) {
@@ -161,7 +161,7 @@ export class CadastrarProvaComponent implements OnInit {
     this.exibir = false;
   }
 
-  paginate(event): void {}
+  paginate(event): void { }
 
   removeRepetitions(arr: any[]): Array<Questao> {
     return arr.filter((questao, i) => arr.indexOf(questao) === i);

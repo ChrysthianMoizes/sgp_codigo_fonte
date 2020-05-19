@@ -1,6 +1,8 @@
 package br.com.basis.sgp.servico.filtro;
 
 import br.com.basis.sgp.dominio.Avaliacao_;
+import br.com.basis.sgp.dominio.Prova_;
+import br.com.basis.sgp.dominio.Usuario_;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,12 +36,12 @@ public class AvaliacaoFiltro implements EntityFiltro {
     private List<Predicate> getPredicates(Root root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(nomeCandidato)) {
-            Predicate predicate = cb.like(cb.lower(root.get(Avaliacao_.candidato)), "%" + nomeCandidato.toLowerCase() + "%");
+            Predicate predicate = cb.like(cb.lower(root.join(Avaliacao_.candidato).get(Usuario_.nome)), "%" + nomeCandidato.toLowerCase() + "%");
             predicates.add(predicate);
         }
 
         if (!StringUtils.isEmpty(tituloProva)) {
-            Predicate predicate = cb.equal(root.get(Avaliacao_.prova.getName()),tituloProva);
+            Predicate predicate = cb.like(cb.lower(root.join(Avaliacao_.prova).get(Prova_.titulo)),"%" + tituloProva.toLowerCase() + "%");
             predicates.add(predicate);
         }
 //

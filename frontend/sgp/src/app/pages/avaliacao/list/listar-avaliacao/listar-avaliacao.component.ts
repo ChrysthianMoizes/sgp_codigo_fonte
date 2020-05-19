@@ -6,6 +6,8 @@ import { AlertService } from 'src/app/components/alert/alert.service';
 import { Pageable } from 'src/app/util/pageable-request';
 import { AuthService } from 'src/app/services/auth.service';
 import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
+import { Prova } from 'src/app/pages/prova/models/prova';
+import { ProvaService } from 'src/app/pages/prova/service/prova.service';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -15,6 +17,7 @@ import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 export class ListarAvaliacaoComponent implements OnInit {
   constructor(
     private avaliacaoService: AvaliacaoService,
+    private provaService: ProvaService,
     private alert: AlertService,
     private authService: AuthService
   ) { }
@@ -36,7 +39,7 @@ export class ListarAvaliacaoComponent implements OnInit {
     this.iniciarTabela();
   }
 
-  iniciarTabela(){
+  iniciarTabela() {
     this.cols = [
       { field: 'id', header: 'Código' },
       { field: 'tituloProva', header: 'Título' },
@@ -47,13 +50,11 @@ export class ListarAvaliacaoComponent implements OnInit {
     ];
   }
 
-  temPermissao(){
+  temPermissao() {
     return this.authService.getUsuario().admin
   }
 
   atualizarLista(event = null): void {
-    console.log('chamou')
-
     const pageable = new Pageable<Avaliacao>(0, 20);
 
     if (event) {
@@ -62,19 +63,34 @@ export class ListarAvaliacaoComponent implements OnInit {
       pageable.setSort(1, 'titulo');
     }
 
-    console.log(this.filtro)
-
     this.avaliacaoService.index(this.filtro, pageable)
       .subscribe(
         response => {
           this.avaliacoesRecebidas = response.content;
           this.totalElementos = response.numberOfElements;
           this.avaliacaoSelecionada = new Avaliacao();
+          this.resultadoAvaliacao();
         },
         () => {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao listar avaliações');
         }
       );
+  }
+
+  resultadoAvaliacao(): void {
+    this.avaliacoesRecebidas.forEach(element => {
+      let prova = new Prova();
+      this.provaService.findByTitulo(element.tituloProva).subscribe(
+        response => {
+          prova = response;
+          console.log(element)
+          console.log(prova)
+          element.situacao = element.aproveitamento ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
+        },
+        erro => {
+          this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar prova')
+        })
+    })
   }
 
   isOneSelected(): boolean {

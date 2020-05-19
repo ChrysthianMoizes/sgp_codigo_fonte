@@ -41,6 +41,11 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
+    public ProvaListagemDTO buscarPorTitulo(String titulo) {
+        return provaListagemMapper.toDto(buscarTitulo(titulo));
+    }
+
+    @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
         Prova prova = provaMapper.toEntity(provaDTO);
         provaRepositorio.save(prova);
@@ -61,6 +66,12 @@ public class ProvaServicoImpl implements ProvaServico {
     public List<SelectDTO> listarProvaDropDown() {
         List<Prova> provas = provaRepositorio.findAll();
         return provaDropdownMapper.toDto(provas);
+    }
+
+    private Prova buscarTitulo(String titulo) {
+        Prova prova = provaRepositorio.findByTitulo(titulo)
+                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
+        return prova;
     }
 
     private Prova buscarPorId(Long id){
