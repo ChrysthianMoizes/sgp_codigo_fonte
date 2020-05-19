@@ -28,52 +28,48 @@
         <h3>Alternativas</h3>
         <div>
           <div class="ui-inputgroup border-textInput">
-            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
-                           name="resposta" value=1></p-radioButton>
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=1></p-radioButton>
             <div class="ui-float-label">
               <textarea [(ngModel)]="questao.alternativa1" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
-                        formControlName="alternativa1" id="alternativa1" pInputTextarea
-                        rows="1"></textarea>
+                        formControlName="alternativa1" id="alternativa1" pInputTextarea rows="1"></textarea>
               <label for="alternativa1">Alternativa 1</label>
             </div>
           </div>
 
           <div class="ui-inputgroup border-textInput">
-            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
-                           name="resposta" value=2></p-radioButton>
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=2></p-radioButton>
             <div class="ui-float-label">
               <textarea [(ngModel)]="questao.alternativa2" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
-                        formControlName="alternativa2" id="alternativa2" pInputTextarea
-                        rows="1"></textarea>
+                        formControlName="alternativa2" id="alternativa2" pInputTextarea rows="1"></textarea>
               <label for="alternativa2">Alternativa 2</label>
             </div>
           </div>
 
           <div class="ui-inputgroup border-textInput">
-            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
-                           name="resposta" value=3></p-radioButton>
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=3></p-radioButton>
             <div class="ui-float-label">
               <textarea [(ngModel)]="questao.alternativa3" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
-                        formControlName="alternativa3" id="alternativa3" pInputTextarea
-                        rows="1"></textarea>
+                        formControlName="alternativa3" id="alternativa3" pInputTextarea rows="1"></textarea>
               <label for="alternativa3">Alternativa 3</label>
             </div>
           </div>
 
           <div class="ui-inputgroup border-textInput">
-            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
-                           name="resposta" value=4></p-radioButton>
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=4></p-radioButton>
             <div class="ui-float-label">
               <textarea [(ngModel)]="questao.alternativa4" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
-                        formControlName="alternativa4" id="alternativa4" pInputTextarea
-                        rows="1"></textarea>
+                        formControlName="alternativa4" id="alternativa4" pInputTextarea rows="1"></textarea>
               <label for="alternativa4">Alternativa 4</label>
             </div>
           </div>
 
           <div class="ui-inputgroup border-textInput">
-            <p-radioButton [(ngModel)]="questao.resposta" class="ui-inputgroup-addon" formControlName="resposta"
-                           name="resposta" value=5></p-radioButton>
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=5></p-radioButton>
             <div class="ui-float-label">
               <textarea [(ngModel)]="questao.alternativa5" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
                         formControlName="alternativa5" id="alternativa5" pInputTextarea

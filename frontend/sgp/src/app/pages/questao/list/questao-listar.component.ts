@@ -1,17 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService, LazyLoadEvent, ConfirmationService, SelectItem} from 'primeng';
+import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem} from 'primeng';
+import {LoadingService} from 'src/app/components/loading/loading.service';
 import {Page} from 'src/app/models/page.model';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
+import {QuestaoFiltro} from '../models/questao-filtro.model';
 
 import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
 import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
-import { LoadingService } from 'src/app/components/loading/loading.service';
-import { async } from '@angular/core/testing';
-import { QuestaoFiltro } from '../models/questao-filtro.model';
-import { SenioridadeService } from '../service/senioridade.service';
-import { TipoQuestaoService } from '../service/tipo-questao.service';
+import {SenioridadeService} from '../service/senioridade.service';
+import {TipoQuestaoService} from '../service/tipo-questao.service';
 
 @Component({
   selector: 'app-questao-listar',
@@ -128,7 +127,7 @@ export class QuestaoListarComponent implements OnInit {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
-        this.senioridades.unshift({value: null, label:"" });
+        this.senioridades.unshift({value: null, label: 'Selecione...'});
       }
     );
   }
@@ -137,7 +136,7 @@ export class QuestaoListarComponent implements OnInit {
     this.tipoQuestaoService.index().subscribe(
       (resposta) => {
         this.tipoQuestoes = resposta;
-        this.tipoQuestoes.unshift({value: null, label:"" });
+        this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
       }
     );
   }
