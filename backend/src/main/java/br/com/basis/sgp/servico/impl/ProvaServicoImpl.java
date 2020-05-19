@@ -84,7 +84,7 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private void verificarQuestoes(Prova prova){
         if(prova.getQuestoes().isEmpty()){
-            throw new RegraNegocioException("Não ah questoes o suficiente");
+            throw new RegraNegocioException("Não há questoes o suficiente");
         }
     }
 
