@@ -107,6 +107,7 @@ export class QuestaoComponent implements OnInit {
       },
       () => {
         this.loadingService.deactivate();
+        this.alterar.emit(null);
         this.exibir = false;
       }
     );
@@ -122,6 +123,7 @@ export class QuestaoComponent implements OnInit {
       },
       () => {
         this.loadingService.deactivate();
+        this.alterar.emit(null);
         this.exibir = false;
       }
     );

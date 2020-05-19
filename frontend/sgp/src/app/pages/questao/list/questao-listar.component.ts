@@ -1,16 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem} from 'primeng';
+import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem, Dropdown} from 'primeng';
 import {LoadingService} from 'src/app/components/loading/loading.service';
-import {Page} from 'src/app/models/page.model';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
 import {QuestaoFiltro} from '../models/questao-filtro.model';
-
 import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
 import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
-import {SenioridadeService} from '../service/senioridade.service';
-import {TipoQuestaoService} from '../service/tipo-questao.service';
+import { SenioridadeService } from '../service/senioridade.service';
+import { TipoQuestaoService } from '../service/tipo-questao.service';
+import { Pageable } from 'src/app/util/pageable-request';
 
 @Component({
   selector: 'app-questao-listar',
@@ -24,12 +23,12 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   questaoSelecionada: QuestaoListagemDTO;
-  questoes: Page<QuestaoListagemDTO>;
+  questoes: QuestaoListagemDTO[];
 
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
 
-  itensPorPagina: number = 20;
+  itensPorPagina: number;
   totalRegistros: number;
 
   filtro: QuestaoFiltro = new QuestaoFiltro();
@@ -46,7 +45,9 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questoes = new Page();
+    this.itensPorPagina = 20;
+    this.totalRegistros = 0;
+    this.atualizarPagina(null);
     this.getTiposQuestao();
     this.getSenioridades();
   }
@@ -63,7 +64,7 @@ export class QuestaoListarComponent implements OnInit {
         () => {
           this.loadingService.deactivate();
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
-          this.preencherQuestoes();
+          this.atualizarPagina();
         },
         () => {
           this.loadingService.deactivate();
@@ -73,11 +74,12 @@ export class QuestaoListarComponent implements OnInit {
     this.questaoSelecionada = null;
   }
 
-  preencherQuestoes(pagina: number = 0) {
-    this.questaoListarService.indexPage(pagina, this.itensPorPagina).subscribe(
+  preencherQuestoes(filtro: QuestaoFiltro, pageable: Pageable<QuestaoListagemDTO>) {
+    this.verificaSenioridadeETipoQuestaoNull();
+    this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
-        this.questoes = response;
-        this.totalRegistros = this.questoes.totalElements;
+        this.questoes = response.content;
+        this.totalRegistros = response.totalElements;
         this.loadingService.deactivate();
       },
       () => {
@@ -91,10 +93,18 @@ export class QuestaoListarComponent implements OnInit {
     this.dialogQuestao.openDialog(edicao, id);
   }
 
-  onChangePage(event: LazyLoadEvent){
+  atualizarPagina(event = null){
     this.loadingService.activate();
-    let pagina = event.first / event.rows;
-    this.preencherQuestoes(pagina);
+
+    const pageable = new Pageable<QuestaoListagemDTO>(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'descricao');
+    }
+
+    this.preencherQuestoes(this.filtro, pageable);
   }
 
   verificaNumeroCaractere(texto: string): string{
@@ -119,15 +129,11 @@ export class QuestaoListarComponent implements OnInit {
     });
   }
 
-  atualizarLista(){
-
-  }
-
   getSenioridades() {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
-        this.senioridades.unshift({value: null, label: 'Selecione...'});
+        this.senioridades.unshift({value: '', label: 'Selecione...'});
       }
     );
   }
@@ -139,5 +145,14 @@ export class QuestaoListarComponent implements OnInit {
         this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
       }
     );
+  }
+
+  private verificaSenioridadeETipoQuestaoNull(){
+    if(this.filtro.senioridade === null){
+      this.filtro.senioridade = 0;
+    }
+    if(this.filtro.tipoQuestao === null){
+      this.filtro.tipoQuestao = 0;
+    }
   }
 }
