@@ -53,7 +53,7 @@ export class ListarProvasComponent implements OnInit {
 
   atualizarLista(event = null): void {
 
-    const pageable = new Pageable(0, 20);
+    const pageable = new Pageable<Prova>(0, 20);
 
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
@@ -65,7 +65,7 @@ export class ListarProvasComponent implements OnInit {
       (response) => {
         this.listProvas = response.content;
         this.notFilteredListProvas = response.content;
-        this.totalDeElementos = response.totalElements;
+        this.totalDeElementos = response.numberOfElements;
         this.selectedProvas = [];
       },
       () => {

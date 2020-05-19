@@ -60,8 +60,8 @@ export class CadastrarProvaComponent implements OnInit {
   iniciarForm() {
     this.formulario = this.formBuilder.group(
       {
-        titulo: [null, [Validators.required]],
-        percentualAprovacao: [null, [Validators.required]],
+        titulo: ['', [Validators.required]],
+        percentualAprovacao: ['', [Validators.required]],
       },
       { updateOn: "blur" }
     );
