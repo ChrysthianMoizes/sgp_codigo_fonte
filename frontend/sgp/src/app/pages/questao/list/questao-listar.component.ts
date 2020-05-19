@@ -1,15 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DialogService, LazyLoadEvent, ConfirmationService, SelectItem} from 'primeng';
-import {Page} from 'src/app/models/page.model';
+import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem, Dropdown} from 'primeng';
+import {LoadingService} from 'src/app/components/loading/loading.service';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
-
+import {QuestaoFiltro} from '../models/questao-filtro.model';
 import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
 import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
-import { LoadingService } from 'src/app/components/loading/loading.service';
-import { async } from '@angular/core/testing';
-import { QuestaoFiltro } from '../models/questao-filtro.model';
 import { SenioridadeService } from '../service/senioridade.service';
 import { TipoQuestaoService } from '../service/tipo-questao.service';
 import { Pageable } from 'src/app/util/pageable-request';
@@ -26,13 +23,13 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   questaoSelecionada: QuestaoListagemDTO;
-  questoes: Pageable<QuestaoListagemDTO>;
+  questoes: QuestaoListagemDTO[];
 
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
 
-  itensPorPagina: number = 20;
-  totalRegistros: number;
+  itensPorPagina: number = 10;
+  totalRegistros: number = 0;
 
   filtro: QuestaoFiltro = new QuestaoFiltro();
 
@@ -48,7 +45,7 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questoes = new Pageable(0,20);
+    this.onChangePage(null);
     this.getTiposQuestao();
     this.getSenioridades();
   }
@@ -65,7 +62,7 @@ export class QuestaoListarComponent implements OnInit {
         () => {
           this.loadingService.deactivate();
           this.alertService.montarAlerta('success', 'Sucesso', 'Questão excluida com sucesso');
-          this.preencherQuestoes(this.filtro, this.questoes);
+          this.onChangePage();
         },
         () => {
           this.loadingService.deactivate();
@@ -76,10 +73,11 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   preencherQuestoes(filtro: QuestaoFiltro, pageable: Pageable<QuestaoListagemDTO>) {
+    this.verificaSenioridadeETipoQuestaoNull();
     this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
-        this.questoes = response;
-        this.totalRegistros = this.questoes.numberOfElements;
+        this.questoes = response.content;
+        this.totalRegistros = response.numberOfElements;
         this.loadingService.deactivate();
       },
       () => {
@@ -93,7 +91,7 @@ export class QuestaoListarComponent implements OnInit {
     this.dialogQuestao.openDialog(edicao, id);
   }
 
-  onChangePage(event: LazyLoadEvent = null){
+  onChangePage(event = null){
     this.loadingService.activate();
 
     const pageable = new Pageable<QuestaoListagemDTO>(0, 20);
@@ -133,7 +131,7 @@ export class QuestaoListarComponent implements OnInit {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
-        this.senioridades.unshift({value: null, label:"" });
+        this.senioridades.unshift({value: '', label: 'Selecione...'});
       }
     );
   }
@@ -142,8 +140,17 @@ export class QuestaoListarComponent implements OnInit {
     this.tipoQuestaoService.index().subscribe(
       (resposta) => {
         this.tipoQuestoes = resposta;
-        this.tipoQuestoes.unshift({value: null, label:"" });
+        this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
       }
     );
+  }
+
+  private verificaSenioridadeETipoQuestaoNull(){
+    if(this.filtro.senioridade === null){
+      this.filtro.senioridade = 0;
+    }
+    if(this.filtro.tipoQuestao === null){
+      this.filtro.tipoQuestao = 0;
+    }
   }
 }
