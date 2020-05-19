@@ -19,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collection;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,5 +87,10 @@ public class UsuarioRecursoTest {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioCadastroDTO)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void buscarUsuarioNaoExistente(Long id) throws Exception {
+
     }
 }
