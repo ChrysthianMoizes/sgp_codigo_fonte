@@ -30,7 +30,10 @@ public class UsuarioBuilder extends ConstrutorDeEntidade<Usuario> {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Value("${app.TOKEN_USER}")
-    private String TOKEN;
+    private String TOKEN_USUARIO;
+
+    @Value("${app.TOKEN_ADMIN}")
+    private String TOKEN_ADMIN;
 
     @Override
     public Usuario construirEntidade() throws ParseException {
@@ -46,10 +49,23 @@ public class UsuarioBuilder extends ConstrutorDeEntidade<Usuario> {
         return usuario;
     }
 
+    public Usuario construirEntidadeAdmin() throws ParseException {
+
+        Usuario usuario = new Usuario();
+
+        usuario.setEmail("teste@teste.com.br");
+        usuario.setNome("José da Silva");
+        usuario.setCpf("60600208010");
+        usuario.setSenha("12345");
+        usuario.setAdmin(TipoUsuarioEnum.ADMIN.getCodigo());
+
+        return usuario;
+    }
+
     @Override
     public Usuario persistir(Usuario entidade) {
         UsuarioCadastroDTO usuarioCadastroDTO = usuarioCadastroMapper.toDto(entidade);
-        usuarioCadastroDTO.setToken(TOKEN);
+        usuarioCadastroDTO.setToken(TOKEN_USUARIO);
         return usuarioDetalhadoMapper.toEntity(usuarioServico.salvar(usuarioCadastroDTO));
     }
 
@@ -70,8 +86,17 @@ public class UsuarioBuilder extends ConstrutorDeEntidade<Usuario> {
     public UsuarioCadastroDTO construirUsuario() throws ParseException {
         Usuario usuario = construirEntidade();
         UsuarioCadastroDTO usuarioCadastroDTO = usuarioCadastroMapper.toDto(usuario);
-        usuarioCadastroDTO.setToken(TOKEN);
+        usuarioCadastroDTO.setToken(TOKEN_USUARIO);
 
         return usuarioCadastroDTO;
     }
+
+    public UsuarioCadastroDTO construirAdmin() throws ParseException {
+        Usuario usuario = construirEntidadeAdmin();
+        UsuarioCadastroDTO usuarioCadastroDTO = usuarioCadastroMapper.toDto(usuario);
+        usuarioCadastroDTO.setToken(TOKEN_ADMIN);
+
+        return usuarioCadastroDTO;
+    }
+
 }
