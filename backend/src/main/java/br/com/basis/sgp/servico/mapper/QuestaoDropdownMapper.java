@@ -13,4 +13,9 @@ public interface QuestaoDropdownMapper extends EntityMapper<SelectDTO, Questao> 
     @Mapping(source = "descricao", target = "label")
     SelectDTO toDto(Questao entity);
 
+    @Override
+    @Mapping(source = "value", target = "id")
+    @Mapping(source = "label", target = "descricao")
+    Questao toEntity(SelectDTO DTO);
+
 }

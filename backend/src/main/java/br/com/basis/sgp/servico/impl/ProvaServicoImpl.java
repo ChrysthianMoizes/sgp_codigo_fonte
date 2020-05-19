@@ -1,8 +1,10 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Prova;
+import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.ProvaServico;
+import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -28,6 +30,7 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaListagemMapper provaListagemMapper;
     private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
+    private final QuestaoServico questaoServico;
 
     @Override
     public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
@@ -43,6 +46,10 @@ public class ProvaServicoImpl implements ProvaServico {
     @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
         Prova prova = provaMapper.toEntity(provaDTO);
+
+        validarProva(prova);
+        verificarQuestoes(prova);
+
         provaRepositorio.save(prova);
         return provaMapper.toDto(prova);
     }
@@ -62,6 +69,23 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova = provaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
         return prova;
+    }
+
+    private boolean verificarTitulo(Prova prova){
+        Prova provaBusca = provaRepositorio.findByTitulo(prova.getTitulo());
+        return !(provaBusca == null || provaBusca.getId().equals(prova.getId()));
+    }
+
+    private void validarProva(Prova prova){
+        if(verificarTitulo(prova)){
+            throw new RegraNegocioException("Este título já está em uso");
+        }
+    }
+
+    private void verificarQuestoes(Prova prova){
+        if(prova.getQuestoes().isEmpty()){
+            throw new RegraNegocioException("Não há questões o suficiente");
+        }
     }
 
 }
