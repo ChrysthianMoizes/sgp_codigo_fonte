@@ -5,8 +5,10 @@ import br.com.basis.sgp.builder.ConstrutorDeEntidade;
 import br.com.basis.sgp.builder.ProvaBuilder;
 import br.com.basis.sgp.builder.UsuarioBuilder;
 import br.com.basis.sgp.dominio.Prova;
+import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.dto.UsuarioCadastroDTO;
 import br.com.basis.sgp.servico.mapper.ProvaMapper;
 import br.com.basis.sgp.servico.mapper.UsuarioCadastroMapper;
@@ -26,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -70,6 +73,17 @@ public class ProvaRecursoTest {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(provaDTO)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void cadastrarProvaSemQuestoes() throws Exception { //Cadstro com sem questoes
+        ProvaDTO provaDTO = provaBuilder.construirProva();
+        provaDTO.setQuestoes(new ArrayList<>());
+
+        mockMvc.perform(post(API_PROVA)
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(provaDTO)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

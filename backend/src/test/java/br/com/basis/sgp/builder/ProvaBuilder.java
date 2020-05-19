@@ -36,7 +36,15 @@ public class ProvaBuilder extends ConstrutorDeEntidade<Prova> {
     public Prova construirEntidade() throws ParseException {
 
         Prova prova = new Prova();
+
         List<Questao> questoes = new ArrayList<>();
+
+        Questao questao = new Questao();
+        questao.setId(new Long("1"));
+        questoes.add(questao);
+
+        questao.setId(new Long("2"));
+        questoes.add(questao);
 
         prova.setTitulo("Prova Senior");
         prova.setPercentual(new BigDecimal("90.00"));

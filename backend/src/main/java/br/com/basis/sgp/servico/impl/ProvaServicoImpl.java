@@ -83,8 +83,8 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     private void verificarQuestoes(Prova prova){
-        for (Questao questao: prova.getQuestoes()){
-            questaoServico.obterPorId(questao.getId());
+        if(prova.getQuestoes().isEmpty()){
+            throw new RegraNegocioException("Não ah questoes o suficiente");
         }
     }
 
