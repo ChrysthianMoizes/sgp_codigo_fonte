@@ -78,13 +78,13 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private void validarProva(Prova prova){
         if(verificarTitulo(prova)){
-            throw new RegraNegocioException("Esse titulo já está em uso");
+            throw new RegraNegocioException("Este título já está em uso");
         }
     }
 
     private void verificarQuestoes(Prova prova){
         if(prova.getQuestoes().isEmpty()){
-            throw new RegraNegocioException("Não há questoes o suficiente");
+            throw new RegraNegocioException("Não há questões o suficiente");
         }
     }
 
