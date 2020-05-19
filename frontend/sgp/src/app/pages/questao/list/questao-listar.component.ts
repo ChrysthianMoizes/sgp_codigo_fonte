@@ -77,7 +77,7 @@ export class QuestaoListarComponent implements OnInit {
     this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
         this.questoes = response.content;
-        this.totalRegistros = response.numberOfElements;
+        this.totalRegistros = response.totalElements;
         this.loadingService.deactivate();
       },
       () => {
