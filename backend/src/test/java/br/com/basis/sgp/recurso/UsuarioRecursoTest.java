@@ -21,7 +21,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collection;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -45,15 +48,15 @@ public class UsuarioRecursoTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    private void deletaDados() {
+    private void deletarDados() {
         Collection<Usuario> lista = usuarioBuilder.obterTodos();
         lista.forEach(aluno -> usuarioBuilder.excluirPorId(aluno.getId()));
     }
 
     @Before
-    public void inicializaTeste() {
+    public void inicializarTeste() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.deletaDados();
+        this.deletarDados();
         this.usuarioBuilder.setCustomizacao(null);
     }
 
@@ -109,7 +112,7 @@ public class UsuarioRecursoTest {
 
     //    Logar com dados corretos
     @Test
-    public void deveLogarComDadosCorretos() throws Exception {
+    public void logarComDadosCorretos() throws Exception {
         Usuario usuario = usuarioBuilder.construirEntidade();
         usuarioBuilder.persistir(usuario);
 
@@ -122,7 +125,7 @@ public class UsuarioRecursoTest {
 
     //Não Logar com Senha Incorreta
     @Test
-    public void naoDeveLogarComSenhaIncorreta() throws Exception {
+    public void logarComSenhaIncorreta() throws Exception {
         Usuario usuario = usuarioBuilder.construirEntidade();
         usuarioBuilder.persistir(usuario);
         usuario.setSenha("1234");
@@ -136,7 +139,7 @@ public class UsuarioRecursoTest {
 
     //Não Logar com Email Inexistente
     @Test
-    public void naoDeveLogarComEmailInexistente() throws Exception {
+    public void logarComEmailInexistente() throws Exception {
         Usuario usuario = usuarioBuilder.construirEntidade();
 
         mockMvc.perform(post(API_USUARIO + "login")
@@ -147,7 +150,7 @@ public class UsuarioRecursoTest {
 
     //        Não Cadastrar Usuário com Token Inválido
     @Test
-    public void naoCadastrarUsuarioComTokenInvalido() throws Exception {
+    public void cadastrarUsuarioComTokenInvalido() throws Exception {
         UsuarioCadastroDTO usuarioCadastroDTO = usuarioBuilder.construirUsuario();
         usuarioCadastroDTO.setToken("tokeninvalido");
         mockMvc.perform(post(API_USUARIO + "login")
@@ -241,7 +244,7 @@ public class UsuarioRecursoTest {
 
     //    Deletar Usuário Não Existente
     @Test
-    public void falhaDeletarUsuarioNaoExistente() throws Exception {
+    public void deletarUsuarioNaoExistente() throws Exception {
         Usuario usuario = usuarioBuilder.construir();
         Long id = usuario.getId() + 100;
         mockMvc.perform(delete(API_USUARIO + id))

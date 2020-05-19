@@ -35,31 +35,24 @@ public class UsuarioBuilder extends ConstrutorDeEntidade<Usuario> {
     @Value("${app.TOKEN_ADMIN}")
     private String TOKEN_ADMIN;
 
-    @Override
-    public Usuario construirEntidade() throws ParseException {
-
+    private Usuario criarUsuario(boolean admin) {
         Usuario usuario = new Usuario();
 
         usuario.setEmail("teste@teste.com.br");
         usuario.setNome("José da Silva");
         usuario.setCpf("60600208010");
         usuario.setSenha("12345");
-        usuario.setAdmin(TipoUsuarioEnum.CANDIDATO.getCodigo());
-
+        usuario.setAdmin((admin ? TipoUsuarioEnum.ADMIN : TipoUsuarioEnum.CANDIDATO).getCodigo());
         return usuario;
     }
 
-    public Usuario construirEntidadeAdmin() throws ParseException {
+    @Override
+    public Usuario construirEntidade() {
+        return this.criarUsuario(false);
+    }
 
-        Usuario usuario = new Usuario();
-
-        usuario.setEmail("teste@teste.com.br");
-        usuario.setNome("José da Silva");
-        usuario.setCpf("60600208010");
-        usuario.setSenha("12345");
-        usuario.setAdmin(TipoUsuarioEnum.ADMIN.getCodigo());
-
-        return usuario;
+    public Usuario construirEntidadeAdmin() {
+        return this.criarUsuario(true);
     }
 
     @Override
