@@ -1,10 +1,13 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Avaliacao;
+import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
 import br.com.basis.sgp.servico.AvalicaoServico;
+import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
+import br.com.basis.sgp.servico.dto.UsuarioDetalhadoDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
@@ -24,9 +27,11 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     private final AvaliacaoListagemMapper avaliacaoMapper;
     private final AvaliacaoCadastroMapper avaliacaoCadastroMapper;
     private final AvaliacaoRepositorio avaliacaoRepositorio;
+    private final UsuarioServico usuarioServico;
 
     @Override
     public AvaliacaoListagemDTO salvar(AvaliacaoCadastroDTO avaliacaoCadastroDTO) {
+        validarCandidato(avaliacaoCadastroDTO);
         Avaliacao avaliacao = avaliacaoCadastroMapper.toEntity(avaliacaoCadastroDTO);
 
         return avaliacaoMapper.toDto(avaliacaoRepositorio.save(avaliacao));
@@ -47,6 +52,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     @Override
     public void excluir(Long id) {
         Avaliacao avaliacao = buscarPorId(id);
+        verificarAproveitamento(avaliacao);
         avaliacaoRepositorio.delete(avaliacao);
     }
 
@@ -55,6 +61,19 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
                 .orElseThrow(() -> new RegraNegocioException("Avaliacao inválida"));
 
         return avaliacao;
+    }
+
+    private void verificarAproveitamento(Avaliacao avaliacao) {
+        if(avaliacao.getAproveitamento() != null){
+            throw new RegraNegocioException("Avaliação não pode ser excluída");
+        }
+    }
+
+    private void validarCandidato(AvaliacaoCadastroDTO avaliacao) {
+        UsuarioDetalhadoDTO usuario = usuarioServico.obterPorId(avaliacao.getIdCandidato());
+        if(usuario.getAdmin() == TipoUsuarioEnum.ADMIN.getCodigo()){
+            throw new RegraNegocioException("Usuario é um administrador");
+        }
     }
 
 }

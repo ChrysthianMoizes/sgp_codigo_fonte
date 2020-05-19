@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 import { Prova } from 'src/app/pages/prova/models/prova';
 import { ProvaService } from 'src/app/pages/prova/service/prova.service';
+import { catchError } from 'rxjs/operators';
+import { ConfirmationService } from 'primeng';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -19,7 +21,8 @@ export class ListarAvaliacaoComponent implements OnInit {
     private avaliacaoService: AvaliacaoService,
     private provaService: ProvaService,
     private alert: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
   ) { }
 
   @ViewChild('cadastroAvaliacao')
@@ -30,7 +33,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   totalElementos: number;
   avaliacao: Avaliacao = new Avaliacao();
 
-  avaliacaoSelecionada: Avaliacao = new Avaliacao();
+  avaliacoesSelecionadas: Avaliacao[];
   avaliacoesRecebidas: Avaliacao[];
   cols: any[];
 
@@ -68,7 +71,7 @@ export class ListarAvaliacaoComponent implements OnInit {
         response => {
           this.avaliacoesRecebidas = response.content;
           this.totalElementos = response.totalElements;
-          this.avaliacaoSelecionada = new Avaliacao();
+          this.avaliacoesSelecionadas = [];
           this.resultadoAvaliacao();
         },
         () => {
@@ -92,22 +95,45 @@ export class ListarAvaliacaoComponent implements OnInit {
   }
 
   isOneSelected(): boolean {
-    return this.avaliacaoSelecionada != null;
+    return this.avaliacoesSelecionadas != null;
+  }
+
+  deleteAvaliacao() {
+    console.log('chamou', this.avaliacoesSelecionadas)
+    this.confirmationService.confirm({
+      message: 'Você tem certeza?',
+      accept: () => {
+        this.avaliacoesSelecionadas.forEach((element) =>
+          this.avaliacaoService.destroy(element.id).subscribe({
+            next: () => {
+              this.atualizarLista();
+            },
+            error: erro => {
+              this.alert.montarAlerta(
+                'error',
+                'Erro',
+                erro.error.message
+              )
+            }
+          })
+        );
+      },
+    })
   }
 
   cadastrar(): void {
     this.viewOnly = false;
-    this.avaliacaoSelecionada = null;
+    this.avaliacoesSelecionadas = [];
     this.cadastroAvaliacao.abrirDialog(null);
   }
 
   editar(): void {
     this.viewOnly = false;
-    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
+    this.cadastroAvaliacao.abrirDialog(this.avaliacoesSelecionadas[0].id);
   }
 
   exibir(): void {
     this.viewOnly = true;
-    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
+    this.cadastroAvaliacao.abrirDialog(this.avaliacoesSelecionadas[0].id);
   }
 }

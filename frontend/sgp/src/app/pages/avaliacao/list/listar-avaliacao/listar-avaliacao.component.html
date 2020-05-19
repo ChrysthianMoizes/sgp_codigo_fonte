@@ -1,8 +1,9 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <button *ngIf="temPermissao()" id="button-new" label="Novo" pButton (click)="cadastrar()"></button>
 <div class="p-grid" id="tabela">
   <div class="p-col-11">
-    <p-table [columns]="cols" [value]="avaliacoesRecebidas" [(selection)]="avaliacaoSelecionada" [lazy]='true'
-      selectionMode="single" [showCurrentPageReport]="true">
+    <p-table [columns]="cols" [value]="avaliacoesRecebidas" [(selection)]="avaliacoesSelecionadas" [lazy]='true'
+      selectionMode="multiple" [showCurrentPageReport]="true">
 
       <ng-template pTemplate="header" let-columns>
         <tr>
@@ -32,10 +33,13 @@
     </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
-    <button *ngIf="temPermissao()" [disabled]="!isOneSelected()" (click)="editar()" class="ui-button-rounded"
-      icon="pi pi-pencil" id="button-edit" pButton></button>
-    <button [disabled]="!isOneSelected()" (click)="exibir()" class="ui-button-rounded" icon="pi pi-eye"
-      id="button-visualize" pButton></button>
+    <button [disabled]="avaliacoesSelecionadas.length === 0" id='button-delete' *ngIf="temPermissao()" type="button"
+      icon="pi pi-trash" (click)="deleteAvaliacao()" pButton class="ui-button-rounded">
+    </button>
+    <button *ngIf="temPermissao()" [disabled]="avaliacoesSelecionadas.length !== 1" (click)="editar()"
+      class="ui-button-rounded" icon="pi pi-pencil" id="button-edit" pButton></button>
+    <button [disabled]="avaliacoesSelecionadas.length !== 1" (click)="exibir()" class="ui-button-rounded"
+      icon="pi pi-eye" id="button-visualize" pButton></button>
   </div>
 </div>
 <app-cadastrar-avaliacao #cadastroAvaliacao (avaliacaoAtualizada)="atualizarLista()" [viewOnly]="viewOnly">
