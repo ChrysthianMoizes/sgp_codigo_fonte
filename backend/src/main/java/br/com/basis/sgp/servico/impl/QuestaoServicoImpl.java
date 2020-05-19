@@ -60,7 +60,7 @@ public class QuestaoServicoImpl implements QuestaoServico {
 
     private Questao obterQuestao(Long id) {
         return questaoRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Questao inválida"));
+                .orElseThrow(() -> new RegraNegocioException("Questão inválida"));
 
     }
 }
