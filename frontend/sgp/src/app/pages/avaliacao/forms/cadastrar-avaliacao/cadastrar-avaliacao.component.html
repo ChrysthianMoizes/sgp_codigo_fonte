@@ -24,15 +24,7 @@
       </span>
 
       <span class="ui-float-label">
-        <input autocomplete="off" [(ngModel)]='avaliacao.aproveitamento' formControlName="aproveitamento"
-          id="float-input2" pInputText type="number" />
-        <label for="float-input">
-          Aproveitamento
-        </label>
-      </span>
-
-      <span class="ui-float-label">
-        <p-inputMask mask="9999-99-99" [(ngModel)]="avaliacao.dataAvaliacao">
+        <p-inputMask mask="9999-99-99" formControlName='data' [(ngModel)]="avaliacao.data">
         </p-inputMask>
         <label for="float-input">
           Data

@@ -23,6 +23,6 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario,Long>, JpaSpec
 
     List<Usuario> findAllByAdmin(Integer admin);
 
-    List<Usuario> findAllByNomeContainsIgnoreCase(String query);
+    List<Usuario> findAllByAdminAndNomeContainsIgnoreCase(Integer tipo, String query);
 
 }

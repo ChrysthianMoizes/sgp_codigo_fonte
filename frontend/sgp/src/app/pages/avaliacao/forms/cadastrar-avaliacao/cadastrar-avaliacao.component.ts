@@ -1,10 +1,8 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Prova } from 'src/app/pages/prova/models/prova';
 import { AlertService } from '../../../../components/alert/alert.service';
 import { LoadingService } from '../../../../components/loading/loading.service';
 import { ProvaService } from '../../../prova/service/prova.service';
-import { Usuario } from '../../../usuario/models/usuario';
 import { UsuarioService } from '../../../usuario/service/usuario.service';
 import { AvaliacaoService } from '../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
@@ -17,11 +15,12 @@ import { SelectItem } from 'primeng';
   styleUrls: ['./cadastrar-avaliacao.component.css'],
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
-  @Input() avaliacaoSendoEditada: Avaliacao;
-  @Input() viewOnly = false;
 
-  avaliacao: Avaliacao = new Avaliacao();
+  @Input() viewOnly = false;
+  @Output() avaliacaoAtualizada = new EventEmitter();
+
   avaliacaoForm: FormGroup;
+  avaliacao: Avaliacao = new Avaliacao();
   candidatosFiltrados: SelectItem[];
   provasFiltradas: SelectItem[];
   titulo: string;
@@ -40,15 +39,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void {
-    if (this.avaliacaoSendoEditada) {
-      this.avaliacaoForm
-        .get('usuario')
-        .setValue(this.avaliacaoSendoEditada.idCandidato);
-      this.avaliacaoForm
-        .get('prova')
-        .setValue(this.avaliacaoSendoEditada.idProva);
-    }
-
+    this.carregarAutoComplete();
     if (this.viewOnly) {
       this.avaliacaoForm.disable();
     }
@@ -59,9 +50,15 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     this.iniciarForm();
     this.carregarFiltroCandidato();
     this.carregarFiltroProva();
-
     if (this.viewOnly) {
       this.avaliacaoForm.disable();
+    }
+  }
+
+  carregarAutoComplete() {
+    if(this.avaliacao.id) {
+      this.candidatosFiltrados.forEach(element => { if(element.value == this.avaliacao.idCandidato){this.candidato = element}})
+      this.provasFiltradas.forEach(element => { if(element.value == this.avaliacao.idProva){this.prova = element}})
     }
   }
 
@@ -69,13 +66,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     this.avaliacaoForm = this.formBuilder.group({
       usuario: [null, Validators.required],
       prova: [null, Validators.required],
-      aproveitamento: [null, Validators.required],
       data: [null, Validators.required]
     });
   }
 
   iniciarTitulo(): void {
-    this.titulo = this.avaliacaoSendoEditada ? 'Editar' : 'Cadastrar'
+    this.titulo = this.avaliacao.id ? 'Editar' : 'Cadastrar'
   }
 
   carregarFiltroCandidato(): void {
@@ -120,16 +116,33 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
     }
   }
 
-  abrirDialog(): void {
-    this.exibir = true;
+  buscarAvaliacao(id: number) {
+    if(id){
+      this.avaliacaoService.show(id)
+        .pipe(
+          finalize(() => this.exibir = true)
+        )
+        .subscribe( response => {
+          this.avaliacao = response;
+          this.carregarAutoComplete();
+          this.iniciarTitulo();
+        },
+        erro => {
+          this.alertService.montarAlerta('error', 'Erro', erro.message)
+        })
+    }
+  }
+
+  abrirDialog(id: number): void {
+    this.buscarAvaliacao(id);
   }
 
   fecharDialog(): void {
+    this.avaliacaoAtualizada.emit();
     this.exibir = false;
   }
 
   cadastrarNovaAvaliacao(): void {
-    console.log(this.avaliacao)
     this.avaliacaoService
       .create(this.avaliacao)
       .pipe(
@@ -145,7 +158,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
             'Sucesso!',
             'Prova cadastrada com sucesso!'
           );
-          this.avaliacaoForm.reset();
+          this.avaliacao = new Avaliacao();
           this.fecharDialog();
         }
       )

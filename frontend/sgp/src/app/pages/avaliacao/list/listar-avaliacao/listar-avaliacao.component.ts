@@ -2,10 +2,10 @@ import { CadastrarAvaliacaoComponent } from './../../forms/cadastrar-avaliacao/c
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Avaliacao } from '../../models/avaliacao';
 import { AvaliacaoService } from '../../service/avaliacao.service';
-import { FiltroCandidato } from 'src/app/pages/usuario/models/filtro-candidato';
-import { catchError } from 'rxjs/operators';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { Pageable } from 'src/app/util/pageable-request';
+import { AuthService } from 'src/app/services/auth.service';
+import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -15,33 +15,44 @@ import { Pageable } from 'src/app/util/pageable-request';
 export class ListarAvaliacaoComponent implements OnInit {
   constructor(
     private avaliacaoService: AvaliacaoService,
-    private alert: AlertService
+    private alert: AlertService,
+    private authService: AuthService
   ) { }
 
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
 
   viewOnly: boolean;
-  filtro = new FiltroCandidato();
+  filtro = new FiltroAvaliacao();
   totalElementos: number;
-  avaliacao: Avaliacao[];
+  avaliacao: Avaliacao = new Avaliacao();
 
-  avaliacaoSelecionada: Avaliacao[];
+  avaliacaoSelecionada: Avaliacao = new Avaliacao();
   avaliacoesRecebidas: Avaliacao[];
-  cols = [
-    { field: 'id', header: 'Código' },
-    { field: 'titulo', header: 'Título' },
-    { field: 'candidato', header: 'Candidato' },
-    { field: 'data', header: 'Data' },
-    { field: 'aproveitamento', header: 'Aproveitamento' },
-    { field: 'situacao', header: 'Situação' }
-  ];
+  cols: any[];
 
   ngOnInit(): void {
     this.atualizarLista();
+    this.iniciarTabela();
+  }
+
+  iniciarTabela(){
+    this.cols = [
+      { field: 'id', header: 'Código' },
+      { field: 'tituloProva', header: 'Título' },
+      { field: 'nomeCandidato', header: 'Candidato' },
+      { field: 'data', header: 'Data' },
+      { field: 'aproveitamento', header: 'Aproveitamento' },
+      { field: 'situacao', header: 'Situação' }
+    ];
+  }
+
+  temPermissao(){
+    return this.authService.getUsuario().admin
   }
 
   atualizarLista(event = null): void {
+    console.log('chamou')
 
     const pageable = new Pageable<Avaliacao>(0, 20);
 
@@ -51,12 +62,14 @@ export class ListarAvaliacaoComponent implements OnInit {
       pageable.setSort(1, 'titulo');
     }
 
+    console.log(this.filtro)
+
     this.avaliacaoService.index(this.filtro, pageable)
       .subscribe(
         response => {
           this.avaliacoesRecebidas = response.content;
           this.totalElementos = response.numberOfElements;
-          this.avaliacaoSelecionada = [];
+          this.avaliacaoSelecionada = new Avaliacao();
         },
         () => {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao listar avaliações');
@@ -71,16 +84,16 @@ export class ListarAvaliacaoComponent implements OnInit {
   cadastrar(): void {
     this.viewOnly = false;
     this.avaliacaoSelecionada = null;
-    this.cadastroAvaliacao.abrirDialog();
+    this.cadastroAvaliacao.abrirDialog(null);
   }
 
   editar(): void {
     this.viewOnly = false;
-    this.cadastroAvaliacao.abrirDialog();
+    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
   }
 
   exibir(): void {
     this.viewOnly = true;
-    this.cadastroAvaliacao.abrirDialog();
+    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
   }
 }

@@ -15,5 +15,4 @@ public class AvaliacaoListagemDTO {
     private String nomeCandidato;
     private String tituloProva;
     private BigDecimal aproveitamento;
-    private BigDecimal situacaoAvaliacao;
 }

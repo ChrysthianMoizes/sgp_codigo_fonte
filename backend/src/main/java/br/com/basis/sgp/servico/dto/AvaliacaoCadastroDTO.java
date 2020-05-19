@@ -11,18 +11,16 @@ import java.time.LocalDate;
 @Setter
 public class AvaliacaoCadastroDTO {
 
-//    @NotNull
     private Long id;
 
     @NotNull
     private LocalDate data;
 
     @NotNull
-    private BigDecimal aproveitamento;
-
-    @NotNull
     private Integer idCandidato;
 
     @NotNull
     private Integer idProva;
+
+    private BigDecimal aproveitamento;
 }

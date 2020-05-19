@@ -34,7 +34,7 @@ public class AvaliacaoFiltro implements EntityFiltro {
     private List<Predicate> getPredicates(Root root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
         if (!StringUtils.isEmpty(nomeCandidato)) {
-            Predicate predicate = cb.like(cb.lower(root.get(Avaliacao_.candidato.getName())), "%" + nomeCandidato.toLowerCase() + "%");
+            Predicate predicate = cb.like(cb.lower(root.get(Avaliacao_.candidato)), "%" + nomeCandidato.toLowerCase() + "%");
             predicates.add(predicate);
         }
 
