@@ -2,9 +2,9 @@ package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Prova;
 import br.com.basis.sgp.dominio.Questao;
-import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.ProvaServico;
+import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -30,6 +30,7 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaListagemMapper provaListagemMapper;
     private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
+    private final QuestaoServico questaoServico;
 
     @Override
     public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
@@ -47,6 +48,7 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova = provaMapper.toEntity(provaDTO);
 
         validarProva(prova);
+        verificarQuestoes(prova);
 
         provaRepositorio.save(prova);
         return provaMapper.toDto(prova);
@@ -80,13 +82,9 @@ public class ProvaServicoImpl implements ProvaServico {
         }
     }
 
-    private boolean validarQuestoes(Prova prova){
-        for (Questao questoes: prova.getQuestoes()) {
-            if(){
-                continue;
-            }else{
-                throw new RegraNegocioException("Questão não encontrada");
-            }
+    private void verificarQuestoes(Prova prova){
+        for (Questao questao: prova.getQuestoes()){
+            questaoServico.obterPorId(questao.getId());
         }
     }
 
