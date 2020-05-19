@@ -2,6 +2,7 @@ package br.com.basis.sgp.servico.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,6 +37,7 @@ public class QuestaoDTO {
     private String alternativa5;
 
     @NotNull(message = "Campo RESPOSTA não deve ficar em branco")
+    @Range(min = 1, max = 5, message = "Campo RESPOSTA inválido")
     private Integer resposta;
 
     @NotNull(message = "Campo SENIORIDADE não deve ficar em branco")

@@ -8,4 +8,6 @@ public interface SenioridadeServico {
 
     List<SelectDTO> listar();
 
+    Boolean obterPorId(Long id);
+
 }
