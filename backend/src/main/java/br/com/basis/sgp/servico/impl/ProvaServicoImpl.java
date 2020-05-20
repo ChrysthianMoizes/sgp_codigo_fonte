@@ -6,10 +6,12 @@ import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.ProvaFiltro;
+import br.com.basis.sgp.servico.mapper.ProvaDetalhadaMapper;
 import br.com.basis.sgp.servico.mapper.ProvaDropdownMapper;
 import br.com.basis.sgp.servico.mapper.ProvaListagemMapper;
 import br.com.basis.sgp.servico.mapper.ProvaMapper;
@@ -30,7 +32,7 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaListagemMapper provaListagemMapper;
     private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
-    private final QuestaoServico questaoServico;
+    private final ProvaDetalhadaMapper provaDetalhadaMapper;
 
     @Override
     public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
@@ -41,6 +43,12 @@ public class ProvaServicoImpl implements ProvaServico {
     @Override
     public ProvaDTO exibirPorId(Long id){
         return provaMapper.toDto(buscarPorId(id));
+    }
+
+    @Override
+    public ProvaDetalhadaDTO exiberProvaDetalhada(Long id) {
+        Prova prova =  buscarPorId(id);
+        return provaDetalhadaMapper.toDto(prova);
     }
 
     @Override
@@ -66,9 +74,8 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     private Prova buscarPorId(Long id){
-        Prova prova = provaRepositorio.findById(id)
+        return provaRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
-        return prova;
     }
 
     private boolean verificarTitulo(Prova prova){

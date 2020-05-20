@@ -2,6 +2,7 @@ package br.com.basis.sgp.web.rest;
 
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.filtro.ProvaFiltro;
@@ -33,6 +34,11 @@ public class ProvaRecurso {
     public ResponseEntity<ProvaDTO> visualizarProva(@PathVariable("id") Long id){
         ProvaDTO provaDTO = provaServico.exibirPorId(id);
         return ResponseEntity.ok(provaDTO);
+    }
+
+    @GetMapping("/avaliacoes/{id}")
+    public ResponseEntity<ProvaDetalhadaDTO> visualizarProvaDetalhada(@PathVariable("id") Long id){
+        return ResponseEntity.ok(provaServico.exiberProvaDetalhada(id));
     }
 
     @GetMapping("/dropdown")
