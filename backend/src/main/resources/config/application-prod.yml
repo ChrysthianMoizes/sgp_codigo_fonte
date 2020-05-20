@@ -1,0 +1,5 @@
+spring:
+    datasource:
+        url: jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10342137
+        username: sql10342137
+        password: UFkI7EaWau

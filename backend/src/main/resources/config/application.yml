@@ -4,10 +4,6 @@ application:
 spring:
     application:
         name: sgpservice
-    datasource:
-        url: jdbc:mysql://localhost:3306/sgp?createDatabaseIfNotExist=true&usrSSL=false
-        username: root
-        password: root
     jackson:
         date-format: yyyy-MM-dd
         deserialization:
@@ -26,6 +22,8 @@ spring:
     liquibase:
         change-log: classpath:/db/master.xml
 #        drop-first: true
+    profiles:
+        active: prod
 server:
     port: 8080
 
