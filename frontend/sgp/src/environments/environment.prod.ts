@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   key: 'br.com.basis.sgp',
-  apiUrl: 'http://teste:8080/'
+  apiUrl: 'https://sgpb-backend.herokuapp.com/'
 };
