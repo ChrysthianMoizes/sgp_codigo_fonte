@@ -19,6 +19,5 @@ public interface QuestaoMapper extends EntityMapper<QuestaoDTO, Questao> {
     @Mapping(target = "idSenioridade", source = "senioridade.id")
     @Mapping(target = "idTipoQuestao", source = "tipoQuestao.id")
     QuestaoDTO toDto(Questao entity);
-
 }
 
