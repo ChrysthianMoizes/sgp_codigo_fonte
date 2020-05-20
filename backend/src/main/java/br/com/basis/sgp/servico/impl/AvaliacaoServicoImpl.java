@@ -4,10 +4,9 @@ import br.com.basis.sgp.dominio.Avaliacao;
 import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
 import br.com.basis.sgp.servico.AvalicaoServico;
+import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.UsuarioServico;
-import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
-import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
-import br.com.basis.sgp.servico.dto.UsuarioDetalhadoDTO;
+import br.com.basis.sgp.servico.dto.*;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
@@ -16,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     private final AvaliacaoCadastroMapper avaliacaoCadastroMapper;
     private final AvaliacaoRepositorio avaliacaoRepositorio;
     private final UsuarioServico usuarioServico;
+    private final ProvaServico provaServico;
 
     @Override
     public AvaliacaoListagemDTO salvar(AvaliacaoCadastroDTO avaliacaoCadastroDTO) {
@@ -55,11 +57,36 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
         avaliacaoRepositorio.delete(avaliacao);
     }
 
-    private Avaliacao buscarPorId(Long id) {
-        Avaliacao avaliacao = avaliacaoRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Avaliacao inválida"));
+    @Override
+    public void realizarAvaliacao(AvaliacaoPreenchidaDTO avaliacaoPreenchidaDTO) {
 
-        return avaliacao;
+        ProvaRespostaDTO prova = provaServico.buscarRespostas(avaliacaoPreenchidaDTO.getId());
+        Long acertos = verificarAcertos(avaliacaoPreenchidaDTO, prova);
+
+        Avaliacao avaliacao = buscarPorId(avaliacaoPreenchidaDTO.getId());
+        avaliacao.setAproveitamento(toAproveitamento(acertos, prova));
+
+        avaliacaoRepositorio.save(avaliacao);
+    }
+
+    private BigDecimal toAproveitamento(Long acertos, ProvaRespostaDTO prova){
+        return BigDecimal.valueOf(prova.getQuestoes().size() / acertos);
+    }
+
+    private Long verificarAcertos(AvaliacaoPreenchidaDTO avaliacao, ProvaRespostaDTO prova) {
+        AtomicInteger acertos = new AtomicInteger();
+        prova.getQuestoes().forEach( element -> {
+            int pos = avaliacao.getRespostas().indexOf(element.getId());
+            if(element.getResposta().equals(avaliacao.getRespostas().get(pos))){
+                acertos.getAndIncrement();
+            }
+        });
+        return Long.valueOf(acertos.get());
+    }
+
+    private Avaliacao buscarPorId(Long id) {
+        return avaliacaoRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Avaliacao inválida"));
     }
 
     private void verificarAproveitamento(Avaliacao avaliacao) {

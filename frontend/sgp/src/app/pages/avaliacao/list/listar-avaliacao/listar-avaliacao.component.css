@@ -3,11 +3,16 @@ td {
 }
 #button-delete,
 #button-edit,
-#button-visualize {
+#button-visualize,
+#button-realizar {
   position: fixed;
 }
 #button-new {
   margin: 5px 0 5px 0;
+}
+
+#button-realizar {
+  margin-top: 10px;
 }
 
 #button-delete {
