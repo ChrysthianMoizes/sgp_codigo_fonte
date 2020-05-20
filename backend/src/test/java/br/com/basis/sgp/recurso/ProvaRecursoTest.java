@@ -105,9 +105,18 @@ public class ProvaRecursoTest {
 
     @Test
     public void buscarProvaPorIdInvalido() throws Exception { //Busca por ID invalido
-        mockMvc.perform(get(API_PROVA+1))
+        mockMvc.perform(get(API_PROVA+0L))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void buscarProvasDorpdown() throws Exception {
+        provaBuilder.construir();
+
+        mockMvc.perform(get(API_PROVA + "dropdown"))
+                .andExpect(status().isOk());
+    }
+
 
     @Test
     public void excluirProvaPorId() throws Exception { //Exclusão de prova
@@ -146,7 +155,7 @@ public class ProvaRecursoTest {
 
     @Test
     public void excluirIdInvalido() throws Exception { //Excluindo prova com id inválido
-        mockMvc.perform(delete(API_PROVA+1))
+        mockMvc.perform(delete(API_PROVA+0L))
                 .andExpect(status().isBadRequest());
     }
 }
