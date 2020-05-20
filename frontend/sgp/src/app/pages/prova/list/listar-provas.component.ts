@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AlertService } from '../../../components/alert/alert.service';
@@ -8,7 +8,6 @@ import { Prova } from '../models/prova';
 import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
 import { Pageable } from 'src/app/util/pageable-request';
 import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
-
 @Component({
   selector: 'app-listar-provas',
   templateUrl: './listar-provas.component.html',
@@ -16,6 +15,9 @@ import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
   providers: [DialogService],
 })
 export class ListarProvasComponent implements OnInit {
+
+  @Output() provaAtualizada = new EventEmitter();
+  @Input() apenasVisualizar = false;
   filtro = new FiltroProva();
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
@@ -26,11 +28,11 @@ export class ListarProvasComponent implements OnInit {
   notFilteredListProvas: Prova[];
   provaSelecionada: Prova;
   selectedProvas: Prova[] = [];
+  prova: Prova = new Prova();
+  visible = false;
 
   lastPage = 0;
   lastSize = 0;
-
-  @ViewChild('VisualizarProva') visualizarProva: CadastrarProvaComponent;
 
   constructor(
     private provaService: ProvaService,
@@ -65,13 +67,25 @@ export class ListarProvasComponent implements OnInit {
       (response) => {
         this.listProvas = response.content;
         this.notFilteredListProvas = response.content;
-        this.totalDeElementos = response.numberOfElements;
+        this.totalDeElementos = response.totalElements;
         this.selectedProvas = [];
       },
       () => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar provas');
       }
     );
+  }
+
+  abrirDialog(prova: Prova, apenasVisualizar = false): void {
+    this.prova = Object.assign({}, prova);
+    this.apenasVisualizar = apenasVisualizar;
+    this.visible = true;
+  }
+
+  resetarConfigs(): void {
+    this.prova = new Prova();
+    this.visible = false;
+    this.apenasVisualizar = false;
   }
 
   isOneSelected(): boolean {
@@ -89,7 +103,7 @@ export class ListarProvasComponent implements OnInit {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) =>
-          this.visualizarProva.abrirDialog(provaCompleta, true),
+          this.abrirDialog(provaCompleta, true),
         error: () =>
           this.alertService.montarAlerta(
             'error',
@@ -106,9 +120,8 @@ export class ListarProvasComponent implements OnInit {
   editarProva(): void {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
-        next: (prova) => {
-          console.log(prova);
-          this.visualizarProva.abrirDialog(prova);
+        next: (provaCompleta) => {
+          this.abrirDialog(provaCompleta);
         },
         error: () =>
           this.alertService.montarAlerta(
@@ -124,7 +137,7 @@ export class ListarProvasComponent implements OnInit {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) => {
-          this.visualizarProva.abrirDialog(provaCompleta);
+          this.abrirDialog(provaCompleta);
         },
         error: () =>
           this.alertService.montarAlerta(

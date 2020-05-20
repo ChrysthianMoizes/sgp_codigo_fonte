@@ -2,13 +2,13 @@
 <app-alert></app-alert>
 <p-dialog
   header="getTitulo()"
-  [(visible)]="exibir"
   [style]="{ width: '85%' }"
   [modal]="true"
+  [closable]="false"
 >
   <!-- <h1 style="margin-top: 0px;">{{ titulo }}</h1> -->
   <section style="margin-top: 14px;">
-    <div *ngIf="!visualizando" class="card-header">
+    <div *ngIf="!apenasVisualizar" class="card-header">
       <h3 style="margin-bottom: 0px;">Selecione as questões desejadas.</h3>
       <p style="margin-top: 4px;">
         As questões disponíveis são visíveis à esquerda. As questões
@@ -17,7 +17,7 @@
     </div>
 
     <form [formGroup]="formulario">
-      <div class="card-body">
+      <div class="card-body" *ngIf="!apenasVisualizar">
         <span class="ui-float-label">
           <input
             [size]="inputSize"
@@ -46,7 +46,7 @@
             Percentual de Aprovação
           </label>
         </span>
-        <div *ngIf="!visualizando" class="pick-with-pag">
+        <div *ngIf="!apenasVisualizar" class="pick-with-pag">
           <p-pickList
             [source]="origemQuestoes"
             [target]="destinoQuestoes"
@@ -80,7 +80,7 @@
             ></p-paginator>
           </div>
         </div>
-        <div *ngIf="visualizando" style="margin-top: 12px;">
+        <div *ngIf="apenasVisualizar" style="margin-top: 12px;">
           <p-accordion [multiple]="true">
             <div *ngFor="let questao of destinoQuestoes">
               <p-accordionTab header="Questão {{ questao.id }}">

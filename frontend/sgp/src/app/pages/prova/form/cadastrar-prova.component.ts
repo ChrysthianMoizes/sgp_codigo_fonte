@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -6,7 +6,6 @@ import { Questao } from '../../questao/models/questao';
 import { QuestaoService } from '../../questao/service/questao.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
-import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,19 +13,16 @@ import { Router } from '@angular/router';
   templateUrl: './cadastrar-prova.component.html',
   styleUrls: ['./cadastrar-prova.component.css'],
 })
-export class CadastrarProvaComponent implements OnInit {
+export class CadastrarProvaComponent implements OnInit, OnChanges {
   formulario: FormGroup;
-  prova: Prova = new Prova();
   formSubmetido: boolean = false;
+  @Input() prova: Prova = new Prova();
   @Input() provaSendoEditada: Prova;
   @Input() apenasVisualizar = false;
   @Output() salvar = new EventEmitter();
   @Output() cancelar = new EventEmitter();
-  @Output() provaAtualizada = new EventEmitter();
-  visible = false;
   visualizando: boolean;
   edicao: boolean;
-  modoDialog: number;
 
   @Output() retornarProva = new EventEmitter();
 
@@ -45,19 +41,6 @@ export class CadastrarProvaComponent implements OnInit {
     private router: Router
   ) { }
 
-
-  abrirDialog(prova: Prova, apenasVisualizar = false): void {
-    this.prova = Object.assign({}, prova);
-    this.apenasVisualizar = apenasVisualizar;
-    this.visible = true;
-  }
-
-  resetarConfigs(): void {
-    this.prova = new Prova();
-    this.visible = false;
-    this.apenasVisualizar = false;
-  }
-
   ngOnInit() {
 
     this.iniciarForm();
@@ -75,6 +58,10 @@ export class CadastrarProvaComponent implements OnInit {
       titulo: ['', Validators.required],
       percentualAprovacao: ['', Validators.required],
     });
+  }
+
+  ngOnChanges(): void {
+    this.iniciarForm();
   }
 
   iniciarForm() {

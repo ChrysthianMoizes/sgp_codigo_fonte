@@ -83,6 +83,7 @@
 </div>
 
 <app-cadastrar-prova
-  #dialogProvaForm
   (retornarProva)="atualizarLista()"
+  [prova]="prova"
+  [apenasVisualizar]="apenasVisualizar"
 ></app-cadastrar-prova>
