@@ -105,7 +105,7 @@ public class ProvaRecursoTest {
 
     @Test
     public void buscarProvaPorIdInvalido() throws Exception { //Busca por ID invalido
-        mockMvc.perform(get(API_PROVA+1))
+        mockMvc.perform(get(API_PROVA+0l))
                 .andExpect(status().isBadRequest());
     }
 
@@ -146,7 +146,7 @@ public class ProvaRecursoTest {
 
     @Test
     public void excluirIdInvalido() throws Exception { //Excluindo prova com id inválido
-        mockMvc.perform(delete(API_PROVA+1))
+        mockMvc.perform(delete(API_PROVA+0l))
                 .andExpect(status().isBadRequest());
     }
 }
