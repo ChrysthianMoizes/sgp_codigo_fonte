@@ -17,8 +17,6 @@ public interface ProvaServico {
     public ProvaDTO exibirPorId(Long id);
 
     public ProvaDetalhadaDTO exiberProvaDetalhada(Long id);
-    
-    public ProvaListagemDTO buscarPorTitulo(String titulo);
 
     public ProvaDTO salvar(ProvaDTO provaDTO);
 

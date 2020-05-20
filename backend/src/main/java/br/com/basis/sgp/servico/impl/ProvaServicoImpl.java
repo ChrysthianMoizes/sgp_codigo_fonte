@@ -50,15 +50,10 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova =  buscarPorId(id);
         return provaDetalhadaMapper.toDto(prova);
     }
-    
-    @Override
-    public ProvaListagemDTO buscarPorTitulo(String titulo) {
-        return provaListagemMapper.toDto(buscarTitulo(titulo));
-    }
 
     @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
-        Prova prova = provaMapper.toEntity(provaDTO);f
+        Prova prova = provaMapper.toEntity(provaDTO);
 
         validarProva(prova);
         verificarQuestoes(prova);
@@ -80,11 +75,6 @@ public class ProvaServicoImpl implements ProvaServico {
     @Override
     public List<SelectDTO> listarProvaDropDown() {
         return provaDropdownMapper.toDto(provaRepositorio.findAll());
-    }
-
-    private Prova buscarTitulo(String titulo) {
-        return provaRepositorio.findByTitulo(titulo)
-                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
     }
 
     private Prova buscarPorId(Long id){
