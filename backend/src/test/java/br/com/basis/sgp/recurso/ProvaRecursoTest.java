@@ -104,6 +104,18 @@ public class ProvaRecursoTest {
     }
 
     @Test
+    public void buscarProvaDetalhada() throws Exception { //Busca prova detalhada
+        Prova prova = provaBuilder.construir();
+        mockMvc.perform(get(API_PROVA+"/avaliacoes/"+prova.getId() )).andExpect(status().isOk());
+    }
+
+    @Test
+    public void buscarProvaFiltro() throws Exception { //Busca provapor filtro de titulo
+        Prova prova = provaBuilder.construir();
+    mockMvc.perform(get(API_PROVA+"filtro/"+prova.getTitulo())).andExpect(status().isOk());
+    }
+
+    @Test
     public void buscarProvaPorIdInvalido() throws Exception { //Busca por ID invalido
         mockMvc.perform(get(API_PROVA+0L))
                 .andExpect(status().isBadRequest());

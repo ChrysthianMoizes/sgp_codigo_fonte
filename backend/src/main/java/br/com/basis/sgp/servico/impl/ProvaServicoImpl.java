@@ -6,10 +6,12 @@ import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.ProvaFiltro;
+import br.com.basis.sgp.servico.mapper.ProvaDetalhadaMapper;
 import br.com.basis.sgp.servico.mapper.ProvaDropdownMapper;
 import br.com.basis.sgp.servico.mapper.ProvaListagemMapper;
 import br.com.basis.sgp.servico.mapper.ProvaMapper;
@@ -29,6 +31,7 @@ public class ProvaServicoImpl implements ProvaServico {
     private final ProvaMapper provaMapper;
     private final ProvaListagemMapper provaListagemMapper;
     private final ProvaDropdownMapper provaDropdownMapper;
+    private final ProvaDetalhadaMapper provaDetalhadaMapper;
     private final ProvaRepositorio provaRepositorio;
 
     @Override
@@ -43,13 +46,14 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
-    public ProvaListagemDTO buscarPorTitulo(String titulo) {
-        return provaListagemMapper.toDto(buscarTitulo(titulo));
+    public ProvaDetalhadaDTO exibirProvaDetalhada(Long id) {
+        Prova prova =  buscarPorId(id);
+        return provaDetalhadaMapper.toDto(prova);
     }
 
     @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
-        Prova prova = provaMapper.toEntity(provaDTO);f
+        Prova prova = provaMapper.toEntity(provaDTO);
 
         validarProva(prova);
         verificarQuestoes(prova);
@@ -73,14 +77,9 @@ public class ProvaServicoImpl implements ProvaServico {
         return provaDropdownMapper.toDto(provaRepositorio.findAll());
     }
 
-    private Prova buscarTitulo(String titulo) {
-        return provaRepositorio.findByTitulo(titulo)
-                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
-    }
-
     private Prova buscarPorId(Long id){
         return provaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));    
+                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
     }
 
     private boolean verificarTitulo(Prova prova){
