@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Usuario } from '../pages/usuario/models/usuario';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { Usuario } from '../pages/usuario/models/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   login(usuario: Usuario): Observable<any> {
-    return this.httpClient.post(`/api/usuarios/login`, usuario);
+    return this.httpClient.post(`${environment.apiUrl}/api/usuarios/login`, usuario);
   }
 
   getUsuario(): Usuario {
