@@ -5,8 +5,6 @@ import br.com.basis.sgp.servico.dto.QuestaoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
 public interface QuestaoMapper extends EntityMapper<QuestaoDTO, Questao> {
 

@@ -45,7 +45,7 @@ public class ProvaRecurso {
 
     @GetMapping("/avaliacoes/{id}")
     public ResponseEntity<ProvaDetalhadaDTO> visualizarProvaDetalhada(@PathVariable("id") Long id){
-        return ResponseEntity.ok(provaServico.exiberProvaDetalhada(id));
+        return ResponseEntity.ok(provaServico.exibirProvaDetalhada(id));
     }
 
     @GetMapping("/dropdown")

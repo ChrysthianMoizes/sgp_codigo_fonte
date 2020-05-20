@@ -46,7 +46,7 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
-    public ProvaDetalhadaDTO exiberProvaDetalhada(Long id) {
+    public ProvaDetalhadaDTO exibirProvaDetalhada(Long id) {
         Prova prova =  buscarPorId(id);
         return provaDetalhadaMapper.toDto(prova);
     }

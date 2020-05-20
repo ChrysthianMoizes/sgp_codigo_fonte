@@ -16,7 +16,7 @@ public interface ProvaServico {
 
     public ProvaDTO exibirPorId(Long id);
 
-    public ProvaDetalhadaDTO exiberProvaDetalhada(Long id);
+    public ProvaDetalhadaDTO exibirProvaDetalhada(Long id);
 
     public ProvaDTO salvar(ProvaDTO provaDTO);
 
