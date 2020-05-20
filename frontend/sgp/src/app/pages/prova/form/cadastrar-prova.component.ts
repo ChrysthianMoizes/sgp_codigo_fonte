@@ -22,6 +22,7 @@ export class CadastrarProvaComponent implements OnInit {
   @Input() apenasVisualizar = false;
   @Output() salvar = new EventEmitter();
   @Output() cancelar = new EventEmitter();
+  @Output() provaAtualizada = new EventEmitter();
   visible = false;
   visualizando: boolean;
   edicao: boolean;
@@ -43,6 +44,19 @@ export class CadastrarProvaComponent implements OnInit {
     private questaoService: QuestaoService,
     private router: Router
   ) { }
+
+
+  abrirDialog(prova: Prova, apenasVisualizar = false): void {
+    this.prova = Object.assign({}, prova);
+    this.apenasVisualizar = apenasVisualizar;
+    this.visible = true;
+  }
+
+  resetarConfigs(): void {
+    this.prova = new Prova();
+    this.visible = false;
+    this.apenasVisualizar = false;
+  }
 
   ngOnInit() {
 
@@ -80,11 +94,11 @@ export class CadastrarProvaComponent implements OnInit {
       return;
     }
 
-    this.persistir();
+    this.verificaProva();
 
   }
 
-  persistir() {
+  verificaProva() {
    if (this.prova.id === null) {
      this.salvarProva(this.prova);
    } else {
@@ -155,7 +169,7 @@ export class CadastrarProvaComponent implements OnInit {
 
 
 
-  preencherFormParaEdicao(): void {
+/*   preencherFormParaEdicao(): void {
     this.formulario.get('titulo').setValue(this.provaSendoEditada.titulo);
     this.formulario
       .get('percentualDeAprovacao')
@@ -163,13 +177,8 @@ export class CadastrarProvaComponent implements OnInit {
     this.questaoService.index().subscribe((questoes) => {
       this.destinoQuestoes = questoes;
     });
-  }
+  } */
 
-  abrirDialog(prova: Prova, apenasVisualizar = false): void {
-    this.prova = Object.assign({}, prova);
-    this.apenasVisualizar = apenasVisualizar;
-    this.visible = true;
-  }
 
 /*   abrirDialog(modo): void {
     if (modo === 1) {

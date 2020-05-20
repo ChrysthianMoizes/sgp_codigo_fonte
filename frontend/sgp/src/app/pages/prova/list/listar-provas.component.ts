@@ -30,7 +30,7 @@ export class ListarProvasComponent implements OnInit {
   lastPage = 0;
   lastSize = 0;
 
-  @ViewChild('dialogProvaForm') dialogProvaForm: CadastrarProvaComponent;
+  @ViewChild('VisualizarProva') visualizarProva: CadastrarProvaComponent;
 
   constructor(
     private provaService: ProvaService,
@@ -85,11 +85,11 @@ export class ListarProvasComponent implements OnInit {
 /*   visualizarProva(): void {
     this.dialogProvaForm.abrirDialog(3);
   } */
-  visualizarProva(): void {
+  verProva(): void {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) =>
-          this.dialogProvaForm.abrirDialog(provaCompleta, true),
+          this.visualizarProva.abrirDialog(provaCompleta, true),
         error: () =>
           this.alertService.montarAlerta(
             'error',
@@ -106,8 +106,9 @@ export class ListarProvasComponent implements OnInit {
   editarProva(): void {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
-        next: (provaCompleta) => {
-          this.dialogProvaForm.abrirDialog(provaCompleta);
+        next: (prova) => {
+          console.log(prova);
+          this.visualizarProva.abrirDialog(prova);
         },
         error: () =>
           this.alertService.montarAlerta(
@@ -123,7 +124,7 @@ export class ListarProvasComponent implements OnInit {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) => {
-          this.dialogProvaForm.abrirDialog(provaCompleta);
+          this.visualizarProva.abrirDialog(provaCompleta);
         },
         error: () =>
           this.alertService.montarAlerta(
