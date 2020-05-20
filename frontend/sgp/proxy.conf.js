@@ -6,7 +6,7 @@ const proxy = [
     target: environment.apiUrl,
     secure: false,
     logLevel: 'debug',
-    pathRewrite: { '^/api': `${environment.apiUrl}/api` }
+    pathRewrite: { '^/api': `${environment.apiUrl}api` }
   }
 ];
 
