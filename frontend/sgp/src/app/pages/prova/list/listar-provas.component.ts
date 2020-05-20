@@ -24,11 +24,11 @@ export class ListarProvasComponent implements OnInit {
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.provaService.index().subscribe((provas) => {
-      this.provas = provas;
+    this.provaService.index(null, null).subscribe((provas) => {
+      //
     });
 
     this.definicaoColunas = [

@@ -3,18 +3,24 @@ package br.com.basis.sgp.servico.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-public class AvaliacaoListagemDTO {
+public class AvaliacaoCadastroDTO {
 
     private Long id;
+
+    @NotNull
     private LocalDate data;
+
+    @NotNull
     private Long idCandidato;
-    private String nomeCandidato;
+
+    @NotNull
     private Long idProva;
-    private String tituloProva;
+
     private BigDecimal aproveitamento;
 }

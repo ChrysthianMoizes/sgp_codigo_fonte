@@ -1,10 +1,12 @@
-import { Usuario } from '../../usuario/models/usuario';
-import { Prova } from '../../prova/models/prova';
 import { Resource } from 'src/app/models/resource.model';
 
 export class Avaliacao extends Resource {
-  dataAvaliacao: Date;
+  id: number;
+  data: Date;
+  idCandidato: number;
+  nomeCandidato: string;
+  tituloProva: string;
+  idProva: number;
   aproveitamento: number;
-  candidato: Usuario;
-  prova: Prova;
+  situacao: string;
 }

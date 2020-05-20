@@ -22,7 +22,6 @@ public class ProvaFiltro implements EntityFiltro {
     private String titulo;
     private BigDecimal percentual;
 
-
     @Override
     public Specification filter() {
         return (root, cq, cb) ->

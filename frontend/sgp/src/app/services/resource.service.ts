@@ -4,7 +4,7 @@ import { Resource } from '../models/resource.model';
 import { Pageable } from '../util/pageable-request';
 
 export class ResourceService<T extends Resource> {
-  constructor(private httpClient: HttpClient, protected url: string) {}
+  constructor(private httpClient: HttpClient, protected url: string) { }
 
   create(item: T): Observable<T> {
     return this.httpClient.post<T>(`${this.url}`, item);

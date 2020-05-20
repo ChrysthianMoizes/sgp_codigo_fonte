@@ -13,7 +13,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="APROVEITAMENTO" type="number(10,2)">
-                <constraints nullable="false"/>
             </column>
 
             <column name="ID_CANDIDATO" type="BIGINT">
