@@ -26,11 +26,11 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private final ProvaMapper provaMapper;
     private final ProvaListagemMapper provaListagemMapper;
-    private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
+    private final ProvaRepositorio provaRepositorio;
 
     @Override
-    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
+    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro, Pageable pageable) {
         Page<Prova> provas = provaRepositorio.findAll(provaFiltro.filter(),pageable);
         return provas.map(provaListagemMapper::toDto);
     }
@@ -41,10 +41,20 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
+    public ProvaListagemDTO buscarPorTitulo(String titulo) {
+        return provaListagemMapper.toDto(buscarTitulo(titulo));
+    }
+
+    @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
         Prova prova = provaMapper.toEntity(provaDTO);
         provaRepositorio.save(prova);
         return provaMapper.toDto(prova);
+    }
+
+    @Override
+    public List<SelectDTO> filtrarAutocomplete(String query) {
+        return provaDropdownMapper.toDto(provaRepositorio.findAllByTituloContainsIgnoreCase(query));
     }
 
     @Override
@@ -54,14 +64,17 @@ public class ProvaServicoImpl implements ProvaServico {
 
     @Override
     public List<SelectDTO> listarProvaDropDown() {
-        List<Prova> provas = provaRepositorio.findAll();
-        return provaDropdownMapper.toDto(provas);
+        return provaDropdownMapper.toDto(provaRepositorio.findAll());
+    }
+
+    private Prova buscarTitulo(String titulo) {
+        return provaRepositorio.findByTitulo(titulo)
+                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
     }
 
     private Prova buscarPorId(Long id){
-        Prova prova = provaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
-        return prova;
+        return provaRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));    
     }
 
 }

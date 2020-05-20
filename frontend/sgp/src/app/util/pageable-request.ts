@@ -5,7 +5,6 @@ export class Pageable<T> {
   content: T[];
   totalElements: number;
 
-
   constructor(page: number, size: number) {
     this.page = page * 0.1;
     this.size = size;
