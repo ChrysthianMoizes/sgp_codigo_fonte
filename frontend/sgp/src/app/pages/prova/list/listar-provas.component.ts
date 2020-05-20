@@ -16,8 +16,10 @@ import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
 })
 export class ListarProvasComponent implements OnInit {
 
-  @Output() provaAtualizada = new EventEmitter();
-  @Input() apenasVisualizar = false;
+  @ViewChild('VisualizarProva')
+  visualizarProva: CadastrarProvaComponent;
+
+
   filtro = new FiltroProva();
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
@@ -29,7 +31,6 @@ export class ListarProvasComponent implements OnInit {
   provaSelecionada: Prova;
   selectedProvas: Prova[] = [];
   prova: Prova = new Prova();
-  visible = false;
 
   lastPage = 0;
   lastSize = 0;
@@ -70,23 +71,12 @@ export class ListarProvasComponent implements OnInit {
         this.totalDeElementos = response.totalElements;
         this.selectedProvas = [];
       },
-      () => {
+      (error) => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar provas');
       }
     );
   }
 
-  abrirDialog(prova: Prova, apenasVisualizar = false): void {
-    this.prova = Object.assign({}, prova);
-    this.apenasVisualizar = apenasVisualizar;
-    this.visible = true;
-  }
-
-  resetarConfigs(): void {
-    this.prova = new Prova();
-    this.visible = false;
-    this.apenasVisualizar = false;
-  }
 
   isOneSelected(): boolean {
     return this.selectedProvas && this.selectedProvas.length === 1;
@@ -96,14 +86,12 @@ export class ListarProvasComponent implements OnInit {
     return this.selectedProvas && this.selectedProvas.length >= 1;
   }
 
-/*   visualizarProva(): void {
-    this.dialogProvaForm.abrirDialog(3);
-  } */
   verProva(): void {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
-        next: (provaCompleta) =>
-          this.abrirDialog(provaCompleta, true),
+        next: (provaCompleta) => {
+          this.visualizarProva.abrirDialog(provaCompleta, true);
+        },
         error: () =>
           this.alertService.montarAlerta(
             'error',
@@ -114,14 +102,11 @@ export class ListarProvasComponent implements OnInit {
     );
   }
 
-/*   editarProvass(): void {
-    this.dialogProvaForm.abrirDialog(2);
-  } */
   editarProva(): void {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) => {
-          this.abrirDialog(provaCompleta);
+          this.visualizarProva.abrirDialog(provaCompleta,false);
         },
         error: () =>
           this.alertService.montarAlerta(
@@ -134,23 +119,8 @@ export class ListarProvasComponent implements OnInit {
   }
 
   cadastrarProva(): void {
-    this.selectedProvas.forEach((prova) =>
-      this.provaService.show(prova.id).subscribe({
-        next: (provaCompleta) => {
-          this.abrirDialog(provaCompleta);
-        },
-        error: () =>
-          this.alertService.montarAlerta(
-            'error',
-            'Erro',
-            'Erro ao buscar prova. Tente novamente.'
-          ),
-      })
-    );  }
-
-/*   atualizarListagem(): void {
-    // atualizar a lista com o banco
-  } */
+    this.visualizarProva.abrirDialog(null,false);
+  }
 
   excluirProva(): void {
     this.confirmationService.confirm({

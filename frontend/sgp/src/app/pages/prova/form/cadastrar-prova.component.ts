@@ -14,17 +14,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastrar-prova.component.css'],
 })
 export class CadastrarProvaComponent implements OnInit, OnChanges {
-  formulario: FormGroup;
-  formSubmetido: boolean = false;
-  @Input() prova: Prova = new Prova();
-  @Input() provaSendoEditada: Prova;
+  @Output() provaAtualizada = new EventEmitter();
   @Input() apenasVisualizar = false;
-  @Output() salvar = new EventEmitter();
-  @Output() cancelar = new EventEmitter();
+  provaDialog: Prova = new Prova();
+  formulario: FormGroup;
   visualizando: boolean;
   edicao: boolean;
-
-  @Output() retornarProva = new EventEmitter();
 
   origemQuestoes: Questao[];
   destinoQuestoes: Questao[];
@@ -56,7 +51,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
 
     this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
-      percentualAprovacao: ['', Validators.required],
+      percentual: ['', Validators.required],
     });
   }
 
@@ -67,8 +62,8 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   iniciarForm() {
     this.formulario = this.formBuilder.group(
       {
-        titulo: [this.prova.titulo, [Validators.required]],
-        percentualAprovacao: [this.prova.percentualAprovacao, [Validators.required]],
+        titulo: [this.provaDialog.titulo, [Validators.required]],
+        percentual: [this.provaDialog.percentual, [Validators.required]],
       },
       { updateOn: "blur" }
     );
@@ -86,10 +81,10 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   }
 
   verificaProva() {
-   if (this.prova.id === null) {
-     this.salvarProva(this.prova);
+   if (this.provaDialog.id > 0) {
+    this.atualizarProva(this.provaDialog);
    } else {
-     this.atualizarProva(this.prova);
+    this.salvarProva(this.provaDialog);
    }
   }
 
@@ -103,6 +98,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
           'Sucesso!',
           'Prova cadastrada com suscesso!'
         );
+        this.exibir = false;
       },
       (err) => {
         this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova');
@@ -124,7 +120,8 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
       (err) => {
         this.alert.montarAlerta('error', 'Error!', 'Erro ao atualizar a Prova');
       }
-    );
+    )
+    .add(() => this.loadingService.deactivate());
   }
 
   getTitulo(): string {
@@ -143,92 +140,34 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   }
 
   get isFormValid(): boolean {
-    const percentualAprovacao = +this.formulario.get('percentualAprovacao')
+    const percentual = +this.formulario.get('percentual')
       .value;
 
     return (
       this.formulario.valid &&
       this.destinoQuestoes.length > 0 &&
-      percentualAprovacao <= 100 &&
-      percentualAprovacao >= 0
+      percentual <= 100 &&
+      percentual >= 0
     );
   }
 
 
-
-/*   preencherFormParaEdicao(): void {
-    this.formulario.get('titulo').setValue(this.provaSendoEditada.titulo);
-    this.formulario
-      .get('percentualDeAprovacao')
-      .setValue(this.provaSendoEditada.percentualAprovacao);
-    this.questaoService.index().subscribe((questoes) => {
-      this.destinoQuestoes = questoes;
-    });
-  } */
-
-
-/*   abrirDialog(modo): void {
-    if (modo === 1) {
-      this.edicao = false;
-      this.visualizando = false;
-      this.exibir = true;
-      // novo
-    } else if (modo === 2) {
-      this.edicao = true;
-      this.visualizando = false;
-      this.exibir = true;
-      this.provaService.show(this.prova.id).subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      this.formulario.get('titulo').enable();
-      this.formulario.get('percentualAprovacao').enable();
-      // ediçao
-    } else {
-      this.visualizando = true;
-      this.edicao = false;
-      this.exibir = true;
-      this.provaService.show(this.prova.id).subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      this.formulario.get('titulo').disable();
-      this.formulario.get('percentualAprovacao').disable();
-      //visualizar
+  abrirDialog(prova: Prova, apenasVisualizar = false): void {
+    if(prova !== null){
+      this.provaDialog = Object.assign({}, prova);
     }
-    if (this.modoDialog > 1) {
-      this.provaService.show(this.prova.id).subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      if (this.modoDialog === 3) {
-        this.formulario.get('titulo').disable();
-        this.formulario.get('percentualAprovacao').disable();
-      }
+    else{
+      this.provaDialog = new Prova();
     }
-  } */
+    this.apenasVisualizar = apenasVisualizar;
+    this.exibir = true;
+  }
 
-
-
- /*  onSubmit(): void {
-    this.loadingService.activate();
-    if (!this.provaSendoEditada) {
-      this.salvarProva({
-        ...this.formulario.value,
-        questoes: this.destinoQuestoes,
-      });
-    } else {
-      this.atualizarProva({
-        ...this.formulario.value,
-        questoes: this.destinoQuestoes,
-        id: this.provaSendoEditada.id,
-      });
-    }
-    this.onCancel();
-
-    this.retornarProva.emit(null);
+  resetarConfigs(): void {
+    this.provaDialog = new Prova();
     this.exibir = false;
-  } */
+    this.apenasVisualizar = false;
+  }
 
   paginate(event): void {}
 
@@ -241,7 +180,6 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   }
 
   onCancel(): void {
-    this.provaSendoEditada = undefined;
     this.exibir = false;
   }
 }

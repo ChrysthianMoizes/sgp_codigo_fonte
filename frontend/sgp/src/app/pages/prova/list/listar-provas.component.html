@@ -83,7 +83,5 @@
 </div>
 
 <app-cadastrar-prova
-  (retornarProva)="atualizarLista()"
-  [prova]="prova"
-  [apenasVisualizar]="apenasVisualizar"
+#VisualizarProva (retornarProva)="atualizarLista()"
 ></app-cadastrar-prova>

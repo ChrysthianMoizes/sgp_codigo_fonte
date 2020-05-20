@@ -5,6 +5,7 @@
   [style]="{ width: '85%' }"
   [modal]="true"
   [closable]="false"
+  [(visible)]="exibir"
 >
   <!-- <h1 style="margin-top: 0px;">{{ titulo }}</h1> -->
   <section style="margin-top: 14px;">
@@ -17,14 +18,15 @@
     </div>
 
     <form [formGroup]="formulario">
-      <div class="card-body" *ngIf="!apenasVisualizar">
+      <div class="card-body">
         <span class="ui-float-label">
           <input
             [size]="inputSize"
             formControlName="titulo"
-            [(ngModel)]="prova.titulo"
+            [(ngModel)]="provaDialog.titulo"
             id="float-input1"
             pInputText
+            [disabled]= "apenasVisualizar"
           />
           <label for="float-input1" style="margin-top: 4px;">
             Título
@@ -34,8 +36,8 @@
           <input
             [size]="inputSize"
             autocomplete="off"
-            formControlName="percentualAprovacao"
-            [(ngModel)]="prova.percentualAprovacao"
+            formControlName="percentual"
+            [(ngModel)]="provaDialog.percentual"
             id="float-input"
             max="100"
             min="0"
@@ -80,7 +82,7 @@
             ></p-paginator>
           </div>
         </div>
-        <div *ngIf="apenasVisualizar" style="margin-top: 12px;">
+        <div style="margin-top: 12px;">
           <p-accordion [multiple]="true">
             <div *ngFor="let questao of destinoQuestoes">
               <p-accordionTab header="Questão {{ questao.id }}">
@@ -97,7 +99,7 @@
             </div>
           </p-accordion>
         </div>
-        <footer *ngIf="!apenasVisualizar">
+        <footer>
           <button
             pButton
             class="ui-button-secondary"
@@ -110,6 +112,7 @@
             type="button"
             (click)="validarForm()"
             label="SALVAR"
+            *ngIf="!apenasVisualizar"
           ></button>
         </footer>
       </div>
