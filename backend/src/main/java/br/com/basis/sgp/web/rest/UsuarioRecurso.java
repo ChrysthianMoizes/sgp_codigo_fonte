@@ -47,7 +47,7 @@ public class UsuarioRecurso {
 
     @GetMapping("/filtro/{filtro}")
     public ResponseEntity<List<SelectDTO>> listarNomeCandidatosDropdown(@PathVariable String filtro) {
-        List<SelectDTO> usuarios = usuarioServico.autocomplete(filtro);
+        List<SelectDTO> usuarios = usuarioServico.filtrarAutocomplete(filtro);
         return ResponseEntity.ok(usuarios);
     }
 

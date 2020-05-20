@@ -44,7 +44,7 @@ public class AvaliacaoFiltro implements EntityFiltro {
             Predicate predicate = cb.like(cb.lower(root.join(Avaliacao_.prova).get(Prova_.titulo)),"%" + tituloProva.toLowerCase() + "%");
             predicates.add(predicate);
         }
-//
+
         if (!StringUtils.isEmpty(aproveitamento)) {
             Predicate predicate = cb.equal(root.get(Avaliacao_.aproveitamento),aproveitamento);
             predicates.add(predicate);
@@ -54,11 +54,6 @@ public class AvaliacaoFiltro implements EntityFiltro {
             Predicate predicate = cb.equal(root.get(Avaliacao_.data),data);
             predicates.add(predicate);
         }
-
-//        if (!StringUtils.isEmpty(situacaoAvaliacao)) {
-//            Predicate predicate = cb.equal(root.get(Avaliacao_.),aproveitamento);
-//            predicates.add(predicate);
-//        }
 
         return predicates;
     }

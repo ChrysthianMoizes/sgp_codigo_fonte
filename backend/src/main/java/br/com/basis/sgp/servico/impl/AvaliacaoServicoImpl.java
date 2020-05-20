@@ -38,7 +38,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     }
 
     @Override
-    public Page<AvaliacaoListagemDTO> listar(@ModelAttribute AvaliacaoFiltro filtro, Pageable pageable) {
+    public Page<AvaliacaoListagemDTO> listar(AvaliacaoFiltro filtro, Pageable pageable) {
         Page<Avaliacao> avaliacoes = avaliacaoRepositorio.findAll(filtro.filter(), pageable);
         return avaliacoes.map(avaliacaoMapper::toDto);
     }
@@ -47,7 +47,6 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     public AvaliacaoCadastroDTO obterPorId(Long id) {
         return avaliacaoCadastroMapper.toDto(buscarPorId(id));
     }
-
 
     @Override
     public void excluir(Long id) {
@@ -71,7 +70,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
 
     private void validarCandidato(AvaliacaoCadastroDTO avaliacao) {
         UsuarioDetalhadoDTO usuario = usuarioServico.obterPorId(avaliacao.getIdCandidato());
-        if(usuario.getAdmin() == TipoUsuarioEnum.ADMIN.getCodigo()){
+        if(TipoUsuarioEnum.ADMIN.getCodigo().equals(usuario.getAdmin())){
             throw new RegraNegocioException("Usuario é um administrador");
         }
     }

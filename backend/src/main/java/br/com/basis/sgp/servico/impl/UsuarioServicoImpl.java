@@ -59,7 +59,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     @Override
-    public List<SelectDTO> autocomplete(String query) {
+    public List<SelectDTO> filtrarAutocomplete(String query) {
         return usuarioDropdownMapper.toDto(usuarioRepositorio.findAllByAdminAndNomeContainsIgnoreCase(TipoUsuarioEnum.CANDIDATO.getCodigo(), query));
     }
 

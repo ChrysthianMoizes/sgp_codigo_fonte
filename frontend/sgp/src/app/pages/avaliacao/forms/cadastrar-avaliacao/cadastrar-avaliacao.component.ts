@@ -55,8 +55,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   carregarAutoComplete() {
     if (this.avaliacao.id) {
-      this.candidatosFiltrados.forEach(element => { if (element.value == this.avaliacao.idCandidato) { this.candidato = element } })
-      this.provasFiltradas.forEach(element => { if (element.value == this.avaliacao.idProva) { this.prova = element } })
+      this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
+      this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
     }
   }
 
@@ -201,7 +201,6 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       })
       )
       .subscribe(response => {
-        console.log(response)
         this.candidatosFiltrados = response;
       })
   }

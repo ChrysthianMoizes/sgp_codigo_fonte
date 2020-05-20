@@ -83,7 +83,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   resultadoAvaliacao(): void {
     this.avaliacoesRecebidas.forEach(element => {
       let prova = new Prova();
-      this.provaService.findByTitulo(element.tituloProva).subscribe(
+      this.provaService.show(element.idProva).subscribe(
         response => {
           prova = response;
           element.situacao = element.aproveitamento ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
@@ -99,7 +99,6 @@ export class ListarAvaliacaoComponent implements OnInit {
   }
 
   deleteAvaliacao() {
-    console.log('chamou', this.avaliacoesSelecionadas)
     this.confirmationService.confirm({
       message: 'Você tem certeza?',
       accept: () => {

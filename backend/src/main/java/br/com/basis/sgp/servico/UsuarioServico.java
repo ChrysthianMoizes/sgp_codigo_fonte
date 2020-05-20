@@ -18,7 +18,7 @@ public interface UsuarioServico {
 
     public List<SelectDTO> listarCandidatosDropdown();
 
-    public List<SelectDTO> autocomplete(String query);
+    public List<SelectDTO> filtrarAutocomplete(String query);
 
     public UsuarioDetalhadoDTO logar(UsuarioCadastroDTO usuarioCadastroDTO);
 
