@@ -30,12 +30,12 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private final ProvaMapper provaMapper;
     private final ProvaListagemMapper provaListagemMapper;
-    private final ProvaRepositorio provaRepositorio;
     private final ProvaDropdownMapper provaDropdownMapper;
     private final ProvaDetalhadaMapper provaDetalhadaMapper;
+    private final ProvaRepositorio provaRepositorio;
 
     @Override
-    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro,Pageable pageable) {
+    public Page<ProvaListagemDTO> listarProvas(ProvaFiltro provaFiltro, Pageable pageable) {
         Page<Prova> provas = provaRepositorio.findAll(provaFiltro.filter(),pageable);
         return provas.map(provaListagemMapper::toDto);
     }
@@ -50,10 +50,15 @@ public class ProvaServicoImpl implements ProvaServico {
         Prova prova =  buscarPorId(id);
         return provaDetalhadaMapper.toDto(prova);
     }
+    
+    @Override
+    public ProvaListagemDTO buscarPorTitulo(String titulo) {
+        return provaListagemMapper.toDto(buscarTitulo(titulo));
+    }
 
     @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
-        Prova prova = provaMapper.toEntity(provaDTO);
+        Prova prova = provaMapper.toEntity(provaDTO);f
 
         validarProva(prova);
         verificarQuestoes(prova);
@@ -63,14 +68,23 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
+    public List<SelectDTO> filtrarAutocomplete(String query) {
+        return provaDropdownMapper.toDto(provaRepositorio.findAllByTituloContainsIgnoreCase(query));
+    }
+
+    @Override
     public void excluir(Long id) {
         provaRepositorio.delete(buscarPorId(id));
     }
 
     @Override
     public List<SelectDTO> listarProvaDropDown() {
-        List<Prova> provas = provaRepositorio.findAll();
-        return provaDropdownMapper.toDto(provas);
+        return provaDropdownMapper.toDto(provaRepositorio.findAll());
+    }
+
+    private Prova buscarTitulo(String titulo) {
+        return provaRepositorio.findByTitulo(titulo)
+                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
     }
 
     private Prova buscarPorId(Long id){
@@ -85,13 +99,13 @@ public class ProvaServicoImpl implements ProvaServico {
 
     private void validarProva(Prova prova){
         if(verificarTitulo(prova)){
-            throw new RegraNegocioException("Esse titulo já está em uso");
+            throw new RegraNegocioException("Este título já está em uso");
         }
     }
 
     private void verificarQuestoes(Prova prova){
         if(prova.getQuestoes().isEmpty()){
-            throw new RegraNegocioException("Não ah questoes o suficiente");
+            throw new RegraNegocioException("Não há questões o suficiente");
         }
     }
 

@@ -8,4 +8,6 @@ public interface TipoQuestaoServico {
 
     List<SelectDTO> listar();
 
+    Boolean obterPorId(Long id);
+
 }

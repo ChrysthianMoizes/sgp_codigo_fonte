@@ -40,17 +40,13 @@ public class QuestaoFiltro implements EntityFiltro<Questao> {
             Predicate predicate = builder.like(root.get(Questao_.descricao), "%" + descricao.toLowerCase() + "%");
             predicates.add(predicate);
         }
-        if (ObjectUtils.isNotEmpty(senioridade)) {
-            if(!senioridade.equals(0L)){
-                Predicate predicate = builder.equal(root.join("senioridade").get(Senioridade_.ID), senioridade);
-                predicates.add(predicate);
-            }
+        if (ObjectUtils.isNotEmpty(senioridade) && ObjectUtils.notEqual(senioridade, 0L)) {
+            Predicate predicate = builder.equal(root.join("senioridade").get(Senioridade_.ID), senioridade);
+            predicates.add(predicate);
         }
-        if (ObjectUtils.isNotEmpty(tipoQuestao)) {
-            if(!tipoQuestao.equals(0L)){
-                Predicate predicate = builder.equal(root.join("tipoQuestao").get(TipoQuestao_.ID), tipoQuestao);
-                predicates.add(predicate);
-            }
+        if (ObjectUtils.isNotEmpty(tipoQuestao) && ObjectUtils.notEqual(senioridade, 0L)) {
+            Predicate predicate = builder.equal(root.join("tipoQuestao").get(TipoQuestao_.ID), tipoQuestao);
+            predicates.add(predicate);
         }
         return predicates;
     }

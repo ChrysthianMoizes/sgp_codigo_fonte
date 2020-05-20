@@ -5,7 +5,6 @@ import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
-import br.com.basis.sgp.servico.filtro.ProvaFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +23,16 @@ public class ProvaRecurso {
 
     private final ProvaServico provaServico;
 
-    @GetMapping
-    public ResponseEntity<Page<ProvaListagemDTO>> listarProvasPaginadas(@ModelAttribute ProvaFiltro filtro, Pageable pageable){
-        Page<ProvaListagemDTO> provas = provaServico.listarProvas(filtro,pageable);
+    @GetMapping("/filtro/{filtro}")
+    public ResponseEntity<List<SelectDTO>> listarTituloProvasDropdown(@PathVariable String filtro) {
+        List<SelectDTO> provas = provaServico.filtrarAutocomplete(filtro);
         return ResponseEntity.ok(provas);
+    }
+
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<ProvaListagemDTO> listarTituloProvas(@PathVariable String titulo) {
+        ProvaListagemDTO prova = provaServico.buscarPorTitulo(titulo);
+        return ResponseEntity.ok(prova);
     }
 
     @GetMapping("/{id}")

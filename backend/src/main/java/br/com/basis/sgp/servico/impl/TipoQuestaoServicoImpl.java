@@ -23,4 +23,9 @@ public class TipoQuestaoServicoImpl implements TipoQuestaoServico {
     public List<SelectDTO> listar() {
         return tipoQuestaoMapper.toDto(repositorio.findAll());
     }
+
+    @Override
+    public Boolean obterPorId(Long id) {
+        return repositorio.existsById(id);
+    }
 }

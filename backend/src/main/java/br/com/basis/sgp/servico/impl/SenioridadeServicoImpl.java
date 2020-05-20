@@ -23,4 +23,9 @@ public class SenioridadeServicoImpl implements SenioridadeServico {
     public List<SelectDTO> listar() {
         return senioridadeMapper.toDto(repositorio.findAll());
     }
+
+    @Override
+    public Boolean obterPorId(Long id) {
+        return repositorio.existsById(id);
+    }
 }
