@@ -55,8 +55,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   carregarAutoComplete() {
     if (this.avaliacao.id) {
-      this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
-      this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
+      this.candidato = this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
+      this.prova = this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
     }
   }
 
