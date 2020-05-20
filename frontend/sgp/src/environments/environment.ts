@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  key: 'br.com.basis.sgp'
+  key: 'br.com.basis.sgp',
+  apiUrl: 'http://localhost:8080/'
 };
 
 /*

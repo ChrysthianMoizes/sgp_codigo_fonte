@@ -1,10 +1,12 @@
+import { environment } from './src/environments/environment';
+
 const proxy = [
   {
     context: ['/api'],
-    target: 'http://localhost:8080/',
+    target: environment.apiUrl,
     secure: false,
     logLevel: 'debug',
-    pathRewrite: { '^/api': 'http://localhost:8080/api' }
+    pathRewrite: { '^/api': `${environment.apiUrl}/api` }
   }
 ];
 
