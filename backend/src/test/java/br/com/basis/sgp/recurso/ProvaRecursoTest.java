@@ -110,6 +110,15 @@ public class ProvaRecursoTest {
     }
 
     @Test
+    public void buscarProvasDorpdown() throws Exception {
+        provaBuilder.construir();
+
+        mockMvc.perform(get(API_PROVA + "dropdown"))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
     public void excluirProvaPorId() throws Exception { //Exclusão de prova
         Prova prova = provaBuilder.construir();
         mockMvc.perform(delete(API_PROVA+prova.getId() )).andExpect(status().isOk());
