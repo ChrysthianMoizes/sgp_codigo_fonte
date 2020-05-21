@@ -1,7 +1,7 @@
 <app-loading></app-loading>
 <app-alert></app-alert>
 <p-dialog
-  header="getTitulo()"
+  [header]="definirHeader()"
   [style]="{ width: '85%' }"
   [modal]="true"
   [closable]="false"
@@ -19,9 +19,10 @@
 
     <form [formGroup]="formulario">
       <div class="card-body">
-        <span class="ui-float-label">
+        <span class="ui-float-label" style="padding-top: 12px;">
           <input
-            [size]="inputSize"
+            maxlength="10"
+            autocomplete="off"
             formControlName="titulo"
             [(ngModel)]="provaDialog.titulo"
             id="float-input1"
@@ -34,15 +35,12 @@
         </span>
         <span class="ui-float-label" style="margin-top: 12px;">
           <input
-            [size]="inputSize"
+            maxlength="2"
             autocomplete="off"
             formControlName="percentual"
             [(ngModel)]="provaDialog.percentual"
             id="float-input"
-            max="100"
-            min="0"
             pInputText
-            type="number"
           />
           <label for="float-input" style="margin-top: 4px;">
             Percentual de Aprovação

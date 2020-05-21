@@ -64,9 +64,13 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
       {
         titulo: [this.provaDialog.titulo, [Validators.required]],
         percentual: [this.provaDialog.percentual, [Validators.required]],
-      },
-      { updateOn: "blur" }
+      }
     );
+
+    if (this.provaDialog.id) {
+      this.formulario.controls['titulo'].setValidators([]);
+      this.formulario.controls['percentual'].setValidators([]);
+    }
   }
 
   validarForm() {
@@ -101,7 +105,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
         this.exibir = false;
       },
       (err) => {
-        this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova');
+        this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova, verifique os campos');
       }
     );
   }
@@ -124,36 +128,13 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     .add(() => this.loadingService.deactivate());
   }
 
-  getTitulo(): string {
-    if (this.visualizando) {
-      return 'Visualizar Prova';
-    } else if (this.edicao) {
-      return 'Editar Prova';
-    } else {
-      return 'Cadastrar Prova';
-    }
-  }
-
-  get inputSize(): number {
-    const inputTitulo = this.formulario.get('titulo').value;
-    return inputTitulo ? inputTitulo.length : 20;
-  }
-
-  get isFormValid(): boolean {
-    const percentual = +this.formulario.get('percentual')
-      .value;
-
-    return (
-      this.formulario.valid &&
-      this.destinoQuestoes.length > 0 &&
-      percentual <= 100 &&
-      percentual >= 0
-    );
-  }
-
-
   abrirDialog(prova: Prova, apenasVisualizar = false): void {
-    if(prova !== null){
+    if(prova !== null && apenasVisualizar !== true ){
+      this.edicao = true;
+      this.provaDialog = Object.assign({}, prova);
+    }
+    else if(apenasVisualizar == true) {
+      this.visualizando = true;
       this.provaDialog = Object.assign({}, prova);
     }
     else{
@@ -163,10 +144,16 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     this.exibir = true;
   }
 
-  resetarConfigs(): void {
-    this.provaDialog = new Prova();
-    this.exibir = false;
-    this.apenasVisualizar = false;
+  definirHeader(): string {
+    if (this.visualizando) {
+      return 'Visualizar Prova';
+    }
+    else if (this.edicao) {
+      return 'Editar Prova';
+    }
+    else {
+      return 'Cadastrar Prova';
+    }
   }
 
   paginate(event): void {}

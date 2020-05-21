@@ -106,7 +106,7 @@ export class ListarProvasComponent implements OnInit {
     this.selectedProvas.forEach((prova) =>
       this.provaService.show(prova.id).subscribe({
         next: (provaCompleta) => {
-          this.visualizarProva.abrirDialog(provaCompleta,false);
+          this.visualizarProva.abrirDialog(provaCompleta, false);
         },
         error: () =>
           this.alertService.montarAlerta(
