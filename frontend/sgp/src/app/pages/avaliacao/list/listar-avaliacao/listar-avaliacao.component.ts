@@ -86,7 +86,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   }
 
   verificarAproveitamento() {
-    return (this.avaliacoesSelecionadas.length === 1 && !this.avaliacoesSelecionadas[0].aproveitamento == null);
+    return (this.avaliacoesSelecionadas.length === 1 && this.avaliacoesSelecionadas[0].aproveitamento == null);
   }
 
   resultadoAvaliacao(): void {

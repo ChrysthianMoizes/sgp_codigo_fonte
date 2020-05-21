@@ -25,7 +25,7 @@ spring:
                 dialect: org.hibernate.dialect.MySQL5Dialect
     liquibase:
         change-log: classpath:/db/master.xml
-#        drop-first: true
+        drop-first: true
 server:
     port: 8080
 

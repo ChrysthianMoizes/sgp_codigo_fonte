@@ -19,7 +19,7 @@ export class ProvaService extends ResourceService<Prova>{
   }
 
   exibirProvaDetalhada(id: number): Observable<any> {
-    return this.http.get(`/api/provas/avaliacao/${id}`);
+    return this.http.get(`/api/provas/avaliacoes/${id}`);
   }
 
   listarProvasDropdown(): Observable<any> {

@@ -29,7 +29,7 @@ export class RealizarAvaliacaoComponent implements OnInit {
   }
 
   iniciarVetorRespostas() {
-    this.avaliacaoPreenchida.respostas = new Array(this.prova.questoes.length);
+    this.avaliacaoPreenchida.respostas = [];
   }
 
   converterResposta() {
@@ -68,26 +68,23 @@ export class RealizarAvaliacaoComponent implements OnInit {
   }
 
   finalizarProva() {
-    this.converterResposta();
-    this.avaliacaoService.realizarAvaliacao(this.avaliacaoPreenchida).subscribe(
-      response => {
-        this.alertService.montarAlerta('success', 'Sucesso', 'Prova enviada!');
-        this.updateLista.emit();
-        this.fecharDialog();
-      },
-      erro => {
-        this.alertService.montarAlerta('error', 'Erro', erro.message);
-      }
-    );
-  }
+    if (this.avaliacaoPreenchida.respostas.length == this.prova.questoes.length) {
+      this.converterResposta();
+      this.avaliacaoService.realizarAvaliacao(this.avaliacaoPreenchida).subscribe(
+        response => {
+          this.alertService.montarAlerta('success', 'Sucesso', 'Prova enviada!');
+          this.updateLista.emit();
+          this.fecharDialog();
+        },
+        erro => {
+          this.alertService.montarAlerta('error', 'Erro', erro.message);
+        }
+      );
+    }
+    else {
+      this.alertService.montarAlerta('error', 'Erro', 'Você deve preencher todas as questões');
+    }
 
-  verificaQuestoes() {
-    this.avaliacaoPreenchida.respostas.forEach(element => {
-      if (!element) {
-        return true;
-      }
-    })
-    return false;
   }
 
   returnNome() {
