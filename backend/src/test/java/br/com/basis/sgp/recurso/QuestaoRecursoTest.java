@@ -38,7 +38,7 @@ public class QuestaoRecursoTest {
     @Autowired
     private QuestaoBuilder questaoBuilder;
 
-    private void limparBD() {
+    private void deletarDados() {
         Collection<Questao> questoes = questaoBuilder.obterTodos();
         questoes.forEach(questao -> questaoBuilder.excluirPorId(questao.getId()));
     }
@@ -46,12 +46,12 @@ public class QuestaoRecursoTest {
     @Before
     public void inicializaTeste() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        limparBD();
+        deletarDados();
         questaoBuilder.setCustomizacao(null);
     }
 
     @Test
-    public void questaoSalvar() throws Exception {
+    public void salvarQuestao() throws Exception {
         QuestaoDTO questaoDTO = questaoBuilder.construirQuestao();
         mockMvc.perform(post(API_QUESTAO)
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -60,7 +60,7 @@ public class QuestaoRecursoTest {
     }
 
     @Test
-    public void questaoSalvarSenioridadeInvalida() throws Exception {
+    public void salvarQuestaoSenioridadeInvalida() throws Exception {
         QuestaoDTO questaoDTO = questaoBuilder.construirQuestao();
         questaoDTO.setIdSenioridade(-5L);
         mockMvc.perform(post(API_QUESTAO)
@@ -70,7 +70,7 @@ public class QuestaoRecursoTest {
     }
 
     @Test
-    public void questaoSalvarTipoQuestaoInvalido() throws Exception {
+    public void salvarQuestaoTipoQuestaoInvalido() throws Exception {
         QuestaoDTO questaoDTO = questaoBuilder.construirQuestao();
         questaoDTO.setIdTipoQuestao(-5L);
         mockMvc.perform(post(API_QUESTAO)
@@ -80,7 +80,7 @@ public class QuestaoRecursoTest {
     }
 
     @Test
-    public void questaoAlterar() throws Exception {
+    public void alterarQuestao() throws Exception {
         Questao questao = questaoBuilder.construir();
         questaoBuilder.customizar(entidade -> entidade.setId(questao.getId()));
         questaoBuilder.customizar(entidade -> entidade.setDescricao("Questão utópica alterada"));
@@ -93,26 +93,26 @@ public class QuestaoRecursoTest {
     }
 
     @Test
-    public void questaoBuscarLista() throws Exception {
+    public void buscarListaQuestao() throws Exception {
         mockMvc.perform(get(API_QUESTAO))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void questaoBuscarDropdown() throws Exception {
+    public void buscarDropdownQuestao() throws Exception {
         mockMvc.perform(get(API_QUESTAO + "dropdown"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void questaoBuscarPorId() throws Exception {
+    public void buscarQuestaoPorId() throws Exception {
         Questao questao = questaoBuilder.construir();
         mockMvc.perform(get(API_QUESTAO + questao.getId()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void questaoExcluir() throws Exception {
+    public void excluirQuestao() throws Exception {
         Questao questao = questaoBuilder.construir();
         mockMvc.perform(delete(API_QUESTAO + questao.getId()))
                 .andExpect(status().isOk());

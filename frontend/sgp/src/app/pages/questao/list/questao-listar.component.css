@@ -19,3 +19,14 @@
 .btn-margin {
   margin: 15px 0;
 }
+
+.table-row {
+  text-align: center;
+}
+
+.descricao {
+  text-overflow: ellipsis;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+}

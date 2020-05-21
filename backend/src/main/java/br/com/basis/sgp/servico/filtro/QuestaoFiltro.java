@@ -1,6 +1,5 @@
 package br.com.basis.sgp.servico.filtro;
 
-import br.com.basis.sgp.dominio.Questao;
 import br.com.basis.sgp.dominio.Questao_;
 import br.com.basis.sgp.dominio.Senioridade_;
 import br.com.basis.sgp.dominio.TipoQuestao_;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class QuestaoFiltro implements EntityFiltro<Questao> {
+public class QuestaoFiltro implements EntityFiltro {
 
     private Long id;
     private String descricao;
@@ -26,12 +25,12 @@ public class QuestaoFiltro implements EntityFiltro<Questao> {
     private Long tipoQuestao;
 
     @Override
-    public Specification<Questao> filter() {
+    public Specification filter() {
         return (root, query, builder) -> builder.and(getPredicates(root, builder).toArray(new Predicate[0]));
     }
 
-    private List<Predicate> getPredicates(Root<Questao> root, CriteriaBuilder builder) {
-        List<Predicate> predicates = new ArrayList<>();
+    private List<Predicate> getPredicates(Root root, CriteriaBuilder builder) {
+        List<Predicate> predicates = new ArrayList();
         if (ObjectUtils.isNotEmpty(id)) {
             Predicate predicate = builder.equal(root.get(Questao_.id), id);
             predicates.add(predicate);
@@ -44,7 +43,7 @@ public class QuestaoFiltro implements EntityFiltro<Questao> {
             Predicate predicate = builder.equal(root.join("senioridade").get(Senioridade_.ID), senioridade);
             predicates.add(predicate);
         }
-        if (ObjectUtils.isNotEmpty(tipoQuestao) && ObjectUtils.notEqual(senioridade, 0L)) {
+        if (ObjectUtils.isNotEmpty(tipoQuestao) && ObjectUtils.notEqual(tipoQuestao, 0L)) {
             Predicate predicate = builder.equal(root.join("tipoQuestao").get(TipoQuestao_.ID), tipoQuestao);
             predicates.add(predicate);
         }

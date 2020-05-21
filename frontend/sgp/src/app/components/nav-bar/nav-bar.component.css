@@ -5,6 +5,8 @@
 }
 
 .nav-bar {
+  position: fixed;
+  width: 100vw;
   height: 60px;
   background-color: var(--color-primary);
   padding: 0 30px;
@@ -101,6 +103,7 @@
   background-color: rgba(0, 0, 0, 0.75);
   color: var(--color-secondary);
 }
+
 #primeiro {
   margin-top: 17px;
 }
