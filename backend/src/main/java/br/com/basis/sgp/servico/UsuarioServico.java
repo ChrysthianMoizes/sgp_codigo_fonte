@@ -32,5 +32,4 @@ public interface UsuarioServico {
 
     public void excluir(Long id);
 
-    Optional<Usuario> findById(long l);
 }

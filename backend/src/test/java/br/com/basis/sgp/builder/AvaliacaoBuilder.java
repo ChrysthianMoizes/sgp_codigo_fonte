@@ -8,15 +8,17 @@ import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
+import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
 import br.com.basis.sgp.servico.mapper.AvaliacaoListagemMapper;
+import br.com.basis.sgp.servico.mapper.ProvaDetalhadaMapper;
+import br.com.basis.sgp.servico.mapper.ProvaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 @Component
@@ -35,22 +37,31 @@ public class AvaliacaoBuilder extends ConstrutorDeEntidade<Avaliacao>{
     private UsuarioServico usuarioServico;
 
     @Autowired
-    private ProvaServico provaServico;
+    private ProvaBuilder provaBuilder;
+
+    @Autowired
+    private UsuarioBuilder usuarioBuilder;
 
     @Autowired
     private AvaliacaoRepositorio avaliacaoRepositorio;
+
 
     @Override
     public Avaliacao construirEntidade() throws ParseException {
         Avaliacao avaliacao = new Avaliacao();
 
         //chamar o builder do usuario e prova
+        Prova prova = provaBuilder.construirEntidade();
+        prova=provaBuilder.persistir(prova);
+        Usuario candidato = usuarioBuilder.construir();
         avaliacao.setData(LocalDate.parse("2020-05-20"));
-        avaliacao.setCandidato(usuarioServico.findById(1L).get());
-        avaliacao.setProva(provaServico.findById(1L).get());
+        avaliacao.setCandidato(candidato);
+        avaliacao.setProva(prova);
+        avaliacao.setAproveitamento(BigDecimal.valueOf(0));
 
         return avaliacao;
     }
+
 
     @Override
     public Avaliacao persistir(Avaliacao entidade) {

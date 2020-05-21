@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -157,8 +156,4 @@ public class UsuarioServicoImpl implements UsuarioServico {
         usuarioRepositorio.delete(usuario);
     }
 
-    @Override
-    public Optional<Usuario> findById(long l) {
-        return usuarioRepositorio.findById(l);
-    }
 }

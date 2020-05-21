@@ -1,61 +1,61 @@
 <app-alert></app-alert>
-<button
-  pButton
-  label="Novo"
-  (click)="showDialog('1')"
-  class="btn-margin"
-></button>
+<p-confirmDialog></p-confirmDialog>
+<app-loading></app-loading>
+<button (click)="openDialog(true,null)" class="btn-margin" label="Novo" pButton></button>
+
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table
-      [columns]="definicaoColunas"
-      [value]="questoes"
-      selectionMode="multiple"
-      [(selection)]="questoesSelecionadas"
-      rows="20"
-      paginator="true"
-    >
-      <ng-template pTemplate="header" let-colunas>
+    <p-table [(selection)]="questaoSelecionada" [value]="questoes" [showCurrentPageReport]="true"
+             [lazy]="true" selectionMode="single">
+      <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let coluna of colunas">
-            {{ coluna.header }}
+          <th scope="col" style="width: 50px;">Código</th>
+          <th scope="col" style="width: 200px;">Descrição</th>
+          <th scope="col" style="width: 100px;">Senioridade</th>
+          <th scope="col" style="width: 100px;">Tipo Questão</th>
+        </tr>
+        <tr>
+          <th>
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
+                   (keyup.enter)="atualizarPagina()" pInputText pKeyFilter="int"/>
+          </th>
+          <th>
+            <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
+                   (keyup.enter)="atualizarPagina()" pInputText/>
+          </th>
+          <th>
+            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades" [showClear]="true"
+                        (onChange)="atualizarPagina()" ></p-dropdown>
+          </th>
+          <th>
+            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes" [showClear]="true"
+                        (onChange)="atualizarPagina()"></p-dropdown>
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-questao let-colunas="columns">
+      <ng-template let-questao pTemplate="body">
         <tr [pSelectableRow]="questao">
-          <td *ngFor="let coluna of colunas">
-            {{ walk(questao, coluna.field) }}
-          </td>
+          <td style="text-align: center;">{{questao["id"]}}</td>
+          <td>{{ verificaNumeroCaractere(questao["descricao"]) }}</td>
+          <td style="text-align: center;">{{questao["descricaoSenioridade"]}}</td>
+          <td style="text-align: center;">{{questao["descricaoTipo"]}}</td>
         </tr>
       </ng-template>
     </p-table>
+    <p-paginator [totalRecords]="totalRegistros" [rows]="itensPorPagina" (onPageChange)="atualizarPagina($event)"
+      >
+    </p-paginator>
   </div>
-  <div id="botoes" class="p-col-1">
-    <button
-      (click)="excluir()"
-      [disabled]="!habilitar()"
-      pButton
-      id="botao1"
-      icon="pi pi-trash"
-      class="ui-button-rounded"
-    ></button>
-    <button
-      pButton
-      id="botao2"
-      icon="pi pi-pencil"
-      class="ui-button-rounded"
-      [disabled]="!isSelected()"
-      (click)="showDialog('2')"
-    ></button>
-    <button
-      pButton
-      id="botao3"
-      icon="pi pi-eye"
-      class="ui-button-rounded"
-      [disabled]="!isSelected()"
-    ></button>
+  <div class="p-col-1" id="botoes">
+    <button (click)="confirmarExclusao(questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-trash"
+            id="botao1" pButton type="button" pTooltip="Excluir" tooltipPosition="right"></button>
+    <button (click)="openDialog(true,questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-pencil"
+            id="botao2" pButton type="button" pTooltip="Editar" tooltipPosition="right"></button>
+    <button (click)="openDialog(false,questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
+            icon="pi pi-eye"
+            id="botao3" pButton type="button" pTooltip="Visualizar" tooltipPosition="right"></button>
   </div>
 </div>
-
-<app-questao #DialogCadastrar (alterar)="atualizar()"></app-questao>
+<app-questao #DialogCadastrar (alterar)="atualizarPagina()"></app-questao>
