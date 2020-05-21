@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, DialogService, SelectItem} from 'primeng';
+import {ConfirmationService, DialogService, SelectItem, Table} from 'primeng';
 import {LoadingService} from 'src/app/components/loading/loading.service';
 import {Pageable} from 'src/app/util/pageable-request';
 import {AlertService} from '../../../components/alert/alert.service';
@@ -21,6 +21,8 @@ import {TipoQuestaoService} from '../service/tipo-questao.service';
 export class QuestaoListarComponent implements OnInit {
 
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
+
+  @ViewChild('dt') table: Table;
 
   questaoSelecionada: QuestaoListagemDTO;
   questoes: Pageable<QuestaoListagemDTO>;
@@ -45,9 +47,10 @@ export class QuestaoListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.itensPorPagina = 20;
-    this.atualizarPagina(null);
     this.getTiposQuestao();
     this.getSenioridades();
+    this.atualizarPagina(null);
+
   }
 
   isOneSelected(): boolean {
@@ -99,6 +102,10 @@ export class QuestaoListarComponent implements OnInit {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
       pageable.setSort(1, 'descricao');
+    }else{
+      if(this.table){
+        this.table.first = 0;
+      }
     }
 
     this.preencherQuestoes(this.filtro, pageable);
@@ -130,6 +137,7 @@ export class QuestaoListarComponent implements OnInit {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
+        this.senioridades.unshift({value: '', label: 'Selecione...'});
       }
     );
   }
@@ -138,6 +146,7 @@ export class QuestaoListarComponent implements OnInit {
     this.tipoQuestaoService.index().subscribe(
       (resposta) => {
         this.tipoQuestoes = resposta;
+        this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
       }
     );
   }
