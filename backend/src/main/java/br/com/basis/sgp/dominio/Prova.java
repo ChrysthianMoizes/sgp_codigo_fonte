@@ -3,15 +3,7 @@ package br.com.basis.sgp.dominio;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +25,7 @@ public class Prova {
     @Column(name = "PERCENTUAL_APROVACAO", nullable = false)
     private BigDecimal percentual;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "PROVA_QUESTAO",
             joinColumns = @JoinColumn(name = "ID_PROVA", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "ID_QUESTAO", referencedColumnName = "ID"))

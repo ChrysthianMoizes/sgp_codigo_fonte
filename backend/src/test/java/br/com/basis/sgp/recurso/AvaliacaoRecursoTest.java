@@ -5,6 +5,7 @@ import br.com.basis.sgp.SgpApplication;
 import br.com.basis.sgp.builder.AvaliacaoBuilder;
 import br.com.basis.sgp.dominio.Avaliacao;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
+import br.com.basis.sgp.servico.dto.AvaliacaoPreenchidaDTO;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
 import br.com.basis.sgp.util.TestUtil;
 import org.junit.Before;
@@ -99,7 +100,6 @@ public class AvaliacaoRecursoTest {
                 .andExpect(status().isOk());
     }
 
-    //  Editar Avaliacao Com Sucesso com aproveitamento válido
     @Test
     public void editarAvaliacaoComAproveitamento() throws Exception {
         Avaliacao avaliacao = avaliacaoBuilder.construirEntidade();
@@ -150,6 +150,16 @@ public class AvaliacaoRecursoTest {
         Long id = avaliacao.getId() + 100;
         mockMvc.perform(delete(API_AVALIACAO + id))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void realizarAvaliacaoSucesso() throws Exception {
+        AvaliacaoPreenchidaDTO avaliacao = avaliacaoBuilder.construirEntidadePreenchida();
+
+        mockMvc.perform(put(API_AVALIACAO + "realizada")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(avaliacao)))
+                .andExpect(status().isOk());
     }
 
 }

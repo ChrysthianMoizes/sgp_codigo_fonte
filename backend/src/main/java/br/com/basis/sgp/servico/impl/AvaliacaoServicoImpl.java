@@ -1,9 +1,11 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Avaliacao;
+import br.com.basis.sgp.dominio.Prova;
 import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
 
+import br.com.basis.sgp.repositorio.ProvaRepositorio;
 import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.UsuarioServico;
@@ -44,6 +46,7 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
     private final AvaliacaoRepositorio avaliacaoRepositorio;
     private final UsuarioServico usuarioServico;
     private final ProvaServico provaServico;
+    private final ProvaRepositorio provaRepositorio;
 
     @Override
     public AvaliacaoListagemDTO salvar(AvaliacaoCadastroDTO avaliacaoCadastroDTO) {
@@ -91,14 +94,11 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
     public void realizarAvaliacao(AvaliacaoPreenchidaDTO avaliacaoPreenchidaDTO) {
 
         ProvaRespostaDTO prova = provaServico.buscarRespostas(avaliacaoPreenchidaDTO.getIdProva());
+        Prova prova2 = provaRepositorio.findById(avaliacaoPreenchidaDTO.getIdProva()).orElse(null);
         Avaliacao avaliacao = buscarPorId(avaliacaoPreenchidaDTO.getId());
         verificarAcertos(avaliacaoPreenchidaDTO, prova, avaliacao);
 
         avaliacaoRepositorio.save(avaliacao);
-    }
-
-    private BigDecimal toAproveitamento(Long acertos, ProvaRespostaDTO prova){
-        return BigDecimal.valueOf(prova.getQuestoes().size() / acertos);
     }
 
     private void verificarAcertos(AvaliacaoPreenchidaDTO avaliacaoDTO, ProvaRespostaDTO prova, Avaliacao avaliacao) {

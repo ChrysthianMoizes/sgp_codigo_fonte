@@ -23,6 +23,9 @@ public class ProvaBuilder extends ConstrutorDeEntidade<Prova> {
     private ProvaMapper provaMapper;
 
     @Autowired
+    private QuestaoBuilder questaoBuilder;
+
+    @Autowired
     private ProvaListagemMapper provaListagemMapper;
 
     @Autowired
@@ -39,12 +42,15 @@ public class ProvaBuilder extends ConstrutorDeEntidade<Prova> {
 
         List<Questao> questoes = new ArrayList<>();
 
-        Questao questao = new Questao();
-        questao.setId(new Long("1"));
+        Questao questao = questaoBuilder.construir();
         questoes.add(questao);
 
-        questao.setId(new Long("2"));
-        questoes.add(questao);
+        Questao questao2 = questaoBuilder.customizar(entidade -> {
+            entidade.setDescricao("Questao 2");
+            entidade.setResposta(2);
+        }).construir();
+
+        questoes.add(questao2);
 
         prova.setTitulo("Prova Senior");
         prova.setPercentual(new BigDecimal("90.00"));
