@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem, Dropdown} from 'primeng';
+import {ConfirmationService, DialogService, SelectItem} from 'primeng';
 import {LoadingService} from 'src/app/components/loading/loading.service';
+import {Pageable} from 'src/app/util/pageable-request';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
 import {QuestaoFiltro} from '../models/questao-filtro.model';
 import {QuestaoListagemDTO} from '../models/questao-listagem.dto';
 import {QuestaoListarService} from '../service/questao-listar.service';
 import {QuestaoService} from '../service/questao.service';
-import { SenioridadeService } from '../service/senioridade.service';
-import { TipoQuestaoService } from '../service/tipo-questao.service';
-import { Pageable } from 'src/app/util/pageable-request';
+import {SenioridadeService} from '../service/senioridade.service';
+import {TipoQuestaoService} from '../service/tipo-questao.service';
 
 @Component({
   selector: 'app-questao-listar',
@@ -23,13 +23,12 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
 
   questaoSelecionada: QuestaoListagemDTO;
-  questoes: QuestaoListagemDTO[];
+  questoes: Pageable<QuestaoListagemDTO>;
 
   senioridades: SelectItem[];
   tipoQuestoes: SelectItem[];
 
   itensPorPagina: number;
-  totalRegistros: number;
 
   filtro: QuestaoFiltro = new QuestaoFiltro();
 
@@ -46,7 +45,6 @@ export class QuestaoListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.itensPorPagina = 20;
-    this.totalRegistros = 0;
     this.atualizarPagina(null);
     this.getTiposQuestao();
     this.getSenioridades();
@@ -78,22 +76,21 @@ export class QuestaoListarComponent implements OnInit {
     this.verificaSenioridadeETipoQuestaoNull();
     this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
-        this.questoes = response.content;
-        this.totalRegistros = response.totalElements;
+        this.questoes = response;
         this.loadingService.deactivate();
       },
       () => {
         this.loadingService.deactivate();
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar as questões');
       }
-    )
+    );
   }
 
   openDialog(edicao: boolean, id: number) {
     this.dialogQuestao.openDialog(edicao, id);
   }
 
-  atualizarPagina(event = null){
+  atualizarPagina(event = null) {
     this.loadingService.activate();
 
     const pageable = new Pageable<QuestaoListagemDTO>(0, 20);
@@ -107,22 +104,22 @@ export class QuestaoListarComponent implements OnInit {
     this.preencherQuestoes(this.filtro, pageable);
   }
 
-  verificaNumeroCaractere(texto: string): string{
-    if (texto.length > 150) {
-      return texto.substr(0, 150) + '...';
+  limitarCaracteresExibidos(descricaoQuestao: string): string {
+    if (descricaoQuestao.length > 150) {
+      return descricaoQuestao.substr(0, 150) + '...';
     }
-    return texto;
+    return descricaoQuestao;
   }
 
-  confirmarExclusao(id: number){
+  confirmarExclusao(id: number) {
     this.confirmation.confirm({
       message: 'Deseja realmente excluir?',
-      header: "Excluir questão",
-      icon: "pi pi-question-circle",
-      acceptLabel: "Sim",
-      rejectLabel: "Não",
-      acceptButtonStyleClass: "ui-button-success",
-      rejectButtonStyleClass: "ui-button-warning",
+      header: 'Excluir questão',
+      icon: 'pi pi-question-circle',
+      acceptLabel: 'Sim',
+      rejectLabel: 'Não',
+      acceptButtonStyleClass: 'ui-button-success',
+      rejectButtonStyleClass: 'ui-button-warning',
       accept: () => {
         this.excluir(id);
       }
@@ -133,7 +130,6 @@ export class QuestaoListarComponent implements OnInit {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
-        this.senioridades.unshift({value: '', label: 'Selecione...'});
       }
     );
   }
@@ -142,16 +138,15 @@ export class QuestaoListarComponent implements OnInit {
     this.tipoQuestaoService.index().subscribe(
       (resposta) => {
         this.tipoQuestoes = resposta;
-        this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
       }
     );
   }
 
-  private verificaSenioridadeETipoQuestaoNull(){
-    if(this.filtro.senioridade === null){
+  private verificaSenioridadeETipoQuestaoNull() {
+    if (this.filtro.senioridade === null) {
       this.filtro.senioridade = 0;
     }
-    if(this.filtro.tipoQuestao === null){
+    if (this.filtro.tipoQuestao === null) {
       this.filtro.tipoQuestao = 0;
     }
   }
