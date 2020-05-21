@@ -1,30 +1,30 @@
-<p-dialog style="width: 800px;" header="{{ avaliacao.tituloProva }}" [(visible)]="exibir">
+<p-dialog style="width: 800px;" header="{{ returnTitulo() }}" [(visible)]="exibir">
   <app-alert></app-alert>
   <p-card>
     <div class="linha-avaliacao">
-      <div>Nome: {{ avaliacao.nomeCandidato }}</div>
+      <div>Nome: {{ avaliacao.nomeCandidato || "" }}</div>
       <div>
-        Data avaliacao: {{ avaliacao.data }}
+        Data avaliacao: {{ avaliacao.data || "" }}
       </div>
     </div>
   </p-card>
-  <form [formGroup]='avaliacaoFormulario' class="card-questao" *ngFor="let questao of prova.questoes; let i = index">
+  <form class="card-questao" *ngFor="let questao of prova.questoes; let i = index">
     <p-card header="Questao {{ i + 1 }}">
       {{ questao.descricao }}
       <div class="grupoBotoes">
-        <p-radioButton name='{{i}}' formControlName="alternativa1" value="1"
+        <p-radioButton name='{{i}}' value="1"
           [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa1 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' formControlName="alternativa2" value="2"
+        <p-radioButton name='{{i}}' value="2"
           [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa2 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' formControlName="alternativa3" value="3"
+        <p-radioButton name='{{i}}' value="3"
           [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa3 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' formControlName="alternativa4" value="4"
+        <p-radioButton name='{{i}}'  value="4"
           [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa4 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' formControlName="alternativa5" value="5"
+        <p-radioButton name='{{i}}'  value="5"
           [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa5 }}">
         </p-radioButton>
       </div>

@@ -16,6 +16,5 @@ public class AvaliacaoPreenchidaDTO {
     private Long idProva;
 
     @NotNull
-    @Size(min=5, max=5, message = "Resposta inválida")
     private List<Long> respostas;
 }

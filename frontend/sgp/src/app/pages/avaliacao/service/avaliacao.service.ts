@@ -15,7 +15,7 @@ export class AvaliacaoService extends ResourceService<Avaliacao>{
   }
 
   realizarAvaliacao(avaliacao: AvaliacaoPreenchida): Observable<any> {
-    return this.http.put('/api/avaliacao/realizada', avaliacao);
+    return this.http.put('/api/avaliacoes/realizada', avaliacao);
   }
 
 }

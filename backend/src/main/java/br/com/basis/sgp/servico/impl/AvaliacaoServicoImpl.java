@@ -61,10 +61,8 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     public void realizarAvaliacao(AvaliacaoPreenchidaDTO avaliacaoPreenchidaDTO) {
 
         ProvaRespostaDTO prova = provaServico.buscarRespostas(avaliacaoPreenchidaDTO.getId());
-        Long acertos = verificarAcertos(avaliacaoPreenchidaDTO, prova);
-
         Avaliacao avaliacao = buscarPorId(avaliacaoPreenchidaDTO.getId());
-        avaliacao.setAproveitamento(toAproveitamento(acertos, prova));
+        verificarAcertos(avaliacaoPreenchidaDTO, prova, avaliacao);
 
         avaliacaoRepositorio.save(avaliacao);
     }
@@ -73,15 +71,13 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
         return BigDecimal.valueOf(prova.getQuestoes().size() / acertos);
     }
 
-    private Long verificarAcertos(AvaliacaoPreenchidaDTO avaliacao, ProvaRespostaDTO prova) {
-        AtomicInteger acertos = new AtomicInteger();
+    private void verificarAcertos(AvaliacaoPreenchidaDTO avaliacaoDTO, ProvaRespostaDTO prova, Avaliacao avaliacao) {
         prova.getQuestoes().forEach( element -> {
-            int pos = avaliacao.getRespostas().indexOf(element.getId());
-            if(element.getResposta().equals(avaliacao.getRespostas().get(pos))){
-                acertos.getAndIncrement();
+            int pos = prova.getQuestoes().indexOf(element);
+            if(element.getResposta().equals(avaliacaoDTO.getRespostas().get(pos))){
+                avaliacao.setAproveitamento(avaliacao.getAproveitamento().add(BigDecimal.valueOf(100 / avaliacaoDTO.getRespostas().size())));
             }
         });
-        return Long.valueOf(acertos.get());
     }
 
     private Avaliacao buscarPorId(Long id) {

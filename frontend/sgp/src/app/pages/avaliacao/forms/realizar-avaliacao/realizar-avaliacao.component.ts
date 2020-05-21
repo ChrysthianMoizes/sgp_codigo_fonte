@@ -1,13 +1,12 @@
 import { AlertService } from './../../../../components/alert/alert.service';
 import { AvaliacaoService } from './../../service/avaliacao.service';
 import { Avaliacao } from './../../models/avaliacao';
-import { Component, OnInit, Input } from '@angular/core';
-import { Questao } from 'src/app/pages/questao/models/questao';
-import { QuestaoService } from 'src/app/pages/questao/service/questao.service';
+import { Component, OnInit, Input, ɵConsole } from '@angular/core';
 import { ProvaService } from 'src/app/pages/prova/service/prova.service';
 import { Prova } from 'src/app/pages/prova/models/prova';
 import { AvaliacaoPreenchida } from '../../models/avaliacao-preenchida';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-realizar-avaliacao',
@@ -19,25 +18,24 @@ export class RealizarAvaliacaoComponent implements OnInit {
   @Input() avaliacao: Avaliacao = new Avaliacao();
   avaliacaoPreenchida: AvaliacaoPreenchida = new AvaliacaoPreenchida();
   prova: Prova = new Prova();
-  avaliacaoFormulario: FormGroup;
   exibir: boolean = false;
 
   constructor(
     private avaliacaoService: AvaliacaoService,
     private provaService: ProvaService,
-    private formBuilder: FormBuilder,
     private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.iniciarFormulario();
-    this.iniciarVetorRespostas();
   }
 
   iniciarVetorRespostas() {
-    this.prova.questoes.forEach(() => {
-      this.avaliacaoPreenchida.respostas.push(null);
-    })
+    this.avaliacaoPreenchida.respostas = new Array(this.prova.questoes.length);
+    console.log(this.avaliacaoPreenchida)
+  }
+
+  converterResposta(){
+    this.avaliacaoPreenchida.respostas = this.avaliacaoPreenchida.respostas.map(x => +x);
   }
 
   iniciarAvaliacaoPreenchida() {
@@ -45,21 +43,13 @@ export class RealizarAvaliacaoComponent implements OnInit {
     this.avaliacaoPreenchida.idProva = this.avaliacao.idProva;
   }
 
-  iniciarFormulario() {
-    this.avaliacaoFormulario = this.formBuilder.group({
-      alternativa1: [null, Validators.required],
-      alternativa2: [null, Validators.required],
-      alternativa3: [null, Validators.required],
-      alternativa4: [null, Validators.required],
-      alternativa5: [null, Validators.required],
-    })
-  }
-
   carregarQuestoes() {
     this.provaService.exibirProvaDetalhada(this.avaliacao.idProva)
       .subscribe(
         response => {
           this.prova = response;
+          this.iniciarVetorRespostas();
+          this.iniciarAvaliacaoPreenchida();
         },
         () => {
           this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar prova');
@@ -71,15 +61,36 @@ export class RealizarAvaliacaoComponent implements OnInit {
     this.carregarQuestoes();
   }
 
+  returnTitulo(){
+    return this.prova.titulo ? this.prova.titulo : '';
+  }
+
   fecharDialog() {
     this.exibir = false;
   }
 
   finalizarProva() {
-    this.avaliacaoService.realizarAvaliacao(this.avaliacaoPreenchida);
+    console.log('Finalizou')
+    this.converterResposta();
+    this.avaliacaoService.realizarAvaliacao(this.avaliacaoPreenchida).subscribe(
+      response => {
+        this.alertService.montarAlerta('success', 'Sucesso', 'Prova enviada!');
+        this.fecharDialog();
+      },
+      erro => {
+        this.alertService.montarAlerta('error', 'Erro', erro.message);
+      }
+    );
   }
 
   verificaQuestoes() {
-    return this.avaliacaoFormulario.invalid;
+    this.avaliacaoPreenchida.respostas.forEach( element => {
+      if(!element){
+        console.log(element)
+        return true;
+      }
+    })
+    return false;
   }
+
 }

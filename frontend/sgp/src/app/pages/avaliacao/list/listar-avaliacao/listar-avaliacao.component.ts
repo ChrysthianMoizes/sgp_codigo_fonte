@@ -35,7 +35,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   totalElementos: number;
   avaliacao: Avaliacao = new Avaliacao();
 
-  avaliacoesSelecionadas: Avaliacao[];
+  avaliacoesSelecionadas: Avaliacao[] = [];
   avaliacoesRecebidas: Avaliacao[];
   cols: any[];
 
