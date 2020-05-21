@@ -101,20 +101,13 @@ export class QuestaoListarComponent implements OnInit {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
       pageable.setSort(1, 'descricao');
-    }else{
-      if(this.table){
+    } else {
+      if (this.table) {
         this.table.first = 0;
       }
     }
 
     this.preencherQuestoes(this.filtro, pageable);
-  }
-
-  limitarCaracteresExibidos(descricaoQuestao: string): string {
-    if (descricaoQuestao.length > 150) {
-      return descricaoQuestao.substr(0, 150) + '...';
-    }
-    return descricaoQuestao;
   }
 
   confirmarExclusao(id: number) {
