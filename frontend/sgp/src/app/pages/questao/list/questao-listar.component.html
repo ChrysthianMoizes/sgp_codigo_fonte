@@ -5,9 +5,9 @@
 
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table #dt [(selection)]="questaoSelecionada" [value]="questoes"
+    <p-table #dt [(selection)]="questaoSelecionada" [value]="questoes.content"
              [lazy]="true" selectionMode="single"
-             [totalRecords]="totalRegistros" [paginator]="true"
+             [totalRecords]="questoes.totalElements" [paginator]="true"
              [rows]="itensPorPagina" (onPage)="atualizarPagina($event)">
       <ng-template pTemplate="header">
         <tr>
@@ -19,18 +19,18 @@
         <tr>
           <th>
             <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
-                   (keyup.enter)="atualizarPagina()" pInputText pKeyFilter="int"/>
+                   (keyup.enter)="atualizarPagina()" pKeyFilter="int"/>
           </th>
           <th>
             <input pInputText placeholder="Descrição" style="width: 100%;" [(ngModel)]="filtro.descricao"
-                   (keyup.enter)="atualizarPagina()" pInputText/>
+                   (keyup.enter)="atualizarPagina()"/>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades" [showClear]="true"
-                        (onChange)="atualizarPagina()" ></p-dropdown>
+            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades"
+                        (onChange)="atualizarPagina()"></p-dropdown>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes" [showClear]="true"
+            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tiposQuestao"
                         (onChange)="atualizarPagina()"></p-dropdown>
           </th>
         </tr>
@@ -38,7 +38,7 @@
       <ng-template let-questao pTemplate="body">
         <tr [pSelectableRow]="questao">
           <td style="text-align: center;">{{questao["id"]}}</td>
-          <td>{{ verificaNumeroCaractere(questao["descricao"]) }}</td>
+          <td>{{ limitarCaracteresExibidos(questao["descricao"]) }}</td>
           <td style="text-align: center;">{{questao["descricaoSenioridade"]}}</td>
           <td style="text-align: center;">{{questao["descricaoTipo"]}}</td>
         </tr>

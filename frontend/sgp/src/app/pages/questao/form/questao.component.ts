@@ -2,11 +2,11 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import {SelectItem} from 'primeng';
 import {AlertService} from 'src/app/components/alert/alert.service';
+import {LoadingService} from 'src/app/components/loading/loading.service';
 import {QuestaoDTO} from '../models/questao.dto';
 import {QuestaoService} from '../service/questao.service';
 import {SenioridadeService} from '../service/senioridade.service';
 import {TipoQuestaoService} from '../service/tipo-questao.service';
-import { LoadingService } from 'src/app/components/loading/loading.service';
 
 @Component({
   selector: 'app-questao',
@@ -63,7 +63,7 @@ export class QuestaoComponent implements OnInit {
 
 
   definirCabecalho(edicao: boolean, id: number) {
-    if (Boolean(id)) {
+    if (id) {
       if (edicao) {
         this.header = 'Editar Questão';
       } else {
@@ -84,16 +84,18 @@ export class QuestaoComponent implements OnInit {
     } else {
       this.questao = new QuestaoDTO();
       this.formQuestao.reset();
+      this.exibir = true;
     }
-    this.exibir = true;
   }
 
   salvar() {
-    this.loadingService.activate()
-    if(!Boolean(this.questao.id)) {
-      this.cadastar(this.questao);
-    } else {
-      this.editar(this.questao);
+    if (!this.formQuestao.invalid) {
+      this.loadingService.activate();
+      if (this.questao.id) {
+        this.editar(this.questao);
+      } else {
+        this.cadastar(this.questao);
+      }
     }
   }
 
@@ -217,6 +219,7 @@ export class QuestaoComponent implements OnInit {
     this.questaoService.show(id).subscribe(
       (response) => {
         this.questao = response;
+        this.exibir = true;
       },
       () => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar a questão de código ' + id);

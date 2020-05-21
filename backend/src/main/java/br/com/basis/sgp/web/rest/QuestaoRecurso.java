@@ -46,7 +46,7 @@ public class QuestaoRecurso {
 
     @Transactional(readOnly = true)
     @GetMapping
-    public ResponseEntity<Page<QuestaoListagemDTO>> listarCandidatos(@ModelAttribute QuestaoFiltro questaoFiltro, Pageable pageable) {
+    public ResponseEntity<Page<QuestaoListagemDTO>> listarQuestoes(@ModelAttribute QuestaoFiltro questaoFiltro, Pageable pageable) {
         Page<QuestaoListagemDTO> pages = questaoServico.listarQuestoes(questaoFiltro, pageable);
         return ResponseEntity.ok().body(pages);
     }
@@ -68,7 +68,7 @@ public class QuestaoRecurso {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         questaoServico.excluir(id);
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().build();
     }
 
 }
