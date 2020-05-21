@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -61,6 +62,11 @@ public class ProvaServicoImpl implements ProvaServico {
     public List<SelectDTO> listarProvaDropDown() {
         List<Prova> provas = provaRepositorio.findAll();
         return provaDropdownMapper.toDto(provas);
+    }
+
+    @Override
+    public Optional<Prova> findById(long l) {
+        return provaRepositorio.findById(l);
     }
 
     private Prova buscarPorId(Long id){

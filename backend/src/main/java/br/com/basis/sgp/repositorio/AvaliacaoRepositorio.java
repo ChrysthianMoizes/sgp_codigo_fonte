@@ -1,6 +1,7 @@
 package br.com.basis.sgp.repositorio;
 
 import br.com.basis.sgp.dominio.Avaliacao;
+import br.com.basis.sgp.dominio.Prova;
 import br.com.basis.sgp.dominio.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,5 @@ import java.util.Optional;
 public interface AvaliacaoRepositorio extends JpaRepository<Avaliacao,Long>{
 
     Page<Avaliacao> findAll(Specification filter, Pageable pageable);
+
 }

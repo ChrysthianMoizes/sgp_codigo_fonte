@@ -4,8 +4,7 @@ import br.com.basis.sgp.dominio.Avaliacao;
 import br.com.basis.sgp.dominio.Prova;
 import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
-import br.com.basis.sgp.repositorio.UsuarioRepositorio;
-import br.com.basis.sgp.servico.AvalicaoServico;
+import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
@@ -28,7 +27,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AvaliacaoServicoImpl implements AvalicaoServico {
+public class AvaliacaoServicoImpl implements AvaliacaoServico {
 
     private final AvaliacaoListagemMapper avaliacaoMapper;
     private final AvaliacaoCadastroMapper avaliacaoCadastroMapper;
@@ -41,8 +40,6 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
         Avaliacao avaliacao = avaliacaoCadastroMapper.toEntity(avaliacaoCadastroDTO);
         UsuarioDetalhadoDTO candidato = usuarioServico.obterPorId(avaliacaoCadastroDTO.getIdCandidato());
         avaliacao.getCandidato().setNome(candidato.getNome());
-
-        verificarAdmin(candidato.getId());
 
         ProvaDTO prova = provaServico.exibirPorId(avaliacaoCadastroDTO.getIdProva());
         avaliacao.getProva().setTitulo(prova.getTitulo());
@@ -65,7 +62,11 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     @Override
     public void excluir(Long id) {
         Avaliacao avaliacao = buscarPorId(id);
-        avaliacaoRepositorio.delete(avaliacao);
+
+        if(!(avaliacao.getAproveitamento() == null)){
+            throw new RegraNegocioException("Avaliação tem aproveitamento cadastrado.");
+        }
+        avaliacaoRepositorio.deleteById(id);
     }
 
     private Avaliacao buscarPorId(Long id) {
@@ -74,12 +75,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
         return avaliacao;
     }
 
-    private boolean verificarAdmin(Long id) {
-        UsuarioDetalhadoDTO usuario = usuarioServico.obterPorId(id);
-        if(usuario.getAdmin() == 1) {
-            return true;
-        }
-        return false;
+    private boolean verificarAproveitamento() {
+        return true;
     }
-
 }

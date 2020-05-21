@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
-public interface AvalicaoServico {
+public interface AvaliacaoServico {
 
 //    public Page<AvaliacaoListagemDTO> listarCandidatos(AvaliacaoFiltro usuarioFiltro, Pageable pageable);
 
