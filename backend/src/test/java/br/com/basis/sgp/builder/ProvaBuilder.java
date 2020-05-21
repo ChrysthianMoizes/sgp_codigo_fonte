@@ -31,20 +31,22 @@ public class ProvaBuilder extends ConstrutorDeEntidade<Prova> {
     @Autowired
     private ProvaRepositorio provaRepositorio;
 
+    @Autowired
+    private QuestaoBuilder questaoBuilder;
+
 
     @Override
     public Prova construirEntidade() throws ParseException {
 
         Prova prova = new Prova();
 
-        List<Questao> questoes = new ArrayList<>();
+        List<Questao> questoes = new ArrayList();
 
-        Questao questao = new Questao();
-        questao.setId(new Long("1"));
+        Questao questao = questaoBuilder.construirEntidade();
         questoes.add(questao);
 
-        questao.setId(new Long("2"));
-        questoes.add(questao);
+        Questao questao2= questaoBuilder.construirEntidade();
+        questoes.add(questao2);
 
         prova.setTitulo("Prova Senior");
         prova.setPercentual(new BigDecimal("90.00"));

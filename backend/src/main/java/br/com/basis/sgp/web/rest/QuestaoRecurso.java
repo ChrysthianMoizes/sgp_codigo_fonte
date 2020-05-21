@@ -53,8 +53,8 @@ public class QuestaoRecurso {
 
     @Transactional(readOnly = true)
     @GetMapping("/dropdown")
-    public ResponseEntity<List<SelectDTO>> listarQuestoesDropdown() {
-        List<SelectDTO> questoesDropdown = questaoServico.listarQuestoesDropdown();
+    public ResponseEntity<Page<SelectDTO>> listarQuestoesDropdown(Pageable pageable) {
+        Page<SelectDTO> questoesDropdown = questaoServico.listarQuestoesDropdown(pageable);
         return ResponseEntity.ok().body(questoesDropdown);
     }
 
