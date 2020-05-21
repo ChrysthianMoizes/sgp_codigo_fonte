@@ -5,9 +5,9 @@
 
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table #dt [(selection)]="questaoSelecionada" [value]="questoes"
+    <p-table #dt [(selection)]="questaoSelecionada" [value]="questoes.content"
              [lazy]="true" selectionMode="single"
-             [totalRecords]="totalRegistros" [paginator]="true"
+             [totalRecords]="questoes.totalElements" [paginator]="true"
              [rows]="itensPorPagina" (onPage)="atualizarPagina($event)">
       <ng-template pTemplate="header">
         <tr>
@@ -26,12 +26,12 @@
                    (keyup.enter)="atualizarPagina()"/>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades" [showClear]="true"
-                        (onChange)="atualizarPagina()" placeholder="Selecione..."></p-dropdown>
+            <p-dropdown [(ngModel)]="filtro.senioridade" [options]="senioridades"
+                        (onChange)="atualizarPagina()"></p-dropdown>
           </th>
           <th>
-            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tipoQuestoes" [showClear]="true"
-                        (onChange)="atualizarPagina()" placeholder="Selecione..."></p-dropdown>
+            <p-dropdown [(ngModel)]="filtro.tipoQuestao" [options]="tiposQuestao"
+                        (onChange)="atualizarPagina()"></p-dropdown>
           </th>
         </tr>
       </ng-template>
