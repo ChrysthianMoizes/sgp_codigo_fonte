@@ -1,5 +1,6 @@
 package br.com.basis.sgp.web.rest;
-import br.com.basis.sgp.servico.AvalicaoServico;
+import br.com.basis.sgp.servico.AvaliacaoServico;
+import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoPreenchidaDTO;
@@ -26,7 +27,8 @@ import java.net.URISyntaxException;
 @RequestMapping("/api/avaliacoes")
 @RequiredArgsConstructor
 public class AvaliacaoRecurso {
-    private final AvalicaoServico avaliacaoServico;
+    private final AvaliacaoServico avaliacaoServico;
+
 
     @GetMapping
     public ResponseEntity<Page<AvaliacaoListagemDTO>> listar(@ModelAttribute AvaliacaoFiltro filtro, Pageable pageable){
