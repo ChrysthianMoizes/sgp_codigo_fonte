@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ConfirmationService, DialogService, LazyLoadEvent, SelectItem, Dropdown} from 'primeng';
+import {ConfirmationService, DialogService, SelectItem, Table} from 'primeng';
 import {LoadingService} from 'src/app/components/loading/loading.service';
 import {AlertService} from '../../../components/alert/alert.service';
 import {QuestaoComponent} from '../form/questao.component';
@@ -21,6 +21,8 @@ import { Pageable } from 'src/app/util/pageable-request';
 export class QuestaoListarComponent implements OnInit {
 
   @ViewChild('DialogCadastrar') dialogQuestao: QuestaoComponent;
+
+  @ViewChild('dt') table: Table;
 
   questaoSelecionada: QuestaoListagemDTO;
   questoes: QuestaoListagemDTO[];
@@ -47,9 +49,10 @@ export class QuestaoListarComponent implements OnInit {
   ngOnInit(): void {
     this.itensPorPagina = 20;
     this.totalRegistros = 0;
-    this.atualizarPagina(null);
     this.getTiposQuestao();
     this.getSenioridades();
+    this.atualizarPagina(null);
+
   }
 
   isOneSelected(): boolean {
@@ -98,10 +101,14 @@ export class QuestaoListarComponent implements OnInit {
 
     const pageable = new Pageable<QuestaoListagemDTO>(0, 20);
 
-    if (event) {
+    if(event){
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
       pageable.setSort(1, 'descricao');
+    }else{
+      if(this.table){
+        this.table.first = 0;
+      }
     }
 
     this.preencherQuestoes(this.filtro, pageable);
