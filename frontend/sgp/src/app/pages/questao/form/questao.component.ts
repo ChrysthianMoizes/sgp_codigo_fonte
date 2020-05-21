@@ -84,8 +84,8 @@ export class QuestaoComponent implements OnInit {
     } else {
       this.questao = new QuestaoDTO();
       this.formQuestao.reset();
+      this.exibir = true;
     }
-    this.exibir = true;
   }
 
   salvar() {
@@ -219,6 +219,7 @@ export class QuestaoComponent implements OnInit {
     this.questaoService.show(id).subscribe(
       (response) => {
         this.questao = response;
+        this.exibir = true;
       },
       () => {
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar a questão de código ' + id);

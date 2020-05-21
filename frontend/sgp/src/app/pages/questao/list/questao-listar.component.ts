@@ -28,7 +28,7 @@ export class QuestaoListarComponent implements OnInit {
   questoes: Pageable<QuestaoListagemDTO>;
 
   senioridades: SelectItem[];
-  tipoQuestoes: SelectItem[];
+  tiposQuestao: SelectItem[];
 
   itensPorPagina: number;
 
@@ -76,7 +76,6 @@ export class QuestaoListarComponent implements OnInit {
   }
 
   preencherQuestoes(filtro: QuestaoFiltro, pageable: Pageable<QuestaoListagemDTO>) {
-    this.verificaSenioridadeETipoQuestaoNull();
     this.questaoListarService.index(filtro, pageable).subscribe(
       (response) => {
         this.questoes = response;
@@ -137,7 +136,7 @@ export class QuestaoListarComponent implements OnInit {
     this.senioridadeService.index().subscribe(
       (resposta) => {
         this.senioridades = resposta;
-        this.senioridades.unshift({value: '', label: 'Selecione...'});
+        this.senioridades.unshift({value: 0, label: 'Selecione...'});
       }
     );
   }
@@ -145,18 +144,10 @@ export class QuestaoListarComponent implements OnInit {
   getTiposQuestao() {
     this.tipoQuestaoService.index().subscribe(
       (resposta) => {
-        this.tipoQuestoes = resposta;
-        this.tipoQuestoes.unshift({value: null, label: 'Selecione...'});
+        this.tiposQuestao = resposta;
+        this.tiposQuestao.unshift({value: 0, label: 'Selecione...'});
       }
     );
   }
 
-  private verificaSenioridadeETipoQuestaoNull() {
-    if (this.filtro.senioridade === null) {
-      this.filtro.senioridade = 0;
-    }
-    if (this.filtro.tipoQuestao === null) {
-      this.filtro.tipoQuestao = 0;
-    }
-  }
 }
