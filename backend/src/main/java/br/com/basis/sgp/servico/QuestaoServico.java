@@ -14,7 +14,7 @@ public interface QuestaoServico {
 
     Page<QuestaoListagemDTO> listarQuestoes(QuestaoFiltro questaoFiltro, Pageable pageable);
 
-    List<SelectDTO> listarQuestoesDropdown();
+    Page<SelectDTO> listarQuestoesDropdown(Pageable pageable);
 
     QuestaoDTO obterPorId(Long id);
 
