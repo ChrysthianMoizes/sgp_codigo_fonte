@@ -39,7 +39,7 @@ export class ListarProvasComponent implements OnInit {
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.inicializarTabela();

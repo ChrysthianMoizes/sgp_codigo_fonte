@@ -5,6 +5,7 @@
   <div class="p-col-11">
     <p-table [columns]="cols" [value]="listCandidatos" [resizableColumns]="true" [showCurrentPageReport]="true"
       [lazy]="true" selectionMode="multiple" [(selection)]="selectedCandidatos">
+
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of columns" [style.width]="col.width" />

@@ -6,11 +6,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {})
-public interface ProvaDropdownMapper extends EntityMapper<SelectDTO, Prova>{
+public interface ProvaDropdownMapper extends EntityMapper<SelectDTO, Prova> {
 
     @Override
-    @Mapping(source ="id" ,target ="value")
     @Mapping(source = "titulo", target = "label")
+    @Mapping(source = "id", target = "value")
     SelectDTO toDto(Prova entity);
 
 }

@@ -14,4 +14,13 @@ export class UsuarioService extends ResourceService<Usuario> {
   resetarSenha(email: String): Observable<any> {
     return of(null);
   }
+
+  findByNome(nome: string): Observable<any> {
+    return this.http.get(`/api/usuarios/filtro/${nome}`);
+  }
+
+  listarCandidatosDropdown(): Observable<any> {
+    return this.http.get("/api/usuarios/dropdown");
+  }
+
 }

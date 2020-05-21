@@ -7,17 +7,26 @@
 #botao1 {
   margin-top: 50px;
 }
+
 #botao2 {
   margin-top: 90px;
 }
+
 #botao3 {
   margin-top: 130px;
 }
 
-#botao-novo {
-  margin-bottom: 10px;
-}
-
 .btn-margin {
   margin: 15px 0;
+}
+
+.table-row {
+  text-align: center;
+}
+
+.descricao {
+  text-overflow: ellipsis;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
 }

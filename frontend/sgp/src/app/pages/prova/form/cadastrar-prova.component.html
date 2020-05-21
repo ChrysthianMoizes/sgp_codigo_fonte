@@ -48,7 +48,7 @@
         </span>
         <div *ngIf="!apenasVisualizar" class="pick-with-pag">
           <p-pickList
-            [source]="origemQuestoes"
+            [source]="origemQuestoes.content"
             [target]="destinoQuestoes"
             sourceHeader="Questões Disponíveis"
             targetHeader="Questões Selecionadas"

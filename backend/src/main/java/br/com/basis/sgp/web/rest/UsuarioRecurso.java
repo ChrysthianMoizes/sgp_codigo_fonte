@@ -45,6 +45,12 @@ public class UsuarioRecurso {
         return ResponseEntity.ok(usuarios);
     }
 
+    @GetMapping("/filtro/{filtro}")
+    public ResponseEntity<List<SelectDTO>> listarNomeCandidatosDropdown(@PathVariable String filtro) {
+        List<SelectDTO> usuarios = usuarioServico.filtrarAutocomplete(filtro);
+        return ResponseEntity.ok(usuarios);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDetalhadoDTO> obterPorId(@PathVariable("id") Long id) {
         UsuarioDetalhadoDTO usuarioDTO = usuarioServico.obterPorId(id);
@@ -72,6 +78,6 @@ public class UsuarioRecurso {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         usuarioServico.excluir(id);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.noContent().build();
     }
 }

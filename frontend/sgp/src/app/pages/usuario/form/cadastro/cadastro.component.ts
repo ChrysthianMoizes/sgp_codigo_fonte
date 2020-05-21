@@ -33,7 +33,7 @@ export class CadastroComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.iniciarFormulario();

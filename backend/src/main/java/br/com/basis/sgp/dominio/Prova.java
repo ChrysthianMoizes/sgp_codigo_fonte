@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +36,6 @@ public class Prova {
     @ManyToMany
     @JoinTable(name = "PROVA_QUESTAO",
             joinColumns = @JoinColumn(name = "ID_PROVA", referencedColumnName = "ID"),
-            inverseJoinColumns= @JoinColumn(name = "ID_QUESTAO", referencedColumnName = "ID"))
+            inverseJoinColumns = @JoinColumn(name = "ID_QUESTAO", referencedColumnName = "ID"))
     private List<Questao> questoes = new ArrayList<>();
 }

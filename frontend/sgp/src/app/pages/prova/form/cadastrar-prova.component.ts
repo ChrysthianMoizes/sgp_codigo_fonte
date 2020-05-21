@@ -7,7 +7,9 @@ import { QuestaoService } from '../../questao/service/questao.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
 import { Router } from '@angular/router';
-
+import { QuestaoFiltro } from '../../questao/models/questao-filtro.model';
+import { Pageable } from 'src/app/util/pageable-request';
+import { QuestaoDTO } from '../../questao/models/questao.dto';
 @Component({
   selector: 'app-cadastrar-prova',
   templateUrl: './cadastrar-prova.component.html',
@@ -20,9 +22,11 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   formulario: FormGroup;
   visualizando: boolean;
   edicao: boolean;
+  questaoFiltro: QuestaoFiltro;
+  pageable: Pageable<QuestaoDTO>;
 
-  origemQuestoes: Questao[];
-  destinoQuestoes: Questao[];
+  origemQuestoes:  Pageable<QuestaoDTO>;
+  destinoQuestoes:  QuestaoDTO[];
   totalDeQuestoes = 0;
 
   exibir = false;
@@ -40,14 +44,14 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
 
     this.iniciarForm();
 
-    this.questaoService.index().subscribe((questoes) => {
+    this.questaoFiltro = new QuestaoFiltro();
+    this.pageable = new Pageable(0, 20);
+
+    this.questaoService.index(this.questaoFiltro, this.pageable).subscribe((questoes) => {
       this.origemQuestoes = questoes;
       this.destinoQuestoes = [];
     });
-
-    this.questaoService
-      .getNumberOfElements()
-      .subscribe((total) => (this.totalDeQuestoes = total));
+    this.totalDeQuestoes = this.origemQuestoes.totalElements;
 
     this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -156,7 +160,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     }
   }
 
-  paginate(event): void {}
+  paginate(event): void { }
 
   removeRepetitions(arr: any[]): Array<Questao> {
     return arr.filter((questao, i) => arr.indexOf(questao) === i);

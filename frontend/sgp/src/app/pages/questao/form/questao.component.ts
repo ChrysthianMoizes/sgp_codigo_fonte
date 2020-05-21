@@ -1,10 +1,12 @@
-import { Questao } from './../models/questao';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { QuestaoService } from '../service/questao.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AlertService } from 'src/app/components/alert/alert.service';
-import { Senioridade } from 'src/app/models/senioridade';
-import { TipoQuestao } from 'src/app/models/tipo-questao';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup, Validators,} from '@angular/forms';
+import {SelectItem} from 'primeng';
+import {AlertService} from 'src/app/components/alert/alert.service';
+import {LoadingService} from 'src/app/components/loading/loading.service';
+import {QuestaoDTO} from '../models/questao.dto';
+import {QuestaoService} from '../service/questao.service';
+import {SenioridadeService} from '../service/senioridade.service';
+import {TipoQuestaoService} from '../service/tipo-questao.service';
 
 @Component({
   selector: 'app-questao',
@@ -15,124 +17,217 @@ export class QuestaoComponent implements OnInit {
 
   @Output() alterar = new EventEmitter();
 
-  exibir: boolean = false;
-  header: string = '';
-
-  senioridade: Senioridade[];
-  tipoQuestao: TipoQuestao[];
-
-  idQuestaoEditando: number = 0;
-  isQuestaoEditando: boolean = true;
-  formulario: FormGroup;
-
-  questao: Questao = new Questao();
-
-  public formQuestao: FormGroup = new FormGroup({
-    descricao: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(400)]),
-    senioridade: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]),
-    tipoQuestao: new FormControl('', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(100),
-    ]),
-    alternativa1: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100),
-    ]),
-    alternativa2: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100),
-    ]),
-    alternativa3: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100),
-    ]),
-    alternativa4: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100),
-    ]),
-    alternativa5: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(100),
-    ]),
-    selectedValue: new FormControl('', [
-      Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(100),
-    ]),
-  });
+  public exibir: boolean;
+  public header: string;
+  public isVisualizando: boolean;
+  public questao: QuestaoDTO;
+  public formQuestao: FormGroup;
+  public senioridades: SelectItem[];
+  public tiposQuestao: SelectItem[];
 
   constructor(
-    private questaoService: QuestaoService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private formBuilder: FormBuilder,
+    private senioridadeService: SenioridadeService,
+    private tipoQuestaoService: TipoQuestaoService,
+    public questaoService: QuestaoService,
+    public loadingService: LoadingService
   ) {
   }
 
   ngOnInit(): void {
-    this.iniciarForm();
-    this.preencherSenioridades();
-    this.preencherTiposQuestoes();
+    this.exibir = false;
+    this.header = '';
+    this.questao = new QuestaoDTO();
+    this.isVisualizando = false;
+    this.construirForm();
+    this.getSenioridades();
+    this.getTiposQuestao();
   }
 
-  iniciarForm() {
-    //
+  getSenioridades() {
+    this.senioridadeService.index().subscribe(
+      (resposta) => {
+        this.senioridades = resposta;
+      }
+    );
   }
 
-  preencherSenioridades() {
-    this.senioridade = [
-      { id: 1, descricao: 'Estagiário' },
-      { id: 2, descricao: 'Júnior' },
-      { id: 3, descricao: 'Pleno' },
-      { id: 4, descricao: 'Sênior' },
-    ];
+  getTiposQuestao() {
+    this.tipoQuestaoService.index().subscribe(
+      (resposta) => {
+        this.tiposQuestao = resposta;
+      }
+    );
   }
 
-  preencherTiposQuestoes() {
-    this.tipoQuestao = [
-      { id: 1, descricao: 'Requisito' },
-      { id: 2, descricao: 'Análise e Projeto' },
-      { id: 3, descricao: 'Codificação' },
-      { id: 4, descricao: 'Teste e Arquitetura' },
-    ];
-  }
 
-  salvar(): void {
-    //pegar os dados e salvar
-    this.alterar.emit(null);
-  }
-
-  exibirDialog(id: string, questaoSelecionada: Questao): void {
-
-    this.header = id ? 'Editar Questão' : 'Cadastrar Questão';
-
-    if(id) {
-      // buscar questao completa do backend
+  definirCabecalho(edicao: boolean, id: number) {
+    if (id) {
+      if (edicao) {
+        this.header = 'Editar Questão';
+      } else {
+        this.header = 'Visualizar Questão';
+      }
     } else {
-      this.questao = new Questao();
+      this.header = 'Cadastrar Questão';
+    }
+  }
+
+  openDialog(edicao: boolean, id: number) {
+    this.definirCabecalho(edicao, id);
+
+    this.isVisualizando = !edicao;
+
+    if (id) {
+      this.buscarPorId(id);
+    } else {
+      this.questao = new QuestaoDTO();
+      this.formQuestao.reset();
       this.exibir = true;
     }
   }
 
-  validarForm(): void {
-
-    if(this.formulario.invalid) {
-      // da o erro
-      return;
-    }
-
-    if(this.questao.id){
-      //this.atualizar();
-    }else {
-      //this.salvar();
+  salvar() {
+    if (!this.formQuestao.invalid) {
+      this.loadingService.activate();
+      if (this.questao.id) {
+        this.editar(this.questao);
+      } else {
+        this.cadastar(this.questao);
+      }
     }
   }
 
-  cancelar(): void {
+  editar(questao: QuestaoDTO) {
+    this.questaoService.update(questao).subscribe(
+      (response) => {
+        this.alertService.montarAlerta('success', 'Sucesso', `Questão ${response.id} editada com Sucesso`);
+      },
+      (error) => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao editar questão' + error.defaultMessage);
+      },
+      () => {
+        this.loadingService.deactivate();
+        this.alterar.emit(null);
+        this.exibir = false;
+      }
+    );
+  }
+
+  cadastar(questao: QuestaoDTO) {
+    this.questaoService.create(questao).subscribe(
+      (response) => {
+        this.alertService.montarAlerta('success', 'Sucesso', `Questão ${response.id} cadastrada com Sucesso`);
+      },
+      (error) => {
+        this.alertService.montarAlerta('error', 'Sucesso', 'Erro ao cadastrar questão' + error.defaultMessage);
+      },
+      () => {
+        this.loadingService.deactivate();
+        this.alterar.emit(null);
+        this.exibir = false;
+      }
+    );
+  }
+
+  cancelar() {
     this.exibir = false;
   }
+
+  construirForm() {
+    this.formQuestao = this.formBuilder.group({
+      id: [null],
+      descricao: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(400),
+        ],
+      ],
+      senioridade: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+      tipoQuestao: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+      alternativa1: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(400),
+        ],
+      ],
+      alternativa2: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(400),
+        ],
+      ],
+      alternativa3: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(400),
+        ],
+      ],
+      alternativa4: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(400),
+        ],
+      ],
+      alternativa5: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(400),
+        ],
+      ],
+      resposta: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(100),
+        ],
+      ],
+    });
+  }
+
+
+  buscarPorId(id: number): void {
+    this.loadingService.activate();
+    this.questaoService.show(id).subscribe(
+      (response) => {
+        this.questao = response;
+        this.exibir = true;
+      },
+      () => {
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao buscar a questão de código ' + id);
+      },
+      () => this.loadingService.deactivate()
+    );
+  }
+
+
 }
+

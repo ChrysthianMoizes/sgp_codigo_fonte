@@ -12,7 +12,7 @@ export class RealizarAvaliacaoComponent implements OnInit {
   constructor(
     private avaliacaoService: AvaliacaoService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   selectedValue: number;
 
@@ -21,7 +21,6 @@ export class RealizarAvaliacaoComponent implements OnInit {
   avaliacao: Avaliacao;
 
   ngOnInit(): void {
-    console.log(this.avaliacao.candidato.nome);
   }
 
   abrirDialog() {
@@ -32,17 +31,8 @@ export class RealizarAvaliacaoComponent implements OnInit {
     this.exibir = false;
   }
 
-  finalizarProva() {}
+  finalizarProva() { }
 
-  verificaQuestoes(): boolean {
-    let valido = false;
-
-    this.avaliacao.prova.questoes.forEach((questao) => {
-      if (!questao.resposta) {
-        valido = true;
-      }
-    });
-
-    return valido;
+  verificaQuestoes() {
   }
 }
