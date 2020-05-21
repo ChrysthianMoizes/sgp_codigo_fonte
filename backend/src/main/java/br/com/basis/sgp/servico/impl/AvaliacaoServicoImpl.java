@@ -1,8 +1,9 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Avaliacao;
+import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
-<<<<<<< HEAD
+
 import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.UsuarioServico;
@@ -11,27 +12,26 @@ import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 
 import br.com.basis.sgp.servico.dto.UsuarioDetalhadoDTO;
-=======
-import br.com.basis.sgp.servico.AvalicaoServico;
-import br.com.basis.sgp.servico.ProvaServico;
-import br.com.basis.sgp.servico.UsuarioServico;
+
 import br.com.basis.sgp.servico.dto.*;
->>>>>>> 3c5f0f3ae58980e6107ebc8792b9e5f1153b798d
+
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import br.com.basis.sgp.servico.mapper.AvaliacaoCadastroMapper;
 import br.com.basis.sgp.servico.mapper.AvaliacaoListagemMapper;
+import br.com.basis.sgp.servico.mapper.UsuarioDetalhadoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-<<<<<<< HEAD
-=======
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
->>>>>>> 3c5f0f3ae58980e6107ebc8792b9e5f1153b798d
+
 
 @Service
 @Transactional
@@ -40,10 +40,9 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
 
     private final AvaliacaoListagemMapper avaliacaoMapper;
     private final AvaliacaoCadastroMapper avaliacaoCadastroMapper;
+    private final UsuarioDetalhadoMapper usuarioDetalhadoMapper;
     private final AvaliacaoRepositorio avaliacaoRepositorio;
     private final UsuarioServico usuarioServico;
-    private final ProvaServico provaServico;
-
     private final ProvaServico provaServico;
 
     @Override
@@ -55,6 +54,14 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
 
         ProvaDTO prova = provaServico.exibirPorId(avaliacaoCadastroDTO.getIdProva());
         avaliacao.getProva().setTitulo(prova.getTitulo());
+
+        if(!(avaliacao.getAproveitamento() == null)){
+            throw new RegraNegocioException("Avaliação não pode ser cadastrada com aproveitamento.");
+        }
+
+        if(avaliacao.getData().isBefore(LocalDate.now())){
+            throw new RegraNegocioException("Avaliação não pode ser cadastrada com data inferior ao dia atual.");
+        }
 
         return avaliacaoMapper.toDto(avaliacaoRepositorio.save(avaliacao));
     }
@@ -78,9 +85,6 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
             throw new RegraNegocioException("Avaliação tem aproveitamento cadastrado.");
         }
         avaliacaoRepositorio.deleteById(id);
-
-        avaliacaoRepositorio.delete(avaliacao);
-
     }
 
     @Override
@@ -113,10 +117,7 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
     private Avaliacao buscarPorId(Long id) {
         return avaliacaoRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Avaliacao inválida"));
-<<<<<<< HEAD
-        return avaliacao;
-=======
->>>>>>> 3c5f0f3ae58980e6107ebc8792b9e5f1153b798d
+
     }
 
 }

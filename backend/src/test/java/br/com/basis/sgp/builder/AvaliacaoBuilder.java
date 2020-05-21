@@ -57,7 +57,7 @@ public class AvaliacaoBuilder extends ConstrutorDeEntidade<Avaliacao>{
         avaliacao.setData(LocalDate.parse("2020-05-20"));
         avaliacao.setCandidato(candidato);
         avaliacao.setProva(prova);
-        avaliacao.setAproveitamento(BigDecimal.valueOf(0));
+//        avaliacao.setAproveitamento(BigDecimal.valueOf(0));
 
         return avaliacao;
     }

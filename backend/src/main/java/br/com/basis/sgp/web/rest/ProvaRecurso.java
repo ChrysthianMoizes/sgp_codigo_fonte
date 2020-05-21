@@ -1,5 +1,4 @@
 package br.com.basis.sgp.web.rest;
-
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
@@ -43,16 +42,10 @@ public class ProvaRecurso {
         return ResponseEntity.ok(provaDTO);
     }
 
-<<<<<<< HEAD
     @GetMapping("/avaliacoes/{id}")
     public ResponseEntity<ProvaDetalhadaDTO> visualizarProvaDetalhada(@PathVariable("id") Long id){
         return ResponseEntity.ok(provaServico.exibirProvaDetalhada(id));
-=======
-    @GetMapping("/avaliacao/{id}")
-    public ResponseEntity<ProvaDetalhadaDTO> listarProvaDetalhada(@PathVariable("id") Long id){
-        ProvaDetalhadaDTO provaDetalhadaDTO = provaServico.exibirProvaDetalhada(id);
-        return ResponseEntity.ok(provaDetalhadaDTO);
->>>>>>> 3c5f0f3ae58980e6107ebc8792b9e5f1153b798d
+
     }
 
     @GetMapping("/dropdown")
@@ -78,5 +71,4 @@ public class ProvaRecurso {
         provaServico.excluir(id);
         return ResponseEntity.ok(null);
     }
-
 }
