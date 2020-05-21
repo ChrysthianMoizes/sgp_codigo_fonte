@@ -5,8 +5,10 @@
 
 <div class="p-grid">
   <div class="p-col-11">
-    <p-table [(selection)]="questaoSelecionada" [value]="questoes" [showCurrentPageReport]="true"
-             [lazy]="true" selectionMode="single">
+    <p-table #dt [(selection)]="questaoSelecionada" [value]="questoes"
+             [lazy]="true" selectionMode="single"
+             [totalRecords]="totalRegistros" [paginator]="true"
+             [rows]="itensPorPagina" (onPage)="atualizarPagina($event)">
       <ng-template pTemplate="header">
         <tr>
           <th scope="col" style="width: 50px;">Código</th>
@@ -42,9 +44,6 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator [totalRecords]="totalRegistros" [rows]="itensPorPagina" (onPageChange)="atualizarPagina($event)"
-      >
-    </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
     <button (click)="confirmarExclusao(questaoSelecionada.id)" [disabled]="!isOneSelected()" class="ui-button-rounded"
