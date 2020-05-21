@@ -9,7 +9,7 @@ import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 import { Prova } from 'src/app/pages/prova/models/prova';
 import { ProvaService } from 'src/app/pages/prova/service/prova.service';
 import { catchError } from 'rxjs/operators';
-import { ConfirmationService } from 'primeng';
+import { ConfirmationService, Paginator } from 'primeng';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -27,6 +27,8 @@ export class ListarAvaliacaoComponent implements OnInit {
 
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
+
+  @ViewChild('paginator') paginator: Paginator;
 
   viewOnly: boolean;
   filtro = new FiltroAvaliacao();
@@ -64,6 +66,10 @@ export class ListarAvaliacaoComponent implements OnInit {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
       pageable.setSort(1, 'id');
+    }else{
+      if(this.paginator){
+        this.paginator.first = 0;
+      }
     }
 
     this.avaliacaoService.index(this.filtro, pageable)

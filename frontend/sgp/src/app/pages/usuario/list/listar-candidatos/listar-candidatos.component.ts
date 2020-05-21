@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationService } from 'primeng';
+import { ConfirmationService, Table, Paginator } from 'primeng';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { Pageable } from 'src/app/util/pageable-request';
 import { VisualizarCandidatoComponent } from '../../form/visualizar-candidato/visualizar-candidato.component';
@@ -15,6 +15,8 @@ import { FiltroCandidato } from '../../models/filtro-candidato';
 export class ListarCandidatosComponent implements OnInit {
   @ViewChild('VisualizarCandidato')
   visualizarCandidato: VisualizarCandidatoComponent;
+
+  @ViewChild('paginator') paginator: Paginator;
 
   filtro = new FiltroCandidato();
   cols: any[];
@@ -55,6 +57,10 @@ export class ListarCandidatosComponent implements OnInit {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
       pageable.setSort(1, 'nome');
+    }else {
+      if (this.paginator) {
+        this.paginator.first = 0;
+      }
     }
 
     this.usuarioService.index(this.filtro, pageable).subscribe(

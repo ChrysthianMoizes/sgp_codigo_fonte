@@ -25,7 +25,7 @@ export class QuestaoListarComponent implements OnInit {
   @ViewChild('dt') table: Table;
 
   questaoSelecionada: QuestaoListagemDTO;
-  questoes: Pageable<QuestaoListagemDTO>;
+  questoes: Pageable<QuestaoListagemDTO> = new Pageable<QuestaoListagemDTO>(0, 20);
 
   senioridades: SelectItem[];
   tiposQuestao: SelectItem[];
