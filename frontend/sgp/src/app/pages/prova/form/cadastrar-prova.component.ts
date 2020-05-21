@@ -1,15 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
+import { Pageable } from 'src/app/util/pageable-request';
 import { Questao } from '../../questao/models/questao';
-import { QuestaoService } from '../../questao/service/questao.service';
+import { QuestaoFiltro } from '../../questao/models/questao-filtro.model';
+import { QuestaoListarService } from '../../questao/service/questao-listar.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
-import { Router } from '@angular/router';
-import { QuestaoFiltro } from '../../questao/models/questao-filtro.model';
-import { Pageable } from 'src/app/util/pageable-request';
-import { QuestaoDTO } from '../../questao/models/questao.dto';
 @Component({
   selector: 'app-cadastrar-prova',
   templateUrl: './cadastrar-prova.component.html',
@@ -18,15 +16,17 @@ import { QuestaoDTO } from '../../questao/models/questao.dto';
 export class CadastrarProvaComponent implements OnInit, OnChanges {
   @Output() provaAtualizada = new EventEmitter();
   @Input() apenasVisualizar = false;
+  @Output() salvar = new EventEmitter();
   provaDialog: Prova = new Prova();
   formulario: FormGroup;
   visualizando: boolean;
   edicao: boolean;
   questaoFiltro: QuestaoFiltro;
-  pageable: Pageable<QuestaoDTO>;
+  pageable: Pageable<Questao>;
 
-  origemQuestoes:  Pageable<QuestaoDTO>;
-  destinoQuestoes:  QuestaoDTO[];
+  pageQuestoes:  Pageable<Questao>;
+  origemQuestoes: Questao[];
+  destinoQuestoes:  Questao[];
   totalDeQuestoes = 0;
 
   exibir = false;
@@ -36,8 +36,8 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     private provaService: ProvaService,
     private alert: AlertService,
     private loadingService: LoadingService,
-    private questaoService: QuestaoService,
-    private router: Router
+    private questaoService: QuestaoListarService,
+
   ) { }
 
   ngOnInit() {
@@ -47,11 +47,12 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     this.questaoFiltro = new QuestaoFiltro();
     this.pageable = new Pageable(0, 20);
 
-    this.questaoService.index(this.questaoFiltro, this.pageable).subscribe((questoes) => {
-      this.origemQuestoes = questoes;
+    this.questaoService.listarQuestoesDropdown(this.questaoFiltro, this.pageable).subscribe((questoes: Pageable<Questao>) => {
+      this.origemQuestoes = questoes.content;
       this.destinoQuestoes = [];
+      this.totalDeQuestoes = this.pageQuestoes.totalElements;
     });
-    this.totalDeQuestoes = this.origemQuestoes.totalElements;
+
 
     this.formulario = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -89,15 +90,20 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   }
 
   verificaProva() {
-   if (this.provaDialog.id > 0) {
+   if (this.provaDialog.id) {
     this.atualizarProva(this.provaDialog);
-   } else {
+   }
+   else {
     this.salvarProva(this.provaDialog);
    }
   }
 
   salvarProva(prova: Prova): void {
-    this.provaService.create(prova).subscribe(
+    console.log(this.destinoQuestoes)
+    this.provaService.create({
+      ...prova,
+      questoes: this.destinoQuestoes
+    }).subscribe(
       () => {
         this.loadingService.deactivate();
         this.formulario.reset();
@@ -106,6 +112,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
           'Sucesso!',
           'Prova cadastrada com suscesso!'
         );
+        this.salvar.emit(prova),
         this.exibir = false;
       },
       (err) => {
@@ -124,6 +131,8 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
           'Sucesso!',
           'Prova atualizada com suscesso!'
         );
+        this.salvar.emit(prova),
+        this.exibir = false;
       },
       (err) => {
         this.alert.montarAlerta('error', 'Error!', 'Erro ao atualizar a Prova');

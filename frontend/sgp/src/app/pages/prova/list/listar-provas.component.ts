@@ -23,7 +23,7 @@ export class ListarProvasComponent implements OnInit {
   filtro = new FiltroProva();
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
-  rows: number = 20;
+  rows: number;
   first: number = 0;
   totalDeElementos = 1;
   listProvas: Prova[];

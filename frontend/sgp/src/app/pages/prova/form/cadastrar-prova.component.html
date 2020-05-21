@@ -48,7 +48,7 @@
         </span>
         <div *ngIf="!apenasVisualizar" class="pick-with-pag">
           <p-pickList
-            [source]="origemQuestoes.content"
+            [source]="origemQuestoes"
             [target]="destinoQuestoes"
             sourceHeader="Questões Disponíveis"
             targetHeader="Questões Selecionadas"
@@ -62,11 +62,11 @@
           >
             <ng-template let-questao pTemplate="item">
               <div class="ui-helper-clearfix">
-                {{ questao.id }}
+                {{ questao.value }}
                 <div
                   style="font-size: 14px; float: right; margin: 15px 5px 0 0;"
                 >
-                  {{ questao.descricao }}
+                  {{ questao.label }}
                 </div>
               </div>
             </ng-template>
@@ -83,16 +83,9 @@
         <div style="margin-top: 12px;">
           <p-accordion [multiple]="true">
             <div *ngFor="let questao of destinoQuestoes">
-              <p-accordionTab header="Questão {{ questao.id }}">
-                {{ questao.descricao }}
+              <p-accordionTab header="Questão {{ questao.value }}">
+                {{ questao.label }}
                 <br />
-                1 - Alternativa 1
-                <br />
-                2 - Alternativa 2
-                <br />
-                3 - Alternativa 3
-                <br />
-                Resposta correta: 2
               </p-accordionTab>
             </div>
           </p-accordion>
