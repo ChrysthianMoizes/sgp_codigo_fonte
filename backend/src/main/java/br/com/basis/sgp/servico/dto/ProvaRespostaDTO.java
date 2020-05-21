@@ -8,14 +8,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProvaDetalhadaDTO {
+public class ProvaRespostaDTO {
 
     private Long id;
-
-    private String titulo;
-
-    private BigDecimal percentual;
-
-    private List<QuestaoDetalhaDTO> questoes;
+    private List<QuestaoRespostaDTO> questoes;
 
 }
+

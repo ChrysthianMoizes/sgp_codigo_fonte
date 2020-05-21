@@ -33,14 +33,20 @@
     </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
+    <button [disabled]="avaliacoesSelecionadas.length !== 1" id='button-realizar' *ngIf="temPermissao()" type="button"
+      icon="pi pi-check-square" (click)="abrirAvaliacao()" pButton class="ui-button-rounded">
+    </button>
     <button [disabled]="avaliacoesSelecionadas.length === 0" id='button-delete' *ngIf="temPermissao()" type="button"
       icon="pi pi-trash" (click)="deleteAvaliacao()" pButton class="ui-button-rounded">
     </button>
     <button *ngIf="temPermissao()" [disabled]="avaliacoesSelecionadas.length !== 1" (click)="editar()"
-      class="ui-button-rounded" icon="pi pi-pencil" id="button-edit" pButton></button>
+      class="ui-button-rounded" icon="pi pi-pencil" id="button-edit" pButton>
+    </button>
     <button [disabled]="avaliacoesSelecionadas.length !== 1" (click)="exibir()" class="ui-button-rounded"
-      icon="pi pi-eye" id="button-visualize" pButton></button>
+      icon="pi pi-eye" id="button-visualize" pButton>
+    </button>
   </div>
 </div>
 <app-cadastrar-avaliacao #cadastroAvaliacao (avaliacaoAtualizada)="atualizarLista()" [viewOnly]="viewOnly">
 </app-cadastrar-avaliacao>
+<app-realizar-avaliacao #realizarAvaliacao [avaliacao]='avaliacoesSelecionadas[0]'></app-realizar-avaliacao>

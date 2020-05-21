@@ -2,6 +2,7 @@ package br.com.basis.sgp.web.rest;
 import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
+import br.com.basis.sgp.servico.dto.AvaliacaoPreenchidaDTO;
 import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,6 +56,12 @@ public class AvaliacaoRecurso {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
         avaliacaoServico.excluir(id);
+        return ResponseEntity.ok(null);
+    }
+
+    @PutMapping("realizada")
+    public ResponseEntity<Void> realizar(@Valid @RequestBody AvaliacaoPreenchidaDTO avaliacaoPreenchidaDTO){
+        avaliacaoServico.realizarAvaliacao(avaliacaoPreenchidaDTO);
         return ResponseEntity.ok(null);
     }
 }

@@ -10,6 +10,7 @@ import { Prova } from 'src/app/pages/prova/models/prova';
 import { ProvaService } from 'src/app/pages/prova/service/prova.service';
 import { catchError } from 'rxjs/operators';
 import { ConfirmationService } from 'primeng';
+import { RealizarAvaliacaoComponent } from '../../forms/realizar-avaliacao/realizar-avaliacao.component';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -27,6 +28,7 @@ export class ListarAvaliacaoComponent implements OnInit {
 
   @ViewChild('cadastroAvaliacao')
   cadastroAvaliacao: CadastrarAvaliacaoComponent;
+  @ViewChild('realizarAvaliacao') realizarAvaliacao: RealizarAvaliacaoComponent
 
   viewOnly: boolean;
   filtro = new FiltroAvaliacao();
@@ -92,6 +94,10 @@ export class ListarAvaliacaoComponent implements OnInit {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar prova')
         })
     })
+  }
+
+  abrirAvaliacao() {
+    this.realizarAvaliacao.abrirDialog();
   }
 
   isOneSelected(): boolean {

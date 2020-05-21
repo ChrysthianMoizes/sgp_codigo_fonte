@@ -43,9 +43,16 @@ public class ProvaRecurso {
         return ResponseEntity.ok(provaDTO);
     }
 
+<<<<<<< HEAD
     @GetMapping("/avaliacoes/{id}")
     public ResponseEntity<ProvaDetalhadaDTO> visualizarProvaDetalhada(@PathVariable("id") Long id){
         return ResponseEntity.ok(provaServico.exibirProvaDetalhada(id));
+=======
+    @GetMapping("/avaliacao/{id}")
+    public ResponseEntity<ProvaDetalhadaDTO> listarProvaDetalhada(@PathVariable("id") Long id){
+        ProvaDetalhadaDTO provaDetalhadaDTO = provaServico.exibirProvaDetalhada(id);
+        return ResponseEntity.ok(provaDetalhadaDTO);
+>>>>>>> 3c5f0f3ae58980e6107ebc8792b9e5f1153b798d
     }
 
     @GetMapping("/dropdown")
