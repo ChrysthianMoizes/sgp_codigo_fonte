@@ -2,9 +2,9 @@
   <app-alert></app-alert>
   <p-card>
     <div class="linha-avaliacao">
-      <div>Nome: {{ avaliacao.nomeCandidato || "" }}</div>
+      <div>Nome: {{ returnNome() }}</div>
       <div>
-        Data avaliacao: {{ avaliacao.data || "" }}
+        Data avaliacao: {{ returnData() }}
       </div>
     </div>
   </p-card>
@@ -12,20 +12,20 @@
     <p-card header="Questao {{ i + 1 }}">
       {{ questao.descricao }}
       <div class="grupoBotoes">
-        <p-radioButton name='{{i}}' value="1"
-          [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa1 }}">
+        <p-radioButton name='{{i}}' value="1" [(ngModel)]="avaliacaoPreenchida.respostas[i]"
+          label="{{ questao.alternativa1 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' value="2"
-          [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa2 }}">
+        <p-radioButton name='{{i}}' value="2" [(ngModel)]="avaliacaoPreenchida.respostas[i]"
+          label="{{ questao.alternativa2 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}' value="3"
-          [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa3 }}">
+        <p-radioButton name='{{i}}' value="3" [(ngModel)]="avaliacaoPreenchida.respostas[i]"
+          label="{{ questao.alternativa3 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}'  value="4"
-          [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa4 }}">
+        <p-radioButton name='{{i}}' value="4" [(ngModel)]="avaliacaoPreenchida.respostas[i]"
+          label="{{ questao.alternativa4 }}">
         </p-radioButton>
-        <p-radioButton name='{{i}}'  value="5"
-          [(ngModel)]="avaliacaoPreenchida.respostas[i]" label="{{ questao.alternativa5 }}">
+        <p-radioButton name='{{i}}' value="5" [(ngModel)]="avaliacaoPreenchida.respostas[i]"
+          label="{{ questao.alternativa5 }}">
         </p-radioButton>
       </div>
     </p-card>

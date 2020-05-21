@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 import { Prova } from 'src/app/pages/prova/models/prova';
 import { ProvaService } from 'src/app/pages/prova/service/prova.service';
-import { catchError } from 'rxjs/operators';
 import { ConfirmationService } from 'primeng';
 import { RealizarAvaliacaoComponent } from '../../forms/realizar-avaliacao/realizar-avaliacao.component';
 
@@ -68,6 +67,10 @@ export class ListarAvaliacaoComponent implements OnInit {
       pageable.setSort(1, 'id');
     }
 
+    if (!this.authService.getUsuario().admin) {
+      this.filtro.idCandidato = this.authService.getUsuario().id;
+    }
+
     this.avaliacaoService.index(this.filtro, pageable)
       .subscribe(
         response => {
@@ -82,13 +85,17 @@ export class ListarAvaliacaoComponent implements OnInit {
       );
   }
 
+  verificarAproveitamento() {
+    return (this.avaliacoesSelecionadas.length === 1 && !this.avaliacoesSelecionadas[0].aproveitamento == null);
+  }
+
   resultadoAvaliacao(): void {
     this.avaliacoesRecebidas.forEach(element => {
       let prova = new Prova();
       this.provaService.show(element.idProva).subscribe(
         response => {
           prova = response;
-          element.situacao = element.aproveitamento ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
+          element.situacao = element.aproveitamento != null ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
         },
         erro => {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar prova')

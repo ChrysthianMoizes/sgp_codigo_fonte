@@ -21,6 +21,7 @@ import java.util.List;
 public class AvaliacaoFiltro implements EntityFiltro {
 
     private Long id;
+    private Long idCandidato;
     private LocalDate data;
     private String nomeCandidato;
     private String tituloProva;
@@ -42,6 +43,16 @@ public class AvaliacaoFiltro implements EntityFiltro {
 
         if (!StringUtils.isEmpty(tituloProva)) {
             Predicate predicate = cb.like(cb.lower(root.join(Avaliacao_.prova).get(Prova_.titulo)),"%" + tituloProva.toLowerCase() + "%");
+            predicates.add(predicate);
+        }
+
+        if (!StringUtils.isEmpty(id)) {
+            Predicate predicate = cb.equal(root.get(Avaliacao_.id),id);
+            predicates.add(predicate);
+        }
+
+        if (!StringUtils.isEmpty(idCandidato)) {
+            Predicate predicate = cb.equal(root.join(Avaliacao_.candidato).get(Usuario_.id),idCandidato);
             predicates.add(predicate);
         }
 

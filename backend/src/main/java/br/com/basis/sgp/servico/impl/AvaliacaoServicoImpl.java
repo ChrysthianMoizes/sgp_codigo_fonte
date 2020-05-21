@@ -60,7 +60,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     @Override
     public void realizarAvaliacao(AvaliacaoPreenchidaDTO avaliacaoPreenchidaDTO) {
 
-        ProvaRespostaDTO prova = provaServico.buscarRespostas(avaliacaoPreenchidaDTO.getId());
+        ProvaRespostaDTO prova = provaServico.buscarRespostas(avaliacaoPreenchidaDTO.getIdProva());
         Avaliacao avaliacao = buscarPorId(avaliacaoPreenchidaDTO.getId());
         verificarAcertos(avaliacaoPreenchidaDTO, prova, avaliacao);
 
@@ -72,6 +72,7 @@ public class AvaliacaoServicoImpl implements AvalicaoServico {
     }
 
     private void verificarAcertos(AvaliacaoPreenchidaDTO avaliacaoDTO, ProvaRespostaDTO prova, Avaliacao avaliacao) {
+        avaliacao.setAproveitamento(BigDecimal.valueOf(0));
         prova.getQuestoes().forEach( element -> {
             int pos = prova.getQuestoes().indexOf(element);
             if(element.getResposta().equals(avaliacaoDTO.getRespostas().get(pos))){

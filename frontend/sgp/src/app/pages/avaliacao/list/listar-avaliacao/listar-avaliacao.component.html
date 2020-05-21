@@ -33,7 +33,7 @@
     </p-paginator>
   </div>
   <div class="p-col-1" id="botoes">
-    <button [disabled]="avaliacoesSelecionadas.length !== 1" id='button-realizar' *ngIf="temPermissao()" type="button"
+    <button [disabled]="!verificarAproveitamento()" id='button-realizar' *ngIf="!temPermissao()" type="button"
       icon="pi pi-check-square" (click)="abrirAvaliacao()" pButton class="ui-button-rounded">
     </button>
     <button [disabled]="avaliacoesSelecionadas.length === 0" id='button-delete' *ngIf="temPermissao()" type="button"
@@ -49,4 +49,5 @@
 </div>
 <app-cadastrar-avaliacao #cadastroAvaliacao (avaliacaoAtualizada)="atualizarLista()" [viewOnly]="viewOnly">
 </app-cadastrar-avaliacao>
-<app-realizar-avaliacao #realizarAvaliacao [avaliacao]='avaliacoesSelecionadas[0]'></app-realizar-avaliacao>
+<app-realizar-avaliacao #realizarAvaliacao (updateLista)="atualizarLista()" [avaliacao]='avaliacoesSelecionadas[0]'>
+</app-realizar-avaliacao>

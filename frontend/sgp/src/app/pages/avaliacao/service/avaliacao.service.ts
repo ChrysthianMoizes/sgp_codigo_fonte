@@ -4,6 +4,7 @@ import { ResourceService } from 'src/app/services/resource.service';
 import { HttpClient } from '@angular/common/http';
 import { AvaliacaoPreenchida } from '../models/avaliacao-preenchida';
 import { Observable } from 'rxjs';
+import { Pageable } from 'src/app/util/pageable-request';
 
 @Injectable({
   providedIn: 'root',

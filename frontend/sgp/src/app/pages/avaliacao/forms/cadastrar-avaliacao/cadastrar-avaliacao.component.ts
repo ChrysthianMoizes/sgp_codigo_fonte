@@ -55,8 +55,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   carregarAutoComplete() {
     if (this.avaliacao.id) {
-      this.candidato = this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
-      this.prova = this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
+      this.candidato = this.candidatosFiltrados.find(element => element.value === this.avaliacao.idCandidato)
+      this.prova = this.provasFiltradas.find(element => element.value === this.avaliacao.idProva)
     }
   }
 
@@ -124,13 +124,16 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
           erro => {
             this.alertService.montarAlerta('error', 'Erro', erro.message)
           })
+    } else {
+      this.avaliacao = new Avaliacao();
     }
     this.iniciarDialog();
   }
 
   iniciarDialog() {
-    this.exibir = true;
+    this.carregarAutoComplete();
     this.iniciarTitulo();
+    this.exibir = true;
   }
 
   abrirDialog(id: number): void {
@@ -139,6 +142,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   fecharDialog(): void {
     this.avaliacaoAtualizada.emit();
+    this.candidato = null;
+    this.prova = null;
     this.viewOnly = false;
     this.exibir = false;
   }
