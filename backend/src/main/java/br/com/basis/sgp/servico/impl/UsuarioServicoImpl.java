@@ -60,7 +60,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     @Override
-    public List<SelectDTO> autocomplete(String query) {
+    public List<SelectDTO> filtrarAutocomplete(String query) {
         return usuarioDropdownMapper.toDto(usuarioRepositorio.findAllByAdminAndNomeContainsIgnoreCase(TipoUsuarioEnum.CANDIDATO.getCodigo(), query));
     }
 
@@ -84,7 +84,6 @@ public class UsuarioServicoImpl implements UsuarioServico {
     public UsuarioDetalhadoDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioCadastroMapper.toEntity(usuarioCadastroDTO);
 
-        UsuarioEdicaoDTO usuarioEdicaoDTO = usuarioEdicaoMapper.toDto(usuario);
 
         validarUsuario(usuario);
 
@@ -96,9 +95,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
     @Override
     public UsuarioDetalhadoDTO alterar(UsuarioEdicaoDTO usuarioEdicaoDTO) {
+
         Usuario usuario = preencherEdicao(usuarioEdicaoDTO);
 
-        validarUsuario(usuario);
 
         usuario = usuarioRepositorio.save(usuario);
 
@@ -132,14 +131,18 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Usuario obterUsuario(Long id) {
-        Usuario usuario = usuarioRepositorio.findById(id)
+        return usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Usuário inválido"));
-        return usuario;
     }
 
     private Usuario preencherEdicao(UsuarioEdicaoDTO usuarioEdicaoDTO){
-        Usuario usuario = obterUsuario(usuarioEdicaoDTO.getId());
 
+        Usuario usuario = usuarioEdicaoMapper.toEntity(usuarioEdicaoDTO);
+
+        if(verificarEmail(usuario)){
+            throw new RegraNegocioException("Email existente");
+        }
+        usuario = obterUsuario(usuarioEdicaoDTO.getId());
         usuario.setNome(usuarioEdicaoDTO.getNome());
         usuario.setEmail(usuarioEdicaoDTO.getEmail());
         if(usuarioEdicaoDTO.getSenha() != null && !usuarioEdicaoDTO.getSenha().isEmpty()){

@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface AvaliacaoServico {
 
-//    public Page<AvaliacaoListagemDTO> listarCandidatos(AvaliacaoFiltro usuarioFiltro, Pageable pageable);
-
     public AvaliacaoListagemDTO salvar(AvaliacaoCadastroDTO avaliacaoCadastroDTO);
 
     public Page<AvaliacaoListagemDTO> listar(AvaliacaoFiltro avaliacaoFiltro, Pageable pageable);

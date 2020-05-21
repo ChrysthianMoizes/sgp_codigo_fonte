@@ -22,16 +22,16 @@ public class ProvaRecurso {
 
     private final ProvaServico provaServico;
 
-//    @GetMapping
-//    public ResponseEntity<Page<ProvaListagemDTO>> listarProvasPaginadas(@ModelAttribute ProvaFiltro filtro, Pageable pageable){
-//        Page<ProvaListagemDTO> provas = provaServico.listarProvas(filtro,pageable);
-//        return ResponseEntity.ok(provas);
-//    }
-
     @GetMapping("/filtro/{filtro}")
     public ResponseEntity<List<SelectDTO>> listarTituloProvasDropdown(@PathVariable String filtro) {
-        List<SelectDTO> provas = provaServico.autocomplete(filtro);
+        List<SelectDTO> provas = provaServico.filtrarAutocomplete(filtro);
         return ResponseEntity.ok(provas);
+    }
+
+    @GetMapping("/titulo/{titulo}")
+    public ResponseEntity<ProvaListagemDTO> listarTituloProvas(@PathVariable String titulo) {
+        ProvaListagemDTO prova = provaServico.buscarPorTitulo(titulo);
+        return ResponseEntity.ok(prova);
     }
 
     @GetMapping("/{id}")

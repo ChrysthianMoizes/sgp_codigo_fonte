@@ -6,6 +6,10 @@ import { AlertService } from 'src/app/components/alert/alert.service';
 import { Pageable } from 'src/app/util/pageable-request';
 import { AuthService } from 'src/app/services/auth.service';
 import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
+import { Prova } from 'src/app/pages/prova/models/prova';
+import { ProvaService } from 'src/app/pages/prova/service/prova.service';
+import { catchError } from 'rxjs/operators';
+import { ConfirmationService } from 'primeng';
 
 @Component({
   selector: 'app-listar-avaliacao',
@@ -15,8 +19,10 @@ import { FiltroAvaliacao } from 'src/app/pages/prova/models/filtro-avaliacao';
 export class ListarAvaliacaoComponent implements OnInit {
   constructor(
     private avaliacaoService: AvaliacaoService,
+    private provaService: ProvaService,
     private alert: AlertService,
-    private authService: AuthService
+    private authService: AuthService,
+    private confirmationService: ConfirmationService
   ) { }
 
   @ViewChild('cadastroAvaliacao')
@@ -27,7 +33,7 @@ export class ListarAvaliacaoComponent implements OnInit {
   totalElementos: number;
   avaliacao: Avaliacao = new Avaliacao();
 
-  avaliacaoSelecionada: Avaliacao = new Avaliacao();
+  avaliacoesSelecionadas: Avaliacao[];
   avaliacoesRecebidas: Avaliacao[];
   cols: any[];
 
@@ -36,7 +42,7 @@ export class ListarAvaliacaoComponent implements OnInit {
     this.iniciarTabela();
   }
 
-  iniciarTabela(){
+  iniciarTabela() {
     this.cols = [
       { field: 'id', header: 'Código' },
       { field: 'tituloProva', header: 'Título' },
@@ -47,29 +53,26 @@ export class ListarAvaliacaoComponent implements OnInit {
     ];
   }
 
-  temPermissao(){
+  temPermissao() {
     return this.authService.getUsuario().admin
   }
 
   atualizarLista(event = null): void {
-    console.log('chamou')
-
     const pageable = new Pageable<Avaliacao>(0, 20);
 
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
-      pageable.setSort(1, 'titulo');
+      pageable.setSort(1, 'id');
     }
-
-    console.log(this.filtro)
 
     this.avaliacaoService.index(this.filtro, pageable)
       .subscribe(
         response => {
           this.avaliacoesRecebidas = response.content;
-          this.totalElementos = response.numberOfElements;
-          this.avaliacaoSelecionada = new Avaliacao();
+          this.totalElementos = response.totalElements;
+          this.avaliacoesSelecionadas = [];
+          this.resultadoAvaliacao();
         },
         () => {
           this.alert.montarAlerta('error', 'Erro', 'Erro ao listar avaliações');
@@ -77,23 +80,59 @@ export class ListarAvaliacaoComponent implements OnInit {
       );
   }
 
+  resultadoAvaliacao(): void {
+    this.avaliacoesRecebidas.forEach(element => {
+      let prova = new Prova();
+      this.provaService.show(element.idProva).subscribe(
+        response => {
+          prova = response;
+          element.situacao = element.aproveitamento ? ((element.aproveitamento >= prova.percentual) ? 'Aprovado' : 'Reprovado') : ''
+        },
+        erro => {
+          this.alert.montarAlerta('error', 'Erro', 'Erro ao buscar prova')
+        })
+    })
+  }
+
   isOneSelected(): boolean {
-    return this.avaliacaoSelecionada != null;
+    return this.avaliacoesSelecionadas != null;
+  }
+
+  deleteAvaliacao() {
+    this.confirmationService.confirm({
+      message: 'Você tem certeza?',
+      accept: () => {
+        this.avaliacoesSelecionadas.forEach((element) =>
+          this.avaliacaoService.destroy(element.id).subscribe({
+            next: () => {
+              this.atualizarLista();
+            },
+            error: erro => {
+              this.alert.montarAlerta(
+                'error',
+                'Erro',
+                erro.error.message
+              )
+            }
+          })
+        );
+      },
+    })
   }
 
   cadastrar(): void {
     this.viewOnly = false;
-    this.avaliacaoSelecionada = null;
+    this.avaliacoesSelecionadas = [];
     this.cadastroAvaliacao.abrirDialog(null);
   }
 
   editar(): void {
     this.viewOnly = false;
-    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
+    this.cadastroAvaliacao.abrirDialog(this.avaliacoesSelecionadas[0].id);
   }
 
   exibir(): void {
     this.viewOnly = true;
-    this.cadastroAvaliacao.abrirDialog(this.avaliacaoSelecionada.id);
+    this.cadastroAvaliacao.abrirDialog(this.avaliacoesSelecionadas[0].id);
   }
 }

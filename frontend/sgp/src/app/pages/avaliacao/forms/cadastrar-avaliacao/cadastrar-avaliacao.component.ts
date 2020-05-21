@@ -39,14 +39,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(): void {
-    this.carregarAutoComplete();
     if (this.viewOnly) {
       this.avaliacaoForm.disable();
     }
   }
 
   ngOnInit(): void {
-    this.iniciarTitulo();
     this.iniciarForm();
     this.carregarFiltroCandidato();
     this.carregarFiltroProva();
@@ -56,9 +54,9 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   carregarAutoComplete() {
-    if(this.avaliacao.id) {
-      this.candidatosFiltrados.forEach(element => { if(element.value == this.avaliacao.idCandidato){this.candidato = element}})
-      this.provasFiltradas.forEach(element => { if(element.value == this.avaliacao.idProva){this.prova = element}})
+    if (this.avaliacao.id) {
+      this.candidato = this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
+      this.prova = this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
     }
   }
 
@@ -117,20 +115,22 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   buscarAvaliacao(id: number) {
-    if(id){
+    if (id) {
       this.avaliacaoService.show(id)
-        .pipe(
-          finalize(() => this.exibir = true)
-        )
-        .subscribe( response => {
+        .subscribe(response => {
           this.avaliacao = response;
           this.carregarAutoComplete();
-          this.iniciarTitulo();
         },
-        erro => {
-          this.alertService.montarAlerta('error', 'Erro', erro.message)
-        })
+          erro => {
+            this.alertService.montarAlerta('error', 'Erro', erro.message)
+          })
     }
+    this.iniciarDialog();
+  }
+
+  iniciarDialog() {
+    this.exibir = true;
+    this.iniciarTitulo();
   }
 
   abrirDialog(id: number): void {
@@ -139,6 +139,7 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   fecharDialog(): void {
     this.avaliacaoAtualizada.emit();
+    this.viewOnly = false;
     this.exibir = false;
   }
 
@@ -200,13 +201,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       })
       )
       .subscribe(response => {
-        console.log(response)
         this.candidatosFiltrados = response;
       })
   }
 
   updateProvasFiltradas(event): void {
-    this.provaService.findByTitulo(event.query)
+    this.provaService.findByTituloFiltro(event.query)
       .pipe(catchError(error => {
         this.alertService.montarAlerta('error', 'Erro', error.message);
         return error;

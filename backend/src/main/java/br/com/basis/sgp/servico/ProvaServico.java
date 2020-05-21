@@ -18,9 +18,11 @@ public interface ProvaServico {
 
     public ProvaDTO exibirPorId(Long id);
 
+    public ProvaListagemDTO buscarPorTitulo(String titulo);
+
     public ProvaDTO salvar(ProvaDTO provaDTO);
 
-    public List<SelectDTO> autocomplete(String query);
+    public List<SelectDTO> filtrarAutocomplete(String query);
 
     public void excluir(Long id);
 

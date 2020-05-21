@@ -42,6 +42,11 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
+    public ProvaListagemDTO buscarPorTitulo(String titulo) {
+        return provaListagemMapper.toDto(buscarTitulo(titulo));
+    }
+
+    @Override
     public ProvaDTO salvar(ProvaDTO provaDTO) {
         Prova prova = provaMapper.toEntity(provaDTO);
         provaRepositorio.save(prova);
@@ -49,7 +54,7 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     @Override
-    public List<SelectDTO> autocomplete(String query) {
+    public List<SelectDTO> filtrarAutocomplete(String query) {
         return provaDropdownMapper.toDto(provaRepositorio.findAllByTituloContainsIgnoreCase(query));
     }
 
@@ -60,8 +65,12 @@ public class ProvaServicoImpl implements ProvaServico {
 
     @Override
     public List<SelectDTO> listarProvaDropDown() {
-        List<Prova> provas = provaRepositorio.findAll();
-        return provaDropdownMapper.toDto(provas);
+        return provaDropdownMapper.toDto(provaRepositorio.findAll());
+    }
+
+    private Prova buscarTitulo(String titulo) {
+        return provaRepositorio.findByTitulo(titulo)
+                .orElseThrow(() -> new RegraNegocioException("Prova inexistente"));
     }
 
     @Override
@@ -70,9 +79,8 @@ public class ProvaServicoImpl implements ProvaServico {
     }
 
     private Prova buscarPorId(Long id){
-        Prova prova = provaRepositorio.findById(id)
-                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));
-        return prova;
+        return provaRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Prova inválida"));    
     }
 
 }

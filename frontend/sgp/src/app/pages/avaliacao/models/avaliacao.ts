@@ -7,4 +7,6 @@ export class Avaliacao extends Resource {
   nomeCandidato: string;
   tituloProva: string;
   idProva: number;
+  aproveitamento: number;
+  situacao: string;
 }

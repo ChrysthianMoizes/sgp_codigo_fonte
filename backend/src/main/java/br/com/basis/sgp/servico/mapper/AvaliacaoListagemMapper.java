@@ -15,6 +15,8 @@ public interface AvaliacaoListagemMapper extends EntityMapper<AvaliacaoListagemD
 
     @Override
     @Mapping(source = "candidato.nome", target = "nomeCandidato")
+    @Mapping(source = "candidato.id", target = "idCandidato")
     @Mapping(source = "prova.titulo", target = "tituloProva")
+    @Mapping(source = "prova.id", target = "idProva")
     AvaliacaoListagemDTO toDto(Avaliacao avaliacao);
 }

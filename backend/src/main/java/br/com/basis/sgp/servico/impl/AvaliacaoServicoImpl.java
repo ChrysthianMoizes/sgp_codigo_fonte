@@ -1,8 +1,6 @@
 package br.com.basis.sgp.servico.impl;
 
 import br.com.basis.sgp.dominio.Avaliacao;
-import br.com.basis.sgp.dominio.Prova;
-import br.com.basis.sgp.dominio.Usuario;
 import br.com.basis.sgp.repositorio.AvaliacaoRepositorio;
 import br.com.basis.sgp.servico.AvaliacaoServico;
 import br.com.basis.sgp.servico.ProvaServico;
@@ -10,6 +8,7 @@ import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.AvaliacaoCadastroDTO;
 import br.com.basis.sgp.servico.dto.AvaliacaoListagemDTO;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+
 import br.com.basis.sgp.servico.dto.UsuarioDetalhadoDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.AvaliacaoFiltro;
@@ -19,10 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,10 +30,12 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
     private final AvaliacaoCadastroMapper avaliacaoCadastroMapper;
     private final AvaliacaoRepositorio avaliacaoRepositorio;
     private final UsuarioServico usuarioServico;
+
     private final ProvaServico provaServico;
 
     @Override
     public AvaliacaoListagemDTO salvar(AvaliacaoCadastroDTO avaliacaoCadastroDTO) {
+
         Avaliacao avaliacao = avaliacaoCadastroMapper.toEntity(avaliacaoCadastroDTO);
         UsuarioDetalhadoDTO candidato = usuarioServico.obterPorId(avaliacaoCadastroDTO.getIdCandidato());
         avaliacao.getCandidato().setNome(candidato.getNome());
@@ -48,7 +47,7 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
     }
 
     @Override
-    public Page<AvaliacaoListagemDTO> listar(@ModelAttribute AvaliacaoFiltro filtro, Pageable pageable) {
+    public Page<AvaliacaoListagemDTO> listar(AvaliacaoFiltro filtro, Pageable pageable) {
         Page<Avaliacao> avaliacoes = avaliacaoRepositorio.findAll(filtro.filter(), pageable);
         return avaliacoes.map(avaliacaoMapper::toDto);
     }
@@ -58,7 +57,6 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
         return avaliacaoCadastroMapper.toDto(buscarPorId(id));
     }
 
-
     @Override
     public void excluir(Long id) {
         Avaliacao avaliacao = buscarPorId(id);
@@ -67,6 +65,9 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
             throw new RegraNegocioException("Avaliação tem aproveitamento cadastrado.");
         }
         avaliacaoRepositorio.deleteById(id);
+
+        avaliacaoRepositorio.delete(avaliacao);
+
     }
 
     private Avaliacao buscarPorId(Long id) {
@@ -75,7 +76,4 @@ public class AvaliacaoServicoImpl implements AvaliacaoServico {
         return avaliacao;
     }
 
-    private boolean verificarAproveitamento() {
-        return true;
-    }
 }
