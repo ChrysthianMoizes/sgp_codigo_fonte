@@ -1,6 +1,7 @@
 package br.com.basis.sgp.servico;
 
 import br.com.basis.sgp.servico.dto.ProvaDTO;
+import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
 import br.com.basis.sgp.servico.dto.ProvaListagemDTO;
 import br.com.basis.sgp.servico.dto.SelectDTO;
 import br.com.basis.sgp.servico.filtro.ProvaFiltro;
@@ -15,7 +16,7 @@ public interface ProvaServico {
 
     public ProvaDTO exibirPorId(Long id);
 
-    public ProvaListagemDTO buscarPorTitulo(String titulo);
+    public ProvaDetalhadaDTO exibirProvaDetalhada(Long id);
 
     public ProvaDTO salvar(ProvaDTO provaDTO);
 

@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 public class SgpApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SgpApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SgpApplication.class, args);
+    }
 
 }

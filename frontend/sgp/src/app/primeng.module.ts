@@ -12,6 +12,8 @@ import {
   AutoCompleteModule,
   PasswordModule,
   InputMaskModule,
+  TooltipModule,
+  KeyFilterModule,
 } from 'primeng';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -39,7 +41,9 @@ const modules = [
   RadioButtonModule,
   AutoCompleteModule,
   PasswordModule,
-  InputMaskModule
+  InputMaskModule,
+  TooltipModule,
+  KeyFilterModule
 ];
 
 

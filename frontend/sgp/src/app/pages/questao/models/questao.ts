@@ -1,4 +1,4 @@
-import { Resource } from 'src/app/models/resource.model';
+import {Resource} from 'src/app/models/resource.model';
 
 export class Questao extends Resource {
   descricao: string;
@@ -8,6 +8,6 @@ export class Questao extends Resource {
   alternativa4: string;
   alternativa5: string;
   resposta: number;
-  // idSenioridade: number;
-  // idTipoQuestao: number;
+  idSenioridade: number;
+  idTipoQuestao: number;
 }
