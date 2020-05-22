@@ -14,7 +14,7 @@
     <form [formGroup]="formulario">
       <div class="card-body">
         <span class="ui-float-label" style="padding-top: 12px;">
-          <input maxlength="10" autocomplete="off" formControlName="titulo" [(ngModel)]="provaDialog.titulo"
+          <input maxlength="100" autocomplete="off" formControlName="titulo" [(ngModel)]="provaDialog.titulo"
             id="float-input1" pInputText/>
           <label for="float-input1" style="margin-top: 4px;">
             Título
@@ -22,7 +22,7 @@
         </span>
         <span class="ui-float-label" style="margin-top: 12px;">
           <input maxlength="2" autocomplete="off" formControlName="percentual"
-           [(ngModel)]="provaDialog.percentual" id="float-input" pInputText/>
+           [(ngModel)]="provaDialog.percentual" id="float-input" pInputText pKeyFilter="num"/>
           <label for="float-input" style="margin-top: 4px;">
             Percentual de Aprovação
           </label>
