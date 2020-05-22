@@ -38,14 +38,8 @@ export class NavBarComponent implements OnInit {
     this.authService.removerSessao();
   }
 
-  verificaPermissao(permissaoMenu: boolean): boolean {
-    if (
-      permissaoMenu === this.authService.temPermissao() ||
-      permissaoMenu === false
-    ) {
-      return true;
-    }
-    return false;
+  isAdmin(): boolean {
+    return this.authService.getUsuario().admin;
   }
 
   onClickHamburguerMenu(): void {

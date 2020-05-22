@@ -1,7 +1,7 @@
 package br.com.basis.sgp.servico.impl;
 
-import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.dominio.Usuario;
+import br.com.basis.sgp.dominio.enumeration.TipoUsuarioEnum;
 import br.com.basis.sgp.repositorio.UsuarioRepositorio;
 import br.com.basis.sgp.servico.UsuarioServico;
 import br.com.basis.sgp.servico.dto.SelectDTO;
@@ -12,8 +12,8 @@ import br.com.basis.sgp.servico.dto.UsuarioListagemDTO;
 import br.com.basis.sgp.servico.exception.RegraNegocioException;
 import br.com.basis.sgp.servico.filtro.UsuarioFiltro;
 import br.com.basis.sgp.servico.mapper.UsuarioCadastroMapper;
-import br.com.basis.sgp.servico.mapper.UsuarioDropdownMapper;
 import br.com.basis.sgp.servico.mapper.UsuarioDetalhadoMapper;
+import br.com.basis.sgp.servico.mapper.UsuarioDropdownMapper;
 import br.com.basis.sgp.servico.mapper.UsuarioEdicaoMapper;
 import br.com.basis.sgp.servico.mapper.UsuarioListagemMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -48,7 +47,7 @@ public class UsuarioServicoImpl implements UsuarioServico {
     private String TOKEN_USER;
 
     @Override
-    public Page<UsuarioListagemDTO> listarCandidatos(@ModelAttribute UsuarioFiltro filtro, Pageable pageable) {
+    public Page<UsuarioListagemDTO> listarCandidatos(UsuarioFiltro filtro, Pageable pageable) {
         filtro.setAdmin(TipoUsuarioEnum.CANDIDATO.getCodigo());
         Page<Usuario> usuarios = usuarioRepositorio.findAll(filtro.filter(), pageable);
         return usuarios.map(usuarioListagemMapper::toDto);
@@ -60,10 +59,15 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     @Override
+    public List<SelectDTO> filtrarAutocomplete(String query) {
+        return usuarioDropdownMapper.toDto(usuarioRepositorio.findAllByAdminAndNomeContainsIgnoreCase(TipoUsuarioEnum.CANDIDATO.getCodigo(), query));
+    }
+
+    @Override
     public UsuarioDetalhadoDTO logar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioRepositorio
                 .findByEmailAndSenha(usuarioCadastroDTO.getEmail(), usuarioCadastroDTO.getSenha())
-                .orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
+                .orElseThrow(() -> new RegraNegocioException("Email e/ou senha incorreto(s)."));
         return usuarioDetalhadoMapper.toDto(usuario);
     }
 
@@ -79,7 +83,6 @@ public class UsuarioServicoImpl implements UsuarioServico {
     public UsuarioDetalhadoDTO salvar(UsuarioCadastroDTO usuarioCadastroDTO) {
         Usuario usuario = usuarioCadastroMapper.toEntity(usuarioCadastroDTO);
 
-        UsuarioEdicaoDTO usuarioEdicaoDTO = usuarioEdicaoMapper.toDto(usuario);
 
         validarUsuario(usuario);
 
@@ -91,9 +94,9 @@ public class UsuarioServicoImpl implements UsuarioServico {
 
     @Override
     public UsuarioDetalhadoDTO alterar(UsuarioEdicaoDTO usuarioEdicaoDTO) {
+
         Usuario usuario = preencherEdicao(usuarioEdicaoDTO);
 
-        validarUsuario(usuario);
 
         usuario = usuarioRepositorio.save(usuario);
 
@@ -127,14 +130,18 @@ public class UsuarioServicoImpl implements UsuarioServico {
     }
 
     private Usuario obterUsuario(Long id) {
-        Usuario usuario = usuarioRepositorio.findById(id)
+        return usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RegraNegocioException("Usuário inválido"));
-        return usuario;
     }
 
     private Usuario preencherEdicao(UsuarioEdicaoDTO usuarioEdicaoDTO){
-        Usuario usuario = obterUsuario(usuarioEdicaoDTO.getId());
 
+        Usuario usuario = usuarioEdicaoMapper.toEntity(usuarioEdicaoDTO);
+
+        if(verificarEmail(usuario)){
+            throw new RegraNegocioException("Email existente");
+        }
+        usuario = obterUsuario(usuarioEdicaoDTO.getId());
         usuario.setNome(usuarioEdicaoDTO.getNome());
         usuario.setEmail(usuarioEdicaoDTO.getEmail());
         if(usuarioEdicaoDTO.getSenha() != null && !usuarioEdicaoDTO.getSenha().isEmpty()){

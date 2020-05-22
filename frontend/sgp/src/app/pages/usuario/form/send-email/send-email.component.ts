@@ -1,32 +1,39 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/components/alert/alert.service';
 
 @Component({
   selector: 'app-send-email',
   templateUrl: './send-email.component.html',
   styleUrls: ['./send-email.component.css'],
 })
-export class SendEmailComponent {
-  constructor(private router: Router, private alerts: AlertService) {}
+export class SendEmailComponent implements OnInit {
 
-  email = new FormControl('', [
-    Validators.required,
-    Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
-  ]);
-  @Input() label: string;
-  @Output() sendEmail = new EventEmitter();
+  @Output() enviarEmail = new EventEmitter();
+  @Input() titulo = "Enviar email"
+  formulario: FormGroup;
+  email = "";
 
-  toHome(): void {
-    this.router.navigate(['login']);
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+    this.iniciarFormulario();
   }
 
-  send(): void {
-    if (!this.email.invalid) {
-      this.sendEmail.emit(this.email.value);
-    } else {
-      this.alerts.montarAlerta('error', 'Erro', 'Formato de email inválido');
-    }
+  iniciarFormulario(): void {
+    this.formulario = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  enviar(): void {
+    this.formulario.valid && this.enviarEmail.emit(this.email);
+  }
+
+  cancelar(): void {
+    this.router.navigate(['login']);
   }
 }

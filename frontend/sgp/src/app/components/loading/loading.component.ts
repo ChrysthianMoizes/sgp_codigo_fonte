@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoadingService } from './loading.service';
 
-const spinnerMessage = 'Loading...';
+const spinnerMessage = 'Carregando...';
 
 @Component({
   selector: 'app-loading',

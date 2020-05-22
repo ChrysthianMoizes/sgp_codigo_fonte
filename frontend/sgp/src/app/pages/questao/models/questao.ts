@@ -1,4 +1,4 @@
-import { Resource } from 'src/app/models/resource.model';
+import {Resource} from 'src/app/models/resource.model';
 
 export class Questao extends Resource {
   descricao: string;

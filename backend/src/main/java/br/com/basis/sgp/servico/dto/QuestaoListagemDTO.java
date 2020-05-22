@@ -8,7 +8,7 @@ import lombok.Setter;
 public class QuestaoListagemDTO {
 
     private Long id;
-    private String titulo;
-    private String descSenioridade;
-    private String descTipo;
+    private String descricao;
+    private String descricaoSenioridade;
+    private String descricaoTipo;
 }
