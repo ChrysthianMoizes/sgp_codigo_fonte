@@ -24,7 +24,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   questaoFiltro: QuestaoFiltro;
   pageable: Pageable<Questao>;
   pageQuestoes:  Pageable<Questao>;
-  origemQuestoes: Questao[];
+  origemQuestoes: Questao[] = [];
   destinoQuestoes:  Questao[];
   totalDeQuestoes = 0;
 
@@ -43,14 +43,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
 
     this.iniciarForm();
 
-    this.questaoFiltro = new QuestaoFiltro();
-    this.pageable = new Pageable(0, 20);
-
-    this.questaoService.listarQuestoesDropdown(this.questaoFiltro, this.pageable).subscribe((questoes: Pageable<Questao>) => {
-      this.origemQuestoes = questoes.content;
-      this.destinoQuestoes = [];
-      this.totalDeQuestoes = this.pageQuestoes.totalElements;
-    });
+    this.preencherQuestoesDropDown();
 
 
     this.formulario = this.formBuilder.group({
@@ -112,6 +105,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
         this.loadingService.deactivate();
         this.salvar.emit(prova),
         this.exibir = false;
+        this.resetarHeader();
       },
       (err) => {
         this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova, verifique os campos');
@@ -131,6 +125,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
         this.loadingService.deactivate();
         this.salvar.emit(prova),
         this.exibir = false;
+        this.resetarHeader();
       },
       (err) => {
         this.alert.montarAlerta('error', 'Error!', 'Erro ao atualizar a Prova');
@@ -142,14 +137,17 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   abrirDialog(prova: Prova, apenasVisualizar = false): void {
     if(prova !== null && apenasVisualizar !== true ){
       this.edicao = true;
-      this.provaDialog = Object.assign({}, prova);
+      this.preencherProva(prova);
+      this.preencherQuestoesDropDown();
     }
     else if(apenasVisualizar == true) {
       this.visualizando = true;
-      this.provaDialog = Object.assign({}, prova);
+      this.preencherProva(prova);
     }
     else{
       this.provaDialog = new Prova();
+      this.preencherQuestoesDropDown();
+      this.destinoQuestoes = [];
     }
     this.apenasVisualizar = apenasVisualizar;
     this.exibir = true;
@@ -179,5 +177,26 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
 
   onCancel(): void {
     this.exibir = false;
+    this.resetarHeader();
+  }
+
+  resetarHeader(){
+    this.edicao = false;
+    this.visualizando = false;
+  }
+
+  preencherQuestoesDropDown(){
+    this.questaoFiltro = new QuestaoFiltro();
+    this.pageable = new Pageable(0, 20);
+
+    this.questaoService.listarQuestoesDropdown(this.questaoFiltro, this.pageable).subscribe((questoes: Pageable<Questao>) => {
+      this.origemQuestoes = questoes.content;
+      this.totalDeQuestoes = questoes.totalElements;
+    });
+  }
+
+  preencherProva(prova: Prova){
+    this.provaDialog = Object.assign({}, prova);
+    this.destinoQuestoes = this.provaDialog.questoes;
   }
 }
