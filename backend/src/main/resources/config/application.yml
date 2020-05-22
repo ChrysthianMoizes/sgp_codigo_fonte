@@ -30,5 +30,5 @@ server:
     port: 8080
 
 app:
-    TOKEN_ADMIN: pindaiba
-    TOKEN_USER: abacate
+    TOKEN_ADMIN: 4dm1n
+    TOKEN_USER: us3r
