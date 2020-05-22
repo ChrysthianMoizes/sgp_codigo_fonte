@@ -259,4 +259,10 @@ public class UsuarioRecursoTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void filtrarDropDown() throws Exception{
+        Usuario usuario = usuarioBuilder.construir();
+        mockMvc.perform(get(API_USUARIO + "/filtro/" + usuario.getNome()))
+                .andExpect(status().isOk());
+    }
 }
