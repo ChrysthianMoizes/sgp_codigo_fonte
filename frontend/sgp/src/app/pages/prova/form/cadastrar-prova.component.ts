@@ -172,7 +172,6 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
       }
     });
     return reduced;
-    // return arr.filter((questao, i) => arr.(questao.value) === arr[i]);
   }
 
   onMoveToSource(): void {
