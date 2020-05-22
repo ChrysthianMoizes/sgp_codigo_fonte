@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Prova } from '../models/prova';
-import { SelectItem } from 'primeng';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { ResourceService } from 'src/app/services/resource.service';
 
 @Injectable({
   providedIn: 'root',
 })
+
+
+
 export class ProvaService extends ResourceService<Prova>{
 
   constructor(private http: HttpClient) {
-    super(http, '/api/provas')
+    super(http, '/api/provas');
   }
+
+  private provas: Prova[];
 
   buscaProva(): Observable<any> {
     return null;
