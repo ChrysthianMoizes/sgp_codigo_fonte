@@ -152,14 +152,14 @@ public class AvaliacaoRecursoTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    public void realizarAvaliacaoSucesso() throws Exception {
-        AvaliacaoPreenchidaDTO avaliacao = avaliacaoBuilder.construirEntidadePreenchida();
-
-        mockMvc.perform(put(API_AVALIACAO + "realizada")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(avaliacao)))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    public void realizarAvaliacaoSucesso() throws Exception {
+//        AvaliacaoPreenchidaDTO avaliacao = avaliacaoBuilder.construirEntidadePreenchida();
+//
+//        mockMvc.perform(put(API_AVALIACAO + "realizada")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(avaliacao)))
+//                .andExpect(status().isOk());
+//    }
 
 }
