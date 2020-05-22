@@ -1,0 +1,19 @@
+spring:
+    h2:
+        console:
+            enabled: true
+            path: /h2
+    datasource:
+        url: jdbc:h2:mem:sgp
+        username: sa
+        password:
+        driverClassName: org.h2.Driver
+    liquibase:
+        change-log: classpath:/db/master.xml
+
+server:
+    port: 8080
+
+app:
+    TOKEN_ADMIN: pindaiba
+    TOKEN_USER: abacate

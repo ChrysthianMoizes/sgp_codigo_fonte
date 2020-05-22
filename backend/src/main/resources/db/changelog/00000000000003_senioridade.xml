@@ -6,7 +6,7 @@
     <changeSet id="3" author="maxson.zucolotto">
         <createTable tableName="SENIORIDADE" remarks="Tabela de níveis de senioridade">
             <column name="ID" type="number" remarks="Campo de indentificação">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TIPO_QUESTAO"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SENIORIDADE"/>
             </column>
             <column name="DESCRICAO" type="varchar(80)" remarks="Descrição">
                 <constraints nullable="false"/>
