@@ -7,18 +7,22 @@ import br.com.basis.sgp.repositorio.QuestaoRepositorio;
 import br.com.basis.sgp.servico.QuestaoServico;
 import br.com.basis.sgp.servico.dto.QuestaoDTO;
 import br.com.basis.sgp.servico.mapper.QuestaoMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
 @Component
-@RequiredArgsConstructor
 public class QuestaoBuilder extends ConstrutorDeEntidade<Questao> {
 
-    private final QuestaoRepositorio questaoRepositorio;
-    private final QuestaoServico questaoServico;
-    private final QuestaoMapper questaoMapper;
+    @Autowired
+    private  QuestaoRepositorio questaoRepositorio;
+
+    @Autowired
+    private QuestaoServico questaoServico;
+
+    @Autowired
+    private QuestaoMapper questaoMapper;
 
     @Override
     protected Questao construirEntidade() {
