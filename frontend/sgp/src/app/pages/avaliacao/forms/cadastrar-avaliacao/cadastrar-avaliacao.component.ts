@@ -16,8 +16,8 @@ import { SelectItem } from 'primeng';
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
-  @Input() viewOnly = false;
   @Output() avaliacaoAtualizada = new EventEmitter();
+  @Input() viewOnly = false;
 
   avaliacaoForm: FormGroup;
   avaliacao: Avaliacao = new Avaliacao();
@@ -55,8 +55,8 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
   carregarAutoComplete() {
     if (this.avaliacao.id) {
-      this.candidato = this.candidatosFiltrados.find(element => { element.value == this.avaliacao.idCandidato})
-      this.prova = this.provasFiltradas.find(element => { element.value == this.avaliacao.idProva})
+      this.candidato = this.candidatosFiltrados.find(element => element.value === this.avaliacao.idCandidato)
+      this.prova = this.provasFiltradas.find(element => element.value === this.avaliacao.idProva)
     }
   }
 
@@ -124,21 +124,32 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
           erro => {
             this.alertService.montarAlerta('error', 'Erro', erro.message)
           })
+    } else {
+      this.avaliacao = new Avaliacao();
     }
     this.iniciarDialog();
   }
 
   iniciarDialog() {
-    this.exibir = true;
+    this.carregarAutoComplete();
     this.iniciarTitulo();
+    this.exibir = true;
   }
 
   abrirDialog(id: number): void {
+    if (this.viewOnly) {
+      this.avaliacaoForm.disable();
+    }
+    else {
+      this.avaliacaoForm.enable();
+    }
     this.buscarAvaliacao(id);
   }
 
   fecharDialog(): void {
     this.avaliacaoAtualizada.emit();
+    this.candidato = null;
+    this.prova = null;
     this.viewOnly = false;
     this.exibir = false;
   }
@@ -154,11 +165,13 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       )
       .subscribe(
         () => {
-          this.alertService.montarAlerta(
-            'success',
-            'Sucesso!',
-            'Prova cadastrada com sucesso!'
-          );
+          if (!this.viewOnly) {
+            this.alertService.montarAlerta(
+              'success',
+              'Sucesso!',
+              'Prova cadastrada com sucesso!'
+            );
+          }
           this.avaliacao = new Avaliacao();
           this.fecharDialog();
         }
@@ -177,11 +190,13 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       )
       .subscribe(
         () => {
-          this.alertService.montarAlerta(
-            'success',
-            'Sucesso!',
-            'Prova atualizada com sucesso!'
-          );
+          if (!this.viewOnly) {
+            this.alertService.montarAlerta(
+              'success',
+              'Sucesso!',
+              'Prova cadastrada com sucesso!'
+            );
+          }
           this.avaliacaoForm.reset();
           this.fecharDialog();
         }

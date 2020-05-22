@@ -155,4 +155,5 @@ public class UsuarioServicoImpl implements UsuarioServico {
         Usuario usuario = obterUsuario(id);
         usuarioRepositorio.delete(usuario);
     }
+
 }

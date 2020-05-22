@@ -1,5 +1,4 @@
 package br.com.basis.sgp.web.rest;
-
 import br.com.basis.sgp.servico.ProvaServico;
 import br.com.basis.sgp.servico.dto.ProvaDTO;
 import br.com.basis.sgp.servico.dto.ProvaDetalhadaDTO;
@@ -46,6 +45,7 @@ public class ProvaRecurso {
     @GetMapping("/avaliacoes/{id}")
     public ResponseEntity<ProvaDetalhadaDTO> visualizarProvaDetalhada(@PathVariable("id") Long id){
         return ResponseEntity.ok(provaServico.exibirProvaDetalhada(id));
+
     }
 
     @GetMapping("/dropdown")
@@ -71,5 +71,4 @@ public class ProvaRecurso {
         provaServico.excluir(id);
         return ResponseEntity.ok(null);
     }
-
 }
