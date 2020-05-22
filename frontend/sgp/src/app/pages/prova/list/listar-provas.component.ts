@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService } from 'primeng';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { AlertService } from '../../../components/alert/alert.service';
-import { LoadingService } from '../../../components/loading/loading.service';
 import { ProvaService } from '../service/prova.service';
 import { Prova } from '../models/prova';
 import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
 import { Pageable } from 'src/app/util/pageable-request';
 import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 @Component({
   selector: 'app-listar-provas',
   templateUrl: './listar-provas.component.html',
@@ -38,7 +38,8 @@ export class ListarProvasComponent implements OnInit {
   constructor(
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class ListarProvasComponent implements OnInit {
 
   atualizarLista(event = null): void {
 
+    this.loadingService.activate();
+
     const pageable = new Pageable<Prova>(0, 20);
 
     if (event) {
@@ -70,8 +73,10 @@ export class ListarProvasComponent implements OnInit {
         this.notFilteredListProvas = response.content;
         this.totalDeElementos = response.totalElements;
         this.selectedProvas = [];
+        this.loadingService.deactivate();
       },
       (error) => {
+        this.loadingService.deactivate();
         this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar provas');
       }
     );

@@ -23,7 +23,6 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   edicao: boolean;
   questaoFiltro: QuestaoFiltro;
   pageable: Pageable<Questao>;
-
   pageQuestoes:  Pageable<Questao>;
   origemQuestoes: Questao[];
   destinoQuestoes:  Questao[];
@@ -99,19 +98,18 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   }
 
   salvarProva(prova: Prova): void {
-    console.log(this.destinoQuestoes)
     this.provaService.create({
       ...prova,
       questoes: this.destinoQuestoes
     }).subscribe(
       () => {
-        this.loadingService.deactivate();
         this.formulario.reset();
         this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova cadastrada com suscesso!'
         );
+        this.loadingService.deactivate();
         this.salvar.emit(prova),
         this.exibir = false;
       },
@@ -124,13 +122,13 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
   atualizarProva(prova: Prova): void {
     this.provaService.update(prova).subscribe(
       () => {
-        this.loadingService.deactivate();
         this.formulario.reset();
         this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova atualizada com suscesso!'
         );
+        this.loadingService.deactivate();
         this.salvar.emit(prova),
         this.exibir = false;
       },
