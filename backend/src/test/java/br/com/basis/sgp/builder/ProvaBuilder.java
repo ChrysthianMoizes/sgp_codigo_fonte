@@ -40,7 +40,7 @@ public class ProvaBuilder extends ConstrutorDeEntidade<Prova> {
 
         Prova prova = new Prova();
 
-        List<Questao> questoes = new ArrayList<>();
+        List<Questao> questoes = new ArrayList();
 
         Questao questao = questaoBuilder.construir();
         questoes.add(questao);

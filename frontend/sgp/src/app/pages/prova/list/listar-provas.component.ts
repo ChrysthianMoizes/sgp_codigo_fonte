@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService } from 'primeng';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { AlertService } from '../../../components/alert/alert.service';
-import { LoadingService } from '../../../components/loading/loading.service';
 import { ProvaService } from '../service/prova.service';
 import { Prova } from '../models/prova';
 import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
-
+import { Pageable } from 'src/app/util/pageable-request';
+import { FiltroProva } from 'src/app/pages/prova/models/filtro-prova.model';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 @Component({
   selector: 'app-listar-provas',
   templateUrl: './listar-provas.component.html',
@@ -14,52 +15,116 @@ import { CadastrarProvaComponent } from '../form/cadastrar-prova.component';
   providers: [DialogService],
 })
 export class ListarProvasComponent implements OnInit {
-  provas: Prova[];
+
+  @ViewChild('VisualizarProva')
+  visualizarProva: CadastrarProvaComponent;
+
+
+  filtro = new FiltroProva();
   provasSelecionadas: Prova[];
   definicaoColunas: any[];
+  rows: number;
+  first: number = 0;
+  totalDeElementos = 1;
+  listProvas: Prova[];
+  notFilteredListProvas: Prova[];
+  provaSelecionada: Prova;
+  selectedProvas: Prova[] = [];
+  prova: Prova = new Prova();
 
-  @ViewChild('dialogProvaForm') dialogProvaForm: CadastrarProvaComponent;
+  lastPage = 0;
+  lastSize = 0;
 
   constructor(
     private provaService: ProvaService,
     private confirmationService: ConfirmationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit(): void {
-    this.provaService.index(null, null).subscribe((provas) => {
-      //
-    });
+    this.inicializarTabela();
+    this.atualizarLista(null);
+  }
 
+  inicializarTabela(): void {
     this.definicaoColunas = [
       { field: 'id', header: 'ID' },
       { field: 'titulo', header: 'Titulo' },
-      { field: 'percentualAprovacao', header: '% para aprovação' },
+      { field: 'percentual', header: '% para aprovação' },
     ];
   }
 
+  atualizarLista(event = null): void {
+
+    this.loadingService.activate();
+
+    const pageable = new Pageable<Prova>(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'titulo');
+    }
+
+    this.provaService.index(this.filtro, pageable).subscribe(
+      (response) => {
+        this.listProvas = response.content;
+        this.notFilteredListProvas = response.content;
+        this.totalDeElementos = response.totalElements;
+        this.selectedProvas = [];
+        this.loadingService.deactivate();
+      },
+      (error) => {
+        this.loadingService.deactivate();
+        this.alertService.montarAlerta('error', 'Erro', 'Erro ao listar provas');
+      }
+    );
+  }
+
+
   isOneSelected(): boolean {
-    return this.provasSelecionadas && this.provasSelecionadas.length === 1;
+    return this.selectedProvas && this.selectedProvas.length === 1;
   }
 
   isAtLeastOneSelected(): boolean {
-    return this.provasSelecionadas && this.provasSelecionadas.length >= 1;
+    return this.selectedProvas && this.selectedProvas.length >= 1;
   }
 
-  visualizarProva(): void {
-    this.dialogProvaForm.abrirDialog(3);
+  verProva(): void {
+    this.selectedProvas.forEach((prova) =>
+      this.provaService.show(prova.id).subscribe({
+        next: (provaCompleta) => {
+          this.visualizarProva.abrirDialog(provaCompleta, true);
+        },
+        error: () =>
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar prova. Tente novamente.'
+          ),
+      })
+    );
   }
 
   editarProva(): void {
-    this.dialogProvaForm.abrirDialog(2);
+    this.selectedProvas.forEach((prova) =>
+      this.provaService.show(prova.id).subscribe({
+        next: (provaCompleta) => {
+          this.visualizarProva.abrirDialog(provaCompleta, false);
+        },
+        error: () =>
+          this.alertService.montarAlerta(
+            'error',
+            'Erro',
+            'Erro ao buscar prova. Tente novamente.'
+          ),
+      })
+    );
   }
 
   cadastrarProva(): void {
-    this.dialogProvaForm.abrirDialog(1);
-  }
-
-  atualizarListagem(): void {
-    // atualizar a lista com o banco
+    this.visualizarProva.abrirDialog(null,false);
   }
 
   excluirProva(): void {
@@ -68,10 +133,14 @@ export class ListarProvasComponent implements OnInit {
       header: 'Excluir prova',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.alertService.montarAlerta(
-          'success',
-          'Sucesso!',
-          'Prova excluída com sucesso.'
+        this.selectedProvas.forEach((prova) =>
+          this.provaService.destroy(prova.id).subscribe({
+            next: () => {
+              this.atualizarLista();
+
+            },
+            error: () => this.alertService.montarAlerta('error', 'Erro', `Não foi possível excluir a prova ${prova.id}`)
+          })
         );
       },
     });

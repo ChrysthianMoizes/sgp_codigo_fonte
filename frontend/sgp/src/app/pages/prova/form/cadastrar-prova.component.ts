@@ -1,28 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/components/alert/alert.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
+import { Pageable } from 'src/app/util/pageable-request';
 import { Questao } from '../../questao/models/questao';
-import { QuestaoService } from '../../questao/service/questao.service';
+import { QuestaoFiltro } from '../../questao/models/questao-filtro.model';
+import { QuestaoListarService } from '../../questao/service/questao-listar.service';
 import { Prova } from '../models/prova';
 import { ProvaService } from '../service/prova.service';
-
+import { SelectItem } from 'primeng';
 @Component({
   selector: 'app-cadastrar-prova',
   templateUrl: './cadastrar-prova.component.html',
   styleUrls: ['./cadastrar-prova.component.css'],
 })
-export class CadastrarProvaComponent implements OnInit {
-  @Input() provaSendoEditada: Prova;
-  provaForm: FormGroup;
+export class CadastrarProvaComponent implements OnInit, OnChanges {
+  @Output() provaAtualizada = new EventEmitter();
+  @Input() apenasVisualizar = false;
+  @Output() salvar = new EventEmitter();
+  provaDialog: Prova = new Prova();
+  formulario: FormGroup;
   visualizando: boolean;
   edicao: boolean;
-  modoDialog: number;
-
-  @Output() retornarProva = new EventEmitter();
-
-  origemQuestoes: Questao[];
-  destinoQuestoes: Questao[];
+  questaoFiltro: QuestaoFiltro = new QuestaoFiltro();
+  pageQuestoes: Pageable<Questao>;
+  origemQuestoes: SelectItem[] = [];
+  destinoQuestoes: SelectItem[];
   totalDeQuestoes = 0;
 
   exibir = false;
@@ -30,96 +33,77 @@ export class CadastrarProvaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private provaService: ProvaService,
-    private alertService: AlertService,
+    private alert: AlertService,
     private loadingService: LoadingService,
-    private questaoService: QuestaoService
+    private questaoService: QuestaoListarService,
+
   ) { }
 
-  getTitulo(): string {
-    if (this.visualizando) {
-      return 'Visualizar Prova';
-    } else if (this.edicao) {
-      return 'Editar Prova';
-    } else {
-      return 'Cadastrar Prova';
-    }
+  ngOnInit() {
+
+    this.iniciarForm();
+
+    this.preencherQuestoesDropDown();
+
   }
 
-  get inputSize(): number {
-    const inputTitulo = this.provaForm.get('titulo').value;
-    return inputTitulo ? inputTitulo.length : 20;
+  ngOnChanges(): void {
+    this.iniciarForm();
   }
 
-  get isFormValid(): boolean {
-    const percentualDeAprovacao = +this.provaForm.get('percentualDeAprovacao')
-      .value;
-
-    return (
-      this.provaForm.valid &&
-      this.destinoQuestoes.length > 0 &&
-      percentualDeAprovacao <= 100 &&
-      percentualDeAprovacao >= 0
-    );
-  }
-
-  ngOnInit() { }
-
-  preencherFormParaEdicao(): void { }
-
-  abrirDialog(modo): void {
-    if (modo === 1) {
-      this.edicao = false;
-      this.visualizando = false;
-      this.exibir = true;
-      // novo
-    } else if (modo === 2) {
-      this.edicao = true;
-      this.visualizando = false;
-      this.exibir = true;
-      this.provaService.buscaProva().subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      this.provaForm.get('titulo').enable();
-      this.provaForm.get('percentualDeAprovacao').enable();
-      // ediçao
-    } else {
-      this.visualizando = true;
-      this.edicao = false;
-      this.exibir = true;
-      this.provaService.buscaProva().subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      this.provaForm.get('titulo').disable();
-      this.provaForm.get('percentualDeAprovacao').disable();
-      //visualizar
-    }
-    if (this.modoDialog > 1) {
-      this.provaService.buscaProva().subscribe((prova) => {
-        this.provaSendoEditada = prova;
-      });
-      this.preencherFormParaEdicao();
-      if (this.modoDialog === 3) {
-        this.provaForm.get('titulo').disable();
-        this.provaForm.get('percentualDeAprovacao').disable();
+  iniciarForm() {
+    this.formulario = this.formBuilder.group(
+      {
+        titulo: [this.provaDialog.titulo, [Validators.required]],
+        percentual: [this.provaDialog.percentual, [Validators.required]],
       }
+    );
+
+    if (this.provaDialog.id) {
+      this.formulario.controls['titulo'].setValidators([]);
+      this.formulario.controls['percentual'].setValidators([]);
     }
   }
 
-  cadastrarNovo(prova: Prova): void {
-    this.provaService.create(prova).subscribe(
+  validarForm() {
+
+    if (this.formulario.invalid) {
+      this.alert.montarAlerta('error', 'Erro', 'Preenchimento obrigatório dos campos: titulo e Percentual de Aprovação');
+      return;
+    }
+
+    this.verificaProva();
+
+  }
+
+  verificaProva() {
+    if (this.provaDialog.id) {
+      this.atualizarProva(this.provaDialog);
+    }
+    else {
+      this.salvarProva(this.provaDialog);
+    }
+  }
+
+  salvarProva(prova: Prova): void {
+    this.provaService.create({
+      ...prova,
+      questoes: this.destinoQuestoes
+    }).subscribe(
       () => {
-        this.loadingService.deactivate();
-        this.provaForm.reset();
-        this.alertService.montarAlerta(
+        this.formulario.reset();
+        this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova cadastrada com suscesso!'
         );
+        this.loadingService.deactivate();
+        this.salvar.emit(prova),
+          this.exibir = false;
+        this.resetarHeader();
       },
       (err) => {
-        this.alertService.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', 'Erro ao salvar a Prova, verifique os campos');
       }
     );
   }
@@ -127,44 +111,71 @@ export class CadastrarProvaComponent implements OnInit {
   atualizarProva(prova: Prova): void {
     this.provaService.update(prova).subscribe(
       () => {
-        this.loadingService.deactivate();
-        this.provaForm.reset();
-        this.alertService.montarAlerta(
+        this.formulario.reset();
+        this.alert.montarAlerta(
           'success',
           'Sucesso!',
           'Prova atualizada com suscesso!'
         );
+        this.loadingService.deactivate();
+        this.salvar.emit(prova),
+          this.exibir = false;
+        this.resetarHeader();
       },
       (err) => {
-        this.alertService.montarAlerta('error', 'Error!', err);
+        this.alert.montarAlerta('error', 'Error!', 'Erro ao atualizar a Prova');
       }
-    );
+    )
+      .add(() => this.loadingService.deactivate());
   }
 
-  onSubmit(): void {
-    this.loadingService.activate();
-    if (!this.provaSendoEditada) {
-      this.cadastrarNovo({
-        ...this.provaForm.value,
-        questoes: this.destinoQuestoes,
-      });
-    } else {
-      this.atualizarProva({
-        ...this.provaForm.value,
-        questoes: this.destinoQuestoes,
-        id: this.provaSendoEditada.id,
-      });
+  abrirDialog(prova: Prova, apenasVisualizar = false): void {
+    if (prova !== null && apenasVisualizar !== true) {
+      this.edicao = true;
+      this.preencherProva(prova);
+      this.preencherQuestoesDropDown();
     }
-    this.onCancel();
-
-    this.retornarProva.emit(null);
-    this.exibir = false;
+    else if (apenasVisualizar == true) {
+      this.visualizando = true;
+      this.preencherProva(prova);
+    }
+    else {
+      this.provaDialog = new Prova();
+      this.preencherQuestoesDropDown();
+      this.destinoQuestoes = [];
+    }
+    this.apenasVisualizar = apenasVisualizar;
+    this.exibir = true;
   }
 
-  paginate(event): void { }
+  definirHeader(): string {
+    if (this.visualizando) {
+      return 'Visualizar Prova';
+    }
+    else if (this.edicao) {
+      return 'Editar Prova';
+    }
+    else {
+      return 'Cadastrar Prova';
+    }
+  }
 
-  removeRepetitions(arr: any[]): Array<Questao> {
-    return arr.filter((questao, i) => arr.indexOf(questao) === i);
+  removeRepetitions(arr: any[]): Array<SelectItem> {
+    const reduced = [];
+    arr.forEach((item) => {
+      var duplicated = reduced.findIndex(redItem => {
+        return item.value == redItem.value;
+      }) > -1;
+
+      if (!duplicated) {
+        reduced.push(item);
+      }
+    });
+    return reduced;
+  }
+
+  onMoveToSource(): void {
+    this.origemQuestoes = this.removeRepetitions(this.origemQuestoes);
   }
 
   onMoveToTarget(): void {
@@ -172,7 +183,34 @@ export class CadastrarProvaComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.provaSendoEditada = undefined;
     this.exibir = false;
+    this.resetarHeader();
+  }
+
+  resetarHeader() {
+    this.edicao = false;
+    this.visualizando = false;
+  }
+
+  preencherQuestoesDropDown(event = null) {
+
+    const pageable = new Pageable<SelectItem>(0, 20);
+
+    if (event) {
+      pageable.setSize(event.rows ? event.rows : 20);
+      pageable.setPage(event.first ? event.first : 0);
+      pageable.setSort(1, 'descricao');
+    }
+
+    this.questaoService.listarQuestoesDropdown(this.questaoFiltro, pageable)
+      .subscribe((questoes: Pageable<SelectItem>) => {
+        this.origemQuestoes = questoes.content;
+        this.totalDeQuestoes = questoes.totalElements;
+      });
+  }
+
+  preencherProva(prova: Prova) {
+    this.provaDialog = Object.assign({}, prova);
+    this.destinoQuestoes = this.provaDialog.questoes;
   }
 }
