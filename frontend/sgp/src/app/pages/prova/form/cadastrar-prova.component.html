@@ -1,14 +1,8 @@
 <app-loading></app-loading>
 <app-alert></app-alert>
-<p-dialog
-  header="getTitulo()"
-  [(visible)]="exibir"
-  [style]="{ width: '85%' }"
-  [modal]="true"
->
-  <!-- <h1 style="margin-top: 0px;">{{ titulo }}</h1> -->
+<p-dialog [header]="definirHeader()" [style]="{ width: '85%' }" [modal]="true" [closable]="false" [(visible)]="exibir">
   <section style="margin-top: 14px;">
-    <div *ngIf="!visualizando" class="card-header">
+    <div *ngIf="!apenasVisualizar" class="card-header">
       <h3 style="margin-bottom: 0px;">Selecione as questões desejadas.</h3>
       <p style="margin-top: 4px;">
         As questões disponíveis são visíveis à esquerda. As questões
@@ -16,102 +10,60 @@
       </p>
     </div>
 
-    <div class="card-body">
-      <form [formGroup]="provaForm">
-        <span class="ui-float-label">
-          <input
-            [size]="inputSize"
-            formControlName="titulo"
-            id="float-input1"
-            pInputText
-          />
+    <form [formGroup]="formulario">
+      <div class="card-body">
+        <span class="ui-float-label" style="padding-top: 12px;">
+          <input maxlength="100" autocomplete="off" formControlName="titulo" [(ngModel)]="provaDialog.titulo"
+            id="float-input1" pInputText />
           <label for="float-input1" style="margin-top: 4px;">
             Título
           </label>
         </span>
         <span class="ui-float-label" style="margin-top: 12px;">
-          <input
-            [size]="inputSize"
-            autocomplete="off"
-            formControlName="percentualDeAprovacao"
-            id="float-input"
-            max="100"
-            min="0"
-            pInputText
-            type="number"
-          />
+          <input maxlength="2" autocomplete="off" formControlName="percentual" [(ngModel)]="provaDialog.percentual"
+            id="float-input" pInputText pKeyFilter="num" />
           <label for="float-input" style="margin-top: 4px;">
             Percentual de Aprovação
           </label>
         </span>
-        <div *ngIf="!visualizando" class="pick-with-pag">
-          <p-pickList
-            [source]="origemQuestoes"
-            [target]="destinoQuestoes"
-            sourceHeader="Questões Disponíveis"
-            targetHeader="Questões Selecionadas"
-            [responsive]="true"
-            dragdrop="true"
-            [sourceStyle]="{ height: '300px' }"
-            [targetStyle]="{ height: '300px' }"
-            [showSourceControls]="false"
-            [showTargetControls]="false"
-            (onMoveToTarget)="onMoveToTarget()"
-          >
-            <ng-template let-questao pTemplate="item">
+        <div *ngIf="!apenasVisualizar" class="pick-with-pag">
+          <p-pickList [source]="origemQuestoes" [target]="destinoQuestoes" dragdrop="true"
+            sourceHeader="Questões Disponíveis" targetHeader="Questões Selecionadas" [responsive]="true"
+            [sourceStyle]="{ height: '300px' }" [targetStyle]="{ height: '300px' }" [showSourceControls]="false"
+            [showTargetControls]="false" (onMoveToTarget)="onMoveToTarget()" (onMoveToSource)="onMoveToSource()">
+            <ng-template let-questao pTemplate="item" *ngIf="!apenasVisualizar">
               <div class="ui-helper-clearfix">
-                {{ questao.id }}
-                <div
-                  style="font-size: 14px; float: right; margin: 15px 5px 0 0;"
-                >
-                  {{ questao.descricao }}
+                {{ questao.value }}
+                <div style="font-size: 14px; float: right; margin: 15px 5px 0 0;">
+                  {{ questao.label }}
                 </div>
               </div>
             </ng-template>
           </p-pickList>
           <div class="paginator">
-            <p-paginator
-              (onPageChange)="paginate($event)"
-              [totalRecords]="totalDeQuestoes"
-              pageLinkSize="3"
-              rows="20"
-            ></p-paginator>
+            <p-paginator (onPageChange)="preencherQuestoesDropDown($event)" [totalRecords]="totalDeQuestoes"
+              pageLinkSize="3" rows="20">
+            </p-paginator>
           </div>
         </div>
-        <div *ngIf="visualizando" style="margin-top: 12px;">
+        <div style="margin-top: 12px;" *ngIf="apenasVisualizar">
           <p-accordion [multiple]="true">
             <div *ngFor="let questao of destinoQuestoes">
-              <p-accordionTab header="Questão {{ questao.id }}">
-                {{ questao.descricao }}
+              <p-accordionTab header="Questão {{ questao.value }}">
+                {{ questao.label }}
                 <br />
-                1 - Alternativa 1
-                <br />
-                2 - Alternativa 2
-                <br />
-                3 - Alternativa 3
-                <br />
-                Resposta correta: 2
               </p-accordionTab>
             </div>
           </p-accordion>
         </div>
-        <footer *ngIf="!visualizando">
-          <button
-            pButton
-            class="ui-button-secondary"
-            type="button"
-            (click)="onCancel()"
-            label="CANCELAR"
-          ></button>
-          <button
-            pButton
-            type="button"
-            (click)="onSubmit()"
-            [disabled]="!isFormValid"
-            label="SALVAR"
-          ></button>
+        <footer>
+          <button pButton class="ui-button-secondary" type="button" (click)="onCancel()" label="CANCELAR">
+          </button>
+          <button pButton type="button" (click)="validarForm()" label="SALVAR" *ngIf="!apenasVisualizar">
+          </button>
         </footer>
-      </form>
-    </div>
+      </div>
+    </form>
+
   </section>
 </p-dialog>

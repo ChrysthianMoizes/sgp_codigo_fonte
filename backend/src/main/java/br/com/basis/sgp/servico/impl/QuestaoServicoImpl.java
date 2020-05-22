@@ -42,8 +42,9 @@ public class QuestaoServicoImpl implements QuestaoServico {
     }
 
     @Override
-    public List<SelectDTO> listarQuestoesDropdown() {
-        return questaoDropdownMapper.toDto(questaoRepositorio.findAll());
+    public Page<SelectDTO> listarQuestoesDropdown(Pageable pageable) {
+        Page<Questao> questoes= questaoRepositorio.findAll(pageable);
+        return questoes.map(questaoDropdownMapper::toDto);
     }
 
     @Override
