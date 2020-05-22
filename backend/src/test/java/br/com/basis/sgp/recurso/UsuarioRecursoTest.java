@@ -247,7 +247,7 @@ public class UsuarioRecursoTest {
         Usuario usuario = usuarioBuilder.construir();
         Long id = usuario.getId();
         mockMvc.perform(delete(API_USUARIO + id))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     //    Deletar Usuário Não Existente
