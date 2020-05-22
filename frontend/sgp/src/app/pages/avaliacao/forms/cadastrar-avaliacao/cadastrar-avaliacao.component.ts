@@ -16,8 +16,8 @@ import { SelectItem } from 'primeng';
 })
 export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
 
-  @Input() viewOnly = false;
   @Output() avaliacaoAtualizada = new EventEmitter();
+  @Input() viewOnly = false;
 
   avaliacaoForm: FormGroup;
   avaliacao: Avaliacao = new Avaliacao();
@@ -137,6 +137,12 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
   }
 
   abrirDialog(id: number): void {
+    if (this.viewOnly) {
+      this.avaliacaoForm.disable();
+    }
+    else {
+      this.avaliacaoForm.enable();
+    }
     this.buscarAvaliacao(id);
   }
 
@@ -159,11 +165,13 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       )
       .subscribe(
         () => {
-          this.alertService.montarAlerta(
-            'success',
-            'Sucesso!',
-            'Prova cadastrada com sucesso!'
-          );
+          if (!this.viewOnly) {
+            this.alertService.montarAlerta(
+              'success',
+              'Sucesso!',
+              'Prova cadastrada com sucesso!'
+            );
+          }
           this.avaliacao = new Avaliacao();
           this.fecharDialog();
         }
@@ -182,11 +190,13 @@ export class CadastrarAvaliacaoComponent implements OnInit, OnChanges {
       )
       .subscribe(
         () => {
-          this.alertService.montarAlerta(
-            'success',
-            'Sucesso!',
-            'Prova atualizada com sucesso!'
-          );
+          if (!this.viewOnly) {
+            this.alertService.montarAlerta(
+              'success',
+              'Sucesso!',
+              'Prova cadastrada com sucesso!'
+            );
+          }
           this.avaliacaoForm.reset();
           this.fecharDialog();
         }
