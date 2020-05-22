@@ -43,7 +43,7 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
 
     this.iniciarForm();
 
-    this.preencherQuestoesDropDown();
+    this.preencherQuestoesDropDown(null);
 
 
     this.formulario = this.formBuilder.group({
@@ -185,9 +185,15 @@ export class CadastrarProvaComponent implements OnInit, OnChanges {
     this.visualizando = false;
   }
 
-  preencherQuestoesDropDown(){
+  preencherQuestoesDropDown(event = null): void{
     this.questaoFiltro = new QuestaoFiltro();
     this.pageable = new Pageable(0, 20);
+
+    if (event) {
+      this.pageable.setSize(event.rows ? event.rows : 20);
+      this.pageable.setPage(event.first ? event.first : 0);
+      this.pageable.setSort(1, 'id');
+    }
 
     this.questaoService.listarQuestoesDropdown(this.questaoFiltro, this.pageable).subscribe((questoes: Pageable<Questao>) => {
       this.origemQuestoes = questoes.content;

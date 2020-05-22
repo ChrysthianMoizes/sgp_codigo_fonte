@@ -43,8 +43,8 @@ export class ListarProvasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.inicializarTabela();
     this.atualizarLista(null);
+    this.inicializarTabela();
   }
 
   inicializarTabela(): void {
@@ -64,7 +64,7 @@ export class ListarProvasComponent implements OnInit {
     if (event) {
       pageable.setSize(event.rows ? event.rows : 20);
       pageable.setPage(event.first ? event.first : 0);
-      pageable.setSort(1, 'titulo');
+      pageable.setSort(1, 'id');
     }
 
     this.provaService.index(this.filtro, pageable).subscribe(
