@@ -1,0 +1,56 @@
+<app-alert></app-alert>
+<app-loading></app-loading>
+<app-card cabecalho="true">
+  <header>
+    <h3> Login </h3>
+  </header>
+
+  <form
+    [formGroup]="formulario"
+    (ngSubmit)="validarFormulario()"
+  >
+    <section>
+      <!-- EMAIL INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-envelope"></i>
+        </span>
+        <span class="ui-float-label">
+          <input pInputText formControlName="email"
+            [(ngModel)]="usuario.email" size="27">
+          <label for="email-input"> E-mail </label>
+        </span>
+      </div>
+      <div *ngIf="deveMostrarErrors('email')">
+        E-mail é obrigatorio!
+      </div>
+      
+      <!-- SENHA INPUT -->
+      <div class="ui-inputgroup app-input">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-key"></i>
+        </span>
+        <span class="ui-float-label">
+          <input pInputText [(ngModel)]="usuario.senha" formControlName="senha"
+            class="border-input" type="password" size="27">
+          <label id="senha-input"> Senha </label>
+        </span>
+      </div>
+      <div *ngIf="deveMostrarErrors('senha')">
+        Senha é obrigatorio!
+      </div>
+    </section>
+    
+    <footer>
+      <button pButton class="ui-button-danger" label="ENTRAR"
+        [disabled]="!formulario.valid">
+      </button>
+
+      <div class="links-uteis">
+        <a routerLink="/cadastro"> Cadastrar </a>
+        <a routerLink="/resetarsenha"> Esqueci minha senha </a>
+        <a routerLink="/reenviaremail"> Reeviar e-mail de ativação </a>
+      </div>
+    </footer>
+  </form>
+</app-card>

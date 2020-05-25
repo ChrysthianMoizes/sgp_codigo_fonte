@@ -1,0 +1,42 @@
+<app-alert></app-alert>
+<p-dialog header=" {{ titulo }}" [(visible)]="exibir" [style]="{ width: '85%' }" [modal]="true">
+  <header>
+    <h1>{{ titulo }}</h1>
+    <p>Associe um candidato a uma prova.</p>
+  </header>
+
+  <form [formGroup]="avaliacaoForm">
+    <section>
+      <span class="ui-float-label">
+        <p-autoComplete formControlName="usuario" [(ngModel)]="candidato" [suggestions]="candidatosFiltrados"
+          (completeMethod)="updateUsuariosFiltrados($event)" field="label" id="float-input"></p-autoComplete>
+        <label for="float-input">
+          Usuário
+        </label>
+      </span>
+
+      <span class="ui-float-label">
+        <p-autoComplete formControlName="prova" [(ngModel)]="prova" [suggestions]="provasFiltradas"
+          (completeMethod)="updateProvasFiltradas($event)" field="label" id="float-input1"></p-autoComplete>
+        <label for="float-input1">
+          Prova
+        </label>
+      </span>
+
+      <span class="ui-float-label">
+        <p-inputMask mask="9999-99-99" formControlName='data' [(ngModel)]="avaliacao.data">
+        </p-inputMask>
+        <label for="float-input">
+          Data
+        </label>
+      </span>
+
+
+    </section>
+
+    <footer>
+      <button pButton type="button" class="ui-button-secondary" (click)="onCancel()" label="CANCELAR"></button>
+      <button pButton type="button" (click)="validarForm()" [disabled]="avaliacaoForm.invalid" label="SALVAR"></button>
+    </footer>
+  </form>
+</p-dialog>

@@ -1,0 +1,37 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="3" author="maxson.zucolotto">
+        <createTable tableName="SENIORIDADE" remarks="Tabela de níveis de senioridade">
+            <column name="ID" type="number" remarks="Campo de indentificação">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_SENIORIDADE"/>
+            </column>
+            <column name="DESCRICAO" type="varchar(80)" remarks="Descrição">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="SENIORIDADE">
+            <column name="ID" value="1"/>
+            <column name="DESCRICAO" value="ESTAGIÁRIO"/>
+        </insert>
+
+        <insert tableName="SENIORIDADE">
+            <column name="ID" value="2"/>
+            <column name="DESCRICAO" value="JÚNIOR"/>
+        </insert>
+
+        <insert tableName="SENIORIDADE">
+            <column name="ID" value="3"/>
+            <column name="DESCRICAO" value="PLENO"/>
+        </insert>
+
+        <insert tableName="SENIORIDADE">
+            <column name="ID" value="4"/>
+            <column name="DESCRICAO" value="SÊNIOR"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

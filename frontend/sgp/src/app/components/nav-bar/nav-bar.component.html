@@ -1,0 +1,37 @@
+<div class="nav-bar">
+  <div class="menu-hamburguer">
+    <i (click)="onClickHamburguerMenu()" class="pi pi-bars"></i>
+    <img
+      src="../../../assets/logo-basis.png"
+      alt="BASIS"
+      (click)="onClickLogo()"
+    />
+  </div>
+
+  <div class="mid-navbar">
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="perfil">
+    <img
+      (click)="menu.toggle($event)"
+      alt="PERFIL"
+      height="40px"
+      src="../../../assets/profile.svg"
+    />
+  </div>
+</div>
+<p-menu #menu [model]="items" [popup]="true"></p-menu>
+<div class="sidebar">
+  <div *ngFor="let menuItem of menuSideBar">
+    <a
+      *ngIf="!menuItem.permissao || menuItem.permissao === isAdmin()"
+      type="button"
+      id="primeiro"
+      pButton
+      label="{{ menuItem.descricao }}"
+      [routerLink]="menuItem.path"
+      class="btn-sidebar"
+      (click)="toogleSidebar()"
+    ></a>
+  </div>
+</div>

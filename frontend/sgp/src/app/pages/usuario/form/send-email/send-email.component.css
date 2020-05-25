@@ -1,0 +1,15 @@
+form, footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  width: 100%;
+  margin-top: 14px;
+}
+
+button {
+  width: 100%;
+  margin-top: 8px;
+}

@@ -1,0 +1,28 @@
+td {
+  text-align: center;
+}
+#button-delete,
+#button-edit,
+#button-visualize,
+#button-realizar {
+  position: fixed;
+}
+#button-new {
+  margin: 5px 0 5px 0;
+}
+
+#button-realizar {
+  margin-top: 10px;
+}
+
+#button-delete {
+  margin-top: 130px;
+}
+
+#button-edit {
+  margin-top: 90px;
+}
+
+#button-visualize {
+  margin-top: 50px;
+}

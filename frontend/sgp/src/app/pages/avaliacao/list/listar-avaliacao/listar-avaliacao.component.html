@@ -1,0 +1,53 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<button *ngIf="temPermissao()" id="button-new" label="Novo" pButton (click)="cadastrar()"></button>
+<div class="p-grid" id="tabela">
+  <div class="p-col-11">
+    <p-table [columns]="cols" [value]="avaliacoesRecebidas" [(selection)]="avaliacoesSelecionadas" [lazy]='true'
+      selectionMode="multiple" [showCurrentPageReport]="true">
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+
+        <tr>
+          <th *ngFor="let col of cols">
+            <input pInputText (keyup.enter)="atualizarLista()" [(ngModel)]='filtro[col.field]'
+              placeholder="{{col.header}}" type="text" style="width: 100%;">
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+          <td *ngFor="let col of columns" class="ui-resizable-column">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [totalRecords]="totalElementos" [rows]="20" (onPageChange)="atualizarLista($event)"
+      [rowsPerPageOptions]="[20, 50, 100]">
+    </p-paginator>
+  </div>
+  <div class="p-col-1" id="botoes">
+    <button [disabled]="!verificarAproveitamento()" id='button-realizar' *ngIf="!temPermissao()" type="button"
+      icon="pi pi-check-square" (click)="abrirAvaliacao()" pButton class="ui-button-rounded">
+    </button>
+    <button [disabled]="avaliacoesSelecionadas.length === 0" id='button-delete' *ngIf="temPermissao()" type="button"
+      icon="pi pi-trash" (click)="deleteAvaliacao()" pButton class="ui-button-rounded">
+    </button>
+    <button *ngIf="temPermissao()" [disabled]="avaliacoesSelecionadas.length !== 1" (click)="editar()"
+      class="ui-button-rounded" icon="pi pi-pencil" id="button-edit" pButton>
+    </button>
+    <button [disabled]="avaliacoesSelecionadas.length !== 1" (click)="exibir()" class="ui-button-rounded"
+      icon="pi pi-eye" id="button-visualize" pButton>
+    </button>
+  </div>
+</div>
+<app-cadastrar-avaliacao #cadastroAvaliacao (avaliacaoAtualizada)="atualizarLista()">
+</app-cadastrar-avaliacao>
+<app-realizar-avaliacao #realizarAvaliacao (updateLista)="atualizarLista()" [avaliacao]='avaliacoesSelecionadas[0]'>
+</app-realizar-avaliacao>

@@ -1,0 +1,7 @@
+<p-dialog [modal]="true" [visible]="visible" [closable]="false">
+  <div class="dialog">
+    <app-cadastro [usuario]="usuario" [apenasVisualizar]="apenasVisualizar"
+      (salvar)="salvar()" (cancelar)="resetarConfigs()" 
+    ></app-cadastro>
+  </div>
+</p-dialog>

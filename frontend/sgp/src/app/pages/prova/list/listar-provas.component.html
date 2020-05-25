@@ -1,0 +1,55 @@
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+<app-loading></app-loading>
+<app-alert></app-alert>
+<button id="button-new" label="Novo" (click)="cadastrarProva()" pButton></button>
+<div class="p-grid" id="tabela">
+  <div class="p-col-11">
+    <p-table [(selection)]="selectedProvas" [columns]="definicaoColunas" [value]="listProvas"
+      [resizableColumns]="true" [showCurrentPageReport]="true" [lazy]="true" rows="20"
+      selectionMode="multiple">
+      <ng-template let-colunas pTemplate="header">
+        <tr>
+          <th *ngFor="let coluna of colunas">
+            {{ coluna.header }}
+          </th>
+        </tr>
+
+        <tr>
+          <th>
+            <input pInputText placeholder="Id" style="width: 100%;" [(ngModel)]="filtro.id"
+              (keyup.enter)="atualizarLista()" pKeyFilter="int" />
+          </th>
+          <th>
+            <input pInputText placeholder="Titulo" style="width: 100%;" [(ngModel)]="filtro.titulo"
+              (keyup.enter)="atualizarLista()" pInputText />
+          </th>
+          <th>
+            <input pInputText placeholder="Percentaul de Aprovação" style="width: 100%;" [(ngModel)]="filtro.percentual"
+              (keyup.enter)="atualizarLista()" pKeyFilter="num" />
+          </th>
+        </tr>
+
+      </ng-template>
+      <ng-template let-colunas="columns" let-prova pTemplate="body" let-rowIndex="rowIndex">
+        <tr [pSelectableRow]="prova" [pSelectableRowIndex]="rowIndex">
+          <td *ngFor="let coluna of colunas">
+            {{ prova[coluna.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator [totalRecords]="totalDeElementos" [rows]="20" (onPageChange)="atualizarLista($event)"
+      [rowsPerPageOptions]="[20, 50, 100]">
+    </p-paginator>
+  </div>
+  <div class="p-col-1" id="botoes">
+    <button [disabled]="!isAtLeastOneSelected()" class="ui-button-rounded" icon="pi pi-trash" id="button-delete"
+      (click)="excluirProva()" pButton></button>
+    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-pencil" id="button-edit"
+      (click)="editarProva()" pButton></button>
+    <button [disabled]="!isOneSelected()" class="ui-button-rounded" icon="pi pi-eye" id="button-visualize"
+      (click)="verProva()" pButton></button>
+  </div>
+</div>
+
+<app-cadastrar-prova #VisualizarProva (salvar)="atualizarLista()"></app-cadastrar-prova>

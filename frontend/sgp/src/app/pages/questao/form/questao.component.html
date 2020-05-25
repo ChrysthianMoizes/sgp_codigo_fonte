@@ -1,0 +1,89 @@
+<p-dialog [(visible)]="exibir" [modal]="true" [style]="{ width: '60vw' }" header="{{ header }}">
+  <form [formGroup]="formQuestao">
+    <div class="p-grid ">
+      <h3 class="p-col-12">Questão</h3>
+      <div *ngIf="questao.id">
+        <h3>Código: {{questao.id}}</h3>
+      </div>
+      <div class="p-col-12">
+        <div class="ui-float-label">
+          <textarea [(ngModel)]="questao.descricao" [readOnly]="isVisualizando" autoResize="autoResize" cols="85"
+                    formControlName="descricao" id="descricao" pInputTextarea rows="1"></textarea>
+          <label for="descricao">Descrição</label>
+        </div>
+      </div>
+      <div class="p-col-12">
+        <div class="p-grid">
+          <div class="p-col-6">
+            <p-dropdown [(ngModel)]="questao.idSenioridade" [options]="senioridades" [readonly]="isVisualizando"
+                        formControlName="senioridade" placeholder="Selecione uma senioridade"></p-dropdown>
+          </div>
+          <div class="p-col-6">
+            <p-dropdown [(ngModel)]="questao.idTipoQuestao" [options]="tiposQuestao" [readonly]="isVisualizando"
+                        formControlName="tipoQuestao" placeholder="Selecione um tipo de questão"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12">
+        <h3>Alternativas</h3>
+        <div>
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=1></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa1" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa1" id="alternativa1" pInputTextarea rows="1"></textarea>
+              <label for="alternativa1">Alternativa 1</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=2></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa2" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa2" id="alternativa2" pInputTextarea rows="1"></textarea>
+              <label for="alternativa2">Alternativa 2</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=3></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa3" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa3" id="alternativa3" pInputTextarea rows="1"></textarea>
+              <label for="alternativa3">Alternativa 3</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=4></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa4" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa4" id="alternativa4" pInputTextarea rows="1"></textarea>
+              <label for="alternativa4">Alternativa 4</label>
+            </div>
+          </div>
+
+          <div class="ui-inputgroup border-textInput">
+            <p-radioButton [(ngModel)]="questao.resposta" [disabled]="isVisualizando" class="ui-inputgroup-addon"
+                           formControlName="resposta" name="resposta" value=5></p-radioButton>
+            <div class="ui-float-label">
+              <textarea [(ngModel)]="questao.alternativa5" [readOnly]="isVisualizando" autoResize="autoResize" cols="81"
+                        formControlName="alternativa5" id="alternativa5" pInputTextarea
+                        rows="1"></textarea>
+              <label for="alternativa5">Alternativa 5</label>
+            </div>
+          </div>
+        </div>
+        <button (click)="salvar()" *ngIf="!isVisualizando"
+                class="ui-button-raised button-spacing" label="Salvar" pButton type="button"></button>
+        <button (click)="cancelar()" class="ui-button-raised button-spacing" label="Cancelar" pButton
+                type="button"></button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+

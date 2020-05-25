@@ -1,0 +1,29 @@
+header, label, a {
+  color: red;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+footer button {
+  margin-top: 28px;
+  width: 100%;
+}
+
+footer .links-uteis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.app-input {
+  margin-top: 12px;
+}

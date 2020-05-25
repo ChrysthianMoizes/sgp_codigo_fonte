@@ -1,0 +1,20 @@
+.linha-avaliacao {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+.grupoBotoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.botao-footer {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.card-questao {
+  margin-top: 15px;
+}

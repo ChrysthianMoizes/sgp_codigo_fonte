@@ -1,0 +1,28 @@
+<app-card>
+  <header>
+    <h4> {{ titulo }} </h4>
+  </header>
+
+  <form [formGroup]="formulario" (ngSubmit)="enviar()">
+    <section>
+      <div class="ui-inputgroup">
+        <span class="ui-inputgroup-addon">
+          <i class="pi pi-envelope"></i>
+        </span>
+        <div class="ui-float-label">
+          <input pInputText formControlName="email" [(ngModel)]="email"/>
+          <label for='float-input'> Email </label>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <button pButton label="Confirmar" class="ui-button-success"
+        (click)='enviar()' type="submit" [disabled]="!formulario.valid"
+      ></button>
+      <button pButton label="Cancelar" class="ui-button-danger"
+        (click)='cancelar()' type="button"
+      ></button>
+    </footer>
+  </form>
+</app-card>
